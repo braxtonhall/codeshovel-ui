@@ -20,14 +20,14 @@ export abstract class Page<P extends IPageProps, S extends IPageState> extends F
 
 	protected abstract handleNext(): void;
 
-	protected chooseAnimation(suffix?: string): string {
-		let ret: string;
+	protected chooseTransform(): string {
 		if (this.props.active) {
-			ret = this.props.forward ? "RtoC" : "LtoC";
+			return "translate(-50%, -50%)";
+		} else if (this.props.forward) {
+			return "translate(-200%, -50%)";
 		} else {
-			ret = this.props.forward ? "CtoL" : "CtoR";
+			return "translate(200%, -50%)";
 		}
-		return suffix ? ret + suffix : ret;
 	}
 
 	// protected handleKey(event: KeyboardEvent): void {

@@ -1,6 +1,6 @@
 import React, {ReactNode} from "react";
-import {OutsideAlerter} from "./Util";
-import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "./FadeableElement";
+import {OutsideAlerter} from "../Util";
+import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../FadeableElement";
 
 export default class ErrorPane extends FadeableElement<IErrorPaneProps, IErrorPaneState> {
 	protected readonly fadeOutTime: number = 500;

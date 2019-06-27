@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import {Constants} from "../Constants";
 import Button from "react-bootstrap/Button";
 import {ArgKind, Pages} from "../Enums";
-import ErrorPane from "../ErrorPane";
+import ErrorPane from "../Panes/ErrorPane";
 import {IPageProps, IPageState, Page} from "./Page";
 
 export class Landing extends Page<ILandingProps, ILandingState> {
@@ -50,16 +50,9 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 	}
 
 	public render(): ReactNode {
+		let transform: string = this.chooseTransform();
 		if (this.state.onScreen || this.props.active) {
 			setImmediate(this.setOnScreen);
-			let transform: string;
-			if (this.props.active) {
-				transform = "translate(-50%, -50%)";
-			} else if (this.props.forward) {
-				transform = "translate(-200%, -50%)";
-			} else {
-				transform = "translate(200%, -50%)";
-			}
 			return (
 				<div style={{
 					position: "absolute",
@@ -84,12 +77,6 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 				</div>
 			);
 		} else {
-			let transform: string;
-			if (this.props.forward) {
-				transform = "translate(-200%, -50%)";
-			} else {
-				transform = "translate(200%, -50%)";
-			}
 			return <div
 				style={{
 					position: "absolute",

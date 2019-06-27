@@ -24,15 +24,18 @@ export default class BackButton extends FadeableElement<IBackButtonProps, IBackB
 						left: "5px",
 						backgroundColor: "rgb(183, 166, 108)",
 						opacity: this.props.active ? 1 : 0,
-						// transition: this.fadeOutTime + "ms ease-in-out",
-						animation: `Fade-${this.props.active ? "In" : "Out"}  ${this.fadeOutTime}ms ease-in-out`,
-						zIndex: 9999,
+						transition: this.fadeOutTime + "ms ease-in-out",
 					}}
 					onClick={this.props.goBack}
 				/>
 			);
 		} else {
-			return <div/>;
+			return <div style={{
+				position: "absolute",
+				bottom: "5px",
+				left: "5px",
+				opacity: 0,
+			}}/>;
 		}
 	}
 }

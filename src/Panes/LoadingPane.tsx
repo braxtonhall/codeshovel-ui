@@ -1,5 +1,5 @@
 import React, {ReactNode} from "react";
-import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "./FadeableElement";
+import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../FadeableElement";
 
 export default class LoadingPane extends FadeableElement<ILoadingPaneProps, ILoadingPaneState> {
 	protected readonly fadeOutTime: number = 500;
@@ -26,7 +26,6 @@ export default class LoadingPane extends FadeableElement<ILoadingPaneProps, ILoa
 						width: this.props.size.width + "%",
 						backgroundColor: "rgb(183, 166, 108)",
 						opacity: this.props.active ? 1 : 0,
-						// transition: this.fadeOutTime + "ms ease-in-out",
 						animation: `Fade-${this.props.active ? "In" : "Out"}  ${this.fadeOutTime}ms ease-in-out, ` +
 							`Pulse infinite 1s ease-in-out`,
 					}}

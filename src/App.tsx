@@ -4,8 +4,8 @@ import './App.css';
 import {ArgKind, Pages} from './Enums'
 import {Landing} from "./Pages/Landing";
 import BackButton from "./BackButton";
-import {Files} from "./Pages/Files";
-import {Methods} from "./Pages/Methods";
+import {Files} from "./Pages/Files/Files";
+import {Methods} from "./Pages/Methods/Methods";
 import {IMethodTransport} from "./Types";
 import {BackgroundText} from "./BackgroundText";
 

@@ -19,7 +19,6 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						opacity: this.props.page >= Pages.FILES ? 1 : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
-						// animation: `Fade-${this.props.active ? "In" : "Out"} ${this.fadeOutTime}ms ease-in-out`,
 					}}
 				>
 					{(this.props.repo.split("/").pop() as string).replace(".git", "")}
@@ -35,7 +34,6 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						opacity: this.props.page >= Pages.FILES ? 1 : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
-						// animation: `Fade-${this.props.active ? "In" : "Out"} ${this.fadeOutTime}ms ease-in-out`,
 					}}
 				>
 					{this.props.file.split("/").pop()}
@@ -51,8 +49,6 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						opacity: this.props.page >= Pages.FILES ? 1 : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
-						// transition: this.fadeOutTime + "ms ease-in-out",
-						// animation: `Fade-${this.props.active ? "In" : "Out"} ${this.fadeOutTime}ms ease-in-out`,
 					}}
 				>
 					{this.props.sha === "HEAD" ? "" : this.props.sha}

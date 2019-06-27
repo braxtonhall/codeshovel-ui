@@ -1,16 +1,16 @@
 import * as React from "react";
 import {FormEvent, ReactNode} from "react";
-import {IPageState, Page} from "./Page";
-import {ArgKind, Pages} from "../Enums";
-import {IFilesProps} from "./Files";
+import {IPageState, Page} from "../Page";
+import {ArgKind, Pages} from "../../Enums";
+import {IFilesProps} from "../Files/Files";
 import * as rp from "request-promise-native";
-import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../FadeableElement";
-import {Constants} from "../Constants";
+import {Constants} from "../../Constants";
 import Form from "react-bootstrap/Form";
-import ErrorPane from "../ErrorPane";
-import LoadingPane from "../LoadingPane";
+import ErrorPane from "../../Panes/ErrorPane";
+import LoadingPane from "../../Panes/LoadingPane";
 import Button from "react-bootstrap/Button";
-import {IMethodTransport} from "../Types";
+import {IMethodTransport} from "../../Types";
+import {Method} from "./Method";
 
 export class Methods extends Page<IMethodsProps, IMethodsState> {
 	private readonly requestErrorText: string = Constants.METHODS_REQUEST_ERROR_TEXT;
@@ -137,16 +137,13 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 			setImmediate(this.setOnScreen);
 		}
 		return (
-			<div
-				style={{
-					opacity: this.props.active ? 1 : 0,
-					transition: this.fadeOutTime + "ms ease-in-out",
-				}}
-			>
-				{(this.state.onScreen || this.props.active) ?
-					<div>
+			<div>
+				<div>
+					{this.state.onScreen || this.props.active ?
 						<div
 							style={{
+								opacity: this.props.active ? 1 : 0,
+								transition: this.fadeOutTime + "ms ease-in-out",
 								position: "absolute",
 								right: "-1%",
 								top: "2%",
@@ -156,48 +153,58 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 							}}
 						>
 							Select a method.
-						</div>
+						</div> : <div style={{right: "-1%", top: "2%", font: "200% \"Courier New\", Futura, sans-serif", opacity: 0}}/>
+					}
+				</div>
+				<div>
+					{this.state.onScreen || this.props.active ?
 						<div style={{
 							height: "100%",
 							width: "100%",
 							top: "50%",
 							left: "50%",
 							position: "absolute",
-							transform: "translate(-50%, -50%)",
+							transform: this.chooseTransform(),
+							transition: this.fadeOutTime + "ms ease-in-out",
 							opacity: 0.8,
-							animation: `${this.chooseAnimation("8")}  ${this.fadeOutTime}ms ease-in-out`,
 						}}>
 							<MethodContainer
 								methods={this.content}
 								search={this.state.search}
 								tellParent={this.updateSelected}
 							/>
-						</div>
-						<div
-							style={{
-								width: "20%",
-								position: "absolute",
-								right: "2%",
-								top: "10%",
-							}}
-						>
-							<Form onSubmit={this.handleEnter}>
-								<Form.Control id="searchInput" size="sm" type="text" placeholder={this.methodInputPlaceholder} onChange={this.handleKey}/>
-							</Form>
-						</div>
-						<div
-							style={{
-								position: "absolute",
-								top: "15%",
-								right: "2%",
-							}}
-						>
-							<Button variant="primary" onClick={this.handleNext} disabled={this.props.method.methodName === ""}>Next</Button>
-						</div>
-						<LoadingPane text={this.loadingText} active={this.state.loading && this.props.active} size={{height: 30, width: 72}}/>
-						<ErrorPane text={this.requestErrorText} active={this.state.requestError && this.props.active} size={{height: 30, width: 72}} exit={this.handleCloseRequestError}/>
-					</div> : <div/>
-				}
+						</div> : <div style={{top: "50%", left: "50%", transform: this.chooseTransform()}}/>
+					}
+				</div>
+				<div>
+					{this.state.onScreen || this.props.active ?
+						<div style={{opacity: this.props.active ? 1 : 0, transition: this.fadeOutTime + "ms ease-in-out",}}>
+							<div
+								style={{
+									width: "20%",
+									position: "absolute",
+									right: "2%",
+									top: "10%",
+								}}
+							>
+								<Form onSubmit={this.handleEnter}>
+									<Form.Control id="searchInput" size="sm" type="text" placeholder={this.methodInputPlaceholder} onChange={this.handleKey}/>
+								</Form>
+							</div>
+							<div
+								style={{
+									position: "absolute",
+									top: "15%",
+									right: "2%",
+								}}
+							>
+								<Button variant="primary" onClick={this.handleNext} disabled={this.props.method.methodName === ""}>Next</Button>
+							</div>
+							<LoadingPane text={this.loadingText} active={this.state.loading && this.props.active} size={{height: 30, width: 72}}/>
+							<ErrorPane text={this.requestErrorText} active={this.state.requestError && this.props.active} size={{height: 30, width: 72}} exit={this.handleCloseRequestError}/>
+						</div> : <div style={{opacity: 0}}/>
+					}
+				</div>
 			</div>
 		);
 	}
@@ -235,7 +242,7 @@ class MethodContainer extends React.Component<IMethodContainerProps, any> {
 					{
 						this.props.methods
 							.map((method: {longName: string, startLine: number, methodName: string}, i: number) => (
-								<ReactMethod
+								<Method
 									method={method}
 									search={this.props.search}
 									tellParent={this.tellParent}
@@ -246,81 +253,6 @@ class MethodContainer extends React.Component<IMethodContainerProps, any> {
 							))
 					}
 				</div>
-			</div>
-		);
-	}
-}
-
-class ReactMethod extends FadeableElement<IReactMethodProps, IReactMethodState> {
-	protected readonly fadeOutTime: number = Constants.METHODS_METHOD_ANIMATE_TIME;
-	protected readonly marginModifier: number;
-	private turnedOn: boolean;
-
-	constructor(props: IReactMethodProps) {
-		super(props);
-		const inSearch: boolean = this.props.method.longName.includes(this.props.search);
-		let marginModifier: number = Math.floor(Math.random() * Constants.METHODS_MAX_INDENT_UNIT_COUNT);
-		marginModifier = marginModifier * Constants.METHODS_INDENT_UNIT_PX;
-		marginModifier = marginModifier + this.props.index * Constants.METHODS_INDENT_UNIT_PX;
-		this.marginModifier = marginModifier;
-		this.state = {
-			onScreen: this.props.active && inSearch,
-			margin: this.marginModifier,
-		};
-		this.turnedOn = false;
-		this.handleClick = this.handleClick.bind(this);
-		this.mouseDown = this.mouseDown.bind(this);
-		this.tellParent = this.tellParent.bind(this);
-	}
-
-	private handleClick(): void {
-		if (this.props.active) {
-			setImmediate(this.tellParent);
-		}
-		const state: IReactMethodState = Object.assign({}, this.state);
-		state.margin = this.marginModifier;
-		this.setState(state);
-	}
-
-	private mouseDown(): void {
-		const state: IReactMethodState = Object.assign({}, this.state);
-		state.margin = this.marginModifier + Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT;
-		this.setState(state);
-	}
-
-	private tellParent(): void {
-		this.props.tellParent(this.props.method);
-	}
-
-	public render(): ReactNode {
-		const style = {display: "inline-block"};
-		const animation: string = this.turnedOn ? "" : `Expand ${this.fadeOutTime}ms ease-in-out`;
-		if (!this.turnedOn) {
-			this.turnedOn = true;
-		}
-		return (
-			<div
-				style={{
-					marginLeft: this.state.margin +  "px",
-					marginTop: this.props.active ? "3px" : "0",
-					marginBottom: this.props.active ? "3px" : "1px",
-					backgroundColor: "rgb(124, 124, 124)",
-					height: this.props.active ? "40px" : "8px",
-					font: (this.props.active ? 100 : 12) + "% \"Courier New\", Futura, sans-serif",
-					width: "650px",
-					overflow: "hidden",
-					transition: this.fadeOutTime + "ms ease-in-out",
-					opacity: this.props.active ? 1 : 0.5,
-					animation,
-				}}
-				onClick={this.handleClick}
-				onMouseDown={this.mouseDown}
-			>
-				{
-					this.props.search === "" || !this.props.active ? this.props.method.longName : this.props.method.longName.split(this.props.search).flatMap(
-						(s, i, list) => list.length - 1 !== i ? [<div key={2 * i} style={style}>{s}</div>, <code key={2 * i + 1} style={style}>{this.props.search}</code>] : <div key={2 * i} style={style}>{s}</div>,
-					)
-				}
 			</div>
 		);
 	}
@@ -342,15 +274,4 @@ export interface IMethodContainerProps {
 	methods: {longName: string, startLine: number, methodName: string}[];
 	search: string;
 	tellParent: (method: IMethodTransport) => void;
-}
-
-export interface IReactMethodProps extends IFadeableElementProps {
-	method: IMethodTransport;
-	search: string;
-	tellParent: (method: {longName: string, startLine: number, methodName: string}) => void;
-	index: number;
-}
-
-export interface IReactMethodState extends IFadeableElementState {
-	margin: number;
 }
