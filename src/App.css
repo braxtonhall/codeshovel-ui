@@ -1,33 +1,231 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+    animation: App-logo-spin infinite 20s linear;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: rgb(48, 47, 71);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
+}
+
+.Panel {
+    flex: 1;
+    position: absolute;
+    overflow-y: scroll;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes Fade-In {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes Fade-Out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes RtoC {
+    from {
+        opacity: 0;
+        transform: translate(200%, -50%);
+
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes LtoC {
+    from {
+        opacity: 0;
+        transform: translate(-200%, -50%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes CtoL {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-200%, -50%);
+    }
+}
+
+@keyframes CtoR {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    to {
+        opacity: 0;
+        transform: translate(200%, -50%);
+    }
+}
+
+@keyframes Pulse {
+    from {
+        color: rgb(183, 166, 108);
+    }
+    to {
+        color: rgb(227, 208, 135);
+    }
+}
+
+@keyframes Expand {
+     from {
+         height: 0;
+         opacity: 0;
+         margin-bottom: 0;
+         margin-top: 0;
+     }
+     to {
+         height: 40px;
+         opacity: 1;
+         margin-bottom: 3px;
+         margin-top: 3px;
+     }
+ }
+
+@keyframes Contract {
+    from {
+        height: 40px;
+        opacity: 1;
+        margin-bottom: 3px;
+        margin-top: 3px;
+    }
+    to {
+        height: 0;
+        opacity: 0;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+}
+
+@keyframes RtoC8 {
+    from {
+        opacity: 0;
+        transform: translate(200%, -50%);
+
+    }
+    to {
+        opacity: 0.8;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes LtoC8 {
+    from {
+        opacity: 0;
+        transform: translate(-200%, -50%);
+    }
+    to {
+        opacity: 0.8;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes CtoL8 {
+    from {
+        opacity: 0.8;
+        transform: translate(-50%, -50%);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-200%, -50%);
+    }
+}
+
+@keyframes CtoR8 {
+    from {
+        opacity: 0.8;
+        transform: translate(-50%, -50%);
+    }
+    to {
+        opacity: 0;
+        transform: translate(200%, -50%);
+    }
+}
+
+@keyframes RtoC-No-Translate {
+     from {
+         opacity: 0;
+         transform: translate(250%, 0);
+
+     }
+     to {
+         opacity: 1;
+         transform: translate(0, 0);
+     }
+ }
+
+@keyframes LtoC-No-Translate {
+    from {
+        opacity: 0;
+        transform: translate(-150%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes CtoL-No-Translate {
+    from {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-150%, 0);
+    }
+}
+
+@keyframes CtoR-No-Translate {
+    from {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate(250%, 0);
+    }
 }
