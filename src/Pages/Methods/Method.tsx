@@ -1,23 +1,22 @@
-import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../../FadeableElement";
+import {IFadeableElementProps} from "../../FadeableElement";
 import {IMethodTransport} from "../../Types";
 import {Constants} from "../../Constants";
 import {ReactNode} from "react";
 import * as React from "react";
 
-export class Method extends FadeableElement<IReactMethodProps, IReactMethodState> {
+export class Method extends React.Component<IReactMethodProps, IReactMethodState> {
 	protected readonly fadeOutTime: number = Constants.METHODS_METHOD_ANIMATE_TIME;
 	protected readonly marginModifier: number;
 	private turnedOn: boolean;
 
 	constructor(props: IReactMethodProps) {
 		super(props);
-		const inSearch: boolean = this.props.method.longName.includes(this.props.search);
+		// const inSearch: boolean = this.props.method.longName.includes(this.props.search);
 		let marginModifier: number = Math.floor(Math.random() * Constants.METHODS_MAX_INDENT_UNIT_COUNT);
 		marginModifier = marginModifier * Constants.METHODS_INDENT_UNIT_PX;
 		marginModifier = marginModifier + this.props.index * Constants.METHODS_INDENT_UNIT_PX;
 		this.marginModifier = marginModifier;
 		this.state = {
-			onScreen: this.props.active && inSearch,
 			margin: this.marginModifier,
 		};
 		this.turnedOn = false;
@@ -86,6 +85,6 @@ export interface IReactMethodProps extends IFadeableElementProps {
 	index: number;
 }
 
-export interface IReactMethodState extends IFadeableElementState {
+export interface IReactMethodState {
 	margin: number;
 }

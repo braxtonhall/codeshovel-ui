@@ -15,6 +15,7 @@ export class Files extends Page<IFilesProps, IFilesState> {
 	private readonly loadingText: string = Constants.FILE_LOADING_TEXT;
 	private readonly shaPlaceholder: string = Constants.FILE_SHA_PLACEHOLDER_TEXT;
 	private readonly shaErrorText: string = Constants.FILE_SHA_ERROR_TEXT;
+	protected readonly page: Pages = Pages.FILES;
 
 	private link: string;
 	private sha: string;
@@ -35,7 +36,6 @@ export class Files extends Page<IFilesProps, IFilesState> {
 		this.handleCloseRequestError = this.handleCloseRequestError.bind(this);
 		this.closeRequestError = this.closeRequestError.bind(this);
 		this.closeShaError = this.closeShaError.bind(this);
-		this.updateFiles = this.updateFiles.bind(this);
 		this.buildDirectory = this.buildDirectory.bind(this);
 		this.updateSelected = this.updateSelected.bind(this);
 		this.handleRefresh = this.handleRefresh.bind(this);
@@ -68,7 +68,7 @@ export class Files extends Page<IFilesProps, IFilesState> {
 		this.props.updateSelected(sha, ArgKind.SHA);
 	}
 
-	private updateFiles(): void {
+	protected updateContent(): void {
 		if (this.props.link !== this.link || this.sha !== this.props.sha) {
 			this.link = this.props.link;
 			this.sha = this.props.sha;
@@ -142,11 +142,11 @@ export class Files extends Page<IFilesProps, IFilesState> {
 		this.content = new Directory(".", files, this.updateSelected);
 	}
 
-	public render(): ReactNode {
-		setImmediate(this.updateFiles);
-		if (this.state.onScreen || this.props.active) {
-			setImmediate(this.setOnScreen);
-		}
+	public createReactNode(): ReactNode {
+		// setImmediate(this.updateContent);
+		// if (this.state.onScreen || this.props.active) {
+		// 	setImmediate(this.setOnScreen);
+		// }
 		return (
 			<div>
 				<div>
@@ -164,7 +164,7 @@ export class Files extends Page<IFilesProps, IFilesState> {
 							}}
 						>
 							Select a<br/>file.{'\u00A0\u00A0'}
-						</div> : <div style={{right: "1%", top: "58%", font: "200% \"Courier New\", Futura, sans-serif"}}/>
+						</div> : <div style={{right: "1%", top: "58%", font: "200% \"Courier New\", Futura, sans-serif", opacity: 0}}/>
 					}
 				</div>
 				<div>
@@ -221,7 +221,7 @@ export class Files extends Page<IFilesProps, IFilesState> {
 								</Form>
 								<Button style={{marginTop: "1%", marginLeft: "auto", marginRight: "5%", position: "relative", float: "right",}} variant="primary" onClick={this.handleRefresh} disabled={false}>Refresh</Button>
 							</div>
-						</div> : <div/>
+						</div> : <div style={{opacity: 0}}/>
 					}
 				</div>
 				<div>

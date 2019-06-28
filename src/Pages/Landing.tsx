@@ -10,6 +10,7 @@ import {IPageProps, IPageState, Page} from "./Page";
 export class Landing extends Page<ILandingProps, ILandingState> {
 	private readonly placeholder: string;
 	private readonly errorText: string = Constants.INVALID_URL_ERROR_TEXT;
+	protected readonly page: Pages = Pages.LANDING;
 
 	public constructor(props: ILandingProps) {
 		super(props);
@@ -49,44 +50,57 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 		this.handleNext();
 	}
 
-	public render(): ReactNode {
-		let transform: string = this.chooseTransform();
-		if (this.state.onScreen || this.props.active) {
-			setImmediate(this.setOnScreen);
-			return (
-				<div style={{
-					position: "absolute",
-					top: "50%",
-					left: "50%",
-					transform,
-					opacity: this.props.active ? 1 : 0,
-					transition: `${this.fadeOutTime}ms ease-in-out`,
-					textAlign: "center",
-				}}>
-					<p>
-						Welcome to Felix's Java <code>codeshovel</code>.
-					</p>
-					<p>
-						To begin, enter a link to a Java GitHub repository.
-					</p>
-					<Form onSubmit={this.handleEnter}>
-						<Form.Control id="repoInput" size="lg" type="text" placeholder={this.placeholder}/>
-					</Form>
-					<Button variant="primary" onClick={this.handleNext} disabled={this.state.error}>Next</Button>
-					<ErrorPane text={this.errorText} active={this.state.error} exit={this.toggleError} size={{height: 50, width: 120}}/>
-				</div>
-			);
-		} else {
-			return <div
+	protected updateContent(): void {
+
+	}
+
+	public createReactNode(): ReactNode {
+		// if (this.state.onScreen || this.props.active) {
+		// 	setImmediate(this.setOnScreen);
+		return (
+			this.state.onScreen || this.props.active ?
+			<div style={{
+				position: "absolute",
+				top: "50%",
+				left: "50%",
+				transform: this.chooseTransform(),
+				opacity: this.props.active ? 1 : 0,
+				transition: `${this.fadeOutTime}ms ease-in-out`,
+				textAlign: "center",
+			}}>
+				<p>
+					Welcome to Felix's Java <code>codeshovel</code>.
+				</p>
+				<p>
+					To begin, enter a link to a Java GitHub repository.
+				</p>
+				<Form onSubmit={this.handleEnter}>
+					<Form.Control id="repoInput" size="lg" type="text" placeholder={this.placeholder}/>
+				</Form>
+				<Button variant="primary" onClick={this.handleNext} disabled={this.state.error}>Next</Button>
+				<ErrorPane text={this.errorText} active={this.state.error} exit={this.toggleError} size={{height: 50, width: 120}}/>
+			</div> :
+			<div
 				style={{
 					position: "absolute",
 					top: "50%",
 					left: "50%",
 					opacity: 0,
-					transform,
+					transform: this.chooseTransform(),
 				}}
-			/>;
-		}
+			/>
+		);
+		// } else {
+		// 	return <div
+		// 		style={{
+		// 			position: "absolute",
+		// 			top: "50%",
+		// 			left: "50%",
+		// 			opacity: 0,
+		// 			transform: this.chooseTransform(),
+		// 		}}
+		// 	/>;
+		// }
 	}
 }
 

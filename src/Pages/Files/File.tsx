@@ -45,33 +45,34 @@ export class ReactFile extends FadeableElement<IReactFileProps, IReactFileState>
 		this.setState(state);
 	}
 
-	public render(): ReactNode {
-		if (this.state.onScreen || this.props.active) {
-			setImmediate(this.setOnScreen);
-			return (
-				<div
-					style={{
-						marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin +  "px",
-						animation: `${this.props.active ? "Expand" : "Contract"}  ${this.fadeOutTime}ms ease-in-out`,
-						marginTop: "3px",
-						marginBottom: "3px",
-						backgroundColor: "rgb(124, 124, 124)",
-						height: this.props.active ? "40px" : "0",
-						font: "100% \"Courier New\", Futura, sans-serif",
-						width: (650 - Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT * 1.5) + "px",
-						overflow: "hidden",
-						transition: this.fadeOutTime + "ms ease-in-out",
-					}}
-					onClick={this.handleClick}
-					onMouseDown={this.mouseDown}
-				>
-					{/*{this.props.active ? this.props.file.getName() : ""}*/this.props.file.getName()}
-				</div>
-			);
-		} else {
-			const style = {marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px"};
-			return <div style={style}/>;
-		}
+	protected createReactNode(): ReactNode {
+		const style = {marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px"};
+		// if (this.state.onScreen || this.props.active) {
+		// 	setImmediate(this.setOnScreen);
+		return (this.state.onScreen || this.props.active ?
+			<div
+				style={{
+					marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin +  "px",
+					animation: `${this.props.active ? "Expand" : "Contract"}  ${this.fadeOutTime}ms ease-in-out`,
+					marginTop: "3px",
+					marginBottom: "3px",
+					backgroundColor: "rgb(124, 124, 124)",
+					height: this.props.active ? "40px" : "0",
+					font: "100% \"Courier New\", Futura, sans-serif",
+					width: (650 - Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT * 1.5) + "px",
+					overflow: "hidden",
+					transition: this.fadeOutTime + "ms ease-in-out",
+				}}
+				onClick={this.handleClick}
+				onMouseDown={this.mouseDown}
+			>
+				{/*{this.props.active ? this.props.file.getName() : ""}*/this.props.file.getName()}
+			</div> : <div style={style}/>
+		);
+		// } else {
+		// 	const style = {marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px"};
+		// 	return <div style={style}/>;
+		// }
 	}
 }
 

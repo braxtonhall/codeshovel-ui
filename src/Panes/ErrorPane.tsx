@@ -17,10 +17,10 @@ export default class ErrorPane extends FadeableElement<IErrorPaneProps, IErrorPa
 		}
 	}
 
-	public render(): ReactNode {
-		if (this.state.onScreen || this.props.active) {
-			setImmediate(this.setOnScreen);
-			return (
+	public createReactNode(): ReactNode {
+		// if (this.state.onScreen || this.props.active) {
+		// 	setImmediate(this.setOnScreen);
+			return (this.state.onScreen || this.props.active ?
 				<OutsideAlerter
 					child={
 						<div
@@ -53,11 +53,11 @@ export default class ErrorPane extends FadeableElement<IErrorPaneProps, IErrorPa
 						</div>
 					}
 					handleClick={this.exit}
-				/>
+				/> : <div/>
 			);
-		} else {
-			return <div/>;
-		}
+		// } else {
+		// 	return <div/>;
+		// }
 
 	}
 }

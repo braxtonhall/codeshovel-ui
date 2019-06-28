@@ -1,47 +1,42 @@
 import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../FadeableElement";
 import {ArgKind, Pages} from "../Enums";
+import {ReactNode} from "react";
 
 export abstract class Page<P extends IPageProps, S extends IPageState> extends FadeableElement<P, S> {
 	protected readonly fadeOutTime: number = 900;
+	protected abstract readonly page: Pages;
 
 	protected constructor(props: P) {
 		super(props);
 		this.handleNext = this.handleNext.bind(this);
-		// this.handleKey = this.handleKey.bind(this);
+		this.updateContent = this.updateContent.bind(this);
 	}
-
-	// public componentDidMount(): void {
-	// 	document.addEventListener('keydown', this.handleKey);
-	// }
-	//
-	// public componentWillUnmount(): void {
-	// 	document.removeEventListener('keydown', this.handleKey);
-	// }
 
 	protected abstract handleNext(): void;
 
+	protected abstract updateContent(): void;
+
 	protected chooseTransform(): string {
-		if (this.props.active) {
+		if (this.props.page === this.page) {
 			return "translate(-50%, -50%)";
-		} else if (this.props.forward) {
+		} else if (this.props.page > this.page) {
 			return "translate(-200%, -50%)";
 		} else {
 			return "translate(200%, -50%)";
 		}
 	}
 
-	// protected handleKey(event: KeyboardEvent): void {
-	// 	const key: string = event.code;
-	// 	if ((key === "Enter" || event.code === 'ArrowRight') && this.props.active) {
-	// 		setImmediate(this.handleNext)
-	// 	}
-	// }
+	public render(): ReactNode {
+		setImmediate(this.updateContent);
+		return super.render();
+	}
 }
 
 export interface IPageProps extends IFadeableElementProps {
 	proceedToPage: (page: Pages) => void;
 	forward: boolean;
 	updateSelected: (arg: any, kind: ArgKind) => void;
+	page: Pages;
 }
 
 export interface IPageState extends IFadeableElementState {

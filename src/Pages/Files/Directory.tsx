@@ -79,43 +79,44 @@ export class ReactDirectory extends FadeableElement<IReactDirectoryProps, IReact
 		this.setState(state);
 	}
 
-	public render(): ReactNode {
-		if (this.state.onScreen || this.props.active) {
-			setImmediate(this.setOnScreen);
-			return(
+	protected createReactNode(): ReactNode {
+		// if (this.state.onScreen || this.props.active) {
+		// 	setImmediate(this.setOnScreen);
+		const style = {marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px"};
+		return(this.state.onScreen || this.props.active ?
+			<div
+				style={{display: "block"}}
+			>
 				<div
-					style={{display: "block"}}
+					style={{
+						marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px",
+						animation: `${this.props.active ? "Expand" : "Contract"}  ${this.fadeOutTime}ms ease-in-out`,
+						marginTop: "3px",
+						marginBottom: "3px",
+						backgroundColor: "rgb(75, 75, 124)",
+						height: this.props.active ? "40px" : "0",
+						font: "100% \"Courier New\", Futura, sans-serif",
+						width: "650px",
+						overflow: "hidden",
+						zIndex: 9999,
+						transition: this.fadeOutTime + "ms ease-in-out",
+					}}
+					onClick={this.toggleExpanded}
+					onMouseDown={this.mouseDown}
 				>
-					<div
-						style={{
-							marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px",
-							animation: `${this.props.active ? "Expand" : "Contract"}  ${this.fadeOutTime}ms ease-in-out`,
-							marginTop: "3px",
-							marginBottom: "3px",
-							backgroundColor: "rgb(75, 75, 124)",
-							height: this.props.active ? "40px" : "0",
-							font: "100% \"Courier New\", Futura, sans-serif",
-							width: "650px",
-							overflow: "hidden",
-							zIndex: 9999,
-							transition: this.fadeOutTime + "ms ease-in-out",
-						}}
-						onClick={this.toggleExpanded}
-						onMouseDown={this.mouseDown}
-					>
-						{this.props.dir.getName() + "/"}
-					</div>
-					{this.props.dir.getDirectories()
-						.map((dir: Directory, i: number) => <ReactDirectory dir={dir} level={this.props.level + 1} key={i} active={this.state.expanded && this.props.active}/>)}
-					{this.props.dir.getFiles()
-						.map((file: File, i: number) => <ReactFile file={file} level={this.props.level + 1} key={i} active={this.state.expanded && this.props.active}/>)}
-
+					{this.props.dir.getName() + "/"}
 				</div>
-			);
-		} else {
-			const style = {marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px"};
-			return <div style={style}/>;
-		}
+				{this.props.dir.getDirectories()
+					.map((dir: Directory, i: number) => <ReactDirectory dir={dir} level={this.props.level + 1} key={i} active={this.state.expanded && this.props.active}/>)}
+				{this.props.dir.getFiles()
+					.map((file: File, i: number) => <ReactFile file={file} level={this.props.level + 1} key={i} active={this.state.expanded && this.props.active}/>)}
+
+			</div> :  <div style={style}/>
+		);
+		// } else {
+		// 	const style = {marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px"};
+		// 	return <div style={style}/>;
+		// }
 	}
 }
 

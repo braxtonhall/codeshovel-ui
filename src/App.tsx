@@ -151,6 +151,7 @@ export default class App extends React.Component<any, IAppState> {
 						forward={this.state.forward}
 						updateSelected={this.updateSelected}
 						proceedWithUpdate={this.proceedWithUpdate}
+						page={this.state.page}
 					/>
 					<Files
 						proceedToPage={this.proceedToPage}
@@ -161,6 +162,7 @@ export default class App extends React.Component<any, IAppState> {
 						file={this.state.file}
 						sha={this.state.sha}
 						updateSelected={this.updateSelected}
+						page={this.state.page}
 					/>
 					<Methods
 						proceedToPage={this.proceedToPage}
@@ -174,6 +176,7 @@ export default class App extends React.Component<any, IAppState> {
 						method={this.state.method}
 						goBackWithUpdate={this.goBackWithUpdate}
 						proceedWithUpdate={this.proceedWithUpdate}
+						page={this.state.page}
 					/>
 
 					<BackButton

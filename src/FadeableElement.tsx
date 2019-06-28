@@ -1,4 +1,5 @@
 import * as React from "react";
+import {ReactNode} from "react";
 
 export abstract class FadeableElement<P extends IFadeableElementProps, S extends IFadeableElementState> extends React.Component<P, S> {
 	protected fadeOutTime: number = 300;
@@ -7,6 +8,7 @@ export abstract class FadeableElement<P extends IFadeableElementProps, S extends
 		super(props);
 		this.toggleOnScreen = this.toggleOnScreen.bind(this);
 		this.setOnScreen = this.setOnScreen.bind(this);
+		this.createReactNode = this.createReactNode.bind(this);
 	}
 
 	protected toggleOnScreen(): void {
@@ -21,6 +23,15 @@ export abstract class FadeableElement<P extends IFadeableElementProps, S extends
 		} else if (!this.state.onScreen) {
 			this.toggleOnScreen();
 		}
+	}
+
+	protected abstract createReactNode(): ReactNode;
+
+	public render(): ReactNode {
+		if (this.state.onScreen || this.props.active) {
+			setImmediate(this.setOnScreen);
+		}
+		return this.createReactNode();
 	}
 }
 

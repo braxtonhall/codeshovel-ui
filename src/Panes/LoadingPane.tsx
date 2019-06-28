@@ -10,44 +10,42 @@ export default class LoadingPane extends FadeableElement<ILoadingPaneProps, ILoa
 	}
 
 
-	public render(): ReactNode {
-		if (this.state.onScreen || this.props.active) {
-			setImmediate(this.setOnScreen);
-			return (
+	public createReactNode(): ReactNode {
+		// if (this.state.onScreen || this.props.active) {
+		// 	setImmediate(this.setOnScreen);
+		return (this.state.onScreen || this.props.active ?
+			<div
+				style={{
+					textAlign: "center",
+					verticalAlign: "center",
+					position: "absolute",
+					top: "50%",
+					left: "50%",
+					transform: "translate(-50%, -50%)",
+					height: this.props.size.height + "%",
+					width: this.props.size.width + "%",
+					backgroundColor: "rgb(183, 166, 108)",
+					opacity: this.props.active ? 1 : 0,
+					animation: `Fade-${this.props.active ? "In" : "Out"}  ${this.fadeOutTime}ms ease-in-out, ` +
+						`Pulse infinite 1s ease-in-out`,
+				}}
+			>
 				<div
 					style={{
-						textAlign: "center",
-						verticalAlign: "center",
 						position: "absolute",
 						top: "50%",
 						left: "50%",
 						transform: "translate(-50%, -50%)",
-						height: this.props.size.height + "%",
-						width: this.props.size.width + "%",
-						backgroundColor: "rgb(183, 166, 108)",
-						opacity: this.props.active ? 1 : 0,
-						animation: `Fade-${this.props.active ? "In" : "Out"}  ${this.fadeOutTime}ms ease-in-out, ` +
-							`Pulse infinite 1s ease-in-out`,
+						font: "100% \"Courier New\", Futura, sans-serif"
 					}}
 				>
-					<div
-						style={{
-							position: "absolute",
-							top: "50%",
-							left: "50%",
-							transform: "translate(-50%, -50%)",
-							font: "100% \"Courier New\", Futura, sans-serif"
-						}}
-					>
-						{this.props.text}
-					</div>
+					{this.props.text}
 				</div>
-
-			);
-		} else {
-			return <div/>;
-		}
-
+			</div> : <div/>
+		);
+		// } else {
+		// 	return <div/>;
+		// }
 	}
 }
 

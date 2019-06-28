@@ -16,6 +16,7 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 	private readonly requestErrorText: string = Constants.METHODS_REQUEST_ERROR_TEXT;
 	private readonly methodInputPlaceholder: string = Constants.METHODS_SEARCH_TEXT;
 	private readonly loadingText: string = Constants.METHODS_LOADING_TEXT;
+	protected readonly page: Pages = Pages.METHODS;
 	private file: string;
 	private content: IMethodTransport[];
 
@@ -29,7 +30,6 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 		};
 		this.file = "";
 		this.content = [];
-		this.updateMethods = this.updateMethods.bind(this);
 		this.finishLoad = this.finishLoad.bind(this);
 		this.updateSelected = this.updateSelected.bind(this);
 		this.handleKey = this.handleKey.bind(this);
@@ -68,7 +68,7 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 		}
 	}
 
-	private updateMethods(): void {
+	protected updateContent(): void {
 		if (this.file !== this.props.file) {
 			this.file = this.props.file;
 			this.content = [];
@@ -131,11 +131,11 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 		this.props.goBackWithUpdate("", ArgKind.FILE);
 	}
 
-	public render(): ReactNode {
-		setImmediate(this.updateMethods);
-		if (this.state.onScreen || this.props.active) {
-			setImmediate(this.setOnScreen);
-		}
+	public createReactNode(): ReactNode {
+		// setImmediate(this.updateContent);
+		// if (this.state.onScreen || this.props.active) {
+		// 	setImmediate(this.setOnScreen);
+		// }
 		return (
 			<div>
 				<div>
@@ -236,7 +236,6 @@ class MethodContainer extends React.Component<IMethodContainerProps, any> {
 					style={{
 						position: "absolute",
 						left: "5%",
-						// transform: "translate(-50%, 0)",
 					}}
 				>
 					{

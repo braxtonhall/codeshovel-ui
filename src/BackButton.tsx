@@ -11,32 +11,32 @@ export default class BackButton extends FadeableElement<IBackButtonProps, IBackB
 		};
 	}
 
-	public render(): ReactNode {
-		if (this.state.onScreen || this.props.active) {
-			this.setOnScreen();
-			return (
-				<div
-					style={{
-						height: "30px",
-						width: "30px",
-						position: "absolute",
-						bottom: "5px",
-						left: "5px",
-						backgroundColor: "rgb(183, 166, 108)",
-						opacity: this.props.active ? 1 : 0,
-						transition: this.fadeOutTime + "ms ease-in-out",
-					}}
-					onClick={this.props.goBack}
-				/>
-			);
-		} else {
-			return <div style={{
-				position: "absolute",
-				bottom: "5px",
-				left: "5px",
-				opacity: 0,
-			}}/>;
-		}
+	protected createReactNode(): ReactNode {
+		// if (this.state.onScreen || this.props.active) {
+		// 	this.setOnScreen();
+		return (this.state.onScreen || this.props.active ?
+			<div
+				style={{
+					height: "30px",
+					width: "30px",
+					position: "absolute",
+					bottom: "5px",
+					left: "5px",
+					backgroundColor: "rgb(183, 166, 108)",
+					opacity: this.props.active ? 1 : 0,
+					transition: this.fadeOutTime + "ms ease-in-out",
+				}}
+				onClick={this.props.goBack}
+			/> : <div style={{position: "absolute", bottom: "5px", left: "5px", opacity: 0,}}/>
+		);
+		// } else {
+		// 	return <div style={{
+		// 		position: "absolute",
+		// 		bottom: "5px",
+		// 		left: "5px",
+		// 		opacity: 0,
+		// 	}}/>;
+		// }
 	}
 }
 
