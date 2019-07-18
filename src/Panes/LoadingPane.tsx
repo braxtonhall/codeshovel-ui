@@ -11,8 +11,6 @@ export default class LoadingPane extends FadeableElement<ILoadingPaneProps, ILoa
 
 
 	public createReactNode(): ReactNode {
-		// if (this.state.onScreen || this.props.active) {
-		// 	setImmediate(this.setOnScreen);
 		return (this.state.onScreen || this.props.active ?
 			<div
 				style={{
@@ -26,7 +24,8 @@ export default class LoadingPane extends FadeableElement<ILoadingPaneProps, ILoa
 					width: this.props.size.width + "%",
 					backgroundColor: "rgb(183, 166, 108)",
 					opacity: this.props.active ? 1 : 0,
-					animation: `Fade-${this.props.active ? "In" : "Out"}  ${this.fadeOutTime}ms ease-in-out, ` +
+					transition: this.fadeOutTime + "ms ease-in-out",
+					animation: //`Fade-${this.props.active ? "In" : "Out"}  ${this.fadeOutTime}ms ease-in-out, ` +
 						`Pulse infinite 1s ease-in-out`,
 				}}
 			>
@@ -36,16 +35,22 @@ export default class LoadingPane extends FadeableElement<ILoadingPaneProps, ILoa
 						top: "50%",
 						left: "50%",
 						transform: "translate(-50%, -50%)",
-						font: "100% \"Courier New\", Futura, sans-serif"
+						font: "100% \"Courier New\", Futura, sans-serif",
 					}}
 				>
 					{this.props.text}
 				</div>
-			</div> : <div/>
+			</div> :
+				<div
+					style={{
+						position: "absolute",
+						top: "50%",
+						left: "50%",
+						opacity: 0,
+						transform: "translate(-50%, -50%)",
+					}}
+				/>
 		);
-		// } else {
-		// 	return <div/>;
-		// }
 	}
 }
 

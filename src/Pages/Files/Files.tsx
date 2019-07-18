@@ -2,45 +2,38 @@ import * as React from "react";
 import {FormEvent, ReactNode} from "react";
 import {IPageProps, IPageState, Page} from "../Page";
 import {ArgKind, Pages} from "../../Enums";
-import * as rp from "request-promise-native";
 import ErrorPane from "../../Panes/ErrorPane";
 import Button from "react-bootstrap/Button";
 import {Constants} from "../../Constants";
-import LoadingPane from "../../Panes/LoadingPane";
 import Form from "react-bootstrap/Form";
 import {Directory} from "./Directory";
 
 export class Files extends Page<IFilesProps, IFilesState> {
-	private readonly requestErrorText: string = Constants.FILE_REQUEST_ERROR_TEXT;
-	private readonly loadingText: string = Constants.FILE_LOADING_TEXT;
 	private readonly shaPlaceholder: string = Constants.FILE_SHA_PLACEHOLDER_TEXT;
 	private readonly shaErrorText: string = Constants.FILE_SHA_ERROR_TEXT;
 	protected readonly page: Pages = Pages.FILES;
 
 	private link: string;
 	private sha: string;
-	private content: Directory;
+	private root: Directory;
+	private content: string[];
 
 	public constructor(props: IFilesProps) {
 		super(props);
 		this.state = {
 			onScreen: this.props.active,
 			loading: false,
-			requestError: false,
 			shaError: false,
 		};
 		this.link = "";
 		this.sha = "HEAD";
-		this.content = new Directory(".", [], this.updateSelected);
-		this.finishLoad = this.finishLoad.bind(this);
-		this.handleCloseRequestError = this.handleCloseRequestError.bind(this);
-		this.closeRequestError = this.closeRequestError.bind(this);
+		this.root = new Directory(".", [], this.proceedToNextPageAndUpdateSelected);
+		this.content = [];
 		this.closeShaError = this.closeShaError.bind(this);
 		this.buildDirectory = this.buildDirectory.bind(this);
-		this.updateSelected = this.updateSelected.bind(this);
+		this.proceedToNextPageAndUpdateSelected = this.proceedToNextPageAndUpdateSelected.bind(this);
 		this.handleRefresh = this.handleRefresh.bind(this);
 		this.handleShaEnter = this.handleShaEnter.bind(this);
-		this.updateSha = this.updateSha.bind(this);
 	}
 
 	protected handleNext(): void {
@@ -51,74 +44,17 @@ export class Files extends Page<IFilesProps, IFilesState> {
 
 	private handleRefresh(): void {
 		const shaElement: HTMLInputElement = (document.getElementById("shaInput") as HTMLInputElement);
-		const state: IFilesState = Object.assign({}, this.state);
 		if (shaElement && shaElement.value) {
-			setImmediate(() => this.updateSha(shaElement.value));
+			this.props.proceedWithUpdate(Pages.FILES, shaElement.value, ArgKind.SHA);
 		} else {
-			state.shaError = true;
-		}
-		this.setState(state);
-	}
-
-	private updateSelected(path: string): void {
-		this.props.updateSelected(path, ArgKind.FILE);
-	}
-
-	private updateSha(sha: string) {
-		this.props.updateSelected(sha, ArgKind.SHA);
-	}
-
-	protected updateContent(): void {
-		if (this.props.link !== this.link || this.sha !== this.props.sha) {
-			this.link = this.props.link;
-			this.sha = this.props.sha;
-			this.content = new Directory(".", [], this.updateSelected);
-			const url = "http://localhost:8080/listFiles"; // TODO
-			const opts: rp.RequestPromiseOptions = {
-				rejectUnauthorized: false,
-				strictSSL: false,
-				method: 'get',
-			};
-			const qs: {[key: string]: string | boolean} = {
-				gitUrl: this.link,
-				sha: this.props.sha,
-			};
-			// @ts-ignore
-			rp(url, {qs, ...opts})
-				.then((response: any) => {
-					try {
-						this.buildDirectory(JSON.parse(response).sort());
-						this.finishLoad(this.content.getDirectories().length === 0);
-					} catch (err) {
-						this.finishLoad(true);
-					}
-				})
-				.catch((err: any) => {
-					this.finishLoad(true);
-				});
 			const state: IFilesState = Object.assign({}, this.state);
-			state.loading = true;
-			state.shaError = false;
-			this.updateSelected("");
+			state.shaError = true;
 			this.setState(state);
 		}
 	}
 
-	private finishLoad(error: boolean = false): void {
-		const state: IFilesState = Object.assign({}, this.state);
-		state.loading = false;
-		if (error) {
-			state.requestError = true;
-			if (this.props.sha !== "HEAD") {
-				this.updateSha("HEAD");
-			}
-		}
-		this.setState(state);
-	}
-
-	private handleCloseRequestError(): void {
-		setTimeout(this.closeRequestError, this.fadeOutTime * 2);
-		this.props.goBack();
+	private proceedToNextPageAndUpdateSelected(path: string): void {
+		this.props.proceedWithUpdate(Pages.METHODS, path, ArgKind.FILE);
 	}
 
 	private handleShaEnter(event: FormEvent): void {
@@ -132,21 +68,15 @@ export class Files extends Page<IFilesProps, IFilesState> {
 		this.setState(state);
 	}
 
-	private closeRequestError(): void {
-		const state: IFilesState = Object.assign({}, this.state);
-		state.requestError = false;
-		this.setState(state);
-	}
-
 	private buildDirectory(files: string[]): void {
-		this.content = new Directory(".", files, this.updateSelected);
+		this.content = files;
+		this.root = new Directory(".", files, this.proceedToNextPageAndUpdateSelected);
 	}
 
 	public createReactNode(): ReactNode {
-		// setImmediate(this.updateContent);
-		// if (this.state.onScreen || this.props.active) {
-		// 	setImmediate(this.setOnScreen);
-		// }
+		if (this.content !== this.props.content) {
+			this.buildDirectory(this.props.content);
+		}
 		return (
 			<div>
 				<div>
@@ -168,7 +98,7 @@ export class Files extends Page<IFilesProps, IFilesState> {
 					}
 				</div>
 				<div>
-					{this.state.onScreen || this.props.active ?
+					{// this.state.onScreen || this.props.active ?
 						<div
 							style={{
 								position: "fixed",
@@ -182,8 +112,8 @@ export class Files extends Page<IFilesProps, IFilesState> {
 								transition: `${this.fadeOutTime}ms ease-in-out`,
 							}}
 						>
-							<FileContainer dir={this.content}/>
-						</div> : <div style={{top: "50%", left: "50%", transform: this.chooseTransform()}}/>
+							<FileContainer dir={this.root}/>
+						</div>// : <div style={{top: "50%", left: "50%", transform: this.chooseTransform()}}/>
 					}
 				</div>
 				<div>
@@ -227,8 +157,6 @@ export class Files extends Page<IFilesProps, IFilesState> {
 				<div>
 					{this.state.onScreen || this.props.active ?
 						<div>
-							<LoadingPane text={this.loadingText} active={this.state.loading && this.props.active} size={{height: 30, width: 72}}/>
-							<ErrorPane text={this.requestErrorText} active={this.state.requestError && this.props.active} size={{height: 30, width: 72}} exit={this.handleCloseRequestError}/>
 							<ErrorPane text={this.shaErrorText} active={this.state.shaError && this.props.active} size={{height: 30, width: 72}} exit={this.closeShaError}/>
 						</div> : <div/>
 					}
@@ -257,14 +185,13 @@ class FileContainer extends React.Component<{dir: Directory}, any> {
 }
 
 export interface IFilesProps extends IPageProps {
-	link: string;
 	goBack: () => void;
+	content: string[];
 	file: string;
-	sha: string;
+	proceedWithUpdate: (page: Pages, arg: any, kind: ArgKind) => void;
 }
 
 export interface IFilesState extends IPageState {
 	loading: boolean;
-	requestError: boolean;
 	shaError: boolean;
 }

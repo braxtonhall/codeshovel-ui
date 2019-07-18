@@ -5,16 +5,21 @@ import {Constants} from "../../Constants";
 import * as React from "react";
 
 export class Directory {
-	private readonly name: string;
-	private readonly subDirs: Directory[];
-	private readonly files: File[];
+	private name: string;
+	private subDirs: Directory[];
+	private files: File[];
 	private readonly alerter: (name: string) => void;
 
 	constructor(name: string, contents: string[], alerter: (name: string) => void) {
 		this.name = name;
-		this.files = [];
 		this.alerter = alerter;
+		this.subDirs = [];
+		this.files = [];
 		this.tellParent = this.tellParent.bind(this);
+		this.buildChildren(contents);
+	}
+
+	private buildChildren(contents: string[]): void {
 		const subDirs: {[name: string]: string[]} = {};
 		for (const entry of contents) {
 			const path = entry.split(/\/(.+)/);
@@ -27,7 +32,13 @@ export class Directory {
 				subDirs[path[0]].push(path[1]);
 			}
 		}
-		this.subDirs = Object.keys(subDirs).map((key: string) => new Directory(key, subDirs[key], this.tellParent));
+		const keys = Object.keys(subDirs);
+		if (keys.length === 1 && this.files.length === 0) {
+			this.name = `${this.name}/${keys[0]}`;
+			this.buildChildren(subDirs[keys[0]]);
+		} else {
+			this.subDirs = keys.map((key: string) => new Directory(key, subDirs[key], this.tellParent));
+		}
 	}
 
 	private tellParent(path: string): void {
@@ -61,7 +72,6 @@ export class ReactDirectory extends FadeableElement<IReactDirectoryProps, IReact
 		} else {
 			this.state = {onScreen: this.props.active, expanded: false, margin: 0};
 		}
-		// this.mouseUp = this.mouseUp.bind(this);
 		this.mouseDown = this.mouseDown.bind(this);
 		this.toggleExpanded = this.toggleExpanded.bind(this);
 	}
@@ -80,8 +90,6 @@ export class ReactDirectory extends FadeableElement<IReactDirectoryProps, IReact
 	}
 
 	protected createReactNode(): ReactNode {
-		// if (this.state.onScreen || this.props.active) {
-		// 	setImmediate(this.setOnScreen);
 		const style = {marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px"};
 		return(this.state.onScreen || this.props.active ?
 			<div
@@ -113,10 +121,6 @@ export class ReactDirectory extends FadeableElement<IReactDirectoryProps, IReact
 
 			</div> :  <div style={style}/>
 		);
-		// } else {
-		// 	const style = {marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px"};
-		// 	return <div style={style}/>;
-		// }
 	}
 }
 

@@ -1,24 +1,19 @@
 import * as React from "react";
 import {FormEvent, ReactNode} from "react";
-import {IPageState, Page} from "../Page";
+import {IPageProps, IPageState, Page} from "../Page";
 import {ArgKind, Pages} from "../../Enums";
-import {IFilesProps} from "../Files/Files";
-import * as rp from "request-promise-native";
 import {Constants} from "../../Constants";
 import Form from "react-bootstrap/Form";
-import ErrorPane from "../../Panes/ErrorPane";
 import LoadingPane from "../../Panes/LoadingPane";
 import Button from "react-bootstrap/Button";
 import {IMethodTransport} from "../../Types";
 import {Method} from "./Method";
 
 export class Methods extends Page<IMethodsProps, IMethodsState> {
-	private readonly requestErrorText: string = Constants.METHODS_REQUEST_ERROR_TEXT;
 	private readonly methodInputPlaceholder: string = Constants.METHODS_SEARCH_TEXT;
 	private readonly loadingText: string = Constants.METHODS_LOADING_TEXT;
 	protected readonly page: Pages = Pages.METHODS;
 	private file: string;
-	private content: IMethodTransport[];
 
 	public constructor(props: IMethodsProps) {
 		super(props);
@@ -29,11 +24,8 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 			search: "",
 		};
 		this.file = "";
-		this.content = [];
-		this.finishLoad = this.finishLoad.bind(this);
-		this.updateSelected = this.updateSelected.bind(this);
+		this.proceedToNextPageAndUpdateSelected = this.proceedToNextPageAndUpdateSelected.bind(this);
 		this.handleKey = this.handleKey.bind(this);
-		this.handleCloseRequestError = this.handleCloseRequestError.bind(this);
 		this.handleEnter = this.handleEnter.bind(this);
 	}
 
@@ -59,7 +51,7 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 
 	private handleEnter(event: FormEvent): void {
 		event.preventDefault();
-		const searchMethods = this.content
+		const searchMethods = this.props.content
 			.filter((method: IMethodTransport) =>
 				method.longName.includes(this.state.search)
 			);
@@ -68,74 +60,11 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 		}
 	}
 
-	protected updateContent(): void {
-		if (this.file !== this.props.file) {
-			this.file = this.props.file;
-			this.content = [];
-			const url = "http://localhost:8080/listMethods"; // TODO
-			const opts: rp.RequestPromiseOptions = {
-				rejectUnauthorized: false,
-				strictSSL: false,
-				method: 'get',
-			};
-			const qs: {[key: string]: string | boolean} = {
-				gitUrl: this.props.link,
-				sha: this.props.sha,
-				filePath: this.file,
-			};
-			// @ts-ignore
-			rp(url, {qs, ...opts})
-				.then((response: any) => {
-					try {
-						this.content = JSON.parse(response)
-							.sort((a: IMethodTransport, b: IMethodTransport) => {
-								if (a.longName < b.longName) {
-									return -1;
-								} else if (a.longName > b.longName) {
-									return 1;
-								} else {
-									return 0;
-								}
-							});
-						this.finishLoad(this.content.length === 0);
-					} catch (err) {
-						this.finishLoad(true);
-					}
-				})
-				.catch((err: any) => {
-					this.finishLoad(true);
-				});
-			const state: IMethodsState = Object.assign({}, this.state);
-			state.loading = true;
-			state.requestError = false;
-			state.search = "";
-			this.updateSelected({longName: "", startLine: -1, methodName: ""});
-			this.setState(state);
-		}
-	}
-
-	private updateSelected(method: {longName: string, startLine: number, methodName: string}): void {
-		this.props.updateSelected(method, ArgKind.METHOD);
-	}
-
-	private finishLoad(error: boolean = false): void {
-		const state: IMethodsState = Object.assign({}, this.state);
-		state.loading = false;
-		if (error) {
-			state.requestError = true;
-		}
-		this.setState(state);
-	}
-
-	private handleCloseRequestError(): void {
-		this.props.goBackWithUpdate("", ArgKind.FILE);
+	private proceedToNextPageAndUpdateSelected(method: IMethodTransport): void {
+		this.props.proceedWithUpdate(Pages.RESULTS, method, ArgKind.METHOD);
 	}
 
 	public createReactNode(): ReactNode {
-		// setImmediate(this.updateContent);
-		// if (this.state.onScreen || this.props.active) {
-		// 	setImmediate(this.setOnScreen);
-		// }
 		return (
 			<div>
 				<div>
@@ -169,9 +98,9 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 							opacity: 0.8,
 						}}>
 							<MethodContainer
-								methods={this.content}
+								methods={this.props.content}
 								search={this.state.search}
-								tellParent={this.updateSelected}
+								tellParent={this.proceedToNextPageAndUpdateSelected}
 							/>
 						</div> : <div style={{top: "50%", left: "50%", transform: this.chooseTransform()}}/>
 					}
@@ -201,7 +130,6 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 								<Button variant="primary" onClick={this.handleNext} disabled={this.props.method.methodName === ""}>Next</Button>
 							</div>
 							<LoadingPane text={this.loadingText} active={this.state.loading && this.props.active} size={{height: 30, width: 72}}/>
-							<ErrorPane text={this.requestErrorText} active={this.state.requestError && this.props.active} size={{height: 30, width: 72}} exit={this.handleCloseRequestError}/>
 						</div> : <div style={{opacity: 0}}/>
 					}
 				</div>
@@ -240,7 +168,7 @@ class MethodContainer extends React.Component<IMethodContainerProps, any> {
 				>
 					{
 						this.props.methods
-							.map((method: {longName: string, startLine: number, methodName: string}, i: number) => (
+							.map((method: IMethodTransport, i: number) => (
 								<Method
 									method={method}
 									search={this.props.search}
@@ -257,9 +185,12 @@ class MethodContainer extends React.Component<IMethodContainerProps, any> {
 	}
 }
 
-export interface IMethodsProps extends IFilesProps {
+export interface IMethodsProps extends IPageProps {
 	method: IMethodTransport;
-	goBackWithUpdate: (arg: any, kind: ArgKind) => void;
+	// goBackWithUpdate: (arg: any, kind: ArgKind) => void;
+	// proceedWithUpdate: (page: Pages, arg: any, kind: ArgKind) => void;
+	goBack: () => void;
+	content: IMethodTransport[];
 	proceedWithUpdate: (page: Pages, arg: any, kind: ArgKind) => void;
 }
 
@@ -270,7 +201,7 @@ export interface IMethodsState extends IPageState {
 }
 
 export interface IMethodContainerProps {
-	methods: {longName: string, startLine: number, methodName: string}[];
+	methods: IMethodTransport[];
 	search: string;
 	tellParent: (method: IMethodTransport) => void;
 }

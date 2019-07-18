@@ -81,7 +81,7 @@ export class Method extends React.Component<IReactMethodProps, IReactMethodState
 export interface IReactMethodProps extends IFadeableElementProps {
 	method: IMethodTransport;
 	search: string;
-	tellParent: (method: {longName: string, startLine: number, methodName: string}) => void;
+	tellParent: (method: IMethodTransport) => void;
 	index: number;
 }
 

@@ -35,8 +35,8 @@ export default class ErrorPane extends FadeableElement<IErrorPaneProps, IErrorPa
 								width: this.props.size.width + "%",
 								backgroundColor: "rgb(255, 124, 124)",
 								opacity: this.props.active ? 1 : 0,
-								// transition: this.fadeOutTime + "ms ease-in-out",
-								animation: `Fade-${this.props.active ? "In" : "Out"}  ${this.fadeOutTime}ms ease-in-out`,
+								transition: this.fadeOutTime + "ms ease-in-out",
+								// animation: `Fade-${this.props.active ? "In" : "Out"}  ${this.fadeOutTime}ms ease-in-out`,
 							}}
 						>
 							<div
@@ -53,12 +53,15 @@ export default class ErrorPane extends FadeableElement<IErrorPaneProps, IErrorPa
 						</div>
 					}
 					handleClick={this.exit}
-				/> : <div/>
+				/> : <div
+						style={{
+							opacity: 0,
+							top: "50%",
+							left: "50%",
+							transform: "translate(-50%, -50%)",
+						}}
+					/>
 			);
-		// } else {
-		// 	return <div/>;
-		// }
-
 	}
 }
 

@@ -50,13 +50,11 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 		this.handleNext();
 	}
 
-	protected updateContent(): void {
-
-	}
+	// protected updateContent(): void {
+	//
+	// }
 
 	public createReactNode(): ReactNode {
-		// if (this.state.onScreen || this.props.active) {
-		// 	setImmediate(this.setOnScreen);
 		return (
 			this.state.onScreen || this.props.active ?
 			<div style={{
@@ -90,17 +88,6 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 				}}
 			/>
 		);
-		// } else {
-		// 	return <div
-		// 		style={{
-		// 			position: "absolute",
-		// 			top: "50%",
-		// 			left: "50%",
-		// 			opacity: 0,
-		// 			transform: this.chooseTransform(),
-		// 		}}
-		// 	/>;
-		// }
 	}
 }
 
