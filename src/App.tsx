@@ -39,10 +39,8 @@ export default class App extends React.Component<any, IAppState> {
 		this.history = [];
 		this.proceedToPage = this.proceedToPage.bind(this);
 		this.goBack = this.goBack.bind(this);
-		this.setLink = this.setLink.bind(this);
 		this.handleKey = this.handleKey.bind(this);
 		this.updateSelected = this.updateSelected.bind(this);
-		this.goBackWithUpdate = this.goBackWithUpdate.bind(this);
 		this.getNewStateWithArg = this.getNewStateWithArg.bind(this);
 		this.proceedWithUpdate = this.proceedWithUpdate.bind(this);
 		this.finishLoad = this.finishLoad.bind(this);
@@ -183,25 +181,8 @@ export default class App extends React.Component<any, IAppState> {
 		}
 	}
 
-	private goBackWithUpdate(arg: any, kind: ArgKind): void {
-		const state = this.getNewStateWithArg(arg, kind);
-		const lastPage: Pages | undefined = this.history.pop();
-		if (lastPage !== undefined && lastPage !== state.page) {
-			state.page = lastPage;
-		}
-		this.setState(state);
-	}
-
 	private proceedWithUpdate(page: Pages, arg: any, kind: ArgKind): void {
 		this.proceedToPage(page, this.getNewStateWithArg(arg, kind));
-	}
-
-	private setLink(link: string): void {
-		const state: IAppState = Object.assign({}, this.state);
-		if (link !== this.state.link) {
-			state.link = link;
-			this.setState(state);
-		}
 	}
 
 	private closeErrors(): void {
@@ -244,27 +225,19 @@ export default class App extends React.Component<any, IAppState> {
 					<Files
 						proceedToPage={this.proceedToPage}
 						active={this.state.page === Pages.FILES}
-						// link={this.state.link}
 						goBack={this.goBack}
 						file={this.state.file}
-						// sha={this.state.sha}
 						updateSelected={this.updateSelected}
 						page={this.state.page}
 						proceedWithUpdate={this.proceedWithUpdate}
-						// goBackWithUpdate={this.goBackWithUpdate}
 						content={this.state.fileContent ? this.state.fileContent : []}
 					/>
 					<Methods
 						proceedToPage={this.proceedToPage}
 						active={this.state.page === Pages.METHODS}
 						method={this.state.method}
-						// link={this.state.link}
 						goBack={this.goBack}
-						// file={this.state.file}
-						// sha={this.state.sha}
 						updateSelected={this.updateSelected}
-						// method={this.state.method}
-						// goBackWithUpdate={this.goBackWithUpdate}
 						proceedWithUpdate={this.proceedWithUpdate}
 						page={this.state.page}
 						content={this.state.methodContent ? this.state.methodContent : []}

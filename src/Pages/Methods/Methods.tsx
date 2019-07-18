@@ -4,14 +4,12 @@ import {IPageProps, IPageState, Page} from "../Page";
 import {ArgKind, Pages} from "../../Enums";
 import {Constants} from "../../Constants";
 import Form from "react-bootstrap/Form";
-import LoadingPane from "../../Panes/LoadingPane";
 import Button from "react-bootstrap/Button";
 import {IMethodTransport} from "../../Types";
 import {Method} from "./Method";
 
 export class Methods extends Page<IMethodsProps, IMethodsState> {
 	private readonly methodInputPlaceholder: string = Constants.METHODS_SEARCH_TEXT;
-	private readonly loadingText: string = Constants.METHODS_LOADING_TEXT;
 	protected readonly page: Pages = Pages.METHODS;
 	private file: string;
 
@@ -19,8 +17,6 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 		super(props);
 		this.state = {
 			onScreen: this.props.active,
-			loading: false,
-			requestError: false,
 			search: "",
 		};
 		this.file = "";
@@ -129,7 +125,6 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 							>
 								<Button variant="primary" onClick={this.handleNext} disabled={this.props.method.methodName === ""}>Next</Button>
 							</div>
-							<LoadingPane text={this.loadingText} active={this.state.loading && this.props.active} size={{height: 30, width: 72}}/>
 						</div> : <div style={{opacity: 0}}/>
 					}
 				</div>
@@ -187,16 +182,12 @@ class MethodContainer extends React.Component<IMethodContainerProps, any> {
 
 export interface IMethodsProps extends IPageProps {
 	method: IMethodTransport;
-	// goBackWithUpdate: (arg: any, kind: ArgKind) => void;
-	// proceedWithUpdate: (page: Pages, arg: any, kind: ArgKind) => void;
 	goBack: () => void;
 	content: IMethodTransport[];
 	proceedWithUpdate: (page: Pages, arg: any, kind: ArgKind) => void;
 }
 
 export interface IMethodsState extends IPageState {
-	loading: boolean;
-	requestError: boolean;
 	search: string;
 }
 
