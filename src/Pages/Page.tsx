@@ -1,6 +1,5 @@
 import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../FadeableElement";
-import {ArgKind, Pages} from "../Enums";
-// import {ReactNode} from "react";
+import {Pages} from "../Enums";
 
 export abstract class Page<P extends IPageProps, S extends IPageState> extends FadeableElement<P, S> {
 	protected readonly fadeOutTime: number = 900;
@@ -9,12 +8,9 @@ export abstract class Page<P extends IPageProps, S extends IPageState> extends F
 	protected constructor(props: P) {
 		super(props);
 		this.handleNext = this.handleNext.bind(this);
-		// this.updateContent = this.updateContent.bind(this);
 	}
 
 	protected abstract handleNext(): void;
-
-	// protected abstract updateContent(): void;
 
 	protected chooseTransform(): string {
 		if (this.props.page === this.page) {
@@ -25,16 +21,10 @@ export abstract class Page<P extends IPageProps, S extends IPageState> extends F
 			return "translate(200%, -50%)";
 		}
 	}
-
-	// public render(): ReactNode {
-	// 	setImmediate(this.updateContent);
-	// 	return super.render();
-	// }
 }
 
 export interface IPageProps extends IFadeableElementProps {
 	proceedToPage: (page: Pages) => void;
-	updateSelected: (arg: any, kind: ArgKind) => void;
 	page: Pages;
 }
 

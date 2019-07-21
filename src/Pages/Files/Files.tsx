@@ -54,7 +54,7 @@ export class Files extends Page<IFilesProps, IFilesState> {
 	}
 
 	private proceedToNextPageAndUpdateSelected(path: string): void {
-		this.props.proceedWithUpdate(Pages.METHODS, path, ArgKind.FILE);
+		this.props.proceedWithUpdate(Pages.METHODS, path.replace(/^\.\//, ""), ArgKind.FILE);
 	}
 
 	private handleShaEnter(event: FormEvent): void {
@@ -185,7 +185,6 @@ class FileContainer extends React.Component<{dir: Directory}, any> {
 }
 
 export interface IFilesProps extends IPageProps {
-	goBack: () => void;
 	content: string[];
 	file: string;
 	proceedWithUpdate: (page: Pages, arg: any, kind: ArgKind) => void;

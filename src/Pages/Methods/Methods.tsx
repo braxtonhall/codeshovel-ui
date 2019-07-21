@@ -182,7 +182,6 @@ class MethodContainer extends React.Component<IMethodContainerProps, any> {
 
 export interface IMethodsProps extends IPageProps {
 	method: IMethodTransport;
-	goBack: () => void;
 	content: IMethodTransport[];
 	proceedWithUpdate: (page: Pages, arg: any, kind: ArgKind) => void;
 }

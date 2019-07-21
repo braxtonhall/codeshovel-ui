@@ -11,6 +11,7 @@ export class Constants {
 		// "https://github.com/hibernate/hibernate-search",
 		"https://github.com/javaparser/javaparser",
 		// "https://github.com/JetBrains/intellij-community",
+		"https://github.com/kiegroup/drools",
 		"https://github.com/mockito/mockito",
 		// "https://github.com/spring-projects/spring-boot",
 	];
@@ -24,11 +25,16 @@ export class Constants {
 		visibility: ""
 	};
 
-	public static readonly SERVER_ADDRESS: string = "http://localhost:1234";
+	public static readonly IN_TEST: boolean = true;
+
+	public static readonly SERVER_ADDRESS: string = "http://localhost:8080";
 
 	public static readonly INVALID_URL_ERROR_TEXT: string = "Please enter a link to proceed.";
 
-	public static readonly FILE_REQUEST_ERROR_TEXT: string = "We're having trouble checking that out. Please try something else.";
+	public static readonly SERVER_BUSY_ERROR_TEXT: string = "The server is under heavy load. Please try again in a moment!";
+	public static readonly INTERNAL_ERROR_TEXT: string = "The server is having trouble processing this specific request. Please try another.";
+
+	public static readonly FILE_REQUEST_ERROR_TEXT: string = "There don't appear to be any .java files in this repo. Please try another.";
 	public static readonly FILE_LOADING_TEXT: string = "Retrieving files";
 	public static readonly FILE_SHA_PLACEHOLDER_TEXT: string = "Specific commit? Enter the SHA here and reload";
 	public static readonly FILE_SHA_ERROR_TEXT: string = "Enter a SHA to refresh";
@@ -42,7 +48,7 @@ export class Constants {
 	public static readonly METHODS_REQUEST_ERROR_TEXT: string = "We couldn't find any methods in this file. Try another?";
 	public static readonly METHODS_LOADING_TEXT: string = "Retrieving methods";
 
-	public static readonly RESULTS_REQUEST_ERROR_TEXT: string = "We couldn't find a history for that method! Please try another";
+	public static readonly RESULTS_REQUEST_ERROR_TEXT: string = "There aren't any changes in this method's history! Please try another.";
 
 	public static readonly LOADING_TEXT: string = "Retrieving."
 }
