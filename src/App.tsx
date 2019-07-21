@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import {ArgKind, Pages} from './Enums'
+import {ArgKind, Key, Pages} from './Enums'
 import {Landing} from "./Pages/Landing";
 import BackButton from "./BackButton";
 import {Files} from "./Pages/Files/Files";
@@ -66,25 +66,25 @@ export default class App extends React.Component<any, IAppState> {
 		if (document.activeElement && document.activeElement.className.includes("form")) {
 			return;
 		}
-		if (event.code === 'Backspace') {
+		if (event.code === Key.BACKSPACE) {
 			console.log(document.activeElement ? document.activeElement.className : "NULL");
 			setImmediate(this.goBack)
 		}
 		if (Constants.IN_TEST) {
 			switch(event.code) {
-				case "Digit1":
+				case Key._1:
 					this.proceedToPage(Pages.LANDING);
 					break;
-				case "Digit2":
+				case Key._2:
 					this.proceedToPage(Pages.FILES);
 					break;
-				case "Digit3":
+				case Key._3:
 					this.proceedToPage(Pages.METHODS);
 					break;
-				case "Digit4":
+				case Key._4:
 					this.proceedToPage(Pages.RESULTS);
 					break;
-				case "Digit5":
+				case Key._5:
 					this.proceedToPage(Pages.ABOUT);
 					break;
 				default:

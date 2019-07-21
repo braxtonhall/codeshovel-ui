@@ -1,7 +1,7 @@
 import * as React from "react";
 import {FormEvent, ReactNode} from "react";
 import {IPageProps, IPageState, Page} from "../Page";
-import {ArgKind, Pages} from "../../Enums";
+import {ArgKind, Key, Pages} from "../../Enums";
 import ErrorPane from "../../Panes/ErrorPane";
 import Button from "react-bootstrap/Button";
 import {Constants} from "../../Constants";
@@ -27,13 +27,35 @@ export class Files extends Page<IFilesProps, IFilesState> {
 		};
 		this.link = "";
 		this.sha = "HEAD";
-		this.root = new Directory(".", [], this.proceedToNextPageAndUpdateSelected);
+		this.root = new Directory(".", [], this.proceedToNextPageAndUpdateSelected, this.forceUpdate, true);
 		this.content = [];
 		this.closeShaError = this.closeShaError.bind(this);
 		this.buildDirectory = this.buildDirectory.bind(this);
 		this.proceedToNextPageAndUpdateSelected = this.proceedToNextPageAndUpdateSelected.bind(this);
 		this.handleRefresh = this.handleRefresh.bind(this);
 		this.handleShaEnter = this.handleShaEnter.bind(this);
+		this.handleKey = this.handleKey.bind(this);
+		this.forceUpdate = this.forceUpdate.bind(this);
+	}
+
+	public componentDidMount(): void {
+		document.addEventListener('keydown', this.handleKey);
+	}
+
+	public componentWillUnmount(): void {
+		document.removeEventListener('keydown', this.handleKey);
+	}
+
+	private handleKey(event: KeyboardEvent): void {
+		function isArrowKey(code: string): boolean {
+			return code === Key.UP || code === Key.DOWN || code === Key.LEFT || code === Key.RIGHT;
+		}
+
+		if (this.props.active && isArrowKey(event.code)) {
+			event.preventDefault();
+			this.root.moveHighlight(event.code as Key);
+			this.forceUpdate();
+		}
 	}
 
 	protected handleNext(): void {
@@ -70,7 +92,7 @@ export class Files extends Page<IFilesProps, IFilesState> {
 
 	private buildDirectory(files: string[]): void {
 		this.content = files;
-		this.root = new Directory(".", files, this.proceedToNextPageAndUpdateSelected);
+		this.root = new Directory(".", files, this.proceedToNextPageAndUpdateSelected, this.forceUpdate, true);
 	}
 
 	public createReactNode(): ReactNode {
