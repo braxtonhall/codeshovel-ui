@@ -6,11 +6,17 @@ import * as React from "react";
 export class File {
 	private readonly name: string;
 	private readonly alerter: (name: string) => void;
+	private highlight: boolean;
 
 	constructor(name: string, alerter: (name: string) => void) {
 		this.name = name;
 		this.alerter = alerter;
+		this.highlight = false;
 		this.tellParent = this.tellParent.bind(this);
+	}
+
+	public shouldHighlightThis(): boolean {
+		return this.highlight;
 	}
 
 	public tellParent(): void {
@@ -19,6 +25,14 @@ export class File {
 
 	public getName(): string {
 		return this.name;
+	}
+
+	public removeHighlight(): void {
+		this.highlight = false;
+	}
+
+	public addHighlight(): void {
+		this.highlight = true;
 	}
 }
 
@@ -57,7 +71,7 @@ export class ReactFile extends FadeableElement<IReactFileProps, IReactFileState>
 							animation: `${this.props.active ? "Expand" : "Contract"}  ${this.fadeOutTime}ms ease-in-out`,
 							marginTop: "3px",
 							marginBottom: "3px",
-							backgroundColor: "rgb(124, 124, 124)",
+							backgroundColor: this.props.highlight ? "rgb(124, 0, 6)" : "rgb(124, 124, 124)",
 							height: this.props.active ? "40px" : "0",
 							font: "100% \"Courier New\", Futura, sans-serif",
 							width: (650 - Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT * 1.5) + "px",
@@ -79,6 +93,7 @@ export class ReactFile extends FadeableElement<IReactFileProps, IReactFileState>
 export interface IReactFileProps extends IFadeableElementProps {
 	file: File;
 	level: number;
+	highlight: boolean;
 }
 
 export interface IReactFileState extends IFadeableElementState {

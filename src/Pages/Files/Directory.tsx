@@ -13,8 +13,9 @@ export class Directory {
 	private highlight: number | null;
 	private expanded: boolean;
 	private forceUpdate: () => void;
+	private parent: Directory | null;
 
-	constructor(name: string, contents: string[], alerter: (name: string) => void, parentUpdate: () => void, root: boolean = false) {
+	constructor(name: string, contents: string[], alerter: (name: string) => void, parentUpdate: () => void, root: boolean, parent: Directory | null = null) {
 		this.name = name;
 		this.alerter = alerter;
 		this.subDirs = [];
@@ -22,6 +23,7 @@ export class Directory {
 		this.highlight = null;
 		this.expanded = root;
 		this.forceUpdate = parentUpdate;
+		this.parent = parent;
 		this.tellParent = this.tellParent.bind(this);
 		this.moveHighlight = this.moveHighlight.bind(this);
 		this.shouldHighlightThis = this.shouldHighlightThis.bind(this);
@@ -49,17 +51,18 @@ export class Directory {
 			this.name = `${this.name}/${keys[0]}`;
 			this.buildChildren(subDirs[keys[0]]);
 		} else {
-			this.subDirs = keys.map((key: string) => new Directory(key, subDirs[key], this.tellParent, this.forceUpdate));
+			this.subDirs = keys.map((key: string) => new Directory(key, subDirs[key], this.tellParent, this.forceUpdate, false, this));
 		}
 	}
 
 	public setExpanded(expanded: boolean): void {
 		this.expanded = expanded;
-		this.forceUpdate();
+		this.highlight = !this.expanded && this.highlight ? -1 : this.highlight;
+		this.subDirs.forEach((subDir) => subDir.removeHighlight());
 	}
 
 	public toggleExpanded(): void {
-		this.expanded = !this.expanded;
+		this.setExpanded(!this.expanded);
 		this.forceUpdate();
 	}
 
@@ -67,37 +70,119 @@ export class Directory {
 		return this.expanded;
 	}
 
-	public moveHighlight(key: Key): void {
-		if (this.highlight === null) {
-			this.highlight = -1;
-			return;
+	public removeHighlight(): void {
+		this.highlight = null;
+	}
+
+	public moveHighlightAmongChildren(key: Key): void {
+		if (this.shouldHighlightThis()) {
+			this.moveHighlightHelper(key);
+		} else if (this.highlight !== null && this.highlight < this.subDirs.length) {
+			this.subDirs[this.highlight].moveHighlight(key);
+		} else if (this.highlight && this.highlight - this.subDirs.length < this.files.length) {
+			// if (key === Key.UP) {
+			// 	if (this.highlight !== null && this.highlight < this.subDirs.length) {
+			// 		this.subDirs[this.highlight].moveHighlight(key);
+			// 	} else {
+			// 		this.files[this.highlight - this.subDirs.length].addHighlight();
+			// 	}
+			// } else if (key === Key.DOWN) {
+			// 	if (this.highlight - this.subDirs.length < this.files.length) {
+			// 		this.files[this.highlight - this.subDirs.length].addHighlight();
+			// 	} else {
+			// 		if (this.parent) {
+			// 			this.parent.moveHighlightHelper(key);
+			// 		}
+			// 	}
+			// } else if (key === Key.LEFT) {
+			// 	if (this.parent) {
+			// 		this.parent.moveHighlightHelper(key);
+			// 	}
+			// }
 		}
+	}
+
+	public moveHighlightHelper(key: Key): void {
+		// if (this.highlight !== null && (key === Key.UP || key === Key.DOWN)) {
+		// 	if (this.files[this.highlight - this.subDirs.length] !== undefined) {
+		// 		this.files[this.highlight].removeHighlight();
+		// 		this.highlight = key === Key.UP ? this.highlight + 1 : this.highlight - 1;
+		// 	}
+		// }
 		switch (key) {
 			case Key.UP:
-				if (this.shouldHighlightThis()) {
-					// Give control up to the parent
-				} else {
-					// Give control to the selected child
+				if (this.highlight !== null && this.highlight >= 0) {
+					this.highlight--;
+					if (this.highlight >= 0) {
+						this.moveHighlightAmongChildren(key);
+					}
+				} else if (this.parent) {
+					this.parent.moveHighlightHelper(key);
 				}
 				break;
 			case Key.DOWN:
-				if (this.shouldHighlightThis()) {
-					// If expanded, select child give control to it.
-						// this should happen in other func --> If reached end of children, give control back up to parent
-					// If not expanded, give control back up to the parent
-				} else {
-					// If expanded, give control to the selected child
+				if (this.highlight !== null && this.highlight < this.files.length + this.subDirs.length - 1) {
+					this.highlight++;
+					this.moveHighlightAmongChildren(key);
+				} else if (this.parent) {
+					this.parent.moveHighlightHelper(key);
 				}
 				break;
-			case Key.RIGHT:
-				break;
 			case Key.LEFT:
+				if (this.parent) {
+					this.parent.setExpanded(false);
+					this.parent.removeHighlight();
+					this.parent.moveHighlight(key);
+				}
 				break;
 		}
 	}
 
+	public moveHighlight(key: Key): void {
+		if (this.highlight === null) {
+			this.highlight = -1;
+		} else {
+			switch (key) {
+				case Key.UP:
+					if (this.shouldHighlightThis()) {
+						if (this.parent) {
+							this.highlight = null;
+							this.parent.moveHighlightHelper(key);
+						}
+					} else {
+						this.moveHighlightAmongChildren(key);
+					}
+					break;
+				case Key.DOWN:
+						if (this.expanded) {
+							this.moveHighlightAmongChildren(key);
+						} else if (this.parent && !this.expanded) {
+							this.highlight = null;
+							this.parent.moveHighlightHelper(key);
+						}
+					break;
+				case Key.RIGHT:
+					if (this.expanded && !this.shouldHighlightThis()) {
+						this.moveHighlightAmongChildren(key);
+					} else if (!this.expanded && this.shouldHighlightThis()) {
+						this.setExpanded(true);
+					}
+					break;
+				case Key.LEFT:
+					if (this.expanded && this.shouldHighlightThis()) {
+						this.setExpanded(false);
+					} else if (this.expanded) {
+						this.moveHighlightAmongChildren(key);
+					} else if (!this.expanded && this.shouldHighlightThis()) {
+						this.moveHighlightHelper(key);
+					}
+					break;
+			}
+		}
+	}
+
 	public shouldHighlightThis(): boolean {
-		return this.highlight === -1;
+		return this.highlight !== null && this.highlight < 0;
 	}
 
 	private tellParent(path: string): void {
@@ -134,9 +219,7 @@ export class ReactDirectory extends FadeableElement<IReactDirectoryProps, IReact
 
 	private toggleExpanded(): void {
 		const state: IReactDirectoryState = Object.assign({}, this.state);
-		// state.expanded = !state.expanded;
 		state.margin = 0;
-		// this.props.dir.setExpanded(state.expanded);
 		this.props.dir.toggleExpanded();
 		this.setState(state);
 	}
@@ -175,7 +258,7 @@ export class ReactDirectory extends FadeableElement<IReactDirectoryProps, IReact
 				{this.props.dir.getDirectories()
 					.map((dir: Directory, i: number) => <ReactDirectory dir={dir} level={this.props.level + 1} key={i} active={this.props.expanded && this.props.active} highlight={dir.shouldHighlightThis()} expanded={dir.isExpanded()}/>)}
 				{this.props.dir.getFiles()
-					.map((file: File, i: number) => <ReactFile file={file} level={this.props.level + 1} key={i} active={this.props.expanded && this.props.active}/>)}
+					.map((file: File, i: number) => <ReactFile file={file} level={this.props.level + 1} key={i} active={this.props.expanded && this.props.active} highlight={file.shouldHighlightThis()}/>)}
 
 			</div> :  <div style={style}/>
 		);
