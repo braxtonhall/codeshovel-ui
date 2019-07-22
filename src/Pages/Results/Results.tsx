@@ -48,7 +48,7 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 						transition: `${this.fadeOutTime}ms ease-in-out`,
 					}}
 				>
-					<ReactHistory history={this.history} active={this.props.active}/>
+					<ReactHistory history={this.history} active={this.props.active} repo={this.props.repo}/>
 				</div>
 			</div>
 		);
@@ -57,6 +57,7 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 
 export interface IHistoryProps extends IPageProps {
 	content: IHistoryTransport;
+	repo: string;
 }
 
 export interface IHistoryState extends IPageState {

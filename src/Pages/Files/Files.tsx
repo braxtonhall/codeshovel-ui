@@ -140,39 +140,22 @@ export class Files extends Page<IFilesProps, IFilesState> {
 				</div>
 				<div>
 					{this.state.onScreen || this.props.active ?
+
 						<div
 							style={{
 								position: "absolute",
-								right: "0",
-								bottom: "0",
+								bottom: "3%",
+								right: "1%",
 								width: "28%",
-								height: "34%",
+								height: "10%",
 								opacity: this.props.active ? 1 : 0,
 								transition: this.fadeOutTime + "ms ease-in-out",
 							}}
 						>
-							<div
-								style={{
-									position: "absolute",
-									top: "0",
-									right: "2%",
-								}}
-							>
-								<Button variant="primary" onClick={this.handleNext} disabled={this.props.file === ""}>Next</Button>
-							</div>
-							<div
-								style={{
-									position: "absolute",
-									bottom: "10%",
-									right: "2%",
-									width: "100%",
-								}}
-							>
-								<Form onSubmit={this.handleShaEnter}>
-									<Form.Control id="shaInput" size="sm" type="text" placeholder={this.shaPlaceholder}/>
-								</Form>
-								<Button style={{marginTop: "1%", marginLeft: "auto", marginRight: "5%", position: "relative", float: "right",}} variant="primary" onClick={this.handleRefresh} disabled={false}>Refresh</Button>
-							</div>
+							<Form onSubmit={this.handleShaEnter}>
+								<Form.Control id="shaInput" size="sm" type="text" placeholder={this.shaPlaceholder}/>
+							</Form>
+							<Button style={{marginTop: "1%", marginLeft: "auto", marginRight: "5%", position: "relative", float: "right",}} variant="primary" onClick={this.handleRefresh} disabled={false}>Refresh</Button>
 						</div> : <div style={{opacity: 0}}/>
 					}
 				</div>

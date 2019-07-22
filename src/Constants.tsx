@@ -25,7 +25,24 @@ export class Constants {
 		visibility: ""
 	};
 
+	public static readonly CHANGE_TYPES: {[internalName: string]: string} = {
+		Ybodychange: "Body Change",
+		Yfilerename: "File Rename",
+		Yintroduced: "Method Introduced",
+		Yexceptionschange: "Exceptions Change",
+		Ymodifierchange: "Modifier Change",
+		Ymovefromfile: "Move From File",
+		Ymultichange: "Multiple Changes",
+		Ynochange: "No Change",
+		Yparameterchange: "Parameter Change",
+		Yparametermetachange: "Parameter Meta Change",
+		Yrename: "Rename",
+		Yreturntypechange: "Return Type Change"
+	};
+
 	public static readonly IN_TEST: boolean = true;
+
+	public static readonly NOTIFICATION_DISPLAY_TIME: number = 3000;
 
 	public static readonly SERVER_ADDRESS: string = "http://localhost:8080";
 

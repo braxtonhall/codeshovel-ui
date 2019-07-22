@@ -71,14 +71,13 @@ export class ReactHistory extends FadeableElement<IReactHistoryProps, IReactHist
 				className="Panel"
 				style={{
 					display: "block",
-					textAlign: "left",
 					width: "100%",
 					height: "100%"
 				}}
 			>
 				{
 					this.props.history.getCommits().map((commit: ICommit, i: number) => {
-						return <ReactCommit commit={commit} key={i} active={this.props.active}/>;
+						return <ReactCommit commit={commit} key={i} active={this.props.active} repo={this.props.repo}/>;
 					})
 				}
 			</div>
@@ -88,6 +87,7 @@ export class ReactHistory extends FadeableElement<IReactHistoryProps, IReactHist
 
 export interface IReactHistoryProps extends IFadeableElementProps {
 	history: History;
+	repo: string;
 }
 
 export interface IReactHistoryState extends IFadeableElementState {

@@ -23,6 +23,12 @@
     color: #61dafb;
 }
 
+.BackgroundImage {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .Panel {
     flex: 1;
     position: absolute;

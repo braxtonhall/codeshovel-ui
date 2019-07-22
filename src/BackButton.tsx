@@ -12,10 +12,9 @@ export default class BackButton extends FadeableElement<IBackButtonProps, IBackB
 	}
 
 	protected createReactNode(): ReactNode {
-		// if (this.state.onScreen || this.props.active) {
-		// 	this.setOnScreen();
 		return (this.state.onScreen || this.props.active ?
 			<div
+				className="BackgroundImage"
 				style={{
 					height: "30px",
 					width: "30px",
@@ -25,18 +24,12 @@ export default class BackButton extends FadeableElement<IBackButtonProps, IBackB
 					backgroundColor: "rgb(183, 166, 108)",
 					opacity: this.props.active ? 1 : 0,
 					transition: this.fadeOutTime + "ms ease-in-out",
+					backgroundImage: "url(/left.png)",
+					backgroundSize: "15px",
 				}}
 				onClick={this.props.goBack}
-			/> : <div style={{position: "absolute", bottom: "5px", left: "5px", opacity: 0,}}/>
+			/> : <div className="BackgroundImage" style={{position: "absolute", bottom: "5px", left: "5px", opacity: 0,}}/>
 		);
-		// } else {
-		// 	return <div style={{
-		// 		position: "absolute",
-		// 		bottom: "5px",
-		// 		left: "5px",
-		// 		opacity: 0,
-		// 	}}/>;
-		// }
 	}
 }
 

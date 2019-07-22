@@ -14,6 +14,7 @@ import ErrorPane from "./Panes/ErrorPane";
 import LoadingPane from "./Panes/LoadingPane";
 import {Results} from "./Pages/Results/Results";
 import {TestController} from "./TestRequestController";
+import CopyRawButton from "./CopyRawButton";
 
 export default class App extends React.Component<any, IAppState> {
 	private history: Pages[];
@@ -41,7 +42,8 @@ export default class App extends React.Component<any, IAppState> {
 			internalError: false,
 			fileContent: null,
 			methodContent: null,
-			historyContent: null
+			historyContent: null,
+			displayTextCopied: false,
 		};
 		this.history = [];
 		this.proceedToPage = this.proceedToPage.bind(this);
@@ -52,6 +54,7 @@ export default class App extends React.Component<any, IAppState> {
 		this.proceedWithUpdate = this.proceedWithUpdate.bind(this);
 		this.finishLoad = this.finishLoad.bind(this);
 		this.closeErrors = this.closeErrors.bind(this);
+		this.copyText = this.copyText.bind(this);
 	}
 
 	public componentDidMount(): void {
@@ -239,6 +242,42 @@ export default class App extends React.Component<any, IAppState> {
 		}
 	}
 
+	private copyText(): void {
+		const element = document.createElement('textarea');
+		if (this.state.loading) {
+			element.value = "Loading... One moment.";
+		} else {
+			switch (this.state.page) {
+				case Pages.FILES:
+					element.value = JSON.stringify(this.state.fileContent);
+					break;
+				case Pages.METHODS:
+					element.value = JSON.stringify(this.state.methodContent);
+					break;
+				case Pages.RESULTS:
+					element.value = JSON.stringify(this.state.historyContent);
+					break;
+				default:
+					element.value = "No Easter Egg here. Go away!";
+			}
+		}
+		element.setAttribute('readonly', '');
+		document.body.appendChild(element);
+		element.select();
+		if (document.execCommand('copy')) {
+			const state: IAppState = Object.assign({}, this.state);
+			state.displayTextCopied = true;
+			const that: App = this;
+			setTimeout(function () {
+				const state: IAppState = Object.assign({}, that.state);
+				state.displayTextCopied = false;
+				that.setState(state)
+			}, Constants.NOTIFICATION_DISPLAY_TIME);
+			this.setState(state);
+		}
+		document.body.removeChild(element);
+	}
+
 	public render(): ReactNode {
 		return(
 			<header className="App-header">
@@ -286,10 +325,16 @@ export default class App extends React.Component<any, IAppState> {
 						active={this.state.page === Pages.RESULTS}
 						page={this.state.page}
 						content={this.state.historyContent ? this.state.historyContent : {}}
+						repo={this.state.link}
 					/>
 					<BackButton
 						active={this.history.length > 0}
 						goBack={this.goBack}
+					/>
+					<CopyRawButton
+						active={this.state.page > Pages.LANDING && this.state.page < Pages.ABOUT}
+						handleClick={() => setImmediate(this.copyText)}
+						displayNotification={this.state.displayTextCopied}
 					/>
 					<LoadingPane text={App.loadingText} active={this.state.loading} size={{height: 30, width: 72}}/>
 					<ErrorPane text={App.serverBusyErrorText} active={this.state.serverBusyError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
@@ -318,4 +363,5 @@ export interface IAppState {
 	fileContent: string[] | null;
 	methodContent: IMethodTransport[] | null;
 	historyContent: IHistoryTransport | null;
+	displayTextCopied: boolean;
 }
