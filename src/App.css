@@ -29,6 +29,40 @@
     background-position: center;
 }
 
+.d2h-file-diff {
+    background-color: rgba(224, 224, 224, 0.99);
+}
+
+.d2h-file-diff .d2h-del.d2h-change {
+    background-color: #e2f0fe;
+}
+
+.d2h-file-header {
+    height: 0;
+    padding: 0 0;
+    border-bottom: 0;
+}
+
+.d2h-file-wrapper {
+    margin-bottom: 0;
+}
+
+.d2h-wrapper {
+    overflow: hidden hidden;
+}
+
+.hljs {
+    color: rgb(0, 0, 0);
+}
+
+.hljs-title {
+    color: rgb(0, 14, 110);
+}
+
+.test {
+    color: rgb(104, 124, 120);
+}
+
 .Panel {
     flex: 1;
     position: absolute;

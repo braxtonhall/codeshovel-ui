@@ -12,26 +12,26 @@ export class History {
 	}
 
 	private static buildCommits(history: IHistoryTransport, startFile: string): ICommitx[] {
-		const commits: ICommitx[] = Array.from(Object.values(history)).slice()
-			.sort((a: ICommit, b: ICommit): number => {
-				const aDate: number = Date.parse(a.commitDate);
-				const bDate: number = Date.parse(b.commitDate);
-				if (!(isNaN(aDate) || isNaN(bDate))) {
-					if (aDate < bDate) {
-						return 1;
-					} else if (aDate > bDate) {
-						return -1;
-					} else {
-						return 0;
-					}
-				} else if (!isNaN(aDate)) {
-					return 1;
-				} else if (!isNaN(bDate)) {
-					return -1;
-				} else {
-					return 0;
-				}
-			});
+		const commits: ICommitx[] = Array.from(Object.values(history)).slice();
+			// .sort((a: ICommit, b: ICommit): number => {
+			// 	const aDate: number = Date.parse(a.commitDate);
+			// 	const bDate: number = Date.parse(b.commitDate);
+			// 	if (!(isNaN(aDate) || isNaN(bDate))) {
+			// 		if (aDate < bDate) {
+			// 			return 1;
+			// 		} else if (aDate > bDate) {
+			// 			return -1;
+			// 		} else {
+			// 			return 0;
+			// 		}
+			// 	} else if (!isNaN(aDate)) {
+			// 		return 1;
+			// 	} else if (!isNaN(bDate)) {
+			// 		return -1;
+			// 	} else {
+			// 		return 0;
+			// 	}
+			// });
 		let file: string | undefined = startFile;
 		for (const commit of commits) {
 			commit["file"] = file;

@@ -40,11 +40,27 @@ export class Constants {
 		Yreturntypechange: "Return Type Change"
 	};
 
+	public static readonly CHANGE_COLORS: {[internalName: string]: string} = {
+		Ybodychange: "rgb(109, 99, 124)",
+		Yfilerename: "rgb(124, 94, 106)",
+		Yintroduced: "rgb(0, 0, 0)",
+		Yexceptionschange: "rgb(124, 124, 124)",
+		Ymodifierchange: "rgb(104, 124, 120)",
+		Ymovefromfile: "rgb(124, 124, 124)",
+		Ymultichange: "rgb(124, 124, 124)",
+		Ynochange: "rgb(124, 124, 124)",
+		Yparameterchange: "rgb(124, 124, 124)",
+		Yparametermetachange: "rgb(124, 124, 124)",
+		Yrename: "rgb(124, 124, 124)",
+		Yreturntypechange: "rgb(124, 124, 124)"
+	};
+
 	public static readonly IN_TEST: boolean = true;
+	public static readonly TEST: string = "r3";
 
 	public static readonly NOTIFICATION_DISPLAY_TIME: number = 3000;
 
-	public static readonly SERVER_ADDRESS: string = "http://localhost:8080";
+	public static readonly SERVER_ADDRESS: string = "http://localhost:1234";
 
 	public static readonly INVALID_URL_ERROR_TEXT: string = "Please enter a link to proceed.";
 

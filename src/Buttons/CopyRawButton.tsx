@@ -1,9 +1,9 @@
-import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "./FadeableElement";
+import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../FadeableElement";
 import {ReactNode} from "react";
 import React from "react";
 
 export default class CopyRawButton extends FadeableElement<ICopyRawProps, ICopyRawState> {
-	protected readonly fadeOutTime: number = 600;
+	protected readonly fadeOutTime: number = 500;
 
 	public constructor(props: ICopyRawProps) {
 		super(props);

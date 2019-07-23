@@ -11,13 +11,16 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 
 	constructor(props: IReactCommitProps) {
 		super(props);
-		this.state = {onScreen: this.props.active};
+		this.state = {onScreen: this.props.active, expanded: false};
 		this.oldText = "";
 		this.newText = "";
 		this.setUpText();
 		this.goToCommit = this.goToCommit.bind(this);
 		this.mouseDown = this.mouseDown.bind(this);
 		this.goToFileInCommit = this.goToFileInCommit.bind(this);
+		this.toggleExpanded = this.toggleExpanded.bind(this);
+		this.getBackgroundColour = this.getBackgroundColour.bind(this);
+		this.getDate = this.getDate.bind(this);
 	}
 
 	private setUpText(): void {
@@ -49,6 +52,7 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 	}
 
 	private goToFileInCommit(): void {
+		console.log(this.props.repo);
 		const baseUrl: string = this.props.repo.replace(".git", "");
 		const link: string = `${baseUrl}/blob/${this.props.commit.commitName}/${this.props.commit.file}`;
 		if(baseUrl !== "") {
@@ -64,23 +68,53 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		return Constants.CHANGE_TYPES[change];
 	}
 
+	private getBackgroundColour(): string {
+		let change = this.props.commit.type;
+		if (change.startsWith("Ymultichange")) {
+			change = "Ymultichange";
+		}
+		return Constants.CHANGE_COLORS[change];
+	}
+
 	private mouseDown(): void {
-		// const state: IReactFileState = Object.assign({}, this.state);
+		// const state: IReactCommitState = Object.assign({}, this.state);
 		// state.margin = Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT;
 		// this.setState(state);
 	}
 
-	protected createReactNode(): ReactNode {
-		// TODO not this
-		setImmediate(() => {
-			if (this.props.commit.diff) {
-				/* eslint-disable */
-				// @ts-ignore
-				const diffDrawer = new Diff2HtmlUI({diff: "--- a/file.fake\n+++ b/file.fake\n" + this.props.commit.diff});
-				diffDrawer.draw(`#${this.props.commit.commitName}`, {inputFormat: 'diff', showFiles: false, matching: 'lines', outputFormat: 'line-by-line'});
-				diffDrawer.highlightCode(`#${this.props.commit.commitName}`);
+	private getDate(): string {
+		const date: number = Date.parse(this.props.commit.commitDate);
+		if (isNaN(date)) {
+			return "?";
+		} else {
+			return this.props.commit.commitDate;
+		}
+	}
+
+	private toggleExpanded(): void {
+		const state: IReactCommitState = Object.assign({}, this.state);
+		state.expanded = !state.expanded;
+		if (state.expanded) {
+			// TODO not this
+			setImmediate(() => {
+				if (this.props.commit.diff) {
+					/* eslint-disable */
+					// @ts-ignore
+					const diffDrawer = new Diff2HtmlUI({diff: "--- a/file.fake\n+++ b/file.fake\n" + this.props.commit.diff});
+					diffDrawer.draw(`#${this.props.commit.commitName}`, {inputFormat: 'diff', showFiles: false, matching: 'lines', outputFormat: 'line-by-line'});
+					diffDrawer.highlightCode(`#${this.props.commit.commitName}`);
+				}
+			});
+		} else {
+			const element = document.getElementById(this.props.commit.commitName);
+			if (element) {
+				element.innerHTML = "<div/>";
 			}
-		});
+		}
+		this.setState(state);
+	}
+
+	protected createReactNode(): ReactNode {
 		return(
 			<div
 				style={{display: "block", alignItems: "center"}}
@@ -93,20 +127,21 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 						marginTop: "3px",
 						marginBottom: "3px",
 						textAlign: "left",
-						backgroundColor: "rgb(124, 124, 124)",
+						backgroundColor: this.getBackgroundColour(),
 						// height: "40px", // this.props.active ? "40px" : "0",
 						font: "100% \"Courier New\", Futura, sans-serif",
-						width: (650 - Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT * 1.5) + "px",
+						width: (this.state.expanded ? 700 : 650) + "px",
 						overflow: "hidden",
 						zIndex: 9999,
 						transition: this.fadeOutTime + "ms ease-in-out",
 					}}
 					onMouseDown={this.mouseDown}
+					onClick={this.toggleExpanded}
 				>
 					<div>
 						{this.getChangeType() + (this.props.commit.commitAuthor ? " by " + this.props.commit.commitAuthor : "")}
 					</div>
-					<div id={this.props.commit.commitName}/>
+					<div id={this.props.commit.commitName} style={{width: "90%", margin: "0 auto"}}/>
 					<div
 						style={{
 							fontSize: "50%",
@@ -116,7 +151,7 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 					>
 						{this.props.commit.commitName}
 					</div>
-					{this.props.commit.file ?
+					{this.props.commit.file && this.props.repo.replace(".git", "") !== "" ?
 						<div
 							style={{
 								fontSize: "50%",
@@ -139,5 +174,5 @@ export interface IReactCommitProps extends IFadeableElementProps {
 }
 
 export interface IReactCommitState extends IFadeableElementState {
-
+	expanded: boolean;
 }

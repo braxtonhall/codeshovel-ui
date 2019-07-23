@@ -3,7 +3,6 @@ import React, {ReactNode} from 'react';
 import './App.css';
 import {ArgKind, Key, Pages} from './Enums'
 import {Landing} from "./Pages/Landing";
-import BackButton from "./BackButton";
 import {Files} from "./Pages/Files/Files";
 import {Methods} from "./Pages/Methods/Methods";
 import {IHistoryTransport, IMethodTransport, InternalError, ServerBusyError} from "./Types";
@@ -14,7 +13,8 @@ import ErrorPane from "./Panes/ErrorPane";
 import LoadingPane from "./Panes/LoadingPane";
 import {Results} from "./Pages/Results/Results";
 import {TestController} from "./TestRequestController";
-import CopyRawButton from "./CopyRawButton";
+import CopyRawButton from "./Buttons/CopyRawButton";
+import SmallButton from "./Buttons/SmallButton";
 
 export default class App extends React.Component<any, IAppState> {
 	private history: Pages[];
@@ -55,6 +55,7 @@ export default class App extends React.Component<any, IAppState> {
 		this.finishLoad = this.finishLoad.bind(this);
 		this.closeErrors = this.closeErrors.bind(this);
 		this.copyText = this.copyText.bind(this);
+		this.getNewTestState = this.getNewTestState.bind(this);
 	}
 
 	public componentDidMount(): void {
@@ -184,10 +185,14 @@ export default class App extends React.Component<any, IAppState> {
 	}
 
 	private updateSelected(arg: any, kind: ArgKind): void {
-		this.setState(this.getNewStateWithArg(arg, kind));
+		this.getNewStateWithArg(arg, kind).then((state) => this.setState(state));
+		// this.setState();
 	}
 
-	private getNewStateWithArg(arg: any, kind: ArgKind): IAppState {
+	private async getNewStateWithArg(arg: any, kind: ArgKind): Promise<IAppState> {
+		if (Constants.IN_TEST) {
+			return await this.getNewTestState(kind);
+		}
 		const state: IAppState = Object.assign({}, this.state);
 		switch (kind) {
 			case ArgKind.FILE:
@@ -210,6 +215,29 @@ export default class App extends React.Component<any, IAppState> {
 		return state;
 	}
 
+	private async getNewTestState(kind: ArgKind): Promise<IAppState> {
+		const state: IAppState = Object.assign({}, this.state);
+		switch (kind) {
+			case ArgKind.FILE:
+				state.file = await TestController.getFile();
+				break;
+			case ArgKind.SHA:
+				state.sha = "HEAD";
+				break;
+			case ArgKind.METHOD:
+				state.method = await TestController.getMethod();
+				break;
+			case ArgKind.REPO:
+				state.link = await TestController.getRepo();
+				state.sha = "HEAD";
+				break;
+			default:
+				console.error("Update Selected Illegal case");
+				return this.state;
+		}
+		return state;
+	}
+
 	private goBack(): void {
 		const state: IAppState = Object.assign({}, this.state);
 		const lastPage: Pages | undefined = this.history.pop();
@@ -223,7 +251,8 @@ export default class App extends React.Component<any, IAppState> {
 	}
 
 	private proceedWithUpdate(page: Pages, arg: any, kind: ArgKind): void {
-		this.proceedToPage(page, this.getNewStateWithArg(arg, kind));
+		this.getNewStateWithArg(arg, kind).then((state) => this.proceedToPage(page, state));
+		// this.proceedToPage(page, );
 	}
 
 	private closeErrors(): void {
@@ -328,9 +357,25 @@ export default class App extends React.Component<any, IAppState> {
 						repo={this.state.link}
 						file={this.state.file}
 					/>
-					<BackButton
+					<SmallButton
 						active={this.history.length > 0}
-						goBack={this.goBack}
+						onClick={this.goBack}
+						width={30}
+						height={30}
+						backgroundImage={"url(/left.png)"}
+						backgroundSize={15}
+						left={5}
+						bottom={40}
+					/>
+					<SmallButton
+						active={this.state.page !== Pages.ABOUT}
+						onClick={() => this.proceedToPage(Pages.ABOUT)}
+						width={30}
+						height={30}
+						backgroundImage={"url(/question.png)"}
+						backgroundSize={15}
+						left={5}
+						bottom={5}
 					/>
 					<CopyRawButton
 						active={this.state.page > Pages.LANDING && this.state.page < Pages.ABOUT}
