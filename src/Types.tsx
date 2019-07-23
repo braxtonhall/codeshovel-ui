@@ -11,10 +11,10 @@ export interface IHistoryTransport {
 	[sha: string]: ICommit
 }
 
-export interface ICommit {
+export interface IChange {
 	type: string;
 	commitMessage: string;
-	commitDate: string; // new Date('2/20/16 8:25 PM') or Date.parse('2/20/16 8:25 PM') for just a number
+	commitDate: string; // new Date('2015-07-24, 9:38 AM') or Date.parse('2015-07-24, 9:38 AM') for just a number
 	commitName: string;
 	commitAuthor: string;
 	commitDateOld?: string,
@@ -25,7 +25,10 @@ export interface ICommit {
 	commitsBetweenForFile?: number;
 	diff?: string;
 	extendedDetails?: any;
-	subchanges?: any[];
+}
+
+export interface ICommit extends IChange {
+	subchanges?: IChange[];
 }
 
 export interface ICommitx extends ICommit{

@@ -1,7 +1,7 @@
 import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../../FadeableElement";
 import {ReactNode} from "react";
 import * as React from "react";
-import {ICommit, ICommitx, IHistoryTransport} from "../../Types";
+import {IChange, ICommit, ICommitx, IHistoryTransport} from "../../Types";
 import {ReactCommit} from "./Commit";
 
 export class History {
@@ -13,25 +13,6 @@ export class History {
 
 	private static buildCommits(history: IHistoryTransport, startFile: string): ICommitx[] {
 		const commits: ICommitx[] = Array.from(Object.values(history)).slice();
-			// .sort((a: ICommit, b: ICommit): number => {
-			// 	const aDate: number = Date.parse(a.commitDate);
-			// 	const bDate: number = Date.parse(b.commitDate);
-			// 	if (!(isNaN(aDate) || isNaN(bDate))) {
-			// 		if (aDate < bDate) {
-			// 			return 1;
-			// 		} else if (aDate > bDate) {
-			// 			return -1;
-			// 		} else {
-			// 			return 0;
-			// 		}
-			// 	} else if (!isNaN(aDate)) {
-			// 		return 1;
-			// 	} else if (!isNaN(bDate)) {
-			// 		return -1;
-			// 	} else {
-			// 		return 0;
-			// 	}
-			// });
 		let file: string | undefined = startFile;
 		for (const commit of commits) {
 			commit["file"] = file;
@@ -39,11 +20,7 @@ export class History {
 				file = commit.extendedDetails.oldPath;
 			} else if (commit.type.startsWith("Ymultichange") &&
 				(commit.type.includes("Yfilerename") || commit.type.includes("Ymovefromfile"))) {
-				let subChanges = [];
-				if (commit.subchanges !== undefined) {
-					// @ts-ignore
-					subChanges = commit.subchanges;
-				}
+				const subChanges: IChange[] = commit.subchanges ? commit.subchanges : [];
 				for (const subChange of subChanges) {
 					if (subChange.type === "Yfilerename" || subChange.type === "Ymovefromfile") {
 						file = subChange.extendedDetails.oldPath;
