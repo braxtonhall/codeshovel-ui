@@ -326,6 +326,7 @@ export default class App extends React.Component<any, IAppState> {
 						page={this.state.page}
 						content={this.state.historyContent ? this.state.historyContent : {}}
 						repo={this.state.link}
+						file={this.state.file}
 					/>
 					<BackButton
 						active={this.history.length > 0}

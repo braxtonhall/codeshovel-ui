@@ -15,7 +15,7 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 		this.state = {
 			onScreen: this.props.active,
 		};
-		this.history = new History({});
+		this.history = new History({}, "");
 		this.content = {};
 		this.buildHistory = this.buildHistory.bind(this);
 	}
@@ -26,7 +26,7 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 
 	private buildHistory(history: IHistoryTransport): void {
 		this.content = history;
-		this.history = new History(history);
+		this.history = new History(history, this.props.file);
 	}
 
 	public createReactNode(): ReactNode {
@@ -58,6 +58,7 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 export interface IHistoryProps extends IPageProps {
 	content: IHistoryTransport;
 	repo: string;
+	file: string;
 }
 
 export interface IHistoryState extends IPageState {

@@ -2,7 +2,7 @@ import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../
 import {Constants} from "../../Constants";
 import {ReactNode} from "react";
 import * as React from "react";
-import {ICommit} from "../../Types";
+import {ICommitx} from "../../Types";
 
 export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommitState> {
 	protected readonly fadeOutTime: number = 300;
@@ -17,6 +17,7 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		this.setUpText();
 		this.goToCommit = this.goToCommit.bind(this);
 		this.mouseDown = this.mouseDown.bind(this);
+		this.goToFileInCommit = this.goToFileInCommit.bind(this);
 	}
 
 	private setUpText(): void {
@@ -47,6 +48,22 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		}
 	}
 
+	private goToFileInCommit(): void {
+		const baseUrl: string = this.props.repo.replace(".git", "");
+		const link: string = `${baseUrl}/blob/${this.props.commit.commitName}/${this.props.commit.file}`;
+		if(baseUrl !== "") {
+			window.open(link, "_blank");
+		}
+	}
+
+	private getChangeType(): string {
+		let change = this.props.commit.type;
+		if (change.startsWith("Ymultichange")) {
+			change = "Ymultichange";
+		}
+		return Constants.CHANGE_TYPES[change];
+	}
+
 	private mouseDown(): void {
 		// const state: IReactFileState = Object.assign({}, this.state);
 		// state.margin = Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT;
@@ -54,50 +71,70 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 	}
 
 	protected createReactNode(): ReactNode {
-		// const style = {marginLeft: Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT + "px"};
-		return(// this.state.onScreen || this.props.active ?
+		// TODO not this
+		setImmediate(() => {
+			if (this.props.commit.diff) {
+				/* eslint-disable */
+				// @ts-ignore
+				const diffDrawer = new Diff2HtmlUI({diff: "--- a/file.fake\n+++ b/file.fake\n" + this.props.commit.diff});
+				diffDrawer.draw(`#${this.props.commit.commitName}`, {inputFormat: 'diff', showFiles: false, matching: 'lines', outputFormat: 'line-by-line'});
+				diffDrawer.highlightCode(`#${this.props.commit.commitName}`);
+			}
+		});
+		return(
+			<div
+				style={{display: "block", alignItems: "center"}}
+			>
 				<div
-					style={{display: "block", alignItems: "center"}}
+					style={{
+						// marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px",
+						// animation: `${this.props.active ? "Expand" : "Contract"}  ${this.fadeOutTime}ms ease-in-out`,
+						margin: "0 auto",
+						marginTop: "3px",
+						marginBottom: "3px",
+						textAlign: "left",
+						backgroundColor: "rgb(124, 124, 124)",
+						// height: "40px", // this.props.active ? "40px" : "0",
+						font: "100% \"Courier New\", Futura, sans-serif",
+						width: (650 - Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT * 1.5) + "px",
+						overflow: "hidden",
+						zIndex: 9999,
+						transition: this.fadeOutTime + "ms ease-in-out",
+					}}
+					onMouseDown={this.mouseDown}
 				>
+					<div>
+						{this.getChangeType() + (this.props.commit.commitAuthor ? " by " + this.props.commit.commitAuthor : "")}
+					</div>
+					<div id={this.props.commit.commitName}/>
 					<div
 						style={{
-							// marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px",
-							// animation: `${this.props.active ? "Expand" : "Contract"}  ${this.fadeOutTime}ms ease-in-out`,
-							margin: "0 auto",
-							marginTop: "3px",
-							marginBottom: "3px",
-							textAlign: "left",
-							backgroundColor: "rgb(124, 124, 124)",
-							// height: "40px", // this.props.active ? "40px" : "0",
-							font: "100% \"Courier New\", Futura, sans-serif",
-							width: (650 - Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT * 1.5) + "px",
-							overflow: "hidden",
-							zIndex: 9999,
-							transition: this.fadeOutTime + "ms ease-in-out",
+							fontSize: "50%",
+							textAlign: "right",
 						}}
-						onMouseDown={this.mouseDown}
+						onClick={this.goToCommit}
 					>
-						<div>
-							{Constants.CHANGE_TYPES[this.props.commit.type] + (this.props.commit.commitAuthor ? " by " + this.props.commit.commitAuthor : "")}
-						</div>
+						{this.props.commit.commitName}
+					</div>
+					{this.props.commit.file ?
 						<div
 							style={{
 								fontSize: "50%",
 								textAlign: "right",
-
 							}}
-							onClick={this.goToCommit}
+							onClick={this.goToFileInCommit}
 						>
-							{this.props.commit.commitName}
-						</div>
-					</div>
-				</div>// :  <div style={style}/>
+							Visit
+						</div> : <div/>
+					}
+				</div>
+			</div>
 		);
 	}
 }
 
 export interface IReactCommitProps extends IFadeableElementProps {
-	commit: ICommit;
+	commit: ICommitx;
 	repo: string;
 }
 

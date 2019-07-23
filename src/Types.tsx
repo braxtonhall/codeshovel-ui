@@ -25,6 +25,11 @@ export interface ICommit {
 	commitsBetweenForFile?: number;
 	diff?: string;
 	extendedDetails?: any;
+	subchanges?: any[];
+}
+
+export interface ICommitx extends ICommit{
+	file?: string;
 }
 
 export class ServerBusyError extends Error {

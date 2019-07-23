@@ -6879,207 +6879,380 @@ export class TestController extends RequestController {
 	}
 	public async getHistory(gitUrl: string, sha: string, filePath: string, startLine: number, methodName: string): Promise<IHistoryTransport> {
 		return(
+			// {
+			// 	"63ea870c89591dfeae1276f582d825670fe7ec3a":
+			// 		{
+			// 			"type": "Ybodychange",
+			// 			"commitMessage": "[DROOLS-1024] rule engine parallelization (#983)\n\n",
+			// 			"commitDate": "10/26/16 4:36 PM",
+			// 			"commitName": "63ea870c89591dfeae1276f582d825670fe7ec3a",
+			// 			"commitAuthor": "Mario Fusco",
+			// 			"commitDateOld": "10/25/16 3:35 PM",
+			// 			"commitNameOld": "76ea146a992491925eaed2ad36a1e909df60ae72",
+			// 			"commitAuthorOld": "Mario Fusco",
+			// 			"daysBetweenCommits": 1.04,
+			// 			"commitsBetweenForRepo": 1,
+			// 			"commitsBetweenForFile": 1,
+			// 			"diff": "@@ -1,12 +1,11 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( focusStack );\n         out.writeObject( mainAgendaGroup );\n         out.writeObject( agendaGroupFactory );\n-        out.writeObject( knowledgeHelper );\n         out.writeObject( legacyConsequenceExceptionHandler );\n         out.writeBoolean( declarativeAgenda );\n         out.writeBoolean( sequential );\n     }\n\\ No newline at end of file\n",
+			// 			"extendedDetails":
+			// 				{
+			//
+			// 				}
+			// 		},
+			// 	"45fb1d622759d3f439b9a089fa1b534e0df1a72d":
+			// 		{
+			// 			"type": "Ybodychange",
+			// 			"commitMessage": "[DROOLS-1247] fix immediate propagation\n",
+			// 			"commitDate": "8/12/16 2:14 PM",
+			// 			"commitName": "45fb1d622759d3f439b9a089fa1b534e0df1a72d",
+			// 			"commitAuthor": "Mario Fusco",
+			// 			"commitDateOld": "7/29/16 9:16 AM",
+			// 			"commitNameOld": "fe4d08a0a573bd0c41360e574a1b5325e10dd35f",
+			// 			"commitAuthorOld": "Mario Fusco",
+			// 			"daysBetweenCommits": 14.21,
+			// 			"commitsBetweenForRepo": 15,
+			// 			"commitsBetweenForFile": 1,
+			// 			"diff": "@@ -1,12 +1,12 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( focusStack );\n-        out.writeObject( main );\n+        out.writeObject( mainAgendaGroup );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeObject( legacyConsequenceExceptionHandler );\n         out.writeBoolean( declarativeAgenda );\n         out.writeBoolean( sequential );\n     }\n\\ No newline at end of file\n",
+			// 			"extendedDetails":
+			// 				{}
+			// 		},
+			// 	"89d08fd76741204d41b8ddce1227e8acbc27e4a9":
+			// 		{
+			// 			"type": "Ybodychange",
+			// 			"commitMessage": "[BZ-1228098] avoid eager evaluations in sequential mode\n",
+			// 			"commitDate": "6/4/15 8:14 AM",
+			// 			"commitName": "89d08fd76741204d41b8ddce1227e8acbc27e4a9",
+			// 			"commitAuthor": "Mario Fusco",
+			// 			"commitDateOld": "5/25/15 2:44 PM",
+			// 			"commitNameOld": "802ff3343eff759323f67514e17d8397854f5618",
+			// 			"commitAuthorOld": "Mario Fusco",
+			// 			"daysBetweenCommits": 9.73,
+			// 			"commitsBetweenForRepo": 9,
+			// 			"commitsBetweenForFile": 1,
+			// 			"diff": "@@ -1,11 +1,12 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( focusStack );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeObject( legacyConsequenceExceptionHandler );\n-        out.writeBoolean(declarativeAgenda);\n+        out.writeBoolean( declarativeAgenda );\n+        out.writeBoolean( sequential );\n     }\n\\ No newline at end of file\n",
+			// 			"extendedDetails":
+			// 				{}
+			// 		},
+			// 	"f79eadd91938f278df368fbdfe9367df0af94ef0":
+			// 		{
+			// 			"type": "Ybodychange",
+			// 			"commitMessage": "[DROOLS-751] add propagation queue\n",
+			// 			"commitDate": "5/5/15 1:53 PM",
+			// 			"commitName": "f79eadd91938f278df368fbdfe9367df0af94ef0",
+			// 			"commitAuthor": "Mario Fusco",
+			// 			"commitDateOld": "1/21/15 11:30 AM",
+			// 			"commitNameOld": "5e05721f4a81d9f80285c0dc1216d37e7f34d78d",
+			// 			"commitAuthorOld": "Maciej Swiderski",
+			// 			"daysBetweenCommits": 104.1,
+			// 			"commitsBetweenForRepo": 98,
+			// 			"commitsBetweenForFile": 1,
+			// 			"diff": "@@ -1,13 +1,11 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( focusStack );\n-        out.writeObject( currentModule );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeObject( legacyConsequenceExceptionHandler );\n         out.writeBoolean(declarativeAgenda);\n-        out.writeBoolean( streamMode );\n     }\n\\ No newline at end of file\n",
+			// 			"extendedDetails":
+			// 				{}
+			// 		},
+			// 	"9d12847c9a79e3ce642f248d0f7cbf2035649666":
+			// 		{
+			// 			"type": "Ybodychange",
+			// 			"commitMessage": "[DROOLS-516] implement stream queue garbage collector\n",
+			// 			"commitDate": "6/18/14 2:39 PM",
+			// 			"commitName": "9d12847c9a79e3ce642f248d0f7cbf2035649666",
+			// 			"commitAuthor": "mariofusco",
+			// 			"commitDateOld": "6/16/14 1:04 PM",
+			// 			"commitNameOld": "83f80c83f70c1d246e203cc26ef8d4d1e5b5b843",
+			// 			"commitAuthorOld": "mariofusco",
+			// 			"daysBetweenCommits": 2.07,
+			// 			"commitsBetweenForRepo": 4,
+			// 			"commitsBetweenForFile": 1,
+			// 			"diff": "@@ -1,12 +1,13 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( focusStack );\n         out.writeObject( currentModule );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeObject( legacyConsequenceExceptionHandler );\n-        out.writeBoolean( declarativeAgenda );\n+        out.writeBoolean(declarativeAgenda);\n+        out.writeBoolean( streamMode );\n     }\n\\ No newline at end of file\n",
+			// 			"extendedDetails":
+			// 				{}
+			// 		},
+			// 	"7bb915b5343877451798ebda374f4834cd683fef":
+			// 		{
+			// 			"type": "Ybodychange",
+			// 			"commitMessage": "DROOLS-198 Separate Rete and Phreak\n",
+			// 			"commitDate": "7/23/13 2:02 PM",
+			// 			"commitName": "7bb915b5343877451798ebda374f4834cd683fef",
+			// 			"commitAuthor": "Mark Proctor",
+			// 			"commitDateOld": "7/4/13 4:21 PM",
+			// 			"commitNameOld": "048ea3237dbecdbe75cce3a0a821e9ffb0fadd1e",
+			// 			"commitAuthorOld": "mariofusco",
+			// 			"daysBetweenCommits": 18.9,
+			// 			"commitsBetweenForRepo": 45,
+			// 			"commitsBetweenForFile": 1,
+			// 			"diff": "@@ -1,13 +1,12 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n-        out.writeObject( scheduledActivations );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( focusStack );\n         out.writeObject( currentModule );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeObject( legacyConsequenceExceptionHandler );\n         out.writeBoolean( declarativeAgenda );\n     }\n\\ No newline at end of file\n",
+			// 			"extendedDetails":
+			// 				{}
+			// 		},
+			// 	"ee37d9dc78ee8058c7e46305cd72cd153d1ee7a6":
+			// 		{
+			// 			"type": "Ybodychange",
+			// 			"commitMessage": "DROOLS-7 Phreak\n-Sequential mode now works. OTN and left memory is now always enabled, as it was easier to get things working this way. This will need reviewing, after Rete is removed.\n",
+			// 			"commitDate": "6/18/13 12:38 PM",
+			// 			"commitName": "ee37d9dc78ee8058c7e46305cd72cd153d1ee7a6",
+			// 			"commitAuthor": "Mark Proctor",
+			// 			"commitDateOld": "6/18/13 12:38 PM",
+			// 			"commitNameOld": "212979489bb15849ad8d065c4cbfe0a63e82ba77",
+			// 			"commitAuthorOld": "Mark Proctor",
+			// 			"daysBetweenCommits": 0.0,
+			// 			"commitsBetweenForRepo": 1,
+			// 			"commitsBetweenForFile": 1,
+			// 			"diff": "@@ -1,14 +1,13 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( scheduledActivations );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n-        out.writeObject( ruleFlowGroups );\n         out.writeObject( focusStack );\n         out.writeObject( currentModule );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeObject( legacyConsequenceExceptionHandler );\n         out.writeBoolean( declarativeAgenda );\n     }\n\\ No newline at end of file\n",
+			// 			"extendedDetails":
+			// 				{}
+			// 		},
+			// 	"80814813158c41ee504df0745f6d5e032ea773a9":
+			// 		{
+			// 			"type": "Ybodychange",
+			// 			"commitMessage": "removed active/dormant tracking\n",
+			// 			"commitDate": "3/18/13 2:31 AM",
+			// 			"commitName": "80814813158c41ee504df0745f6d5e032ea773a9",
+			// 			"commitAuthor": "Mark Proctor",
+			// 			"commitDateOld": "3/16/13 4:56 PM",
+			// 			"commitNameOld": "ab7f413209fd976bc3e76ce2a45d88c51f2ca028",
+			// 			"commitAuthorOld": "Geoffrey De Smet",
+			// 			"daysBetweenCommits": 1.4,
+			// 			"commitsBetweenForRepo": 31,
+			// 			"commitsBetweenForFile": 1,
+			// 			"diff": "@@ -1,16 +1,14 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( scheduledActivations );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( ruleFlowGroups );\n         out.writeObject( focusStack );\n         out.writeObject( currentModule );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n-        out.writeInt( activeActivations );\n-        out.writeInt( dormantActivations );\n         out.writeObject( legacyConsequenceExceptionHandler );\n         out.writeBoolean( declarativeAgenda );\n     }\n\\ No newline at end of file\n",
+			// 			"extendedDetails":
+			// 				{}
+			// 		},
+			// 	"5b99ec4dae3bd10db5a2303291afa39f4ba465bb":
+			// 		{
+			// 			"type": "Yfilerename",
+			// 			"commitMessage": "Resolve split-packages: move everything from drools-core under org.drools.core: move org.drools.common\n",
+			// 			"commitDate": "3/15/13 4:29 PM",
+			// 			"commitName": "5b99ec4dae3bd10db5a2303291afa39f4ba465bb",
+			// 			"commitAuthor": "Geoffrey De Smet",
+			// 			"commitDateOld": "3/15/13 4:19 PM",
+			// 			"commitNameOld": "e01a745ab126a821422ac907da47fbcd7162e781",
+			// 			"commitAuthorOld": "Geoffrey De Smet",
+			// 			"daysBetweenCommits": 0.01,
+			// 			"commitsBetweenForRepo": 1,
+			// 			"commitsBetweenForFile": 1,
+			// 			"diff": "",
+			// 			"extendedDetails":
+			// 				{
+			// 					"oldPath": "drools-core/src/main/java/org/drools/common/DefaultAgenda.java",
+			// 					"newPath": "drools-core/src/main/java/org/drools/core/common/DefaultAgenda.java"
+			// 				}
+			// 		},
+			// 	"f3b7a6f58e3933814f31471e4e032fc44da2720b":
+			// 		{
+			// 			"type": "Ybodychange",
+			// 			"commitMessage": "JBRULES-3148 Dynamic Declarative Conflict Resolution\n-Added property to enable and disable. Disabled by default\n",
+			// 			"commitDate": "8/8/11 5:15 AM",
+			// 			"commitName": "f3b7a6f58e3933814f31471e4e032fc44da2720b",
+			// 			"commitAuthor": "Mark Proctor",
+			// 			"commitDateOld": "8/8/11 5:15 AM",
+			// 			"commitNameOld": "737a782e6b33789ebf21b932198e766754da3ad2",
+			// 			"commitAuthorOld": "Mark Proctor",
+			// 			"daysBetweenCommits": 0.0,
+			// 			"commitsBetweenForRepo": 1,
+			// 			"commitsBetweenForFile": 1,
+			// 			"diff": "@@ -1,15 +1,16 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( scheduledActivations );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( ruleFlowGroups );\n         out.writeObject( focusStack );\n         out.writeObject( currentModule );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeInt( activeActivations );\n         out.writeInt( dormantActivations );\n         out.writeObject( legacyConsequenceExceptionHandler );\n+        out.writeBoolean( declarativeAgenda );\n     }\n\\ No newline at end of file\n",
+			// 			"extendedDetails":
+			// 				{}
+			// 		},
+			// 	"8ce86b3c7dd14aeb890bac19e3a5e345365f9933":
+			// 		{
+			// 			"type": "Ybodychange",
+			// 			"commitMessage": "JBRULES-1734 Drools API \n-Refactoring to expose ConsequenceExceptionHandler\n\ngit-svn-id: https://svn.jboss.org/repos/labs/labs/jbossrules/trunk@23767 c60d74c8-e8f6-0310-9e8f-d4a2fc68ab70\n",
+			// 			"commitDate": "11/7/08 1:36 AM",
+			// 			"commitName": "8ce86b3c7dd14aeb890bac19e3a5e345365f9933",
+			// 			"commitAuthor": "Mark Proctor",
+			// 			"commitDateOld": "10/30/08 3:20 PM",
+			// 			"commitNameOld": "9c76524795611b4a40ba4f049162604ff3354c4e",
+			// 			"commitAuthorOld": "Mark Proctor",
+			// 			"daysBetweenCommits": 7.43,
+			// 			"commitsBetweenForRepo": 23,
+			// 			"commitsBetweenForFile": 1,
+			// 			"diff": "@@ -1,15 +1,15 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( scheduledActivations );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( ruleFlowGroups );\n         out.writeObject( focusStack );\n         out.writeObject( currentModule );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeInt( activeActivations );\n         out.writeInt( dormantActivations );\n-        out.writeObject( consequenceExceptionHandler );\n+        out.writeObject( legacyConsequenceExceptionHandler );\n     }\n\\ No newline at end of file\n",
+			// 			"extendedDetails":
+			// 				{}
+			// 		},
+			// 	"33fe709fd75bbe2de2bf133da56e11c263cd9999":
+			// 		{
+			// 			"type": "Yintroduced",
+			// 			"commitMessage": "Merging from ming-serialization branch.\n\ngit-svn-id: https://svn.jboss.org/repos/labs/labs/jbossrules/trunk@19005 c60d74c8-e8f6-0310-9e8f-d4a2fc68ab70\n",
+			// 			"commitDate": "3/15/08 3:08 AM",
+			// 			"commitName": "33fe709fd75bbe2de2bf133da56e11c263cd9999",
+			// 			"commitAuthor": "Ming Jin"
+			// 		}
+			// }
 			{
-				"63ea870c89591dfeae1276f582d825670fe7ec3a":
-					{
-						"type": "Ybodychange",
-						"commitMessage": "[DROOLS-1024] rule engine parallelization (#983)\n\n",
-						"commitDate": "10/26/16 4:36 PM",
-						"commitName": "63ea870c89591dfeae1276f582d825670fe7ec3a",
-						"commitAuthor": "Mario Fusco",
-						"commitDateOld": "10/25/16 3:35 PM",
-						"commitNameOld": "76ea146a992491925eaed2ad36a1e909df60ae72",
-						"commitAuthorOld": "Mario Fusco",
-						"daysBetweenCommits": 1.04,
-						"commitsBetweenForRepo": 1,
-						"commitsBetweenForFile": 1,
-						"diff": "@@ -1,12 +1,11 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( focusStack );\n         out.writeObject( mainAgendaGroup );\n         out.writeObject( agendaGroupFactory );\n-        out.writeObject( knowledgeHelper );\n         out.writeObject( legacyConsequenceExceptionHandler );\n         out.writeBoolean( declarativeAgenda );\n         out.writeBoolean( sequential );\n     }\n\\ No newline at end of file\n",
-						"extendedDetails":
-							{
-
-							}
-					},
-				"45fb1d622759d3f439b9a089fa1b534e0df1a72d":
-					{
-						"type": "Ybodychange",
-						"commitMessage": "[DROOLS-1247] fix immediate propagation\n",
-						"commitDate": "8/12/16 2:14 PM",
-						"commitName": "45fb1d622759d3f439b9a089fa1b534e0df1a72d",
-						"commitAuthor": "Mario Fusco",
-						"commitDateOld": "7/29/16 9:16 AM",
-						"commitNameOld": "fe4d08a0a573bd0c41360e574a1b5325e10dd35f",
-						"commitAuthorOld": "Mario Fusco",
-						"daysBetweenCommits": 14.21,
-						"commitsBetweenForRepo": 15,
-						"commitsBetweenForFile": 1,
-						"diff": "@@ -1,12 +1,12 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( focusStack );\n-        out.writeObject( main );\n+        out.writeObject( mainAgendaGroup );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeObject( legacyConsequenceExceptionHandler );\n         out.writeBoolean( declarativeAgenda );\n         out.writeBoolean( sequential );\n     }\n\\ No newline at end of file\n",
-						"extendedDetails":
-							{}
-					},
-				"89d08fd76741204d41b8ddce1227e8acbc27e4a9":
-					{
-						"type": "Ybodychange",
-						"commitMessage": "[BZ-1228098] avoid eager evaluations in sequential mode\n",
-						"commitDate": "6/4/15 8:14 AM",
-						"commitName": "89d08fd76741204d41b8ddce1227e8acbc27e4a9",
-						"commitAuthor": "Mario Fusco",
-						"commitDateOld": "5/25/15 2:44 PM",
-						"commitNameOld": "802ff3343eff759323f67514e17d8397854f5618",
-						"commitAuthorOld": "Mario Fusco",
-						"daysBetweenCommits": 9.73,
-						"commitsBetweenForRepo": 9,
-						"commitsBetweenForFile": 1,
-						"diff": "@@ -1,11 +1,12 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( focusStack );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeObject( legacyConsequenceExceptionHandler );\n-        out.writeBoolean(declarativeAgenda);\n+        out.writeBoolean( declarativeAgenda );\n+        out.writeBoolean( sequential );\n     }\n\\ No newline at end of file\n",
-						"extendedDetails":
-							{}
-					},
-				"f79eadd91938f278df368fbdfe9367df0af94ef0":
-					{
-						"type": "Ybodychange",
-						"commitMessage": "[DROOLS-751] add propagation queue\n",
-						"commitDate": "5/5/15 1:53 PM",
-						"commitName": "f79eadd91938f278df368fbdfe9367df0af94ef0",
-						"commitAuthor": "Mario Fusco",
-						"commitDateOld": "1/21/15 11:30 AM",
-						"commitNameOld": "5e05721f4a81d9f80285c0dc1216d37e7f34d78d",
-						"commitAuthorOld": "Maciej Swiderski",
-						"daysBetweenCommits": 104.1,
-						"commitsBetweenForRepo": 98,
-						"commitsBetweenForFile": 1,
-						"diff": "@@ -1,13 +1,11 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( focusStack );\n-        out.writeObject( currentModule );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeObject( legacyConsequenceExceptionHandler );\n         out.writeBoolean(declarativeAgenda);\n-        out.writeBoolean( streamMode );\n     }\n\\ No newline at end of file\n",
-						"extendedDetails":
-							{}
-					},
-				"9d12847c9a79e3ce642f248d0f7cbf2035649666":
-					{
-						"type": "Ybodychange",
-						"commitMessage": "[DROOLS-516] implement stream queue garbage collector\n",
-						"commitDate": "6/18/14 2:39 PM",
-						"commitName": "9d12847c9a79e3ce642f248d0f7cbf2035649666",
-						"commitAuthor": "mariofusco",
-						"commitDateOld": "6/16/14 1:04 PM",
-						"commitNameOld": "83f80c83f70c1d246e203cc26ef8d4d1e5b5b843",
-						"commitAuthorOld": "mariofusco",
-						"daysBetweenCommits": 2.07,
-						"commitsBetweenForRepo": 4,
-						"commitsBetweenForFile": 1,
-						"diff": "@@ -1,12 +1,13 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( focusStack );\n         out.writeObject( currentModule );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeObject( legacyConsequenceExceptionHandler );\n-        out.writeBoolean( declarativeAgenda );\n+        out.writeBoolean(declarativeAgenda);\n+        out.writeBoolean( streamMode );\n     }\n\\ No newline at end of file\n",
-						"extendedDetails":
-							{}
-					},
-				"7bb915b5343877451798ebda374f4834cd683fef":
-					{
-						"type": "Ybodychange",
-						"commitMessage": "DROOLS-198 Separate Rete and Phreak\n",
-						"commitDate": "7/23/13 2:02 PM",
-						"commitName": "7bb915b5343877451798ebda374f4834cd683fef",
-						"commitAuthor": "Mark Proctor",
-						"commitDateOld": "7/4/13 4:21 PM",
-						"commitNameOld": "048ea3237dbecdbe75cce3a0a821e9ffb0fadd1e",
-						"commitAuthorOld": "mariofusco",
-						"daysBetweenCommits": 18.9,
-						"commitsBetweenForRepo": 45,
-						"commitsBetweenForFile": 1,
-						"diff": "@@ -1,13 +1,12 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n-        out.writeObject( scheduledActivations );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( focusStack );\n         out.writeObject( currentModule );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeObject( legacyConsequenceExceptionHandler );\n         out.writeBoolean( declarativeAgenda );\n     }\n\\ No newline at end of file\n",
-						"extendedDetails":
-							{}
-					},
-				"ee37d9dc78ee8058c7e46305cd72cd153d1ee7a6":
-					{
-						"type": "Ybodychange",
-						"commitMessage": "DROOLS-7 Phreak\n-Sequential mode now works. OTN and left memory is now always enabled, as it was easier to get things working this way. This will need reviewing, after Rete is removed.\n",
-						"commitDate": "6/18/13 12:38 PM",
-						"commitName": "ee37d9dc78ee8058c7e46305cd72cd153d1ee7a6",
-						"commitAuthor": "Mark Proctor",
-						"commitDateOld": "6/18/13 12:38 PM",
-						"commitNameOld": "212979489bb15849ad8d065c4cbfe0a63e82ba77",
-						"commitAuthorOld": "Mark Proctor",
-						"daysBetweenCommits": 0.0,
-						"commitsBetweenForRepo": 1,
-						"commitsBetweenForFile": 1,
-						"diff": "@@ -1,14 +1,13 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( scheduledActivations );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n-        out.writeObject( ruleFlowGroups );\n         out.writeObject( focusStack );\n         out.writeObject( currentModule );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeObject( legacyConsequenceExceptionHandler );\n         out.writeBoolean( declarativeAgenda );\n     }\n\\ No newline at end of file\n",
-						"extendedDetails":
-							{}
-					},
-				"80814813158c41ee504df0745f6d5e032ea773a9":
-					{
-						"type": "Ybodychange",
-						"commitMessage": "removed active/dormant tracking\n",
-						"commitDate": "3/18/13 2:31 AM",
-						"commitName": "80814813158c41ee504df0745f6d5e032ea773a9",
-						"commitAuthor": "Mark Proctor",
-						"commitDateOld": "3/16/13 4:56 PM",
-						"commitNameOld": "ab7f413209fd976bc3e76ce2a45d88c51f2ca028",
-						"commitAuthorOld": "Geoffrey De Smet",
-						"daysBetweenCommits": 1.4,
-						"commitsBetweenForRepo": 31,
-						"commitsBetweenForFile": 1,
-						"diff": "@@ -1,16 +1,14 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( scheduledActivations );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( ruleFlowGroups );\n         out.writeObject( focusStack );\n         out.writeObject( currentModule );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n-        out.writeInt( activeActivations );\n-        out.writeInt( dormantActivations );\n         out.writeObject( legacyConsequenceExceptionHandler );\n         out.writeBoolean( declarativeAgenda );\n     }\n\\ No newline at end of file\n",
-						"extendedDetails":
-							{}
-					},
-				"5b99ec4dae3bd10db5a2303291afa39f4ba465bb":
-					{
-						"type": "Yfilerename",
-						"commitMessage": "Resolve split-packages: move everything from drools-core under org.drools.core: move org.drools.common\n",
-						"commitDate": "3/15/13 4:29 PM",
-						"commitName": "5b99ec4dae3bd10db5a2303291afa39f4ba465bb",
-						"commitAuthor": "Geoffrey De Smet",
-						"commitDateOld": "3/15/13 4:19 PM",
-						"commitNameOld": "e01a745ab126a821422ac907da47fbcd7162e781",
-						"commitAuthorOld": "Geoffrey De Smet",
-						"daysBetweenCommits": 0.01,
-						"commitsBetweenForRepo": 1,
-						"commitsBetweenForFile": 1,
-						"diff": "",
-						"extendedDetails":
-							{
-								"oldPath": "drools-core/src/main/java/org/drools/common/DefaultAgenda.java",
-								"newPath": "drools-core/src/main/java/org/drools/core/common/DefaultAgenda.java"
-							}
-					},
-				"f3b7a6f58e3933814f31471e4e032fc44da2720b":
-					{
-						"type": "Ybodychange",
-						"commitMessage": "JBRULES-3148 Dynamic Declarative Conflict Resolution\n-Added property to enable and disable. Disabled by default\n",
-						"commitDate": "8/8/11 5:15 AM",
-						"commitName": "f3b7a6f58e3933814f31471e4e032fc44da2720b",
-						"commitAuthor": "Mark Proctor",
-						"commitDateOld": "8/8/11 5:15 AM",
-						"commitNameOld": "737a782e6b33789ebf21b932198e766754da3ad2",
-						"commitAuthorOld": "Mark Proctor",
-						"daysBetweenCommits": 0.0,
-						"commitsBetweenForRepo": 1,
-						"commitsBetweenForFile": 1,
-						"diff": "@@ -1,15 +1,16 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( scheduledActivations );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( ruleFlowGroups );\n         out.writeObject( focusStack );\n         out.writeObject( currentModule );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeInt( activeActivations );\n         out.writeInt( dormantActivations );\n         out.writeObject( legacyConsequenceExceptionHandler );\n+        out.writeBoolean( declarativeAgenda );\n     }\n\\ No newline at end of file\n",
-						"extendedDetails":
-							{}
-					},
-				"8ce86b3c7dd14aeb890bac19e3a5e345365f9933":
-					{
-						"type": "Ybodychange",
-						"commitMessage": "JBRULES-1734 Drools API \n-Refactoring to expose ConsequenceExceptionHandler\n\ngit-svn-id: https://svn.jboss.org/repos/labs/labs/jbossrules/trunk@23767 c60d74c8-e8f6-0310-9e8f-d4a2fc68ab70\n",
-						"commitDate": "11/7/08 1:36 AM",
-						"commitName": "8ce86b3c7dd14aeb890bac19e3a5e345365f9933",
-						"commitAuthor": "Mark Proctor",
-						"commitDateOld": "10/30/08 3:20 PM",
-						"commitNameOld": "9c76524795611b4a40ba4f049162604ff3354c4e",
-						"commitAuthorOld": "Mark Proctor",
-						"daysBetweenCommits": 7.43,
-						"commitsBetweenForRepo": 23,
-						"commitsBetweenForFile": 1,
-						"diff": "@@ -1,15 +1,15 @@\n     public void writeExternal(ObjectOutput out) throws IOException {\n         out.writeObject( workingMemory );\n         out.writeObject( scheduledActivations );\n         out.writeObject( agendaGroups );\n         out.writeObject( activationGroups );\n         out.writeObject( ruleFlowGroups );\n         out.writeObject( focusStack );\n         out.writeObject( currentModule );\n         out.writeObject( main );\n         out.writeObject( agendaGroupFactory );\n         out.writeObject( knowledgeHelper );\n         out.writeInt( activeActivations );\n         out.writeInt( dormantActivations );\n-        out.writeObject( consequenceExceptionHandler );\n+        out.writeObject( legacyConsequenceExceptionHandler );\n     }\n\\ No newline at end of file\n",
-						"extendedDetails":
-							{}
-					},
-				"33fe709fd75bbe2de2bf133da56e11c263cd9999":
-					{
-						"type": "Yintroduced",
-						"commitMessage": "Merging from ming-serialization branch.\n\ngit-svn-id: https://svn.jboss.org/repos/labs/labs/jbossrules/trunk@19005 c60d74c8-e8f6-0310-9e8f-d4a2fc68ab70\n",
-						"commitDate": "3/15/08 3:08 AM",
-						"commitName": "33fe709fd75bbe2de2bf133da56e11c263cd9999",
-						"commitAuthor": "Ming Jin"
+				"8afb2d5f86231faf6044e0dd97caefc2fca9624c": {
+					"type": "Ymodifierchange",
+					"commitMessage": "[DROOLS-1241] fix recognition of type as event during incremental compilation (#853)\n\n",
+					"commitDate": "2016-07-28, 7:05 AM",
+					"commitName": "8afb2d5f86231faf6044e0dd97caefc2fca9624c",
+					"commitAuthor": "Mario Fusco",
+					"commitDateOld": "2016-07-20, 9:38 AM",
+					"commitNameOld": "9435f787ddd48e3a38bd7e7018dfcefb00352184",
+					"commitAuthorOld": "Mario Fusco",
+					"daysBetweenCommits": 7.89,
+					"commitsBetweenForRepo": 4,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,3 +1,3 @@\n-    InternalKnowledgeBase getKnowledgeBase() {\n+    public InternalKnowledgeBase getKnowledgeBase() {\n         return kBase;\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[]",
+						"newValue": "[public]"
 					}
+				},
+				"1f8dc32725276a68456c5c4315c6a7c0b3f222ad": {
+					"type": "Ymultichange(Ymovefromfile,Yreturntypechange,Ymodifierchange,Ybodychange,Yrename)",
+					"commitMessage": "major cleanup 4.x legacy API\n",
+					"commitDate": "2014-04-22, 12:12 AM",
+					"commitName": "1f8dc32725276a68456c5c4315c6a7c0b3f222ad",
+					"commitAuthor": "mariofusco",
+					"subchanges": [
+						{
+							"type": "Ymovefromfile",
+							"commitMessage": "major cleanup 4.x legacy API\n",
+							"commitDate": "2014-04-22, 12:12 AM",
+							"commitName": "1f8dc32725276a68456c5c4315c6a7c0b3f222ad",
+							"commitAuthor": "mariofusco",
+							"commitDateOld": "2014-04-16, 7:48 AM",
+							"commitNameOld": "16fc9b9bb70f0f7ab2ac078e06d642c637aad8b1",
+							"commitAuthorOld": "mariofusco",
+							"daysBetweenCommits": 5.68,
+							"commitsBetweenForRepo": 1,
+							"commitsBetweenForFile": 1,
+							"diff": "@@ -1,3 +1,3 @@\n-    public PackageBuilder getPackageBuilder() {\n-        return pkgBuilder;\n+    InternalKnowledgeBase getKnowledgeBase() {\n+        return kBase;\n     }\n\\ No newline at end of file\n",
+							"extendedDetails": {
+								"oldPath": "drools-compiler/src/main/java/org/drools/compiler/builder/impl/KnowledgeBuilderImpl.java",
+								"newPath": "drools-compiler/src/main/java/org/drools/compiler/builder/impl/KnowledgeBuilderImpl.java",
+								"oldMethodName": "getPackageBuilder",
+								"newMethodName": "getKnowledgeBase"
+							}
+						},
+						{
+							"type": "Yreturntypechange",
+							"commitMessage": "major cleanup 4.x legacy API\n",
+							"commitDate": "2014-04-22, 12:12 AM",
+							"commitName": "1f8dc32725276a68456c5c4315c6a7c0b3f222ad",
+							"commitAuthor": "mariofusco",
+							"commitDateOld": "2014-04-16, 7:48 AM",
+							"commitNameOld": "16fc9b9bb70f0f7ab2ac078e06d642c637aad8b1",
+							"commitAuthorOld": "mariofusco",
+							"daysBetweenCommits": 5.68,
+							"commitsBetweenForRepo": 1,
+							"commitsBetweenForFile": 1,
+							"diff": "@@ -1,3 +1,3 @@\n-    public PackageBuilder getPackageBuilder() {\n-        return pkgBuilder;\n+    InternalKnowledgeBase getKnowledgeBase() {\n+        return kBase;\n     }\n\\ No newline at end of file\n",
+							"extendedDetails": {
+								"oldValue": "PackageBuilder",
+								"newValue": "InternalKnowledgeBase"
+							}
+						},
+						{
+							"type": "Ymodifierchange",
+							"commitMessage": "major cleanup 4.x legacy API\n",
+							"commitDate": "2014-04-22, 12:12 AM",
+							"commitName": "1f8dc32725276a68456c5c4315c6a7c0b3f222ad",
+							"commitAuthor": "mariofusco",
+							"commitDateOld": "2014-04-16, 7:48 AM",
+							"commitNameOld": "16fc9b9bb70f0f7ab2ac078e06d642c637aad8b1",
+							"commitAuthorOld": "mariofusco",
+							"daysBetweenCommits": 5.68,
+							"commitsBetweenForRepo": 1,
+							"commitsBetweenForFile": 1,
+							"diff": "@@ -1,3 +1,3 @@\n-    public PackageBuilder getPackageBuilder() {\n-        return pkgBuilder;\n+    InternalKnowledgeBase getKnowledgeBase() {\n+        return kBase;\n     }\n\\ No newline at end of file\n",
+							"extendedDetails": {
+								"oldValue": "[public]",
+								"newValue": "[]"
+							}
+						},
+						{
+							"type": "Ybodychange",
+							"commitMessage": "major cleanup 4.x legacy API\n",
+							"commitDate": "2014-04-22, 12:12 AM",
+							"commitName": "1f8dc32725276a68456c5c4315c6a7c0b3f222ad",
+							"commitAuthor": "mariofusco",
+							"commitDateOld": "2014-04-16, 7:48 AM",
+							"commitNameOld": "16fc9b9bb70f0f7ab2ac078e06d642c637aad8b1",
+							"commitAuthorOld": "mariofusco",
+							"daysBetweenCommits": 5.68,
+							"commitsBetweenForRepo": 1,
+							"commitsBetweenForFile": 1,
+							"diff": "@@ -1,3 +1,3 @@\n-    public PackageBuilder getPackageBuilder() {\n-        return pkgBuilder;\n+    InternalKnowledgeBase getKnowledgeBase() {\n+        return kBase;\n     }\n\\ No newline at end of file\n",
+							"extendedDetails": {}
+						},
+						{
+							"type": "Yrename",
+							"commitMessage": "major cleanup 4.x legacy API\n",
+							"commitDate": "2014-04-22, 12:12 AM",
+							"commitName": "1f8dc32725276a68456c5c4315c6a7c0b3f222ad",
+							"commitAuthor": "mariofusco",
+							"commitDateOld": "2014-04-16, 7:48 AM",
+							"commitNameOld": "16fc9b9bb70f0f7ab2ac078e06d642c637aad8b1",
+							"commitAuthorOld": "mariofusco",
+							"daysBetweenCommits": 5.68,
+							"commitsBetweenForRepo": 1,
+							"commitsBetweenForFile": 1,
+							"diff": "@@ -1,3 +1,3 @@\n-    public PackageBuilder getPackageBuilder() {\n-        return pkgBuilder;\n+    InternalKnowledgeBase getKnowledgeBase() {\n+        return kBase;\n     }\n\\ No newline at end of file\n",
+							"extendedDetails": {
+								"oldValue": "getPackageBuilder",
+								"newValue": "getKnowledgeBase"
+							}
+						}
+					]
+				},
+				"30dd17f28a34017d81d73698a7af37ab0be33811": {
+					"type": "Yfilerename",
+					"commitMessage": "Resolve split-packages: move everything from drools-compiler under org.drools.compiler: move org.drools.builder\n",
+					"commitDate": "2013-03-15, 6:21 AM",
+					"commitName": "30dd17f28a34017d81d73698a7af37ab0be33811",
+					"commitAuthor": "Geoffrey De Smet",
+					"commitDateOld": "2013-03-15, 6:19 AM",
+					"commitNameOld": "c211935b201000aaf56bce69cd12d73a8d5724f3",
+					"commitAuthorOld": "Geoffrey De Smet",
+					"daysBetweenCommits": 0,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "",
+					"extendedDetails": {
+						"oldPath": "drools-compiler/src/main/java/org/drools/builder/impl/KnowledgeBuilderImpl.java",
+						"newPath": "drools-compiler/src/main/java/org/drools/compiler/builder/impl/KnowledgeBuilderImpl.java"
+					}
+				},
+				"b2a9b0a4634921b9cd26f2496a8c92f20712c56f": {
+					"type": "Ybodychange",
+					"commitMessage": "[JBRULES-3365] reimplement KnowledgeBuilder's undo avoiding Package cloning\n",
+					"commitDate": "2012-03-13, 9:45 AM",
+					"commitName": "b2a9b0a4634921b9cd26f2496a8c92f20712c56f",
+					"commitAuthor": "mariofusco",
+					"commitDateOld": "2012-03-01, 3:03 AM",
+					"commitNameOld": "497ce7fc21b32ed38f678f47db27a720819704ab",
+					"commitAuthorOld": "mariofusco",
+					"daysBetweenCommits": 12.24,
+					"commitsBetweenForRepo": 37,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,3 +1,3 @@\n     public PackageBuilder getPackageBuilder() {\n-        return pkgBuilder.get();\n+        return pkgBuilder;\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				},
+				"8cc4e63660a37118920287e59c023bfba5f02842": {
+					"type": "Ybodychange",
+					"commitMessage": "[JBRULES-3365] allow to undo the last added resource on the KnowledgeBuilder\n",
+					"commitDate": "2012-02-02, 8:34 AM",
+					"commitName": "8cc4e63660a37118920287e59c023bfba5f02842",
+					"commitAuthor": "mariofusco",
+					"commitDateOld": "2012-02-01, 7:55 AM",
+					"commitNameOld": "1e0d7d29fc104d716e61059b9330e80e38bd7c1a",
+					"commitAuthorOld": "mariofusco",
+					"daysBetweenCommits": 1.03,
+					"commitsBetweenForRepo": 3,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,3 +1,3 @@\n     public PackageBuilder getPackageBuilder() {\n-        return this.pkgBuilder;\n+        return pkgBuilder.get();\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				},
+				"fa253763882a54d10387dc7c5417fd340549663a": {
+					"type": "Yintroduced",
+					"commitMessage": "JBRULES-1903 Pipeline support for DataLoaders and Feeders\n\ngit-svn-id: https://svn.jboss.org/repos/labs/labs/jbossrules/trunk@24484 c60d74c8-e8f6-0310-9e8f-d4a2fc68ab70\n",
+					"commitDate": "2008-12-23, 10:58 AM",
+					"commitName": "fa253763882a54d10387dc7c5417fd340549663a",
+					"commitAuthor": "Mark Proctor"
+				}
 			}
 		);
 	}
