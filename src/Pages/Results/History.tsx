@@ -30,7 +30,33 @@ export class History {
 
 			}
 		}
+		if (commits.length >= 2) {
+			commits[commits.length - 1].diff = History.buildFirstDiff(commits[commits.length - 2].diff);
+		}
 		return commits;
+	}
+
+	private static buildFirstDiff(oldDiff: string | undefined): string | undefined {
+		if (!oldDiff) {
+			return oldDiff;
+		}
+		const oldLines: string[] = oldDiff.split('\n');
+		const newLines: string[] = [];
+		for (const line of oldLines) {
+			if (line.startsWith('+')) {
+				// Do nothing
+			} else if (line.startsWith('@@') || line.startsWith('\\ No newline at end of file')) {
+				newLines.push(line);
+			} else {
+				newLines.push('+' + line.substring(1));
+			}
+		}
+		if (newLines.length < 2) {
+			return undefined;
+		}
+		newLines[0] = `@@ -1,0 +1,${newLines.length - 3} @@`;
+		newLines[newLines.length - 1] = "";
+		return newLines.join('\n');
 	}
 
 	public getCommits(): ICommit[] {

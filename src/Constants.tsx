@@ -56,7 +56,7 @@ export class Constants {
 	};
 
 	public static readonly IN_TEST: boolean = true;
-	public static readonly TEST: string = "r1";
+	public static readonly TEST: string = "r3";
 
 	public static readonly NOTIFICATION_DISPLAY_TIME: number = 3000;
 	public static readonly SHOW_ABOUT_DELAY_TIME: number = 3000;
@@ -84,6 +84,7 @@ export class Constants {
 
 	public static readonly RESULTS_REQUEST_ERROR_TEXT: string = "There aren't any changes in this method's history! Please try another.";
 
+	public static readonly COMMIT_ROW_HEIGHT: number = 40;
 	public static readonly COMMIT_ROW_WIDTH: number = 1000;
 	public static readonly COMMIT_WIDTH_MODIFIER: number = 50;
 
