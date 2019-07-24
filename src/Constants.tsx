@@ -56,7 +56,7 @@ export class Constants {
 	};
 
 	public static readonly IN_TEST: boolean = true;
-	public static readonly TEST: string = "r3";
+	public static readonly TEST: string = "r2";
 
 	public static readonly NOTIFICATION_DISPLAY_TIME: number = 3000;
 	public static readonly SHOW_ABOUT_DELAY_TIME: number = 3000;
@@ -87,6 +87,7 @@ export class Constants {
 	public static readonly COMMIT_ROW_HEIGHT: number = 40;
 	public static readonly COMMIT_ROW_WIDTH: number = 1000;
 	public static readonly COMMIT_WIDTH_MODIFIER: number = 50;
+	public static readonly COMMIT_CELL_COLOUR_VARIANCE_PCT: number = 12;
 
 	public static readonly LOADING_TEXT: string = "Retrieving."
 }

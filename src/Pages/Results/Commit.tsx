@@ -7,10 +7,17 @@ import {ICommitx} from "../../Types";
 export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommitState> {
 	protected readonly fadeOutTime: number = 300;
 	private diffDeleter: any = undefined;
+	private datec: string = "";
+	private authc: string = "";
+	private filec: string = "";
+	private comtc: string = "";
+	private detlc: string = "";
+	private typec: string = "";
 
 	constructor(props: IReactCommitProps) {
 		super(props);
 		this.state = {onScreen: this.props.active, expanded: false, diffVisible: false};
+		this.setUpColours();
 		this.goToCommit = this.goToCommit.bind(this);
 		this.mouseDown = this.mouseDown.bind(this);
 		this.goToFileInCommit = this.goToFileInCommit.bind(this);
@@ -19,6 +26,21 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		this.getDate = this.getDate.bind(this);
 		this.getHeight = this.getHeight.bind(this);
 		this.enableDiff = this.enableDiff.bind(this);
+	}
+
+	private setUpColours(): void {
+		let temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
+		this.datec = temp < 10 ? "0" + temp : "" + temp;
+		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
+		this.authc = temp < 10 ? "0" + temp : "" + temp;
+		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
+		this.filec = temp < 10 ? "0" + temp : "" + temp;
+		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
+		this.comtc = temp < 10 ? "0" + temp : "" + temp;
+		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
+		this.detlc = temp < 10 ? "0" + temp : "" + temp;
+		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
+		this.typec = temp < 10 ? "0" + temp : "" + temp;
 	}
 
 	private goToCommit(): void {
@@ -65,7 +87,7 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		if (isNaN(date)) {
 			return "?";
 		} else {
-			return this.props.commit.commitDate;
+			return this.props.commit.commitDate.split(' ')[0];
 		}
 	}
 
@@ -124,8 +146,6 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 			>
 				<div
 					style={{
-						// marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px",
-						// animation: `${this.props.active ? "Expand" : "Contract"}  ${this.fadeOutTime}ms ease-in-out`,
 						margin: "0 auto",
 						marginTop: "3px",
 						marginBottom: "3px",
@@ -133,7 +153,6 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 						// @ts-ignore
 						height: this.getHeight(),
 						backgroundColor: this.getBackgroundColour(),
-						// height: "40px", // this.props.active ? "40px" : "0",
 						font: "100% \"Courier New\", Futura, sans-serif",
 						width: (Constants.COMMIT_ROW_WIDTH + (this.state.expanded ? Constants.COMMIT_WIDTH_MODIFIER : 0)) + "px",
 						overflow: "hidden",
@@ -141,32 +160,40 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 						transition: this.fadeOutTime + "ms ease-in-out",
 					}}
 					onMouseDown={this.mouseDown}
-					onClick={this.toggleExpanded}
 				>
-					<div>
-						{this.getChangeType() + (this.props.commit.commitAuthor ? " by " + this.props.commit.commitAuthor : "")}
-					</div>
-					<div id={this.props.commit.commitName} style={{width: "90%", margin: "0 auto", opacity: this.state.diffVisible ? 1 : 0, transition: this.fadeOutTime + "ms ease-in-out"}}/>
 					<div
 						style={{
-							fontSize: "50%",
-							textAlign: "right",
+							margin: "0 auto",
+							width: Constants.COMMIT_ROW_WIDTH,
+							// display: "inline-flex",
+							display: "grid",
+							gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr"
 						}}
-						onClick={this.goToCommit}
 					>
-						{this.props.commit.commitName}
+						<div className="CommitRowCell" style={{fontSize: "70%", backgroundColor: `rgba(255, 255, 255, 0.${this.datec})`}}>
+							{this.getDate()}
+						</div>
+						<div className="CommitRowCell" style={{backgroundColor: `rgba(255, 255, 255, 0.${this.authc})`}}>
+							{this.props.commit.commitAuthor}
+						</div>
+						<div className="CommitRowCell" style={{backgroundColor: `rgba(255, 255, 255, 0.${this.typec})`}}>
+							{this.getChangeType()}
+						</div>
+						{this.props.repo.replace(".git", "") !== "" ?
+							<div className="CommitRowCell" onClick={this.goToCommit} style={{backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
+								View<br/>{this.props.commit.commitName.substring(34)}
+							</div> : <div/>
+						}
+						{this.props.commit.file && this.props.repo.replace(".git", "") !== "" ?
+							<div className="CommitRowCell" onClick={this.goToFileInCommit} style={{backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
+								View<br/>File
+							</div> : <div/>
+						}
+						<div className="CommitRowCell" onClick={this.toggleExpanded} style={{backgroundColor: `rgba(255, 255, 255, 0.${this.detlc})`}}>
+							Details
+						</div>
 					</div>
-					{this.props.commit.file && this.props.repo.replace(".git", "") !== "" ?
-						<div
-							style={{
-								fontSize: "50%",
-								textAlign: "right",
-							}}
-							onClick={this.goToFileInCommit}
-						>
-							Visit
-						</div> : <div/>
-					}
+					<div id={this.props.commit.commitName} style={{width: "90%", margin: "0 auto", opacity: this.state.diffVisible ? 1 : 0, transition: this.fadeOutTime + "ms ease-in-out"}}/>
 				</div>
 			</div>
 		);

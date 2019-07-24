@@ -39,6 +39,14 @@
     display: none;
 }
 
+.CommitRowCell {
+    text-align: center;
+}
+
+.Test {
+    color: rgba(255, 255, 255, 0.93);
+}
+
 .d2h-file-diff {
     background-color: rgba(224, 224, 224, 0.99);
     overflow: scroll scroll;
