@@ -130,7 +130,7 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 						backgroundColor: this.getBackgroundColour(),
 						// height: "40px", // this.props.active ? "40px" : "0",
 						font: "100% \"Courier New\", Futura, sans-serif",
-						width: (this.state.expanded ? 700 : 650) + "px",
+						width: (Constants.COMMIT_ROW_WIDTH + (this.state.expanded ? Constants.COMMIT_WIDTH_MODIFIER : 0)) + "px",
 						overflow: "hidden",
 						zIndex: 9999,
 						transition: this.fadeOutTime + "ms ease-in-out",

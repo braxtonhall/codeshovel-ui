@@ -84,5 +84,8 @@ export class Constants {
 
 	public static readonly RESULTS_REQUEST_ERROR_TEXT: string = "There aren't any changes in this method's history! Please try another.";
 
+	public static readonly COMMIT_ROW_WIDTH: number = 1000;
+	public static readonly COMMIT_WIDTH_MODIFIER: number = 50;
+
 	public static readonly LOADING_TEXT: string = "Retrieving."
 }
