@@ -2,10 +2,11 @@ import React, {ReactNode} from "react";
 import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../FadeableElement";
 
 export default class SmallButton extends FadeableElement<ISmallButtonProps, ISmallButtonState> {
-	protected readonly fadeOutTime: number = 500;
+	protected readonly fadeOutTime: number;
 
 	public constructor(props: ISmallButtonProps) {
 		super(props);
+		this.fadeOutTime = 300 + Math.floor(Math.random() * 400);
 		this.state = {
 			onScreen: this.props.active,
 		};

@@ -56,9 +56,10 @@ export class Constants {
 	};
 
 	public static readonly IN_TEST: boolean = true;
-	public static readonly TEST: string = "r3";
+	public static readonly TEST: string = "r1";
 
 	public static readonly NOTIFICATION_DISPLAY_TIME: number = 3000;
+	public static readonly SHOW_ABOUT_DELAY_TIME: number = 3000;
 
 	public static readonly SERVER_ADDRESS: string = "http://localhost:1234";
 

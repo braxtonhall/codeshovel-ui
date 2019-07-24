@@ -44,6 +44,7 @@ export default class App extends React.Component<any, IAppState> {
 			methodContent: null,
 			historyContent: null,
 			displayTextCopied: false,
+			showAbout: false,
 		};
 		this.history = [];
 		this.proceedToPage = this.proceedToPage.bind(this);
@@ -56,14 +57,22 @@ export default class App extends React.Component<any, IAppState> {
 		this.closeErrors = this.closeErrors.bind(this);
 		this.copyText = this.copyText.bind(this);
 		this.getNewTestState = this.getNewTestState.bind(this);
+		this.showAbout = this.showAbout.bind(this);
 	}
 
 	public componentDidMount(): void {
 		document.addEventListener('keydown', this.handleKey);
+		setTimeout(this.showAbout, Constants.SHOW_ABOUT_DELAY_TIME);
 	}
 
 	public componentWillUnmount(): void {
 		document.removeEventListener('keydown', this.handleKey);
+	}
+
+	private showAbout(): void {
+		const state: IAppState = Object.assign({}, this.state);
+		state.showAbout = true;
+		this.setState(state);
 	}
 
 	private handleKey(event: KeyboardEvent): void {
@@ -368,7 +377,7 @@ export default class App extends React.Component<any, IAppState> {
 						bottom={40}
 					/>
 					<SmallButton
-						active={this.state.page !== Pages.ABOUT}
+						active={this.state.page !== Pages.ABOUT && this.state.showAbout}
 						onClick={() => this.proceedToPage(Pages.ABOUT)}
 						width={30}
 						height={30}
@@ -410,4 +419,5 @@ export interface IAppState {
 	methodContent: IMethodTransport[] | null;
 	historyContent: IHistoryTransport | null;
 	displayTextCopied: boolean;
+	showAbout: boolean;
 }

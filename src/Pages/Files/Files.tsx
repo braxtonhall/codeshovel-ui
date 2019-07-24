@@ -122,9 +122,10 @@ export class Files extends Page<IFilesProps, IFilesState> {
 				<div>
 					{// this.state.onScreen || this.props.active ?
 						<div
+							// className="NoScroll"
 							style={{
 								position: "fixed",
-								overflowY: "scroll",
+								// overflowY: "scroll",
 								height: "100%",
 								width: "100%",
 								top: "50%",

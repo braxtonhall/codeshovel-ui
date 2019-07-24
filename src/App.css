@@ -29,8 +29,25 @@
     background-position: center;
 }
 
+.NoScroll {
+    overflow: scroll scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.NoScroll::-webkit-scrollbar {
+    display: none;
+}
+
 .d2h-file-diff {
     background-color: rgba(224, 224, 224, 0.99);
+    overflow: scroll scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.d2h-file-diff::-webkit-scrollbar {
+    display: none;
 }
 
 .d2h-file-diff .d2h-del.d2h-change {
@@ -66,7 +83,13 @@
 .Panel {
     flex: 1;
     position: absolute;
-    overflow-y: scroll;
+    overflow: scroll scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.Panel::-webkit-scrollbar {
+    display: none;
 }
 
 @keyframes App-logo-spin {
