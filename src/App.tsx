@@ -45,6 +45,9 @@ export default class App extends React.Component<any, IAppState> {
 			historyContent: null,
 			displayTextCopied: false,
 			showAbout: false,
+			width: window.innerWidth,
+			height: window.innerHeight,
+
 		};
 		this.history = [];
 		this.proceedToPage = this.proceedToPage.bind(this);
@@ -58,10 +61,12 @@ export default class App extends React.Component<any, IAppState> {
 		this.copyText = this.copyText.bind(this);
 		this.getNewTestState = this.getNewTestState.bind(this);
 		this.showAbout = this.showAbout.bind(this);
+		this.updateSize = this.updateSize.bind(this);
 	}
 
 	public componentDidMount(): void {
 		document.addEventListener('keydown', this.handleKey);
+		window.addEventListener("resize", this.updateSize);
 		setTimeout(this.showAbout, Constants.SHOW_ABOUT_DELAY_TIME);
 	}
 
@@ -73,6 +78,13 @@ export default class App extends React.Component<any, IAppState> {
 		const state: IAppState = Object.assign({}, this.state);
 		state.showAbout = true;
 		this.setState(state);
+	}
+
+	private updateSize(): void {
+		this.setState({
+			width: window.innerWidth,
+			height: window.innerHeight,
+		});
 	}
 
 	private handleKey(event: KeyboardEvent): void {
@@ -365,6 +377,8 @@ export default class App extends React.Component<any, IAppState> {
 						content={this.state.historyContent ? this.state.historyContent : {}}
 						repo={this.state.link}
 						file={this.state.file}
+						windowHeight={this.state.height}
+						windowWidth={this.state.width}
 					/>
 					<SmallButton
 						active={this.history.length > 0}
@@ -373,8 +387,9 @@ export default class App extends React.Component<any, IAppState> {
 						height={30}
 						backgroundImage={"url(/left.png)"}
 						backgroundSize={15}
+						shift={0}
 						left={5}
-						bottom={40}
+						bottom={5}
 					/>
 					<SmallButton
 						active={this.state.page !== Pages.ABOUT && this.state.showAbout}
@@ -383,6 +398,7 @@ export default class App extends React.Component<any, IAppState> {
 						height={30}
 						backgroundImage={"url(/question.png)"}
 						backgroundSize={15}
+						shift={(this.history.length > 0 ? 35 : 0) + (this.state.page > Pages.LANDING && this.state.page < Pages.ABOUT ? 35 : 0)}
 						left={5}
 						bottom={5}
 					/>
@@ -391,7 +407,10 @@ export default class App extends React.Component<any, IAppState> {
 						handleClick={() => setImmediate(this.copyText)}
 						displayNotification={this.state.displayTextCopied}
 					/>
-					<LoadingPane text={App.loadingText} active={this.state.loading} size={{height: 30, width: 72}}/>
+					<LoadingPane text={`$ git clone ${this.state.link} && ls -R | grep *.java`} active={this.state.loading && this.state.page === Pages.LANDING} size={{height: 30, width: 72}}/>
+					<LoadingPane text={`$ vim ${this.state.file.split('/').pop()}`} active={this.state.loading && this.state.page === Pages.FILES} size={{height: 30, width: 72}}/>
+					<LoadingPane text={`$ java -jar codeshovel.jar -m ${this.state.method.methodName}`} active={this.state.loading && this.state.page === Pages.METHODS} size={{height: 30, width: 72}}/>
+					{/*<LoadingPane text={App.loadingText} active={this.state.loading && this.state.page !== Pages.LANDING} size={{height: 30, width: 72}}/>*/}
 					<ErrorPane text={App.serverBusyErrorText} active={this.state.serverBusyError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
 					<ErrorPane text={App.internalErrorText} active={this.state.internalError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
 					<ErrorPane text={App.loadFilesErrorText} active={this.state.loadFilesError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
@@ -420,4 +439,6 @@ export interface IAppState {
 	historyContent: IHistoryTransport | null;
 	displayTextCopied: boolean;
 	showAbout: boolean;
+	width: number;
+	height: number;
 }

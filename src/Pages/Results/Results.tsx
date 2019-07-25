@@ -48,7 +48,7 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 						transition: `${this.fadeOutTime}ms ease-in-out`,
 					}}
 				>
-					<ReactHistory history={this.history} active={this.props.active} repo={this.props.repo}/>
+					<ReactHistory history={this.history} active={this.props.active} repo={this.props.repo} windowHeight={this.props.windowHeight} windowWidth={this.props.windowWidth}/>
 				</div>
 			</div>
 		);
@@ -59,6 +59,8 @@ export interface IHistoryProps extends IPageProps {
 	content: IHistoryTransport;
 	repo: string;
 	file: string;
+	windowHeight: number;
+	windowWidth: number;
 }
 
 export interface IHistoryState extends IPageState {

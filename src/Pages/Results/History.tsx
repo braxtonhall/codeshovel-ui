@@ -3,6 +3,7 @@ import {ReactNode} from "react";
 import * as React from "react";
 import {IChange, ICommit, ICommitx, IHistoryTransport} from "../../Types";
 import {ReactCommit} from "./Commit";
+import {Changes} from "../../Enums";
 
 export class History {
 	private commits: ICommitx[];
@@ -16,19 +17,28 @@ export class History {
 		let file: string | undefined = startFile;
 		for (const commit of commits) {
 			commit["file"] = file;
-			if (commit.type === "Yfilerename" || commit.type === "Ymovefromfile") {
+			if (commit.type === Changes.FILE_RENAME || commit.type === Changes.MOV_FROM_FILE) {
 				file = commit.extendedDetails.oldPath;
-			} else if (commit.type.startsWith("Ymultichange") &&
-				(commit.type.includes("Yfilerename") || commit.type.includes("Ymovefromfile"))) {
-				const subChanges: IChange[] = commit.subchanges ? commit.subchanges : [];
-				for (const subChange of subChanges) {
-					if (subChange.type === "Yfilerename" || subChange.type === "Ymovefromfile") {
-						file = subChange.extendedDetails.oldPath;
-						break;
+			} else if (commit.type.startsWith(Changes.MULTI_CHANGE)) {
+				if (commit.subchanges) {
+					for (const change of commit.subchanges) {
+						if (change.diff) {
+							commit.diff = change.diff;
+							break;
+						}
 					}
 				}
-
+				if (commit.type.includes(Changes.FILE_RENAME) || commit.type.includes(Changes.MOV_FROM_FILE)) {
+					const subChanges: IChange[] = commit.subchanges ? commit.subchanges : [];
+					for (const subChange of subChanges) {
+						if (subChange.type === Changes.FILE_RENAME || subChange.type === Changes.MOV_FROM_FILE) {
+							file = subChange.extendedDetails.oldPath;
+							break;
+						}
+					}
+				}
 			}
+
 		}
 		if (commits.length >= 2) {
 			commits[commits.length - 1].diff = History.buildFirstDiff(commits[commits.length - 2].diff);
@@ -72,23 +82,12 @@ export class ReactHistory extends FadeableElement<IReactHistoryProps, IReactHist
 		super(props);
 		this.state = {onScreen: this.props.active};
 		this.handleClick = this.handleClick.bind(this);
-		// this.mouseDown = this.mouseDown.bind(this);
 	}
 
 	private handleClick(): void {
-		// setImmediate(this.props.history.tellParent);
-		// const state: IReactHistoryState = Object.assign({}, this.state);
-		// state.margin = 0;
-		// this.setState(state);
+
 	}
 
-	// private mouseDown(): void {
-	// 	const state: IReactHistoryState = Object.assign({}, this.state);
-	// 	state.margin = Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT;
-	// 	this.setState(state);
-	// }
-
-	// private buildCommits(history: IHistoryTransport)
 
 	protected createReactNode(): ReactNode {
 		return(
@@ -102,7 +101,7 @@ export class ReactHistory extends FadeableElement<IReactHistoryProps, IReactHist
 			>
 				{
 					this.props.history.getCommits().map((commit: ICommit, i: number) => {
-						return <ReactCommit commit={commit} key={i} active={this.props.active} repo={this.props.repo}/>;
+						return <ReactCommit commit={commit} key={i} active={this.props.active} repo={this.props.repo} windowHeight={this.props.windowHeight} windowWidth={this.props.windowWidth}/>;
 					})
 				}
 			</div>
@@ -113,6 +112,8 @@ export class ReactHistory extends FadeableElement<IReactHistoryProps, IReactHist
 export interface IReactHistoryProps extends IFadeableElementProps {
 	history: History;
 	repo: string;
+	windowHeight: number;
+	windowWidth: number;
 }
 
 export interface IReactHistoryState extends IFadeableElementState {

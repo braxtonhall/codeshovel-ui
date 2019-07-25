@@ -21,7 +21,7 @@ export default class SmallButton extends FadeableElement<ISmallButtonProps, ISma
 						width: this.props.width + "px",
 						position: "absolute",
 						bottom: this.props.bottom + "px",
-						left: this.props.left + "px",
+						left: (this.props.left + this.props.shift) + "px",
 						backgroundColor: "rgb(183, 166, 108)",
 						opacity: this.props.active ? 1 : 0,
 						transition: this.fadeOutTime + "ms ease-in-out",
@@ -42,6 +42,7 @@ export interface ISmallButtonProps extends IFadeableElementProps{
 	left: number;
 	backgroundImage: string;
 	backgroundSize: number;
+	shift: number;
 }
 
 export interface ISmallButtonState extends IFadeableElementState{

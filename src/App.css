@@ -165,3 +165,52 @@
         margin-top: 0;
     }
 }
+
+.Ybodychange {
+    background-color: rgb(109, 99, 124);
+}
+
+.Yfilerename {
+    background-color: rgb(124, 94, 106);
+}
+
+.Yintroduced {
+    background-color: rgb(0, 0, 0);
+}
+
+.Yexceptionschange {
+    background-color: rgb(124, 124, 124);
+}
+
+.Ymodifierchange {
+    background-color: rgb(104, 124, 120);
+}
+
+.Ymovefromfile {
+    background-color: rgb(124, 115, 103);
+}
+
+.Ymultichange {
+    background-color: rgb(124, 124, 124);
+}
+
+.Ynochange {
+    background-color: rgb(124, 124, 124);
+}
+
+.Yparameterchange {
+    background-color: rgb(104, 124, 106);
+}
+
+.Yparametermetachange {
+    background-color: rgb(99, 124, 115);
+}
+
+.Yrename {
+    background-color: rgb(103, 106, 124);
+}
+
+.Yreturntypechange {
+    background-color: rgb(77, 113, 124);
+}
+

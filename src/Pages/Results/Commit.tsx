@@ -3,6 +3,7 @@ import {Constants} from "../../Constants";
 import {ReactNode} from "react";
 import * as React from "react";
 import {ICommitx} from "../../Types";
+import {Changes} from "../../Enums";
 
 export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommitState> {
 	protected readonly fadeOutTime: number = 300;
@@ -22,10 +23,12 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		this.mouseDown = this.mouseDown.bind(this);
 		this.goToFileInCommit = this.goToFileInCommit.bind(this);
 		this.toggleExpanded = this.toggleExpanded.bind(this);
-		this.getBackgroundColour = this.getBackgroundColour.bind(this);
+		this.getClassName = this.getClassName.bind(this);
 		this.getDate = this.getDate.bind(this);
 		this.getHeight = this.getHeight.bind(this);
 		this.enableDiff = this.enableDiff.bind(this);
+		this.getBackgroundImage = this.getBackgroundImage.bind(this);
+		this.getFontSize = this.getFontSize.bind(this);
 	}
 
 	private setUpColours(): void {
@@ -60,20 +63,28 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		}
 	}
 
+	private getBackgroundImage(): string {
+		let change = this.props.commit.type;
+		if (change.startsWith(Changes.MULTI_CHANGE)) {
+			change = Changes.MULTI_CHANGE;
+		}
+		return Constants.CHANGE_IMAGES[change];
+	}
+
 	private getChangeType(): string {
 		let change = this.props.commit.type;
-		if (change.startsWith("Ymultichange")) {
-			change = "Ymultichange";
+		if (change.startsWith(Changes.MULTI_CHANGE)) {
+			change = Changes.MULTI_CHANGE;
 		}
 		return Constants.CHANGE_TYPES[change];
 	}
 
-	private getBackgroundColour(): string {
+	private getClassName(): string {
 		let change = this.props.commit.type;
-		if (change.startsWith("Ymultichange")) {
-			change = "Ymultichange";
+		if (change.startsWith(Changes.MULTI_CHANGE)) {
+			change = Changes.MULTI_CHANGE;
 		}
-		return Constants.CHANGE_COLORS[change];
+		return change;
 	}
 
 	private mouseDown(): void {
@@ -83,22 +94,27 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 	}
 
 	private getDate(): string {
-		const date: number = Date.parse(this.props.commit.commitDate);
-		if (isNaN(date)) {
+		const date: Date = new Date(this.props.commit.commitDate);
+		if (date.toDateString() === 'Invalid Date') {
 			return "?";
 		} else {
-			return this.props.commit.commitDate.split(' ')[0];
+			return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 		}
 	}
 
-	private getHeight(): number {
-		const element: Element | null = document.getElementById(this.props.commit.commitName);
-		if (element) {
-			return Constants.COMMIT_ROW_HEIGHT + element.clientHeight;
-		} else {
-			return Constants.COMMIT_ROW_HEIGHT;
+	private getHeight(baseOnly: boolean = false): string {
+		let height: number = this.props.windowHeight * 0.01 * Constants.COMMIT_ROW_HEIGHT;
+		if (baseOnly) {
+			return height + "px";
 		}
+		const diff: Element | null = document.getElementById(this.props.commit.commitName);
+		height = this.state.expanded ? height * 2 : height;
+		height = diff ? height + diff.clientHeight : height;
+		return height + "px";
+	}
 
+	private getFontSize(s: string): string {
+		return (this.props.windowWidth * (1 / Math.max(s.length, 5)) * 0.01 * Constants.COMMIT_FONT_APPROX_SIZE) + "px";
 	}
 
 	private enableDiff(): void {
@@ -140,21 +156,23 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 	}
 
 	protected createReactNode(): ReactNode {
+		const date = this.getDate();
+		const author = this.props.commit.commitAuthor;
+		const change = this.getChangeType();
 		return(
 			<div
 				style={{display: "block", alignItems: "center"}}
 			>
 				<div
+					className={this.getClassName()}
 					style={{
 						margin: "0 auto",
 						marginTop: "3px",
 						marginBottom: "3px",
 						textAlign: "left",
-						// @ts-ignore
 						height: this.getHeight(),
-						backgroundColor: this.getBackgroundColour(),
-						font: "100% \"Courier New\", Futura, sans-serif",
-						width: (Constants.COMMIT_ROW_WIDTH + (this.state.expanded ? Constants.COMMIT_WIDTH_MODIFIER : 0)) + "px",
+						font: Constants.FONT,
+						width: (Constants.COMMIT_ROW_WIDTH + (this.state.expanded ? Constants.COMMIT_WIDTH_MODIFIER : 0)) + "%",
 						overflow: "hidden",
 						zIndex: 9999,
 						transition: this.fadeOutTime + "ms ease-in-out",
@@ -164,20 +182,19 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 					<div
 						style={{
 							margin: "0 auto",
-							width: Constants.COMMIT_ROW_WIDTH,
-							// display: "inline-flex",
 							display: "grid",
-							gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr"
+							gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr",
+							height: this.getHeight(true)
 						}}
 					>
-						<div className="CommitRowCell" style={{fontSize: "70%", backgroundColor: `rgba(255, 255, 255, 0.${this.datec})`}}>
-							{this.getDate()}
+						<div className="CommitRowCell" style={{fontSize: this.getFontSize(date), backgroundColor: `rgba(255, 255, 255, 0.${this.datec})`}}>
+							{date}
 						</div>
-						<div className="CommitRowCell" style={{backgroundColor: `rgba(255, 255, 255, 0.${this.authc})`}}>
-							{this.props.commit.commitAuthor}
+						<div className="CommitRowCell" style={{fontSize: this.getFontSize(author), backgroundColor: `rgba(255, 255, 255, 0.${this.authc})`}}>
+							{author}
 						</div>
-						<div className="CommitRowCell" style={{backgroundColor: `rgba(255, 255, 255, 0.${this.typec})`}}>
-							{this.getChangeType()}
+						<div className="CommitRowCell" style={{fontSize: this.getFontSize(change), backgroundColor: `rgba(255, 255, 255, 0.${this.typec})`}}>
+							{change}
 						</div>
 						{this.props.repo.replace(".git", "") !== "" ?
 							<div className="CommitRowCell" onClick={this.goToCommit} style={{backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
@@ -193,7 +210,32 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 							Details
 						</div>
 					</div>
-					<div id={this.props.commit.commitName} style={{width: "90%", margin: "0 auto", opacity: this.state.diffVisible ? 1 : 0, transition: this.fadeOutTime + "ms ease-in-out"}}/>
+					<div
+						id={this.props.commit.commitName}
+						style={{
+							width: "90%",
+							margin: "0 auto",
+							opacity: this.state.diffVisible ? 1 : 0,
+							transition: this.fadeOutTime + "ms ease-in-out"
+						}}
+					/>
+					<div
+						style={{
+							height: this.state.expanded ? this.getHeight(true) : 0,
+							backgroundImage: this.getBackgroundImage(),
+							opacity: this.state.expanded ? 0.5 : 0,
+							backgroundSize: (this.props.windowHeight * 0.04 * Constants.COMMIT_ROW_HEIGHT) + "px",
+							backgroundRepeat: "no-repeat",
+							backgroundPosition: "left",
+							transition: this.fadeOutTime + "ms ease-in-out",
+						}}
+					>
+						<div
+							style={{
+
+							}}
+						/>
+					</div>
 				</div>
 			</div>
 		);
@@ -203,6 +245,8 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 export interface IReactCommitProps extends IFadeableElementProps {
 	commit: ICommitx;
 	repo: string;
+	windowHeight: number;
+	windowWidth: number;
 }
 
 export interface IReactCommitState extends IFadeableElementState {

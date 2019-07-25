@@ -9,7 +9,6 @@ export default class LoadingPane extends FadeableElement<ILoadingPaneProps, ILoa
 		this.state = {onScreen: this.props.active};
 	}
 
-	// TODO make the loading pane show commands it's executing. Examples "$ git checkout master", "$ ls -R | grep *.java"
 	public createReactNode(): ReactNode {
 		return (this.state.onScreen || this.props.active ?
 			<div
@@ -22,11 +21,11 @@ export default class LoadingPane extends FadeableElement<ILoadingPaneProps, ILoa
 					transform: "translate(-50%, -50%)",
 					height: this.props.size.height + "%",
 					width: this.props.size.width + "%",
+					color: "rgb(0, 0, 0)",
 					backgroundColor: "rgb(183, 166, 108)",
 					opacity: this.props.active ? 1 : 0,
 					transition: this.fadeOutTime + "ms ease-in-out",
-					animation: //`Fade-${this.props.active ? "In" : "Out"}  ${this.fadeOutTime}ms ease-in-out, ` +
-						`Pulse infinite 1s ease-in-out`,
+					// animation: `Pulse infinite 1s ease-in-out`,
 				}}
 			>
 				<div

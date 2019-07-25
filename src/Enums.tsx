@@ -30,3 +30,18 @@ export enum Key {
 	_8 = 'Digit8',
 	_9 = 'Digit9',
 }
+
+export enum Changes {
+	 BODY_CHANGE = "Ybodychange",
+	 FILE_RENAME = "Yfilerename",
+	 INTRODUCED = "Yintroduced",
+	 EXCEPS_CHANGE = "Yexceptionschange",
+	 MOD_CHANGE = "Ymodifierchange",
+	 MOV_FROM_FILE = "Ymovefromfile",
+	 MULTI_CHANGE = "Ymultichange",
+	 NO_CHANGE = "Ynochange",
+	 PARAM_CHANGE = "Yparameterchange",
+	 PARAM_META_CHANGE = "Yparametermetachange",
+	 RENAME = "Yrename",
+	 RETURN_CHANGE = "Yreturntypechange",
+}

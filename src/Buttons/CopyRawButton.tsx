@@ -29,10 +29,11 @@ export default class CopyRawButton extends FadeableElement<ICopyRawProps, ICopyR
 							transition: this.fadeOutTime + "ms ease-in-out",
 							backgroundImage: "url(/clipboard.png)",
 							backgroundSize: "15px",
+							textAlign: "right",
 						}}
 						onClick={this.props.handleClick}
 					>
-
+						Copy JSON
 					</div> : <div className="BackgroundImage"
 								  style={{position: "absolute", bottom: "5px", left: "40px", opacity: 0,}}/>
 
