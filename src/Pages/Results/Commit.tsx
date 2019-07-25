@@ -132,9 +132,9 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 			case Changes.PARAM_META_CHANGE:
 				if (ichange.extendedDetails && ichange.extendedDetails.oldValue && ichange.extendedDetails.newValue) {
 					let oldParams = ichange.extendedDetails.oldValue;
-					oldVal = oldParams.replace(/^\[/, "(").replace(/]$/, ")");
+					oldParams = oldParams.replace(/^\[/, "(").replace(/]$/, ")");
 					let newParams = ichange.extendedDetails.newValue;
-					newVal = newParams.replace(/^\[/, "(").replace(/]$/, ")");
+					newParams = newParams.replace(/^\[/, "(").replace(/]$/, ")");
 					return `${Constants.CHANGE_DESCRIPTIONS[change]}:\`${oldParams}\` to \`${newParams}\``;
 				} else {
 					break;
