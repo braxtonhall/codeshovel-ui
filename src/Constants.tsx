@@ -62,7 +62,7 @@ export class Constants {
 		[Changes.INTRODUCED]: "Method Introduction",
 		[Changes.EXCEPS_CHANGE]: "Exceptions Change",
 		[Changes.MOD_CHANGE]: "Access Modifier Change",
-		[Changes.MOV_FROM_FILE]: "Source File Change",
+		[Changes.MOV_FROM_FILE]: "Source File Path Change",
 		[Changes.MULTI_CHANGE]: "Multiple Changes",
 		[Changes.NO_CHANGE]: "No Changes",
 		[Changes.PARAM_CHANGE]: "Parameter Change",
