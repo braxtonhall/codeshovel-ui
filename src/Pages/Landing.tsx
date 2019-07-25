@@ -50,10 +50,6 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 		this.handleNext();
 	}
 
-	// protected updateContent(): void {
-	//
-	// }
-
 	public createReactNode(): ReactNode {
 		return (
 			this.state.onScreen || this.props.active ?

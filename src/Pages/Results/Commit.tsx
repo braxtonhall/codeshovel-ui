@@ -108,10 +108,13 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		}
 		switch (change) {
 			case Changes.EXCEPS_CHANGE:
-				break; // TODO
 			case Changes.MOD_CHANGE:
+				let oldVal = ichange.extendedDetails.oldValue;
+				oldVal = oldVal.replace(/^\[/, "").replace(/]$/, "");
+				let newVal = ichange.extendedDetails.newValue;
+				newVal = newVal.replace(/^\[/, "").replace(/]$/, "");
 				if (ichange.extendedDetails && ichange.extendedDetails.oldValue && ichange.extendedDetails.newValue) {
-					return `${Constants.CHANGE_DESCRIPTIONS[change]}:\`${ichange.extendedDetails.oldValue.replace(/[\[\]]/g, "")}\` to \`${ichange.extendedDetails.newValue.replace(/[\[\]]/g, "")}\``;
+					return `${Constants.CHANGE_DESCRIPTIONS[change]}:\`${oldVal}\` to \`${newVal}\``;
 				} else {
 					break;
 				}
@@ -126,15 +129,17 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 				}
 				break;
 			case Changes.PARAM_CHANGE:
-				break; // TODO
 			case Changes.PARAM_META_CHANGE:
-				break; // TODO
-			case Changes.RENAME:
 				if (ichange.extendedDetails && ichange.extendedDetails.oldValue && ichange.extendedDetails.newValue) {
-					return `${Constants.CHANGE_DESCRIPTIONS[change]}:\`${ichange.extendedDetails.oldValue}\` to \`${ichange.extendedDetails.newValue}\``;
+					let oldParams = ichange.extendedDetails.oldValue;
+					oldVal = oldParams.replace(/^\[/, "(").replace(/]$/, ")");
+					let newParams = ichange.extendedDetails.newValue;
+					newVal = newParams.replace(/^\[/, "(").replace(/]$/, ")");
+					return `${Constants.CHANGE_DESCRIPTIONS[change]}:\`${oldParams}\` to \`${newParams}\``;
 				} else {
 					break;
 				}
+			case Changes.RENAME:
 			case Changes.RETURN_CHANGE:
 				if (ichange.extendedDetails && ichange.extendedDetails.oldValue && ichange.extendedDetails.newValue) {
 					return `${Constants.CHANGE_DESCRIPTIONS[change]}:\`${ichange.extendedDetails.oldValue}\` to \`${ichange.extendedDetails.newValue}\``;
@@ -162,10 +167,8 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 			return (height * modifier) + "px";
 		}
 		const diff: Element | null = document.getElementById(this.props.commit.commitName);
-		const rename: Element | null = document.getElementById(this.props.commit.commitName + "rename");
-		height = this.state.expanded ? height + (height * this.changes.length) : height;
+		height = this.state.expanded ? height + (height * (this.changes.length + (diff && this.props.commit.diff ? 0.5 : 0))) : height;
 		height = diff ? height + diff.clientHeight : height;
-		height = rename ? height + rename.clientHeight : height;
 		return (height * modifier) + "px";
 	}
 
@@ -181,48 +184,10 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		}
 	}
 
-	private getRenameHTML(): string {
-		let oldPath: string = '?';
-		let newPath: string = '?';
-		if (this.props.commit.type.startsWith(Changes.MULTI_CHANGE) && this.props.commit.subchanges) {
-			for(const change of this.props.commit.subchanges) {
-				if (change.extendedDetails && change.extendedDetails.oldPath) {
-					oldPath = change.extendedDetails.oldPath;
-				}
-				if (change.extendedDetails && change.extendedDetails.newPath) {
-					newPath = change.extendedDetails.newPath;
-					break;
-				}
-			}
-		} else {
-			if (this.props.commit.extendedDetails && this.props.commit.extendedDetails.oldPath) {
-				oldPath = this.props.commit.extendedDetails.oldPath;
-			}
-			if (this.props.commit.extendedDetails && this.props.commit.extendedDetails.newPath) {
-				newPath = this.props.commit.extendedDetails.newPath;
-			}
-		}
-		return (
-`<div
-	class="Rename"
->
-	<div class="RenameOld">
-		${oldPath}
-	</div>
-	<div class="RenameImage">
-	</div>
-	<div class="RenameNew">
-		${newPath}
-	</div>		
-</div>`
-		);
-	}
-
 	private toggleExpanded(): void {
 		const state: IReactCommitState = Object.assign({}, this.state);
 		state.expanded = !state.expanded;
 		if (state.expanded) {
-			let willSetTimeout: boolean = false;
 			// TODO not this
 			if (this.props.commit.diff) {
 				/* eslint-disable */
@@ -230,16 +195,6 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 				const diffDrawer = new Diff2HtmlUI({diff: "--- a/file.fake\n+++ b/file.fake\n" + this.props.commit.diff});
 				diffDrawer.draw(`#${this.props.commit.commitName}`, {inputFormat: 'diff', showFiles: false, matching: 'lines', outputFormat: 'line-by-line'});
 				diffDrawer.highlightCode(`#${this.props.commit.commitName}`);
-				willSetTimeout = true;
-			}
-			if (this.props.commit.type.includes(Changes.MOV_FROM_FILE) || this.props.commit.type.includes(Changes.FILE_RENAME)) {
-				const element = document.getElementById(this.props.commit.commitName + "rename");
-				if (element) {
-					element.innerHTML = this.getRenameHTML();
-				}
-				willSetTimeout = true;
-			}
-			if (willSetTimeout) {
 				if (this.diffDeleter) {
 					clearTimeout(this.diffDeleter);
 				}
@@ -317,24 +272,6 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 							Details
 						</div>
 					</div>
-					<div
-						id={this.props.commit.commitName}
-						style={{
-							width: "90%",
-							margin: "0 auto",
-							opacity: this.state.diffVisible ? 1 : 0,
-							transition: this.fadeOutTime + "ms ease-in-out"
-						}}
-					/>
-					<div
-						id={this.props.commit.commitName + "rename"}
-						style={{
-							width: "90%",
-							margin: "0 auto",
-							opacity: this.state.diffVisible ? 1 : 0,
-							transition: this.fadeOutTime + "ms ease-in-out"
-						}}
-					/>
 					{
 						this.changes.map((change, i) => {
 							const desc: string = this.getDescription(change);
@@ -368,6 +305,15 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 							</div>);
 						})
 					}
+					<div
+						id={this.props.commit.commitName}
+						style={{
+							width: "90%",
+							margin: "0 auto",
+							opacity: this.state.diffVisible ? 1 : 0,
+							transition: this.fadeOutTime + "ms ease-in-out"
+						}}
+					/>
 				</div>
 			</div>
 		);

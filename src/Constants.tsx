@@ -29,7 +29,7 @@ export class Constants {
 	public static readonly CHANGE_TYPES: {[internalName: string]: string} = {
 		[Changes.BODY_CHANGE]: "Body",
 		[Changes.FILE_RENAME]: "File Rename",
-		[Changes.INTRODUCED]: "Introduced",
+		[Changes.INTRODUCED]: "Introduction",
 		[Changes.EXCEPS_CHANGE]: "Exceptions",
 		[Changes.MOD_CHANGE]: "Modifier",
 		[Changes.MOV_FROM_FILE]: "Move From File",
@@ -59,10 +59,10 @@ export class Constants {
 	public static readonly CHANGE_DESCRIPTIONS: {[internalName: string]: string} = {
 		[Changes.BODY_CHANGE]: "Method Body Change",
 		[Changes.FILE_RENAME]: "Source File Rename",
-		[Changes.INTRODUCED]: "Method Introduced",
+		[Changes.INTRODUCED]: "Method Introduction",
 		[Changes.EXCEPS_CHANGE]: "Exceptions Change",
 		[Changes.MOD_CHANGE]: "Access Modifier Change",
-		[Changes.MOV_FROM_FILE]: "Move Across Files",
+		[Changes.MOV_FROM_FILE]: "Source File Change",
 		[Changes.MULTI_CHANGE]: "Multiple Changes",
 		[Changes.NO_CHANGE]: "No Changes",
 		[Changes.PARAM_CHANGE]: "Parameter Change",
@@ -71,8 +71,8 @@ export class Constants {
 		[Changes.RETURN_CHANGE]: "Return Type Change",
 	};
 
-	public static readonly IN_TEST: boolean = true;
-	public static readonly TEST: string = "r2";
+	public static readonly IN_TEST: boolean = false;
+	public static readonly TEST: string = "r1";
 
 	public static readonly NOTIFICATION_DISPLAY_TIME: number = 1000;
 	public static readonly SHOW_ABOUT_DELAY_TIME: number = 3000;
