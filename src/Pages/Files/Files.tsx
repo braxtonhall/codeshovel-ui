@@ -120,24 +120,20 @@ export class Files extends Page<IFilesProps, IFilesState> {
 					}
 				</div>
 				<div>
-					{// this.state.onScreen || this.props.active ?
-						<div
-							// className="NoScroll"
-							style={{
-								position: "fixed",
-								// overflowY: "scroll",
-								height: "100%",
-								width: "100%",
-								top: "50%",
-								left: "50%",
-								transform: this.chooseTransform(),
-								opacity: this.props.active ? 0.8 : 0,
-								transition: `${this.fadeOutTime}ms ease-in-out`,
-							}}
-						>
-							<FileContainer dir={this.root}/>
-						</div>// : <div style={{top: "50%", left: "50%", transform: this.chooseTransform()}}/>
-					}
+					<div
+						style={{
+							position: "fixed",
+							height: "100%",
+							width: "100%",
+							top: "50%",
+							left: "50%",
+							transform: this.chooseTransform(),
+							opacity: this.props.active ? 0.8 : 0,
+							transition: `${this.fadeOutTime}ms ease-in-out`,
+						}}
+					>
+						<FileContainer dir={this.root}/>
+					</div>
 				</div>
 				<div>
 					{this.state.onScreen || this.props.active ?

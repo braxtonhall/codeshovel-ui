@@ -2,7 +2,7 @@ import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../
 import {Constants} from "../../Constants";
 import {ReactNode} from "react";
 import * as React from "react";
-import {ICommitx} from "../../Types";
+import {IChange, ICommitx} from "../../Types";
 import {Changes} from "../../Enums";
 
 export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommitState> {
@@ -14,13 +14,18 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 	private comtc: string = "";
 	private detlc: string = "";
 	private typec: string = "";
+	private changes: IChange[];
 
 	constructor(props: IReactCommitProps) {
 		super(props);
 		this.state = {onScreen: this.props.active, expanded: false, diffVisible: false};
+		if (this.props.commit.type.startsWith(Changes.MULTI_CHANGE) && this.props.commit.subchanges) {
+			this.changes = this.props.commit.subchanges;
+		} else {
+			this.changes = [this.props.commit]
+		}
 		this.setUpColours();
 		this.goToCommit = this.goToCommit.bind(this);
-		this.mouseDown = this.mouseDown.bind(this);
 		this.goToFileInCommit = this.goToFileInCommit.bind(this);
 		this.toggleExpanded = this.toggleExpanded.bind(this);
 		this.getClassName = this.getClassName.bind(this);
@@ -63,34 +68,83 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		}
 	}
 
-	private getBackgroundImage(): string {
-		let change = this.props.commit.type;
+	private getBackgroundImage(change?: string): string {
+		if (!change) {
+			change = this.props.commit.type;
+		}
 		if (change.startsWith(Changes.MULTI_CHANGE)) {
 			change = Changes.MULTI_CHANGE;
 		}
 		return Constants.CHANGE_IMAGES[change];
 	}
 
-	private getChangeType(): string {
-		let change = this.props.commit.type;
+	private getChangeType(change?: string): string {
+		if (!change) {
+			change = this.props.commit.type;
+		}
 		if (change.startsWith(Changes.MULTI_CHANGE)) {
 			change = Changes.MULTI_CHANGE;
 		}
 		return Constants.CHANGE_TYPES[change];
 	}
 
-	private getClassName(): string {
-		let change = this.props.commit.type;
+	private getClassName(change?: string): string {
+		if (!change) {
+			change = this.props.commit.type;
+		}
 		if (change.startsWith(Changes.MULTI_CHANGE)) {
 			change = Changes.MULTI_CHANGE;
 		}
 		return change;
 	}
 
-	private mouseDown(): void {
-		// const state: IReactCommitState = Object.assign({}, this.state);
-		// state.margin = Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT;
-		// this.setState(state);
+	private getDescription(ichange?: IChange): string {
+		if (!ichange) {
+			ichange = this.props.commit;
+		}
+		let change = ichange.type;
+		if (change.startsWith(Changes.MULTI_CHANGE)) {
+			change = Changes.MULTI_CHANGE;
+		}
+		switch (change) {
+			case Changes.EXCEPS_CHANGE:
+				break; // TODO
+			case Changes.MOD_CHANGE:
+				if (ichange.extendedDetails && ichange.extendedDetails.oldValue && ichange.extendedDetails.newValue) {
+					return `${Constants.CHANGE_DESCRIPTIONS[change]}:\`${ichange.extendedDetails.oldValue.replace(/[\[\]]/g, "")}\` to \`${ichange.extendedDetails.newValue.replace(/[\[\]]/g, "")}\``;
+				} else {
+					break;
+				}
+			case Changes.FILE_RENAME:
+			case Changes.MOV_FROM_FILE:
+				if (ichange.extendedDetails && ichange.extendedDetails.oldPath && ichange.extendedDetails.newPath) {
+					const oldFName = ichange.extendedDetails.oldPath.split('/').pop();
+					const newFName = ichange.extendedDetails.newPath.split('/').pop();
+					if (oldFName !== newFName) {
+						return `${Constants.CHANGE_DESCRIPTIONS[change]}:\`${oldFName}\` to \`${newFName}\``;
+					}
+				}
+				break;
+			case Changes.PARAM_CHANGE:
+				break; // TODO
+			case Changes.PARAM_META_CHANGE:
+				break; // TODO
+			case Changes.RENAME:
+				if (ichange.extendedDetails && ichange.extendedDetails.oldValue && ichange.extendedDetails.newValue) {
+					return `${Constants.CHANGE_DESCRIPTIONS[change]}:\`${ichange.extendedDetails.oldValue}\` to \`${ichange.extendedDetails.newValue}\``;
+				} else {
+					break;
+				}
+			case Changes.RETURN_CHANGE:
+				if (ichange.extendedDetails && ichange.extendedDetails.oldValue && ichange.extendedDetails.newValue) {
+					return `${Constants.CHANGE_DESCRIPTIONS[change]}:\`${ichange.extendedDetails.oldValue}\` to \`${ichange.extendedDetails.newValue}\``;
+				} else {
+					break;
+				}
+			default:
+				break;
+		}
+		return Constants.CHANGE_DESCRIPTIONS[change];
 	}
 
 	private getDate(): string {
@@ -98,23 +152,25 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		if (date.toDateString() === 'Invalid Date') {
 			return "?";
 		} else {
-			return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+			return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 		}
 	}
 
-	private getHeight(baseOnly: boolean = false): string {
-		let height: number = this.props.windowHeight * 0.01 * Constants.COMMIT_ROW_HEIGHT;
+	private getHeight(baseOnly: boolean = false, modifier: number = 1): string {
+		let height: number = Math.log(this.props.windowHeight) * Constants.COMMIT_ROW_HEIGHT;
 		if (baseOnly) {
-			return height + "px";
+			return (height * modifier) + "px";
 		}
 		const diff: Element | null = document.getElementById(this.props.commit.commitName);
-		height = this.state.expanded ? height * 2 : height;
+		const rename: Element | null = document.getElementById(this.props.commit.commitName + "rename");
+		height = this.state.expanded ? height + (height * this.changes.length) : height;
 		height = diff ? height + diff.clientHeight : height;
-		return height + "px";
+		height = rename ? height + rename.clientHeight : height;
+		return (height * modifier) + "px";
 	}
 
-	private getFontSize(s: string): string {
-		return (this.props.windowWidth * (1 / Math.max(s.length, 5)) * 0.01 * Constants.COMMIT_FONT_APPROX_SIZE) + "px";
+	private getFontSize(s: string, modifier: number = 1): string {
+		return (this.props.windowWidth * (1 / Math.max(s.length, 8)) * 0.01 * Constants.COMMIT_FONT_APPROX_SIZE * modifier) + "px";
 	}
 
 	private enableDiff(): void {
@@ -125,10 +181,48 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		}
 	}
 
+	private getRenameHTML(): string {
+		let oldPath: string = '?';
+		let newPath: string = '?';
+		if (this.props.commit.type.startsWith(Changes.MULTI_CHANGE) && this.props.commit.subchanges) {
+			for(const change of this.props.commit.subchanges) {
+				if (change.extendedDetails && change.extendedDetails.oldPath) {
+					oldPath = change.extendedDetails.oldPath;
+				}
+				if (change.extendedDetails && change.extendedDetails.newPath) {
+					newPath = change.extendedDetails.newPath;
+					break;
+				}
+			}
+		} else {
+			if (this.props.commit.extendedDetails && this.props.commit.extendedDetails.oldPath) {
+				oldPath = this.props.commit.extendedDetails.oldPath;
+			}
+			if (this.props.commit.extendedDetails && this.props.commit.extendedDetails.newPath) {
+				newPath = this.props.commit.extendedDetails.newPath;
+			}
+		}
+		return (
+`<div
+	class="Rename"
+>
+	<div class="RenameOld">
+		${oldPath}
+	</div>
+	<div class="RenameImage">
+	</div>
+	<div class="RenameNew">
+		${newPath}
+	</div>		
+</div>`
+		);
+	}
+
 	private toggleExpanded(): void {
 		const state: IReactCommitState = Object.assign({}, this.state);
 		state.expanded = !state.expanded;
 		if (state.expanded) {
+			let willSetTimeout: boolean = false;
 			// TODO not this
 			if (this.props.commit.diff) {
 				/* eslint-disable */
@@ -136,6 +230,16 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 				const diffDrawer = new Diff2HtmlUI({diff: "--- a/file.fake\n+++ b/file.fake\n" + this.props.commit.diff});
 				diffDrawer.draw(`#${this.props.commit.commitName}`, {inputFormat: 'diff', showFiles: false, matching: 'lines', outputFormat: 'line-by-line'});
 				diffDrawer.highlightCode(`#${this.props.commit.commitName}`);
+				willSetTimeout = true;
+			}
+			if (this.props.commit.type.includes(Changes.MOV_FROM_FILE) || this.props.commit.type.includes(Changes.FILE_RENAME)) {
+				const element = document.getElementById(this.props.commit.commitName + "rename");
+				if (element) {
+					element.innerHTML = this.getRenameHTML();
+				}
+				willSetTimeout = true;
+			}
+			if (willSetTimeout) {
 				if (this.diffDeleter) {
 					clearTimeout(this.diffDeleter);
 				}
@@ -144,9 +248,13 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		} else {
 			state.diffVisible = false;
 			this.diffDeleter = setTimeout(() => {
-				const element = document.getElementById(this.props.commit.commitName);
-				if (element) {
-					element.innerHTML = "<div/>";
+				const diff = document.getElementById(this.props.commit.commitName);
+				const rename = document.getElementById(this.props.commit.commitName + "rename");
+				if (diff) {
+					diff.innerHTML = "<div/>";
+				}
+				if (rename) {
+					rename.innerHTML = "<div/>";
 				}
 				this.diffDeleter = undefined;
 				this.forceUpdate();
@@ -177,7 +285,6 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 						zIndex: 9999,
 						transition: this.fadeOutTime + "ms ease-in-out",
 					}}
-					onMouseDown={this.mouseDown}
 				>
 					<div
 						style={{
@@ -220,22 +327,47 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 						}}
 					/>
 					<div
+						id={this.props.commit.commitName + "rename"}
 						style={{
-							height: this.state.expanded ? this.getHeight(true) : 0,
-							backgroundImage: this.getBackgroundImage(),
-							opacity: this.state.expanded ? 0.5 : 0,
-							backgroundSize: (this.props.windowHeight * 0.04 * Constants.COMMIT_ROW_HEIGHT) + "px",
-							backgroundRepeat: "no-repeat",
-							backgroundPosition: "left",
-							transition: this.fadeOutTime + "ms ease-in-out",
+							width: "90%",
+							margin: "0 auto",
+							opacity: this.state.diffVisible ? 1 : 0,
+							transition: this.fadeOutTime + "ms ease-in-out"
 						}}
-					>
-						<div
-							style={{
-
-							}}
-						/>
-					</div>
+					/>
+					{
+						this.changes.map((change, i) => {
+							const desc: string = this.getDescription(change);
+							return (<div
+								className={this.getClassName(change.type)}
+								style={{
+									height: this.state.expanded ? this.getHeight(true) : 0,
+									backgroundImage: this.getBackgroundImage(change.type),
+									opacity: this.state.expanded ? 0.5 : 0,
+									backgroundSize: (this.props.windowHeight * 0.04 * Constants.COMMIT_ROW_HEIGHT) + "px",
+									backgroundRepeat: "no-repeat",
+									backgroundPosition: "left",
+									transition: this.fadeOutTime + "ms ease-in-out",
+									position: "relative"
+								}}
+								key={i}
+							>
+									{this.state.expanded ?
+										<div
+											style={{
+												fontSize: this.getFontSize(desc, desc.length /  (Math.sqrt(desc.length) + 2)),
+												textAlign: "right",
+												position: "absolute",
+												bottom: "0",
+												right: "0"
+											}}
+										>
+											{desc}
+										</div> : <div/>
+									}
+							</div>);
+						})
+					}
 				</div>
 			</div>
 		);

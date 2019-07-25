@@ -40,15 +40,16 @@ export default class LoadingPane extends FadeableElement<ILoadingPaneProps, ILoa
 					{this.props.text}
 				</div>
 			</div> :
-				<div
-					style={{
-						position: "absolute",
-						top: "50%",
-						left: "50%",
-						opacity: 0,
-						transform: "translate(-50%, -50%)",
-					}}
-				/>
+			<div
+				style={{
+					position: "absolute",
+					top: "50%",
+					left: "50%",
+					opacity: 0,
+					transform: "translate(-50%, -50%)",
+					color: "rgb(0, 0, 0)",
+				}}
+			/>
 		);
 	}
 }

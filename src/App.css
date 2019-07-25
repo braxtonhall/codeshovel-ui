@@ -85,7 +85,7 @@
 }
 
 .test {
-    color: rgb(104, 124, 120);
+    color: rgb(124, 203, 126);
 }
 
 .Panel {
@@ -98,6 +98,42 @@
 
 .Panel::-webkit-scrollbar {
     display: none;
+}
+
+.Rename {
+    color: black;
+    font-size: 17px;
+    font-weight: bold;
+    height: 50px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.RenameOld {
+    margin: 0 auto;
+    top: 0;
+    position: absolute;
+}
+
+.RenameNew {
+    margin: 0 auto;
+    bottom: 0;
+    position: absolute;
+}
+
+.RenameImage {
+    background-size: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("/left.png");
+    transform: translate(-50%, -50%) rotate(270deg);
+    margin: 0 auto;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 
 @keyframes App-logo-spin {

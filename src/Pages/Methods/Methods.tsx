@@ -159,6 +159,7 @@ class MethodContainer extends React.Component<IMethodContainerProps, any> {
 					style={{
 						position: "absolute",
 						left: "5%",
+						marginBottom: "1em",
 					}}
 				>
 					{

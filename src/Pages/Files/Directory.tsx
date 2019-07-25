@@ -234,7 +234,7 @@ export class ReactDirectory extends FadeableElement<IReactDirectoryProps, IReact
 		const style = {marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px"};
 		return(this.state.onScreen || this.props.active ?
 			<div
-				style={{display: "block"}}
+				style={{display: "block", marginBottom: this.props.level === 0 ? "1em" : 0,}}
 			>
 				<div
 					style={{

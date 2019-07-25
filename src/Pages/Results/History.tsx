@@ -41,7 +41,12 @@ export class History {
 
 		}
 		if (commits.length >= 2) {
-			commits[commits.length - 1].diff = History.buildFirstDiff(commits[commits.length - 2].diff);
+			for (let i = commits.length - 2; i >= 0; i--) {
+				if (commits[i].diff) {
+					commits[commits.length - 1].diff = History.buildFirstDiff(commits[i].diff);
+					break;
+				}
+			}
 		}
 		return commits;
 	}
@@ -81,11 +86,6 @@ export class ReactHistory extends FadeableElement<IReactHistoryProps, IReactHist
 	constructor(props: IReactHistoryProps) {
 		super(props);
 		this.state = {onScreen: this.props.active};
-		this.handleClick = this.handleClick.bind(this);
-	}
-
-	private handleClick(): void {
-
 	}
 
 
@@ -96,7 +96,7 @@ export class ReactHistory extends FadeableElement<IReactHistoryProps, IReactHist
 				style={{
 					display: "block",
 					width: "100%",
-					height: "100%"
+					marginBottom: "1em",
 				}}
 			>
 				{

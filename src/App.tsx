@@ -387,24 +387,25 @@ export default class App extends React.Component<any, IAppState> {
 						height={30}
 						backgroundImage={"url(/left.png)"}
 						backgroundSize={15}
-						shift={0}
-						left={5}
+						shift={this.history.length > 0 ? 35 : 0}
+						left={-30}
 						bottom={5}
 					/>
 					<SmallButton
-						active={this.state.page !== Pages.ABOUT && this.state.showAbout}
+						active={this.state.page !== Pages.ABOUT && (this.state.showAbout || this.history.length > 0)}
 						onClick={() => this.proceedToPage(Pages.ABOUT)}
 						width={30}
 						height={30}
 						backgroundImage={"url(/question.png)"}
 						backgroundSize={15}
-						shift={(this.history.length > 0 ? 35 : 0) + (this.state.page > Pages.LANDING && this.state.page < Pages.ABOUT ? 35 : 0)}
+						shift={this.history.length > 0 && this.state.page !== Pages.ABOUT ? 35 : 0}
 						left={5}
 						bottom={5}
 					/>
 					<CopyRawButton
-						active={this.state.page > Pages.LANDING && this.state.page < Pages.ABOUT}
+						active={this.history.length > 0 && this.state.page < Pages.ABOUT}
 						handleClick={() => setImmediate(this.copyText)}
+						shift={this.history.length > 0 && this.state.page !== Pages.ABOUT ? 35 : 0}
 						displayNotification={this.state.displayTextCopied}
 					/>
 					<LoadingPane text={`$ git clone ${this.state.link} && ls -R | grep *.java`} active={this.state.loading && this.state.page === Pages.LANDING} size={{height: 30, width: 72}}/>

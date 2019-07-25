@@ -27,18 +27,18 @@ export class Constants {
 	};
 
 	public static readonly CHANGE_TYPES: {[internalName: string]: string} = {
-		[Changes.BODY_CHANGE]: "Body Change",
+		[Changes.BODY_CHANGE]: "Body",
 		[Changes.FILE_RENAME]: "File Rename",
-		[Changes.INTRODUCED]: "Method Introduced",
-		[Changes.EXCEPS_CHANGE]: "Exceptions Change",
-		[Changes.MOD_CHANGE]: "Modifier Change",
+		[Changes.INTRODUCED]: "Introduced",
+		[Changes.EXCEPS_CHANGE]: "Exceptions",
+		[Changes.MOD_CHANGE]: "Modifier",
 		[Changes.MOV_FROM_FILE]: "Move From File",
-		[Changes.MULTI_CHANGE]: "Multiple Changes",
-		[Changes.NO_CHANGE]: "No Change",
-		[Changes.PARAM_CHANGE]: "Parameter Change",
-		[Changes.PARAM_META_CHANGE]: "Parameter Meta Change",
+		[Changes.MULTI_CHANGE]: "Multiple",
+		[Changes.NO_CHANGE]: "None",
+		[Changes.PARAM_CHANGE]: "Parameter",
+		[Changes.PARAM_META_CHANGE]: "Parameter Meta",
 		[Changes.RENAME]: "Rename",
-		[Changes.RETURN_CHANGE]: "Return Type Change"
+		[Changes.RETURN_CHANGE]: "Return"
 	};
 
 	public static readonly CHANGE_IMAGES: {[internalName: string]: string} = {
@@ -56,25 +56,25 @@ export class Constants {
 		[Changes.RETURN_CHANGE]: "url(/logos/return.png)",
 	};
 
-	public static readonly CHANGE_COLORS: {[internalName: string]: string} = {
-		[Changes.BODY_CHANGE]: "rgb(109, 99, 124)",
-		[Changes.FILE_RENAME]: "rgb(124, 94, 106)",
-		[Changes.INTRODUCED]: "rgb(0, 0, 0)",
-		[Changes.EXCEPS_CHANGE]: "rgb(124, 124, 124)",
-		[Changes.MOD_CHANGE]: "rgb(104, 124, 120)",
-		[Changes.MOV_FROM_FILE]: "rgb(124, 124, 124)",
-		[Changes.MULTI_CHANGE]: "rgb(124, 124, 124)",
-		[Changes.NO_CHANGE]: "rgb(124, 124, 124)",
-		[Changes.PARAM_CHANGE]: "rgb(124, 124, 124)",
-		[Changes.PARAM_META_CHANGE]: "rgb(124, 124, 124)",
-		[Changes.RENAME]: "rgb(124, 124, 124)",
-		[Changes.RETURN_CHANGE]: "rgb(124, 124, 124)"
+	public static readonly CHANGE_DESCRIPTIONS: {[internalName: string]: string} = {
+		[Changes.BODY_CHANGE]: "Method Body Change",
+		[Changes.FILE_RENAME]: "Source File Rename",
+		[Changes.INTRODUCED]: "Method Introduced",
+		[Changes.EXCEPS_CHANGE]: "Exceptions Change",
+		[Changes.MOD_CHANGE]: "Access Modifier Change",
+		[Changes.MOV_FROM_FILE]: "Move Across Files",
+		[Changes.MULTI_CHANGE]: "Multiple Changes",
+		[Changes.NO_CHANGE]: "No Changes",
+		[Changes.PARAM_CHANGE]: "Parameter Change",
+		[Changes.PARAM_META_CHANGE]: "Parameter Modifier Change",
+		[Changes.RENAME]: "Method Rename",
+		[Changes.RETURN_CHANGE]: "Return Type Change",
 	};
 
-	public static readonly IN_TEST: boolean = false;
-	public static readonly TEST: string = "r1";
+	public static readonly IN_TEST: boolean = true;
+	public static readonly TEST: string = "r2";
 
-	public static readonly NOTIFICATION_DISPLAY_TIME: number = 3000;
+	public static readonly NOTIFICATION_DISPLAY_TIME: number = 1000;
 	public static readonly SHOW_ABOUT_DELAY_TIME: number = 3000;
 
 	public static readonly FONT: string = "100% \"Courier New\", Futura, sans-serif";
@@ -101,11 +101,11 @@ export class Constants {
 
 	public static readonly RESULTS_REQUEST_ERROR_TEXT: string = "There aren't any changes in this method's history! Please try another.";
 
-	public static readonly COMMIT_ROW_HEIGHT: number = 8; // TODO scale logarithmically
+	public static readonly COMMIT_ROW_HEIGHT: number = 8;
 	public static readonly COMMIT_ROW_WIDTH: number = 80;
 	public static readonly COMMIT_WIDTH_MODIFIER: number = 5;
 	public static readonly COMMIT_CELL_COLOUR_VARIANCE_PCT: number = 12;
-	public static readonly COMMIT_FONT_APPROX_SIZE: number = 15;
+	public static readonly COMMIT_FONT_APPROX_SIZE: number = 17;
 
 	public static readonly LOADING_TEXT: string = "Retrieving."
 }
