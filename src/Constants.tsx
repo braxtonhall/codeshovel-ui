@@ -58,11 +58,11 @@ export class Constants {
 
 	public static readonly CHANGE_DESCRIPTIONS: {[internalName: string]: string} = {
 		[Changes.BODY_CHANGE]: "Method Body Change",
-		[Changes.FILE_RENAME]: "Source File Rename",
+		[Changes.FILE_RENAME]: "Source File Path Rename",
 		[Changes.INTRODUCED]: "Method Introduction",
 		[Changes.EXCEPS_CHANGE]: "Exceptions Change",
 		[Changes.MOD_CHANGE]: "Access Modifier Change",
-		[Changes.MOV_FROM_FILE]: "Source File Path Change",
+		[Changes.MOV_FROM_FILE]: "Source File Change",
 		[Changes.MULTI_CHANGE]: "Multiple Changes",
 		[Changes.NO_CHANGE]: "No Changes",
 		[Changes.PARAM_CHANGE]: "Parameter Change",
