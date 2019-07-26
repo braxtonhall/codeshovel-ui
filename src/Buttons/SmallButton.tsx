@@ -14,7 +14,7 @@ export default class SmallButton extends FadeableElement<ISmallButtonProps, ISma
 	protected createReactNode(): ReactNode {
 		return (this.state.onScreen || this.props.active ?
 				<div
-					className="BackgroundImage"
+					className="BackgroundImage SubtleButton"
 					style={{
 						height: this.props.height + "px",
 						width: this.props.width + "px",

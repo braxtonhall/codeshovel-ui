@@ -58,11 +58,11 @@ export class Constants {
 
 	public static readonly CHANGE_DESCRIPTIONS: {[internalName: string]: string} = {
 		[Changes.BODY_CHANGE]: "Method Body Change",
-		[Changes.FILE_RENAME]: "Source File Path Rename",
+		[Changes.FILE_RENAME]: "File Path Rename",
 		[Changes.INTRODUCED]: "Method Introduction",
 		[Changes.EXCEPS_CHANGE]: "Exceptions Change",
 		[Changes.MOD_CHANGE]: "Access Modifier Change",
-		[Changes.MOV_FROM_FILE]: "Source File Change",
+		[Changes.MOV_FROM_FILE]: "Method Moved to Another File",
 		[Changes.MULTI_CHANGE]: "Multiple Changes",
 		[Changes.NO_CHANGE]: "No Changes",
 		[Changes.PARAM_CHANGE]: "Parameter Change",
@@ -72,10 +72,13 @@ export class Constants {
 	};
 
 	public static readonly IN_TEST: boolean = false;
-	public static readonly TEST: string = "r1";
+	public static readonly TEST: string = "r2";
+	public static readonly MANIFEST_PATH: string = "/responses.json";
 
 	public static readonly NOTIFICATION_DISPLAY_TIME: number = 1000;
 	public static readonly SHOW_ABOUT_DELAY_TIME: number = 3000;
+
+	public static readonly BACKGROUND_TEXT_OPACITY: number = 0.5;
 
 	public static readonly FONT: string = "100% \"Courier New\", Futura, sans-serif";
 
@@ -85,10 +88,15 @@ export class Constants {
 
 	public static readonly SERVER_BUSY_ERROR_TEXT: string = "The server is under heavy load. Please try again in a moment!";
 	public static readonly INTERNAL_ERROR_TEXT: string = "The server is having trouble processing this specific request. Please try another.";
+	public static readonly CACHE_ERROR_TEXT: string = "Oddly we couldn't couldn't find this response in our cache.";
+
+	public static readonly EXAMPLE_TEXT_SIZE: number = 5;
+	public static readonly EXAMPLE_ROW_WIDTH: number = 10;
 
 	public static readonly FILE_REQUEST_ERROR_TEXT: string = "There don't appear to be any .java files in this repo. Please try another.";
 	public static readonly FILE_SHA_PLACEHOLDER_TEXT: string = "Specific commit? Enter the SHA here and reload";
 	public static readonly FILE_SHA_ERROR_TEXT: string = "Enter a SHA to refresh";
+	public static readonly FILE_SYSTEM_TEXT_SIZE: number = 10;
 
 	public static readonly LIST_ELEMENT_NEW_LINE_PX_COUNT: number = 15;
 
@@ -98,6 +106,7 @@ export class Constants {
 	public static readonly METHODS_SEARCH_TEXT: string = "Refine method list";
 	public static readonly METHODS_REQUEST_ERROR_TEXT: string = "We couldn't find any methods in this file. Try another?";
 	public static readonly METHODS_LOADING_TEXT: string = "Retrieving methods";
+	public static readonly METHOD_NAME_TEXT_SIZE:number = 10;
 
 	public static readonly RESULTS_REQUEST_ERROR_TEXT: string = "There aren't any changes in this method's history! Please try another.";
 
@@ -107,5 +116,6 @@ export class Constants {
 	public static readonly COMMIT_CELL_COLOUR_VARIANCE_PCT: number = 12;
 	public static readonly COMMIT_FONT_APPROX_SIZE: number = 17;
 
-	public static readonly LOADING_TEXT: string = "Retrieving."
+	public static readonly LOADING_TEXT: string = "Retrieving.";
+	public static readonly LOADING_TEXT_SIZE: number = 100;
 }

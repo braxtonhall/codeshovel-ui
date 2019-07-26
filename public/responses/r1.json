@@ -1,6 +1,6 @@
 {
-  "repo": "https://github.com/kiegroup/drools.git",
-  "files": [
+	"repo": "https://github.com/kiegroup/drools.git",
+	"files": [
     "drools-compiler/src/test/resources/org/drools/compiler/factmodel/SimpleEnum.java",
     "drools-compiler/src/test/java/org/acme/sensors/SensorReading.java",
     "drools-compiler/src/test/java/org/acme/healthcare/Exception.java",
@@ -5933,8 +5933,8 @@
     "drools-persistence/drools-persistence-jpa/src/main/java/org/drools/persistence/map/KnowledgeSessionStorageEnvironmentBuilder.java",
     "drools-persistence/drools-persistence-jpa/src/main/java/org/drools/persistence/PersistableRunner.java"
   ],
-  "file": "drools-compiler/src/main/java/org/drools/compiler/rule/builder/PatternBuilder.java",
-  "methods": [
+	"file": "drools-compiler/src/main/java/org/drools/compiler/rule/builder/PatternBuilder.java",
+	"methods": [
     {
       "longName": "PatternBuilder::build(RuleBuildContext context, PatternDescr descr)",
       "startLine": 150,
@@ -6512,7 +6512,7 @@
       "visibility": "private"
     }
   ],
-  "method": {
+	"method": {
     "longName": "PatternBuilder::build(RuleBuildContext context, PatternDescr patternDescr, Pattern prefixPattern)",
     "startLine": 166,
     "methodName": "build",
@@ -6520,7 +6520,7 @@
     "isAbstract": false,
     "visibility": "public"
   },
-  "history": {
+	"history": {
     "5b1a928b81875c20d7859a15985491e8b5604b55":
     {
       "type": "Ybodychange",
@@ -7841,5 +7841,6 @@
       "commitName": "7af0694e0e0e0ea4a1488b4ebea44f933a065574",
       "commitAuthor": "Mark Proctor"
     }
-  }
+  },
+	"sha": "HEAD"
 }

@@ -2,10 +2,18 @@ import React, {ReactNode} from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import {ArgKind, Key, Pages} from './Enums'
-import {Landing} from "./Pages/Landing";
+import {Landing} from "./Pages/Landing/Landing";
 import {Files} from "./Pages/Files/Files";
 import {Methods} from "./Pages/Methods/Methods";
-import {IHistoryTransport, IMethodTransport, InternalError, ServerBusyError} from "./Types";
+import {
+	ICachedResponse,
+	IHistoryTransport,
+	IManifest,
+	IManifestEntry,
+	IMethodTransport,
+	InternalError, ParseCachedError,
+	ServerBusyError
+} from "./Types";
 import {BackgroundText} from "./BackgroundText";
 import {Constants} from "./Constants";
 import {RequestController} from "./RequestController";
@@ -13,18 +21,19 @@ import ErrorPane from "./Panes/ErrorPane";
 import LoadingPane from "./Panes/LoadingPane";
 import {Results} from "./Pages/Results/Results";
 import {TestController} from "./TestRequestController";
-import CopyRawButton from "./Buttons/CopyRawButton";
+import LargeButton from "./Buttons/LargeButton";
 import SmallButton from "./Buttons/SmallButton";
+import Cookies from 'js-cookie';
 
 export default class App extends React.Component<any, IAppState> {
 	private history: Pages[];
 	private rc: RequestController = Constants.IN_TEST ? new TestController() : new RequestController();
-	private static readonly loadingText = Constants.LOADING_TEXT;
 	private static readonly loadFilesErrorText = Constants.FILE_REQUEST_ERROR_TEXT;
 	private static readonly loadMethodsErrorText = Constants.METHODS_REQUEST_ERROR_TEXT;
 	private static readonly loadHistoryErrorText = Constants.RESULTS_REQUEST_ERROR_TEXT;
 	private static readonly serverBusyErrorText = Constants.SERVER_BUSY_ERROR_TEXT;
 	private static readonly internalErrorText = Constants.INTERNAL_ERROR_TEXT;
+	private static readonly cacheErrorText = Constants.CACHE_ERROR_TEXT;
 
 	public constructor(props: any) {
 		super(props);
@@ -40,6 +49,7 @@ export default class App extends React.Component<any, IAppState> {
 			loadHistoryError: false,
 			serverBusyError: false,
 			internalError: false,
+			cachedError: false,
 			fileContent: null,
 			methodContent: null,
 			historyContent: null,
@@ -47,7 +57,8 @@ export default class App extends React.Component<any, IAppState> {
 			showAbout: false,
 			width: window.innerWidth,
 			height: window.innerHeight,
-
+			examplesHidden: Cookies.get("examplesHidden") === 'true',
+			examples: []
 		};
 		this.history = [];
 		this.proceedToPage = this.proceedToPage.bind(this);
@@ -62,12 +73,16 @@ export default class App extends React.Component<any, IAppState> {
 		this.getNewTestState = this.getNewTestState.bind(this);
 		this.showAbout = this.showAbout.bind(this);
 		this.updateSize = this.updateSize.bind(this);
+		this.toggleExamples = this.toggleExamples.bind(this);
+		this.handleExample = this.handleExample.bind(this);
+		this.getExamples = this.getExamples.bind(this);
 	}
 
 	public componentDidMount(): void {
 		document.addEventListener('keydown', this.handleKey);
 		window.addEventListener("resize", this.updateSize);
 		setTimeout(this.showAbout, Constants.SHOW_ABOUT_DELAY_TIME);
+		setImmediate(this.getExamples);
 	}
 
 	public componentWillUnmount(): void {
@@ -85,6 +100,12 @@ export default class App extends React.Component<any, IAppState> {
 			width: window.innerWidth,
 			height: window.innerHeight,
 		});
+	}
+
+	private toggleExamples(): void {
+		const examplesHidden: boolean = !this.state.examplesHidden;
+		this.setState({examplesHidden});
+		setImmediate(() => Cookies.set('examplesHidden', examplesHidden.toString()));
 	}
 
 	private handleKey(event: KeyboardEvent): void {
@@ -116,6 +137,32 @@ export default class App extends React.Component<any, IAppState> {
 					// Do nothing
 			}
 		}
+	}
+
+	private async handleExample(example: IManifestEntry): Promise<void> {
+		try {
+			const response: ICachedResponse = await RequestController.getExample(example.file);
+			const state: IAppState = Object.assign({}, this.state);
+			state.link = response.repo;
+			state.file = response.file;
+			state.historyContent = response.history;
+			state.method = response.method;
+			state.sha = response.sha;
+			this.finishLoad(Pages.RESULTS, null, state);
+		} catch (err) {
+			this.finishLoad(this.state.page, new ParseCachedError("Couldn't Find the Result"));
+		}
+	}
+
+	private getExamples(): void {
+		RequestController.getManifest()
+			.then((manifest: IManifest) => {
+				const examples: IManifestEntry[] = Array.from(Object.values(manifest));
+				this.setState({examples});
+			})
+			.catch((err) => {
+				// Do nothing
+			});
 	}
 
 	private proceedToPage(page: Pages, state: IAppState | null = null): void {
@@ -188,6 +235,8 @@ export default class App extends React.Component<any, IAppState> {
 				state.serverBusyError = true;
 			} else if (error instanceof InternalError) {
 				state.internalError = true;
+			} else if (error instanceof ParseCachedError) {
+				state.cachedError = true
 			} else {
 				switch (page) {
 					case Pages.LANDING:
@@ -271,9 +320,9 @@ export default class App extends React.Component<any, IAppState> {
 		}
 	}
 
-	private proceedWithUpdate(page: Pages, arg: any, kind: ArgKind): void {
-		this.getNewStateWithArg(arg, kind).then((state) => this.proceedToPage(page, state));
-		// this.proceedToPage(page, );
+	private async proceedWithUpdate(page: Pages, arg: any, kind: ArgKind): Promise<void> {
+		this.proceedToPage(page, await this.getNewStateWithArg(arg, kind));
+
 	}
 
 	private closeErrors(): void {
@@ -282,12 +331,14 @@ export default class App extends React.Component<any, IAppState> {
 			state.loadMethodsError ||
 			state.loadHistoryError ||
 			state.serverBusyError ||
-			state.internalError) {
+			state.internalError ||
+			state.cachedError) {
 			state.loadFilesError = false;
 			state.loadMethodsError = false;
 			state.loadHistoryError = false;
 			state.serverBusyError = false;
 			state.internalError = false;
+			state.cachedError = false;
 			this.setState(state);
 		}
 	}
@@ -353,6 +404,10 @@ export default class App extends React.Component<any, IAppState> {
 						active={this.state.page === Pages.LANDING}
 						proceedWithUpdate={this.proceedWithUpdate}
 						page={this.state.page}
+						examplesHidden={this.state.examplesHidden}
+						examples={this.state.examples}
+						tellParent={this.handleExample}
+						toggleHidden={this.toggleExamples}
 					/>
 					<Files
 						proceedToPage={this.proceedToPage}
@@ -402,17 +457,34 @@ export default class App extends React.Component<any, IAppState> {
 						left={5}
 						bottom={5}
 					/>
-					<CopyRawButton
+					<LargeButton
 						active={this.history.length > 0 && this.state.page < Pages.ABOUT}
 						handleClick={() => setImmediate(this.copyText)}
 						shift={this.history.length > 0 && this.state.page !== Pages.ABOUT ? 35 : 0}
 						displayNotification={this.state.displayTextCopied}
+						text={"Copy JSON"}
+						backgroundImage={"url(/clipboard.png)"}
+						left={40}
+						bottom={5}
+						width={180}
 					/>
-					<LoadingPane text={`$ git clone ${this.state.link} && ls -R | grep *.java`} active={this.state.loading && this.state.page === Pages.LANDING} size={{height: 30, width: 72}}/>
-					<LoadingPane text={`$ vim ${this.state.file.split('/').pop()}`} active={this.state.loading && this.state.page === Pages.FILES} size={{height: 30, width: 72}}/>
-					<LoadingPane text={`$ java -jar codeshovel.jar -m ${this.state.method.methodName}`} active={this.state.loading && this.state.page === Pages.METHODS} size={{height: 30, width: 72}}/>
+					<LargeButton
+						active={this.state.page === Pages.LANDING && !this.state.examplesHidden && this.state.examples.length > 0}
+						handleClick={this.toggleExamples}
+						shift={this.state.page === Pages.LANDING && !this.state.examplesHidden && this.state.examples.length > 0 ? 0 : 35}
+						displayNotification={false}
+						text={"Hide Examples"}
+						backgroundImage={""}
+						left={225}
+						bottom={5}
+						width={240}
+					/>
+					<LoadingPane windowWidth={this.state.width} text={`$ git ${this.state.sha === "HEAD" ? `clone ${this.state.link}` : `checkout ${this.state.sha}`} && ls -R | grep *.java`} active={this.state.loading && this.state.page === Pages.LANDING} size={{height: 30, width: 72}}/>
+					<LoadingPane windowWidth={this.state.width} text={`$ vim ${this.state.file.split('/').pop()}`} active={this.state.loading && this.state.page === Pages.FILES} size={{height: 30, width: 72}}/>
+					<LoadingPane windowWidth={this.state.width} text={`$ java -jar codeshovel.jar -m ${this.state.method.methodName}`} active={this.state.loading && this.state.page === Pages.METHODS} size={{height: 30, width: 72}}/>
 					{/*<LoadingPane text={App.loadingText} active={this.state.loading && this.state.page !== Pages.LANDING} size={{height: 30, width: 72}}/>*/}
 					<ErrorPane text={App.serverBusyErrorText} active={this.state.serverBusyError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
+					<ErrorPane text={App.cacheErrorText} active={this.state.cachedError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
 					<ErrorPane text={App.internalErrorText} active={this.state.internalError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
 					<ErrorPane text={App.loadFilesErrorText} active={this.state.loadFilesError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
 					<ErrorPane text={App.loadMethodsErrorText} active={this.state.loadMethodsError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
@@ -442,4 +514,7 @@ export interface IAppState {
 	showAbout: boolean;
 	width: number;
 	height: number;
+	examplesHidden: boolean;
+	examples: IManifestEntry[];
+	cachedError: boolean;
 }

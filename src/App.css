@@ -43,8 +43,29 @@
     text-align: center;
 }
 
-.Test {
-    color: rgba(255, 255, 255, 0.93);
+.SubtleButton {
+    cursor: pointer;
+}
+
+.SubtleButton:hover {
+    opacity: 0.5;
+}
+
+.InvertedSubtleButton {
+    cursor: pointer;
+    opacity: 0.2;
+}
+
+.InvertedSubtleButton:hover {
+    opacity: 1;
+}
+
+.ExampleRow {
+    background-color: rgb(75, 90, 149);
+}
+
+.Underline {
+    text-decoration: underline;
 }
 
 .d2h-file-diff {
@@ -82,10 +103,6 @@
 
 .hljs-title {
     color: rgb(0, 14, 110);
-}
-
-.test {
-    color: rgb(124, 203, 126);
 }
 
 .Panel {

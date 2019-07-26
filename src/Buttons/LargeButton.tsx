@@ -3,7 +3,7 @@ import {ReactNode} from "react";
 import React from "react";
 import {Constants} from "../Constants";
 
-export default class CopyRawButton extends FadeableElement<ICopyRawProps, ICopyRawState> {
+export default class LargeButton extends FadeableElement<ICopyRawProps, ICopyRawState> {
 	protected readonly fadeOutTime: number = 400;
 
 	public constructor(props: ICopyRawProps) {
@@ -18,38 +18,38 @@ export default class CopyRawButton extends FadeableElement<ICopyRawProps, ICopyR
 			<div>
 				{this.state.onScreen || this.props.active ?
 					<div
-						className="BackgroundImage"
+						className="BackgroundImage SubtleButton"
 						style={{
 							height: "30px",
-							width: "180px",
+							width: this.props.width + "px",
 							position: "absolute",
-							bottom: "5px",
-							left: (this.props.shift + 40) +"px",
+							bottom: this.props.bottom + "px",
+							left: (this.props.shift + this.props.left) +"px",
 							font: Constants.FONT,
 							color: "rgb(0, 0, 0)",
 							backgroundColor: this.props.displayNotification ? "rgb(124, 203, 126)" : "rgb(183, 166, 108)",
 							opacity: this.props.active ? 1 : 0,
 							transition: this.fadeOutTime + "ms ease-in-out",
-							backgroundImage: "url(/clipboard.png)",
+							backgroundImage: this.props.backgroundImage,
 							backgroundSize: "15px",
-							textAlign: "right",
+							textAlign: this.props.backgroundImage === "" ? "center" : "right",
 							padding: "0 15px",
 							backgroundPosition: "10px 3.5px",
 						}}
 						onClick={this.props.handleClick}
 					>
-						Copy JSON
+						{this.props.text}
 					</div> :
 					<div className="BackgroundImage"
 						 style={{
 						 	 position: "absolute",
-							 bottom: "5px",
+							 bottom: this.props.bottom + "px",
 							 opacity: 0,
 							 textAlign: "right",
 							 padding: "0 15px",
 							 backgroundPosition: "10px 3.5px",
 							 color: "rgb(0, 0, 0)",
-							 left: (this.props.shift + 40) +"px",
+							 left: (this.props.shift + this.props.left) +"px",
 						 }}
 					/>
 
@@ -63,6 +63,11 @@ export interface ICopyRawProps extends IFadeableElementProps{
 	handleClick: () => void;
 	displayNotification: boolean;
 	shift: number;
+	text: string;
+	backgroundImage: string;
+	left: number;
+	bottom: number;
+	width: number;
 }
 
 export interface ICopyRawState extends IFadeableElementState{

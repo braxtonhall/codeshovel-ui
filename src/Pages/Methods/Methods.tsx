@@ -4,7 +4,6 @@ import {IPageProps, IPageState, Page} from "../Page";
 import {ArgKind, Pages} from "../../Enums";
 import {Constants} from "../../Constants";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import {IMethodTransport} from "../../Types";
 import {Method} from "./Method";
 
@@ -52,7 +51,7 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 				method.longName.includes(this.state.search)
 			);
 		if (searchMethods.length === 1 && this.validSelection(searchMethods[0])) {
-			this.props.proceedWithUpdate(Pages.RESULTS, searchMethods[0], ArgKind.METHOD)
+			this.props.proceedWithUpdate(Pages.RESULTS, searchMethods[0], ArgKind.METHOD);
 		}
 	}
 
@@ -61,6 +60,10 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 	}
 
 	public createReactNode(): ReactNode {
+		const searchElement: HTMLInputElement = (document.getElementById("searchInput") as HTMLInputElement);
+		if (searchElement) {
+			searchElement.value = this.state.search;
+		}
 		return (
 			<div>
 				<div>
@@ -115,15 +118,6 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 								<Form onSubmit={this.handleEnter}>
 									<Form.Control id="searchInput" size="sm" type="text" placeholder={this.methodInputPlaceholder} onChange={this.handleKey}/>
 								</Form>
-							</div>
-							<div
-								style={{
-									position: "absolute",
-									top: "15%",
-									right: "2%",
-								}}
-							>
-								<Button variant="primary" onClick={this.handleNext} disabled={this.props.method.methodName === ""}>Next</Button>
 							</div>
 						</div> : <div style={{opacity: 0}}/>
 					}
@@ -184,7 +178,7 @@ class MethodContainer extends React.Component<IMethodContainerProps, any> {
 export interface IMethodsProps extends IPageProps {
 	method: IMethodTransport;
 	content: IMethodTransport[];
-	proceedWithUpdate: (page: Pages, arg: any, kind: ArgKind) => void;
+	proceedWithUpdate: (page: Pages, arg: any, kind: ArgKind) => Promise<void>;
 }
 
 export interface IMethodsState extends IPageState {

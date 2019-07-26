@@ -1,9 +1,10 @@
-import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../../FadeableElement";
+import {IFadeableElementProps, IFadeableElementState} from "../../FadeableElement";
 import {File, ReactFile} from "./File";
 import * as React from "react";
 import {ReactNode} from "react";
 import {Constants} from "../../Constants";
 import {Key} from "../../Enums";
+import {ReactFileSystemNode} from "./FileSystemNode";
 
 export class Directory {
 	private name: string;
@@ -206,7 +207,7 @@ export class Directory {
 	}
 }
 
-export class ReactDirectory extends FadeableElement<IReactDirectoryProps, IReactDirectoryState> {
+export class ReactDirectory extends ReactFileSystemNode<IReactDirectoryProps, IReactDirectoryState> {
 	protected readonly fadeOutTime: number = 300;
 
 	constructor(props: IReactDirectoryProps) {
@@ -231,6 +232,7 @@ export class ReactDirectory extends FadeableElement<IReactDirectoryProps, IReact
 	}
 
 	protected createReactNode(): ReactNode {
+		const name: string = this.props.dir.getName() + "/";
 		const style = {marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px"};
 		return(this.state.onScreen || this.props.active ?
 			<div
@@ -249,11 +251,12 @@ export class ReactDirectory extends FadeableElement<IReactDirectoryProps, IReact
 						overflow: "hidden",
 						zIndex: 9999,
 						transition: this.fadeOutTime + "ms ease-in-out",
+						fontSize: ReactFileSystemNode.getFontSize(name),
 					}}
 					onClick={this.toggleExpanded}
 					onMouseDown={this.mouseDown}
 				>
-					{this.props.dir.getName() + "/"}
+					{name}
 				</div>
 				{this.props.dir.getDirectories()
 					.map((dir: Directory, i: number) => <ReactDirectory dir={dir} level={this.props.level + 1} key={i} active={this.props.expanded && this.props.active} highlight={dir.shouldHighlightThis()} expanded={dir.isExpanded()}/>)}

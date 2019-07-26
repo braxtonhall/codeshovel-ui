@@ -1,7 +1,8 @@
-import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../../FadeableElement";
+import {IFadeableElementProps, IFadeableElementState} from "../../FadeableElement";
 import {Constants} from "../../Constants";
 import {ReactNode} from "react";
 import * as React from "react";
+import {ReactFileSystemNode} from "./FileSystemNode";
 
 export class File {
 	private readonly name: string;
@@ -36,7 +37,7 @@ export class File {
 	}
 }
 
-export class ReactFile extends FadeableElement<IReactFileProps, IReactFileState> {
+export class ReactFile extends ReactFileSystemNode<IReactFileProps, IReactFileState> {
 	protected readonly fadeOutTime: number = 300;
 
 	constructor(props: IReactFileProps) {
@@ -60,6 +61,7 @@ export class ReactFile extends FadeableElement<IReactFileProps, IReactFileState>
 	}
 
 	protected createReactNode(): ReactNode {
+		const name: string = this.props.file.getName();
 		const style = {marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px"};
 		return(this.state.onScreen || this.props.active ?
 				<div
@@ -78,11 +80,12 @@ export class ReactFile extends FadeableElement<IReactFileProps, IReactFileState>
 							overflow: "hidden",
 							zIndex: 9999,
 							transition: this.fadeOutTime + "ms ease-in-out",
+							fontSize: ReactFileSystemNode.getFontSize(name),
 						}}
 						onClick={this.handleClick}
 						onMouseDown={this.mouseDown}
 					>
-						{this.props.file.getName()}
+						{name}
 					</div>
 
 				</div> :  <div style={style}/>

@@ -114,7 +114,8 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 				let newVal = ichange.extendedDetails.newValue;
 				newVal = newVal.replace(/^\[/, "").replace(/]$/, "");
 				if (ichange.extendedDetails && ichange.extendedDetails.oldValue && ichange.extendedDetails.newValue) {
-					return `${Constants.CHANGE_DESCRIPTIONS[change]}:\`${oldVal}\` to \`${newVal}\``;
+					const details = oldVal === "" ? ` Added \`${newVal}\`` : newVal === "" ? ` Removed \`${oldVal}\`` : `\`${oldVal}\` to \`${newVal}\``;
+					return `${Constants.CHANGE_DESCRIPTIONS[change]}:${details}`;
 				} else {
 					break;
 				}
@@ -157,7 +158,20 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		if (date.toDateString() === 'Invalid Date') {
 			return "?";
 		} else {
-			return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+			const month: number = date.getMonth() + 1;
+			const day: number = date.getDate();
+			return `${date.getFullYear()}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`;
+		}
+	}
+
+	private getTime(): string {
+		const date: Date = new Date(this.props.commit.commitDate);
+		if (date.toDateString() === 'Invalid Date') {
+			return "";
+		} else {
+			const hours = date.getHours();
+			const minutes = date.getMinutes();
+			return `${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes}`;
 		}
 	}
 
@@ -250,7 +264,7 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 						}}
 					>
 						<div className="CommitRowCell" style={{fontSize: this.getFontSize(date), backgroundColor: `rgba(255, 255, 255, 0.${this.datec})`}}>
-							{date}
+							{date}<br/>{this.getTime()}
 						</div>
 						<div className="CommitRowCell" style={{fontSize: this.getFontSize(author), backgroundColor: `rgba(255, 255, 255, 0.${this.authc})`}}>
 							{author}
@@ -259,16 +273,16 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 							{change}
 						</div>
 						{this.props.repo.replace(".git", "") !== "" ?
-							<div className="CommitRowCell" onClick={this.goToCommit} style={{backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
+							<div className="CommitRowCell SubtleButton Underline" onClick={this.goToCommit} style={{backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
 								View<br/>{this.props.commit.commitName.substring(34)}
 							</div> : <div/>
 						}
 						{this.props.commit.file && this.props.repo.replace(".git", "") !== "" ?
-							<div className="CommitRowCell" onClick={this.goToFileInCommit} style={{backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
+							<div className="CommitRowCell SubtleButton Underline" onClick={this.goToFileInCommit} style={{backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
 								View<br/>File
 							</div> : <div/>
 						}
-						<div className="CommitRowCell" onClick={this.toggleExpanded} style={{backgroundColor: `rgba(255, 255, 255, 0.${this.detlc})`}}>
+						<div className="CommitRowCell SubtleButton" onClick={this.toggleExpanded} style={{backgroundColor: `rgba(255, 255, 255, 0.${this.detlc})`}}>
 							Details
 						</div>
 					</div>
@@ -278,14 +292,17 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 							return (<div
 								className={this.getClassName(change.type)}
 								style={{
+									// width: this.changes.length > 1 ? "95%" : "100%",
+									margin: "0 auto",
 									height: this.state.expanded ? this.getHeight(true) : 0,
 									backgroundImage: this.getBackgroundImage(change.type),
-									opacity: this.state.expanded ? 0.5 : 0,
+									opacity: this.state.expanded ? 0.8 : 0,
 									backgroundSize: (this.props.windowHeight * 0.04 * Constants.COMMIT_ROW_HEIGHT) + "px",
 									backgroundRepeat: "no-repeat",
 									backgroundPosition: "left",
 									transition: this.fadeOutTime + "ms ease-in-out",
-									position: "relative"
+									position: "relative",
+									marginBottom: i === this.changes.length - 1 && this.props.commit.diff ? this.getHeight(true, 0.25) : "0",
 								}}
 								key={i}
 							>
@@ -300,7 +317,7 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 											}}
 										>
 											{desc}
-										</div> : <div/>
+										</div> : <div style={{opacity: 0}}/>
 									}
 							</div>);
 						})

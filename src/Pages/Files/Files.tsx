@@ -189,7 +189,7 @@ class FileContainer extends React.Component<{dir: Directory}, any> {
 export interface IFilesProps extends IPageProps {
 	content: string[];
 	file: string;
-	proceedWithUpdate: (page: Pages, arg: any, kind: ArgKind) => void;
+	proceedWithUpdate: (page: Pages, arg: any, kind: ArgKind) => Promise<void>;
 }
 
 export interface IFilesState extends IPageState {

@@ -1,3 +1,5 @@
+import {Changes} from "./Enums";
+
 export interface IMethodTransport {
 	longName: string;
 	startLine: number;
@@ -35,7 +37,36 @@ export interface ICommitx extends ICommit{
 	file?: string;
 }
 
+export interface IManifest {
+	[file: string]: IManifestEntry;
+}
+
+export interface IManifestEntry {
+	longName: string;
+	repoShort: string;
+	file: string;
+	methodName: string;
+	historyShort: Changes[];
+}
+
+export interface ICachedResponse {
+	repo: string;
+	files: string[] | string;
+	file: string;
+	methods: IMethodTransport[] | string;
+	method: IMethodTransport;
+	history: IHistoryTransport;
+	sha: string;
+}
+
 export class ServerBusyError extends Error {
+	constructor(...args: any[]) {
+		super(...args);
+		Error.captureStackTrace(this, ServerBusyError);
+	}
+}
+
+export class ParseCachedError extends Error {
 	constructor(...args: any[]) {
 		super(...args);
 		Error.captureStackTrace(this, ServerBusyError);

@@ -4,7 +4,6 @@ import fetch from "node-fetch";
 import {Constants} from "./Constants";
 
 export class TestController extends RequestController {
-	public data: any;
 
 	public static async getRepo(): Promise<string> {
 		return JSON.parse(await (await fetch(`/responses/${Constants.TEST}.json`)).text()).repo;

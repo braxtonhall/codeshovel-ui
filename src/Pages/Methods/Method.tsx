@@ -15,6 +15,7 @@ export class Method extends React.Component<IReactMethodProps, IReactMethodState
 		let marginModifier: number = Math.floor(Math.random() * Constants.METHODS_MAX_INDENT_UNIT_COUNT);
 		marginModifier = marginModifier * Constants.METHODS_INDENT_UNIT_PX;
 		marginModifier = marginModifier + this.props.index * Constants.METHODS_INDENT_UNIT_PX;
+		// TODO modify this so it never goes off the edge of the page
 		this.marginModifier = marginModifier;
 		this.state = {
 			margin: this.marginModifier,
@@ -23,6 +24,10 @@ export class Method extends React.Component<IReactMethodProps, IReactMethodState
 		this.handleClick = this.handleClick.bind(this);
 		this.mouseDown = this.mouseDown.bind(this);
 		this.tellParent = this.tellParent.bind(this);
+	}
+
+	protected static getFontSize(s: string, modifier: number = 1): string {
+		return (100 / Math.max(s.length, 45) * Constants.METHOD_NAME_TEXT_SIZE * modifier) + "px";
 	}
 
 	private handleClick(): void {
@@ -45,7 +50,8 @@ export class Method extends React.Component<IReactMethodProps, IReactMethodState
 	}
 
 	public render(): ReactNode {
-		const style = {display: "inline-block"};
+		const regularStyle = {display: "inline-block", verticalAlign: "middle", height: this.props.active ? "40px" : "8px"};
+		const matchedStyle = {display: "inline-block", verticalAlign: "middle", height: this.props.active ? "40px" : "8px", backgroundColor: "rgb(147, 151, 203)"};
 		const animation: string = this.turnedOn ? "" : `Expand ${this.fadeOutTime}ms ease-in-out`;
 		if (!this.turnedOn) {
 			this.turnedOn = true;
@@ -58,19 +64,21 @@ export class Method extends React.Component<IReactMethodProps, IReactMethodState
 					marginBottom: this.props.active ? "3px" : "1px",
 					backgroundColor: "rgb(124, 124, 124)",
 					height: this.props.active ? "40px" : "8px",
-					font: (this.props.active ? 100 : 12) + "% \"Courier New\", Futura, sans-serif",
+					font: "100% \"Courier New\", Futura, sans-serif",
+					fontSize: Method.getFontSize(this.props.method.longName, this.props.active ? 1 : 1/12),
 					width: "650px",
 					overflow: "hidden",
 					transition: this.fadeOutTime + "ms ease-in-out",
 					opacity: this.props.active ? 1 : 0.5,
 					animation,
+					position: "relative",
 				}}
 				onClick={this.handleClick}
 				onMouseDown={this.mouseDown}
 			>
-				{
-					this.props.search === "" || !this.props.active ? this.props.method.longName : this.props.method.longName.split(this.props.search).flatMap(
-						(s, i, list) => list.length - 1 !== i ? [<div key={2 * i} style={style}>{s}</div>, <code key={2 * i + 1} style={style}>{this.props.search}</code>] : <div key={2 * i} style={style}>{s}</div>,
+				{// TODO fix ' ' bug
+					(this.props.search === "" || !this.props.active ? [this.props.method.longName] : this.props.method.longName.split(this.props.search)).flatMap(
+						(s, i, list) => list.length - 1 !== i ? [<div key={2 * i} style={regularStyle}>{s}</div>, <div key={2 * i + 1} style={matchedStyle}>{this.props.search}</div>] : <div key={2 * i} style={regularStyle}>{s}</div>,
 					)
 				}
 			</div>

@@ -1,6 +1,15 @@
 import * as rp from "request-promise-native";
 import {Constants} from "./Constants";
-import {EmptyError, IHistoryTransport, IMethodTransport, InternalError, ServerBusyError} from "./Types";
+import {
+	EmptyError,
+	ICachedResponse,
+	IHistoryTransport,
+	IManifest,
+	IMethodTransport,
+	InternalError,
+	ServerBusyError
+} from "./Types";
+import fetch from "node-fetch";
 
 export class RequestController {
 	private readonly server: string = Constants.SERVER_ADDRESS;
@@ -9,6 +18,22 @@ export class RequestController {
 		strictSSL: false,
 		method: 'get',
 	};
+
+	public static async getManifest(): Promise<IManifest> {
+		return JSON.parse(await (await fetch(Constants.MANIFEST_PATH)).text());
+	}
+
+	public static async getExample(file: string): Promise<ICachedResponse> {
+		return JSON.parse(await (await fetch(`/responses/${file}.json`)).text());
+	}
+
+	public static async getFiles(file: string): Promise<string[]> {
+		return JSON.parse(await (await fetch(`/responses/${file}.json`)).text()).files;
+	}
+
+	public static async getMethods(file: string): Promise<IMethodTransport[]> {
+		return JSON.parse(await (await fetch(`/responses/${file}.json`)).text()).methods;
+	}
 
 	public async listFiles(gitUrl: string, sha: string): Promise<string[]> {
 		const url = this.server + "/listFiles";

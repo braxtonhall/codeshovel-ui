@@ -2,6 +2,7 @@ import * as React from "react";
 import {ReactNode} from "react";
 import {Pages} from "./Enums";
 import {IMethodTransport} from "./Types";
+import {Constants} from "./Constants";
 
 export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 	private readonly fadeOutTime: number = 700;
@@ -16,7 +17,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						font: "900% \"Courier New\", Futura, sans-serif",
 						textAlign: "left",
 						fontStyle: "italic",
-						opacity: this.props.page >= Pages.FILES ? 1 : 0,
+						opacity: this.props.page >= Pages.FILES ? Constants.BACKGROUND_TEXT_OPACITY : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
 					}}
@@ -31,7 +32,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						font: "800% \"Courier New\", Futura, sans-serif",
 						textAlign: "left",
 						fontStyle: "italic",
-						opacity: this.props.page >= Pages.FILES ? 1 : 0,
+						opacity: this.props.page >= Pages.FILES ? Constants.BACKGROUND_TEXT_OPACITY : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
 					}}
@@ -46,7 +47,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						font: "650% \"Courier New\", Futura, sans-serif",
 						textAlign: "left",
 						fontStyle: "italic",
-						opacity: this.props.page >= Pages.FILES ? 1 : 0,
+						opacity: this.props.page >= Pages.FILES ? Constants.BACKGROUND_TEXT_OPACITY : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
 					}}
@@ -61,7 +62,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						font: "700% \"Courier New\", Futura, sans-serif",
 						textAlign: "left",
 						fontStyle: "italic",
-						opacity: this.props.page >= Pages.METHODS ? 1 : 0,
+						opacity: this.props.page >= Pages.METHODS ? Constants.BACKGROUND_TEXT_OPACITY : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
 					}}
