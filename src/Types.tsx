@@ -51,9 +51,9 @@ export interface IManifestEntry {
 
 export interface ICachedResponse {
 	repo: string;
-	files: string[] | string;
+	// files: string[] | string;
 	file: string;
-	methods: IMethodTransport[] | string;
+	// methods: IMethodTransport[] | string;
 	method: IMethodTransport;
 	history: IHistoryTransport;
 	sha: string;

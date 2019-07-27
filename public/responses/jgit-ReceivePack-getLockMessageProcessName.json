@@ -1,0 +1,37 @@
+{
+	"repo": "https://github.com/eclipse/jgit.git",
+	"file": "org.eclipse.jgit/src/org/eclipse/jgit/transport/ReceivePack.java",
+	"method": {
+		"longName": "ReceivePack::getLockMessageProcessName()",
+		"startLine": 344,
+		"methodName": "getLockMessageProcessName",
+		"isStatic": false,
+		"isAbstract": false,
+		"visibility": "protected"
+	},
+	"history": {
+		"c310fa0c802f40a774edb58641de3ac5bfad0e2c": {
+			"type": "Ybodychange",
+			"commitMessage": "Mark non-externalizable strings as such\n\nA few classes such as Constanrs are marked with @SuppressWarnings, as are\ntoString() methods with many liternal, but otherwise $NLS-n$ is used for\nstring containing text that should not be translated. A few literals may\nfall into the gray zone, but mostly I've tried to only tag the obvious\nones.\n\nChange-Id: I22e50a77e2bf9e0b842a66bdf674e8fa1692f590\n",
+			"commitDate": "2012-12-27, 8:57 AM",
+			"commitName": "c310fa0c802f40a774edb58641de3ac5bfad0e2c",
+			"commitAuthor": "Robin Rosenberg",
+			"commitDateOld": "2012-09-05, 9:20 AM",
+			"commitNameOld": "e63f1c94f8f9a5b10da6c1e5932da33eb805230a",
+			"commitAuthorOld": "Shawn O. Pearce",
+			"daysBetweenCommits": 113.03,
+			"commitsBetweenForRepo": 118,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,3 +1,3 @@\n \tprotected String getLockMessageProcessName() {\n-\t\treturn \"jgit receive-pack\";\n+\t\treturn \"jgit receive-pack\"; //$NON-NLS-1$\n \t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"cc37cb777e57f6a5a8e0068945d322ac0f6834e2": {
+			"type": "Yintroduced",
+			"commitMessage": "Factor a base class out of ReceivePack\n\nWe are working on a publish/subscribe based git protocol, and we want to\nreuse several parts of the ReceivePack-like code for reading commands\nand processing a pack. In this new implementation, the connection\nmanagement will be very different, in particular, there may be multiple\npacks received on a single open connection. So, hoist out as much as we\ncan from ReceivePack, mostly just leaving behind the single-connection\nversion in that class.\n\nChange-Id: I5567aad6ae77951f73f59c1f91996d934ea88334\n",
+			"commitDate": "2012-05-14, 12:41 PM",
+			"commitName": "cc37cb777e57f6a5a8e0068945d322ac0f6834e2",
+			"commitAuthor": "Dave Borowitz"
+		}
+	},
+	"sha": "bd1a82502680b5de5bf86f6c4470185fd1602386"
+}

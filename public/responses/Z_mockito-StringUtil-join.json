@@ -1,0 +1,222 @@
+{
+	"repo": "https://github.com/mockito/mockito.git",
+	"file": "src/main/java/org/mockito/internal/util/StringUtil.java",
+	"method": {
+		"longName": "StringUtil::join(String start, String linePrefix, Collection<?> lines)",
+		"startLine": 52,
+		"methodName": "join",
+		"isStatic": true,
+		"isAbstract": false,
+		"visibility": "public"
+	},
+	"history": {
+		"3d2fb7a146e943003cb3e3cfe18c82f1663b833a": {
+			"type": "Ymultichange(Yparameterchange,Ybodychange)",
+			"commitMessage": "Improved StringUtil\n\n- Added new method useful for modelling clean exception messages\n- Added Javadoc\n",
+			"commitDate": "2017-03-05, 4:15 PM",
+			"commitName": "3d2fb7a146e943003cb3e3cfe18c82f1663b833a",
+			"commitAuthor": "Szczepan Faber",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "Improved StringUtil\n\n- Added new method useful for modelling clean exception messages\n- Added Javadoc\n",
+					"commitDate": "2017-03-05, 4:15 PM",
+					"commitName": "3d2fb7a146e943003cb3e3cfe18c82f1663b833a",
+					"commitAuthor": "Szczepan Faber",
+					"commitDateOld": "2017-02-06, 8:00 AM",
+					"commitNameOld": "e9516f42b1182ae675022c101954e721e20b2c72",
+					"commitAuthorOld": "Allon Murienik",
+					"daysBetweenCommits": 27.34,
+					"commitsBetweenForRepo": 41,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,8 +1,10 @@\n-    public static String join(String start, Iterable<?> lines) {\n+    public static String join(String start, String linePrefix, Collection<?> lines) {\n+        if (lines.isEmpty()) {\n+            return \"\";\n+        }\n         StringBuilder out = new StringBuilder(start);\n         for (Object line : lines) {\n-            out.append(line.toString()).append(\"\\n\");\n+            out.append(linePrefix).append(line).append(\"\\n\");\n         }\n-        int lastBreak = out.lastIndexOf(\"\\n\");\n-        return out.replace(lastBreak, lastBreak+1, \"\").toString();\n+        return out.substring(0, out.length() - 1); //lose last EOL\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[start-String, lines-Iterable<?>]",
+						"newValue": "[start-String, linePrefix-String, lines-Collection<?>]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Improved StringUtil\n\n- Added new method useful for modelling clean exception messages\n- Added Javadoc\n",
+					"commitDate": "2017-03-05, 4:15 PM",
+					"commitName": "3d2fb7a146e943003cb3e3cfe18c82f1663b833a",
+					"commitAuthor": "Szczepan Faber",
+					"commitDateOld": "2017-02-06, 8:00 AM",
+					"commitNameOld": "e9516f42b1182ae675022c101954e721e20b2c72",
+					"commitAuthorOld": "Allon Murienik",
+					"daysBetweenCommits": 27.34,
+					"commitsBetweenForRepo": 41,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,8 +1,10 @@\n-    public static String join(String start, Iterable<?> lines) {\n+    public static String join(String start, String linePrefix, Collection<?> lines) {\n+        if (lines.isEmpty()) {\n+            return \"\";\n+        }\n         StringBuilder out = new StringBuilder(start);\n         for (Object line : lines) {\n-            out.append(line.toString()).append(\"\\n\");\n+            out.append(linePrefix).append(line).append(\"\\n\");\n         }\n-        int lastBreak = out.lastIndexOf(\"\\n\");\n-        return out.replace(lastBreak, lastBreak+1, \"\").toString();\n+        return out.substring(0, out.length() - 1); //lose last EOL\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"ec61a3b6c645b273d238b5e6e6b0cd621f31fb64": {
+			"type": "Ymovefromfile",
+			"commitMessage": "Unify Decamelizer, StringJoiner and RemoveFirstLine in static utility class StringUtil (#914)\n\n\r\n",
+			"commitDate": "2017-01-31, 9:42 AM",
+			"commitName": "ec61a3b6c645b273d238b5e6e6b0cd621f31fb64",
+			"commitAuthor": "Christian Schwarz",
+			"commitDateOld": "2017-01-30, 2:52 PM",
+			"commitNameOld": "59a544060fbddd9fec8d430cc54fce442d16654e",
+			"commitAuthorOld": "Szczepan Faber",
+			"daysBetweenCommits": 0.78,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "src/main/java/org/mockito/internal/util/StringJoiner.java",
+				"newPath": "src/main/java/org/mockito/internal/util/StringUtil.java",
+				"oldMethodName": "join",
+				"newMethodName": "join"
+			}
+		},
+		"0307f92995e165bd1d360f6b91e545e2ee60fe54": {
+			"type": "Yparameterchange",
+			"commitMessage": "Removed more raw types. Fixed String joiner resolution.\n",
+			"commitDate": "2016-06-19, 4:48 PM",
+			"commitName": "0307f92995e165bd1d360f6b91e545e2ee60fe54",
+			"commitAuthor": "Rafael Winterhalter",
+			"commitDateOld": "2016-06-19, 3:30 PM",
+			"commitNameOld": "2f92126a765bbb6f5e6551fa50e007f9c8a14acc",
+			"commitAuthorOld": "Rafael Winterhalter",
+			"daysBetweenCommits": 0.05,
+			"commitsBetweenForRepo": 11,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,8 +1,8 @@\n-    public static String join(String start, Iterable<String> lines) {\n+    public static String join(String start, Iterable<?> lines) {\n         StringBuilder out = new StringBuilder(start);\n         for (Object line : lines) {\n             out.append(line.toString()).append(\"\\n\");\n         }\n         int lastBreak = out.lastIndexOf(\"\\n\");\n         return out.replace(lastBreak, lastBreak+1, \"\").toString();\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {
+				"oldValue": "[start-String, lines-Iterable<String>]",
+				"newValue": "[start-String, lines-Iterable<?>]"
+			}
+		},
+		"9d5176f738f887cd6b2a7447deedd21f9518fae0": {
+			"type": "Ymultichange(Yparameterchange,Ybodychange)",
+			"commitMessage": "More refactoring to StringJoiner\n\nThis class is quite confusing, added another TODO. Changed the class so that it is easy to use right now, will revisit and tidy up later.\n",
+			"commitDate": "2016-04-17, 6:40 PM",
+			"commitName": "9d5176f738f887cd6b2a7447deedd21f9518fae0",
+			"commitAuthor": "Szczepan Faber",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "More refactoring to StringJoiner\n\nThis class is quite confusing, added another TODO. Changed the class so that it is easy to use right now, will revisit and tidy up later.\n",
+					"commitDate": "2016-04-17, 6:40 PM",
+					"commitName": "9d5176f738f887cd6b2a7447deedd21f9518fae0",
+					"commitAuthor": "Szczepan Faber",
+					"commitDateOld": "2016-04-17, 6:40 PM",
+					"commitNameOld": "05f8ff853250918a97a9954cd3341787fe7a1cc0",
+					"commitAuthorOld": "Szczepan Faber",
+					"daysBetweenCommits": 0,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,8 +1,8 @@\n-    public static String join(Iterable<String> lines) {\n-        StringBuilder out = new StringBuilder(\"\\n\");\n+    public static String join(String start, Iterable<String> lines) {\n+        StringBuilder out = new StringBuilder(start);\n         for (Object line : lines) {\n             out.append(line.toString()).append(\"\\n\");\n         }\n         int lastBreak = out.lastIndexOf(\"\\n\");\n         return out.replace(lastBreak, lastBreak+1, \"\").toString();\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[lines-Iterable<String>]",
+						"newValue": "[start-String, lines-Iterable<String>]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "More refactoring to StringJoiner\n\nThis class is quite confusing, added another TODO. Changed the class so that it is easy to use right now, will revisit and tidy up later.\n",
+					"commitDate": "2016-04-17, 6:40 PM",
+					"commitName": "9d5176f738f887cd6b2a7447deedd21f9518fae0",
+					"commitAuthor": "Szczepan Faber",
+					"commitDateOld": "2016-04-17, 6:40 PM",
+					"commitNameOld": "05f8ff853250918a97a9954cd3341787fe7a1cc0",
+					"commitAuthorOld": "Szczepan Faber",
+					"daysBetweenCommits": 0,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,8 +1,8 @@\n-    public static String join(Iterable<String> lines) {\n-        StringBuilder out = new StringBuilder(\"\\n\");\n+    public static String join(String start, Iterable<String> lines) {\n+        StringBuilder out = new StringBuilder(start);\n         for (Object line : lines) {\n             out.append(line.toString()).append(\"\\n\");\n         }\n         int lastBreak = out.lastIndexOf(\"\\n\");\n         return out.replace(lastBreak, lastBreak+1, \"\").toString();\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"05f8ff853250918a97a9954cd3341787fe7a1cc0": {
+			"type": "Ymultichange(Yparameterchange,Ymodifierchange,Ybodychange)",
+			"commitMessage": "Made StringJoiner easier to use\n\nAt times, I need to pass collections as parameter, not only an array. Unit test missing.\n",
+			"commitDate": "2016-04-17, 6:40 PM",
+			"commitName": "05f8ff853250918a97a9954cd3341787fe7a1cc0",
+			"commitAuthor": "Szczepan Faber",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "Made StringJoiner easier to use\n\nAt times, I need to pass collections as parameter, not only an array. Unit test missing.\n",
+					"commitDate": "2016-04-17, 6:40 PM",
+					"commitName": "05f8ff853250918a97a9954cd3341787fe7a1cc0",
+					"commitAuthor": "Szczepan Faber",
+					"commitDateOld": "2015-07-08, 10:42 PM",
+					"commitNameOld": "fe7bbabb82ce3d1000c13d39d6355c134e94ac27",
+					"commitAuthorOld": "Szczepan Faber",
+					"daysBetweenCommits": 283.83,
+					"commitsBetweenForRepo": 137,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,7 +1,8 @@\n-    private static String join(StringBuilder out, Object[] linesToBreak) {\n-        for (Object line : linesToBreak) {\n+    public static String join(Iterable<String> lines) {\n+        StringBuilder out = new StringBuilder(\"\\n\");\n+        for (Object line : lines) {\n             out.append(line.toString()).append(\"\\n\");\n         }\n         int lastBreak = out.lastIndexOf(\"\\n\");\n         return out.replace(lastBreak, lastBreak+1, \"\").toString();\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[out-StringBuilder, linesToBreak-Object[]]",
+						"newValue": "[lines-Iterable<String>]"
+					}
+				},
+				{
+					"type": "Ymodifierchange",
+					"commitMessage": "Made StringJoiner easier to use\n\nAt times, I need to pass collections as parameter, not only an array. Unit test missing.\n",
+					"commitDate": "2016-04-17, 6:40 PM",
+					"commitName": "05f8ff853250918a97a9954cd3341787fe7a1cc0",
+					"commitAuthor": "Szczepan Faber",
+					"commitDateOld": "2015-07-08, 10:42 PM",
+					"commitNameOld": "fe7bbabb82ce3d1000c13d39d6355c134e94ac27",
+					"commitAuthorOld": "Szczepan Faber",
+					"daysBetweenCommits": 283.83,
+					"commitsBetweenForRepo": 137,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,7 +1,8 @@\n-    private static String join(StringBuilder out, Object[] linesToBreak) {\n-        for (Object line : linesToBreak) {\n+    public static String join(Iterable<String> lines) {\n+        StringBuilder out = new StringBuilder(\"\\n\");\n+        for (Object line : lines) {\n             out.append(line.toString()).append(\"\\n\");\n         }\n         int lastBreak = out.lastIndexOf(\"\\n\");\n         return out.replace(lastBreak, lastBreak+1, \"\").toString();\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[private, static]",
+						"newValue": "[public, static]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Made StringJoiner easier to use\n\nAt times, I need to pass collections as parameter, not only an array. Unit test missing.\n",
+					"commitDate": "2016-04-17, 6:40 PM",
+					"commitName": "05f8ff853250918a97a9954cd3341787fe7a1cc0",
+					"commitAuthor": "Szczepan Faber",
+					"commitDateOld": "2015-07-08, 10:42 PM",
+					"commitNameOld": "fe7bbabb82ce3d1000c13d39d6355c134e94ac27",
+					"commitAuthorOld": "Szczepan Faber",
+					"daysBetweenCommits": 283.83,
+					"commitsBetweenForRepo": 137,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,7 +1,8 @@\n-    private static String join(StringBuilder out, Object[] linesToBreak) {\n-        for (Object line : linesToBreak) {\n+    public static String join(Iterable<String> lines) {\n+        StringBuilder out = new StringBuilder(\"\\n\");\n+        for (Object line : lines) {\n             out.append(line.toString()).append(\"\\n\");\n         }\n         int lastBreak = out.lastIndexOf(\"\\n\");\n         return out.replace(lastBreak, lastBreak+1, \"\").toString();\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"fe7bbabb82ce3d1000c13d39d6355c134e94ac27": {
+			"type": "Yfilerename",
+			"commitMessage": "Moved sources to standard location\n\nLet's make the project be as close as possible to standard, conventional project for better clarity\n",
+			"commitDate": "2015-07-08, 10:42 PM",
+			"commitName": "fe7bbabb82ce3d1000c13d39d6355c134e94ac27",
+			"commitAuthor": "Szczepan Faber",
+			"commitDateOld": "2015-07-08, 10:16 AM",
+			"commitNameOld": "9d3124ae8768ec9fb60ff5b8a176b060491f9770",
+			"commitAuthorOld": "Szczepan Faber",
+			"daysBetweenCommits": 0.52,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "src/org/mockito/internal/util/StringJoiner.java",
+				"newPath": "src/main/java/org/mockito/internal/util/StringJoiner.java"
+			}
+		},
+		"98f7799a2bf0e2016eb4c7e0cce46e17fb796966": {
+			"type": "Yintroduced",
+			"commitMessage": "Externalized the reponsiblity to notify listeners from MockHandler.\nSome renaming here and there.\n\n--HG--\nbranch : issue148\nrename : src/org/mockito/invocation/InvocationListener.java => src/org/mockito/listeners/InvocationListener.java\nrename : src/org/mockito/invocation/MethodCallReport.java => src/org/mockito/listeners/MethodInvocationReport.java\n",
+			"commitDate": "2011-05-15, 9:43 AM",
+			"commitName": "98f7799a2bf0e2016eb4c7e0cce46e17fb796966",
+			"commitAuthor": "Brice"
+		}
+	},
+	"sha": "077562ea54f1fa87ff8dd233c3060ddbf0f1ce26"
+}

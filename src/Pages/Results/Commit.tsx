@@ -273,16 +273,16 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 							{change}
 						</div>
 						{this.props.repo.replace(".git", "") !== "" ?
-							<div className="CommitRowCell SubtleButton Underline" onClick={this.goToCommit} style={{backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
+							<div className="CommitRowCell SubtleButton Underline" onClick={this.goToCommit} style={{fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
 								View<br/>{this.props.commit.commitName.substring(34)}
 							</div> : <div/>
 						}
 						{this.props.commit.file && this.props.repo.replace(".git", "") !== "" ?
-							<div className="CommitRowCell SubtleButton Underline" onClick={this.goToFileInCommit} style={{backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
+							<div className="CommitRowCell SubtleButton Underline" onClick={this.goToFileInCommit} style={{fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
 								View<br/>File
 							</div> : <div/>
 						}
-						<div className="CommitRowCell SubtleButton" onClick={this.toggleExpanded} style={{backgroundColor: `rgba(255, 255, 255, 0.${this.detlc})`}}>
+						<div className="CommitRowCell SubtleButton" onClick={this.toggleExpanded} style={{fontSize: this.getFontSize("Details"), backgroundColor: `rgba(255, 255, 255, 0.${this.detlc})`}}>
 							Details
 						</div>
 					</div>
@@ -304,7 +304,7 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 									position: "relative",
 									marginBottom: i === this.changes.length - 1 && this.props.commit.diff ? this.getHeight(true, 0.25) : "0",
 								}}
-								key={i}
+								key={this.props.commit.commitName + i}
 							>
 									{this.state.expanded ?
 										<div

@@ -1,0 +1,222 @@
+{
+	"repo": "https://github.com/mockito/mockito.git",
+	"file": "src/main/java/org/mockito/internal/stubbing/answers/ReturnsArgumentAt.java",
+	"method": {
+		"longName": "ReturnsArgumentAt::answer(InvocationOnMock invocation)",
+		"startLine": 53,
+		"methodName": "answer",
+		"isStatic": false,
+		"isAbstract": false,
+		"visibility": "public"
+	},
+	"history": {
+		"761de40d05b4eddae8328ab1d7e5bdacd882a3be": {
+			"type": "Ybodychange",
+			"commitMessage": "Fix validation in returnArgumentAt(int) in case of type erasure on the parameter (#1076)\n\n* Fixed #1071 / returnArgumentAt(int) The validation of the returnable\r\ntype works now for generic parameters.\r\n\r\nThe parameter type inference takes now the type of the actual instance\r\ninto account to avoid type erasure issues in case the parameter is\r\ngeneric.\r\n\r\n* Fixed very important checkstyle twhitespace & linebreak at eof issues\r\n\r\n* fixed intendation and import issues\r\n",
+			"commitDate": "2017-05-10, 12:03 PM",
+			"commitName": "761de40d05b4eddae8328ab1d7e5bdacd882a3be",
+			"commitAuthor": "Christian Schwarz",
+			"commitDateOld": "2017-01-04, 6:40 AM",
+			"commitNameOld": "1d285102bb01150f6399604aa900bd3f3365e4e7",
+			"commitAuthorOld": "Brice Dutheil",
+			"daysBetweenCommits": 126.18,
+			"commitsBetweenForRepo": 264,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,12 +1,13 @@\n     public Object answer(InvocationOnMock invocation) throws Throwable {\n         int argumentPosition = inferWantedArgumentPosition(invocation);\n         validateIndexWithinInvocationRange(invocation, argumentPosition);\n \n         if (wantedArgIndexIsVarargAndSameTypeAsReturnType(invocation.getMethod(), argumentPosition)) {\n             // answer raw vararg array argument\n             return ((Invocation) invocation).getRawArguments()[argumentPosition];\n-        } else {\n-            // answer expanded argument at wanted position\n-            return invocation.getArgument(argumentPosition);\n         }\n+\n+        // answer expanded argument at wanted position\n+        return invocation.getArgument(argumentPosition);\n+\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"1d285102bb01150f6399604aa900bd3f3365e4e7": {
+			"type": "Ybodychange",
+			"commitMessage": "Fixes #820 ReturnsArgAt to handle returning vararg as arrays\n\nSigned-off-by: Brice Dutheil <brice.dutheil@gmail.com>\n",
+			"commitDate": "2017-01-04, 6:40 AM",
+			"commitName": "1d285102bb01150f6399604aa900bd3f3365e4e7",
+			"commitAuthor": "Brice Dutheil",
+			"commitDateOld": "2016-12-19, 6:35 AM",
+			"commitNameOld": "126308910d3a88db5ba701a55cb5178201105cdc",
+			"commitAuthorOld": "Brice Dutheil",
+			"daysBetweenCommits": 16,
+			"commitsBetweenForRepo": 69,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,4 +1,12 @@\n     public Object answer(InvocationOnMock invocation) throws Throwable {\n-        validateIndexWithinInvocationRange(invocation);\n-        return invocation.getArgument(actualArgumentPosition(invocation));\n+        int argumentPosition = inferWantedArgumentPosition(invocation);\n+        validateIndexWithinInvocationRange(invocation, argumentPosition);\n+\n+        if (wantedArgIndexIsVarargAndSameTypeAsReturnType(invocation.getMethod(), argumentPosition)) {\n+            // answer raw vararg array argument\n+            return ((Invocation) invocation).getRawArguments()[argumentPosition];\n+        } else {\n+            // answer expanded argument at wanted position\n+            return invocation.getArgument(argumentPosition);\n+        }\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"a4391ac09aa2d8ac38ceaa569667bb9e617756df": {
+			"type": "Ybodychange",
+			"commitMessage": "Fixes #365 introduced 'T getArgument(int)'' and deprecated  'T getArgumentAt(int,Class<T>)' in type InvocationOnMock.\n",
+			"commitDate": "2016-03-11, 1:48 PM",
+			"commitName": "a4391ac09aa2d8ac38ceaa569667bb9e617756df",
+			"commitAuthor": "Christian Schwarz",
+			"commitDateOld": "2015-07-08, 10:42 PM",
+			"commitNameOld": "fe7bbabb82ce3d1000c13d39d6355c134e94ac27",
+			"commitAuthorOld": "Szczepan Faber",
+			"daysBetweenCommits": 246.67,
+			"commitsBetweenForRepo": 111,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,4 +1,4 @@\n     public Object answer(InvocationOnMock invocation) throws Throwable {\n         validateIndexWithinInvocationRange(invocation);\n-        return invocation.getArguments()[actualArgumentPosition(invocation)];\n+        return invocation.getArgument(actualArgumentPosition(invocation));\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"fe7bbabb82ce3d1000c13d39d6355c134e94ac27": {
+			"type": "Yfilerename",
+			"commitMessage": "Moved sources to standard location\n\nLet's make the project be as close as possible to standard, conventional project for better clarity\n",
+			"commitDate": "2015-07-08, 10:42 PM",
+			"commitName": "fe7bbabb82ce3d1000c13d39d6355c134e94ac27",
+			"commitAuthor": "Szczepan Faber",
+			"commitDateOld": "2015-07-08, 10:16 AM",
+			"commitNameOld": "9d3124ae8768ec9fb60ff5b8a176b060491f9770",
+			"commitAuthorOld": "Szczepan Faber",
+			"daysBetweenCommits": 0.52,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "src/org/mockito/internal/stubbing/answers/ReturnsArgumentAt.java",
+				"newPath": "src/main/java/org/mockito/internal/stubbing/answers/ReturnsArgumentAt.java"
+			}
+		},
+		"5a2415278e865ac0becfcbaf8626d4f0c3b17a70": {
+			"type": "Yfilerename",
+			"commitMessage": "Make additional answers internal, and expose them via AdditionalAnswers. Renaming returnsArgAtPosition to returnsArgAt\n\n--HG--\nrename : src/org/mockito/stubbing/answers/ReturnsArgumentAt.java => src/org/mockito/internal/stubbing/answers/ReturnsArgumentAt.java\nrename : src/org/mockito/stubbing/answers/ReturnsElementsOf.java => src/org/mockito/internal/stubbing/answers/ReturnsElementsOf.java\nrename : test/org/mockito/stubbing/answers/ReturnsArgumentAtTest.java => test/org/mockito/internal/stubbing/answers/ReturnsArgumentAtTest.java\n",
+			"commitDate": "2012-05-01, 8:30 AM",
+			"commitName": "5a2415278e865ac0becfcbaf8626d4f0c3b17a70",
+			"commitAuthor": "Brice Dutheil",
+			"commitDateOld": "2012-04-15, 3:16 PM",
+			"commitNameOld": "d883cda4d1e73664c623042d283b637990f6cc0d",
+			"commitAuthorOld": "Szczepan Faber",
+			"daysBetweenCommits": 15.72,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "src/org/mockito/stubbing/answers/ReturnsArgumentAt.java",
+				"newPath": "src/org/mockito/internal/stubbing/answers/ReturnsArgumentAt.java"
+			}
+		},
+		"4b81c5d36e1ab63412c9a55d982cf5c6df238dab": {
+			"type": "Ymultichange(Yfilerename,Ybodychange)",
+			"commitMessage": "Renamed ReturnsIdentity by ReturnsArgumentAt\n\n--HG--\nrename : src/org/mockito/stubbing/answers/ReturnsIdentity.java => src/org/mockito/stubbing/answers/ReturnsArgumentAt.java\nrename : test/org/mockito/stubbing/answers/ReturnsIdentityTest.java => test/org/mockito/stubbing/answers/ReturnsArgumentAtTest.java\n",
+			"commitDate": "2012-04-08, 6:28 AM",
+			"commitName": "4b81c5d36e1ab63412c9a55d982cf5c6df238dab",
+			"commitAuthor": "Brice Dutheil",
+			"subchanges": [
+				{
+					"type": "Yfilerename",
+					"commitMessage": "Renamed ReturnsIdentity by ReturnsArgumentAt\n\n--HG--\nrename : src/org/mockito/stubbing/answers/ReturnsIdentity.java => src/org/mockito/stubbing/answers/ReturnsArgumentAt.java\nrename : test/org/mockito/stubbing/answers/ReturnsIdentityTest.java => test/org/mockito/stubbing/answers/ReturnsArgumentAtTest.java\n",
+					"commitDate": "2012-04-08, 6:28 AM",
+					"commitName": "4b81c5d36e1ab63412c9a55d982cf5c6df238dab",
+					"commitAuthor": "Brice Dutheil",
+					"commitDateOld": "2012-04-04, 1:31 PM",
+					"commitNameOld": "93b572cf4e791e891eae691c7af6fc40b981ef16",
+					"commitAuthorOld": "Brice Dutheil",
+					"daysBetweenCommits": 3.71,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,4 +1,4 @@\n     public Object answer(InvocationOnMock invocation) throws Throwable {\n         validateIndexWithinInvocationRange(invocation);\n-        return invocation.getArguments()[actualArgumentIndex(invocation)];\n+        return invocation.getArguments()[actualArgumentPosition(invocation)];\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldPath": "src/org/mockito/stubbing/answers/ReturnsIdentity.java",
+						"newPath": "src/org/mockito/stubbing/answers/ReturnsArgumentAt.java"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Renamed ReturnsIdentity by ReturnsArgumentAt\n\n--HG--\nrename : src/org/mockito/stubbing/answers/ReturnsIdentity.java => src/org/mockito/stubbing/answers/ReturnsArgumentAt.java\nrename : test/org/mockito/stubbing/answers/ReturnsIdentityTest.java => test/org/mockito/stubbing/answers/ReturnsArgumentAtTest.java\n",
+					"commitDate": "2012-04-08, 6:28 AM",
+					"commitName": "4b81c5d36e1ab63412c9a55d982cf5c6df238dab",
+					"commitAuthor": "Brice Dutheil",
+					"commitDateOld": "2012-04-04, 1:31 PM",
+					"commitNameOld": "93b572cf4e791e891eae691c7af6fc40b981ef16",
+					"commitAuthorOld": "Brice Dutheil",
+					"daysBetweenCommits": 3.71,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,4 +1,4 @@\n     public Object answer(InvocationOnMock invocation) throws Throwable {\n         validateIndexWithinInvocationRange(invocation);\n-        return invocation.getArguments()[actualArgumentIndex(invocation)];\n+        return invocation.getArguments()[actualArgumentPosition(invocation)];\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"dda1c41ea0fe96abfe62bb1bfd1e1d51d2c5c509": {
+			"type": "Ybodychange",
+			"commitMessage": "Added reporting on answer misuse. Plus some more use cases.\n\n--HG--\nrename : src/org/mockito/internal/util/ArrayUtils.java => src/org/mockito/internal/util/collections/ArrayUtils.java\n",
+			"commitDate": "2012-04-04, 9:59 AM",
+			"commitName": "dda1c41ea0fe96abfe62bb1bfd1e1d51d2c5c509",
+			"commitAuthor": "Brice Dutheil",
+			"commitDateOld": "2012-04-04, 4:53 AM",
+			"commitNameOld": "5490d9b2fc7814bc4c1efe5a66f05ce5874d38bc",
+			"commitAuthorOld": "Brice Dutheil",
+			"daysBetweenCommits": 0.21,
+			"commitsBetweenForRepo": 2,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,5 +1,4 @@\n     public Object answer(InvocationOnMock invocation) throws Throwable {\n-        return willReturnLastArg() ?\n-                lastArgumentOf(invocation) :\n-                argumentIndexOf(invocation);\n+        validateIndexWithinInvocationRange(invocation);\n+        return invocation.getArguments()[actualArgumentIndex(invocation)];\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"5490d9b2fc7814bc4c1efe5a66f05ce5874d38bc": {
+			"type": "Ymultichange(Ymovefromfile,Yreturntypechange,Ybodychange)",
+			"commitMessage": "Refactoring a bit the patch of Eric, added AdditionalAnswers as a placeholder for future answers.\n\n--HG--\nrename : src/org/mockito/stubbing/answers/IdentityAnswers.java => src/org/mockito/stubbing/answers/ReturnsIdentity.java\nrename : test/org/mockito/stubbing/answers/IdentityAnswersTest.java => test/org/mockito/stubbing/answers/ReturnsIdentityTest.java\n",
+			"commitDate": "2012-04-04, 4:53 AM",
+			"commitName": "5490d9b2fc7814bc4c1efe5a66f05ce5874d38bc",
+			"commitAuthor": "Brice Dutheil",
+			"subchanges": [
+				{
+					"type": "Ymovefromfile",
+					"commitMessage": "Refactoring a bit the patch of Eric, added AdditionalAnswers as a placeholder for future answers.\n\n--HG--\nrename : src/org/mockito/stubbing/answers/IdentityAnswers.java => src/org/mockito/stubbing/answers/ReturnsIdentity.java\nrename : test/org/mockito/stubbing/answers/IdentityAnswersTest.java => test/org/mockito/stubbing/answers/ReturnsIdentityTest.java\n",
+					"commitDate": "2012-04-04, 4:53 AM",
+					"commitName": "5490d9b2fc7814bc4c1efe5a66f05ce5874d38bc",
+					"commitAuthor": "Brice Dutheil",
+					"commitDateOld": "2012-03-07, 2:31 PM",
+					"commitNameOld": "ae7ad39c99ea7ffecd84c1453aa26f44846f066a",
+					"commitAuthorOld": "Eric Lefevre-Ardant",
+					"daysBetweenCommits": 27.56,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,5 +1,5 @@\n-\t\t\tpublic T answer(InvocationOnMock invocation) throws Throwable {\n-\t\t\t\tint actualIndex = (index == -1) ? invocation.getArguments().length - 1\n-\t\t\t\t\t\t: index;\n-\t\t\t\treturn (T) invocation.getArguments()[actualIndex];\n-\t\t\t}\n\\ No newline at end of file\n+    public Object answer(InvocationOnMock invocation) throws Throwable {\n+        return willReturnLastArg() ?\n+                lastArgumentOf(invocation) :\n+                argumentIndexOf(invocation);\n+    }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldPath": "src/org/mockito/stubbing/answers/IdentityAnswers.java",
+						"newPath": "src/org/mockito/stubbing/answers/ReturnsIdentity.java",
+						"oldMethodName": "answer",
+						"newMethodName": "answer"
+					}
+				},
+				{
+					"type": "Yreturntypechange",
+					"commitMessage": "Refactoring a bit the patch of Eric, added AdditionalAnswers as a placeholder for future answers.\n\n--HG--\nrename : src/org/mockito/stubbing/answers/IdentityAnswers.java => src/org/mockito/stubbing/answers/ReturnsIdentity.java\nrename : test/org/mockito/stubbing/answers/IdentityAnswersTest.java => test/org/mockito/stubbing/answers/ReturnsIdentityTest.java\n",
+					"commitDate": "2012-04-04, 4:53 AM",
+					"commitName": "5490d9b2fc7814bc4c1efe5a66f05ce5874d38bc",
+					"commitAuthor": "Brice Dutheil",
+					"commitDateOld": "2012-03-07, 2:31 PM",
+					"commitNameOld": "ae7ad39c99ea7ffecd84c1453aa26f44846f066a",
+					"commitAuthorOld": "Eric Lefevre-Ardant",
+					"daysBetweenCommits": 27.56,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,5 +1,5 @@\n-\t\t\tpublic T answer(InvocationOnMock invocation) throws Throwable {\n-\t\t\t\tint actualIndex = (index == -1) ? invocation.getArguments().length - 1\n-\t\t\t\t\t\t: index;\n-\t\t\t\treturn (T) invocation.getArguments()[actualIndex];\n-\t\t\t}\n\\ No newline at end of file\n+    public Object answer(InvocationOnMock invocation) throws Throwable {\n+        return willReturnLastArg() ?\n+                lastArgumentOf(invocation) :\n+                argumentIndexOf(invocation);\n+    }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "T",
+						"newValue": "Object"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Refactoring a bit the patch of Eric, added AdditionalAnswers as a placeholder for future answers.\n\n--HG--\nrename : src/org/mockito/stubbing/answers/IdentityAnswers.java => src/org/mockito/stubbing/answers/ReturnsIdentity.java\nrename : test/org/mockito/stubbing/answers/IdentityAnswersTest.java => test/org/mockito/stubbing/answers/ReturnsIdentityTest.java\n",
+					"commitDate": "2012-04-04, 4:53 AM",
+					"commitName": "5490d9b2fc7814bc4c1efe5a66f05ce5874d38bc",
+					"commitAuthor": "Brice Dutheil",
+					"commitDateOld": "2012-03-07, 2:31 PM",
+					"commitNameOld": "ae7ad39c99ea7ffecd84c1453aa26f44846f066a",
+					"commitAuthorOld": "Eric Lefevre-Ardant",
+					"daysBetweenCommits": 27.56,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,5 +1,5 @@\n-\t\t\tpublic T answer(InvocationOnMock invocation) throws Throwable {\n-\t\t\t\tint actualIndex = (index == -1) ? invocation.getArguments().length - 1\n-\t\t\t\t\t\t: index;\n-\t\t\t\treturn (T) invocation.getArguments()[actualIndex];\n-\t\t\t}\n\\ No newline at end of file\n+    public Object answer(InvocationOnMock invocation) throws Throwable {\n+        return willReturnLastArg() ?\n+                lastArgumentOf(invocation) :\n+                argumentIndexOf(invocation);\n+    }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"ae7ad39c99ea7ffecd84c1453aa26f44846f066a": {
+			"type": "Yintroduced",
+			"commitMessage": "Helper methods when returning one of the parameters\n\n--HG--\nextra : transplant_source : %2A39%84%21%F4%AB%C4%2A%A5v%0BD%AB8%81%82%3A%C9k\n",
+			"commitDate": "2012-03-07, 2:31 PM",
+			"commitName": "ae7ad39c99ea7ffecd84c1453aa26f44846f066a",
+			"commitAuthor": "Eric Lefevre-Ardant"
+		}
+	},
+	"sha": "077562ea54f1fa87ff8dd233c3060ddbf0f1ce26"
+}

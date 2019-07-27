@@ -158,6 +158,12 @@ export default class App extends React.Component<any, IAppState> {
 		RequestController.getManifest()
 			.then((manifest: IManifest) => {
 				const examples: IManifestEntry[] = Array.from(Object.values(manifest));
+				for (let i = examples.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					const temp = examples[i];
+					examples[i] = examples[j];
+					examples[j] = temp;
+				}
 				this.setState({examples});
 			})
 			.catch((err) => {
@@ -314,7 +320,7 @@ export default class App extends React.Component<any, IAppState> {
 		if (lastPage !== undefined && lastPage !== state.page) {
 			state.page = lastPage;
 			if (lastPage === Pages.LANDING) {
-				state.sha = "HEAD";
+				state.sha = "HEAD"; // TODO move this to Landing's HANDLENEXT
 			}
 			this.setState(state);
 		}
@@ -491,7 +497,7 @@ export default class App extends React.Component<any, IAppState> {
 					<ErrorPane text={App.loadHistoryErrorText} active={this.state.loadHistoryError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
 				</div>
 			</header>
-		);
+		); // TODO loading sha refresh doesn't work
 	}
 }
 

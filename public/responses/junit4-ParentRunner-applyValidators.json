@@ -1,0 +1,22 @@
+{
+	"repo": "https://github.com/junit-team/junit4.git",
+	"file": "src/main/java/org/junit/runners/ParentRunner.java",
+	"method": {
+		"longName": "ParentRunner::applyValidators(List<Throwable> errors)",
+		"startLine": 154,
+		"methodName": "applyValidators",
+		"isStatic": false,
+		"isAbstract": false,
+		"visibility": "private"
+	},
+	"history": {
+		"1d97da73fdafce8f5cf9d722f23c5cba41b26b70": {
+			"type": "Yintroduced",
+			"commitMessage": "Verify that test classes are public.\n\nTest classes should be public in order to avoid problems with\nreflection caused by the security manager. Public classes are always\naccesible.\n",
+			"commitDate": "2014-04-21, 7:18 PM",
+			"commitName": "1d97da73fdafce8f5cf9d722f23c5cba41b26b70",
+			"commitAuthor": "Stefan Birkner"
+		}
+	},
+	"sha": "02c328028b4d32c15bbf0becc9838e54ecbafcbf"
+}

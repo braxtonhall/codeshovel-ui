@@ -1,0 +1,255 @@
+{
+	"repo": "https://github.com/apache/lucene-solr.git",
+	"file": "lucene/queryparser/src/java/org/apache/lucene/queryparser/classic/QueryParserBase.java",
+	"method": {
+		"longName": "QueryParserBase::addClause(List<BooleanClause> clauses, int conj, int mods, Query q)",
+		"startLine": 374,
+		"methodName": "addClause",
+		"isStatic": false,
+		"isAbstract": false,
+		"visibility": "protected"
+	},
+	"history": {
+		"4aafacfbef423a25a349dd8c6e5e6178ac1ba334": {
+			"type": "Ybodychange",
+			"commitMessage": "LUCENE-6570: Make BooleanQuery immutable.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/dev/trunk@1686145 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2015-06-18, 1:14 AM",
+			"commitName": "4aafacfbef423a25a349dd8c6e5e6178ac1ba334",
+			"commitAuthor": "Adrien Grand",
+			"commitDateOld": "2015-06-16, 4:18 AM",
+			"commitNameOld": "c397fe723462cfe4069304fe3b3bcea648217060",
+			"commitAuthorOld": "Adrien Grand",
+			"daysBetweenCommits": 1.87,
+			"commitsBetweenForRepo": 13,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,49 +1,49 @@\n   protected void addClause(List<BooleanClause> clauses, int conj, int mods, Query q) {\n     boolean required, prohibited;\n \n     // If this term is introduced by AND, make the preceding term required,\n     // unless it's already prohibited\n     if (clauses.size() > 0 && conj == CONJ_AND) {\n       BooleanClause c = clauses.get(clauses.size()-1);\n       if (!c.isProhibited())\n-        c.setOccur(BooleanClause.Occur.MUST);\n+        clauses.set(clauses.size() - 1, new BooleanClause(c.getQuery(), Occur.MUST));\n     }\n \n     if (clauses.size() > 0 && operator == AND_OPERATOR && conj == CONJ_OR) {\n       // If this term is introduced by OR, make the preceding term optional,\n       // unless it's prohibited (that means we leave -a OR b but +a OR b-->a OR b)\n       // notice if the input is a OR b, first term is parsed as required; without\n       // this modification a OR b would parsed as +a OR b\n       BooleanClause c = clauses.get(clauses.size()-1);\n       if (!c.isProhibited())\n-        c.setOccur(BooleanClause.Occur.SHOULD);\n+        clauses.set(clauses.size() - 1, new BooleanClause(c.getQuery(), Occur.SHOULD));\n     }\n \n     // We might have been passed a null query; the term might have been\n     // filtered away by the analyzer.\n     if (q == null)\n       return;\n \n     if (operator == OR_OPERATOR) {\n       // We set REQUIRED if we're introduced by AND or +; PROHIBITED if\n       // introduced by NOT or -; make sure not to set both.\n       prohibited = (mods == MOD_NOT);\n       required = (mods == MOD_REQ);\n       if (conj == CONJ_AND && !prohibited) {\n         required = true;\n       }\n     } else {\n       // We set PROHIBITED if we're introduced by NOT or -; We set REQUIRED\n       // if not PROHIBITED and not introduced by OR\n       prohibited = (mods == MOD_NOT);\n       required   = (!prohibited && conj != CONJ_OR);\n     }\n     if (required && !prohibited)\n       clauses.add(newBooleanClause(q, BooleanClause.Occur.MUST));\n     else if (!required && !prohibited)\n       clauses.add(newBooleanClause(q, BooleanClause.Occur.SHOULD));\n     else if (!required && prohibited)\n       clauses.add(newBooleanClause(q, BooleanClause.Occur.MUST_NOT));\n     else\n       throw new RuntimeException(\"Clause cannot be both required and prohibited\");\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"e8e4245d9b36123446546ff15967ac95429ea2b0": {
+			"type": "Yfilerename",
+			"commitMessage": "LUCENE-3965: consolidate all api modules and fix packaging for 4.0\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/dev/trunk@1327094 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2012-04-17, 7:36 AM",
+			"commitName": "e8e4245d9b36123446546ff15967ac95429ea2b0",
+			"commitAuthor": "Robert Muir",
+			"commitDateOld": "2012-04-17, 6:03 AM",
+			"commitNameOld": "0daa4b0aac1748bbb2c56547626e9f49e7fb4ed6",
+			"commitAuthorOld": "Sami Siren",
+			"daysBetweenCommits": 0.06,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "modules/queryparser/src/java/org/apache/lucene/queryparser/classic/QueryParserBase.java",
+				"newPath": "lucene/queryparser/src/java/org/apache/lucene/queryparser/classic/QueryParserBase.java"
+			}
+		},
+		"5f30bedccc3f8a2ed14df05e3207ef9ed56965b2": {
+			"type": "Yfilerename",
+			"commitMessage": "LUCENE-3283: Moved core QueryParsers to queryparser module\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/dev/trunk@1145016 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2011-07-10, 9:37 PM",
+			"commitName": "5f30bedccc3f8a2ed14df05e3207ef9ed56965b2",
+			"commitAuthor": "Christopher John Male",
+			"commitDateOld": "2011-07-10, 7:11 PM",
+			"commitNameOld": "ef25bf2d31a5e462ad6a752919481e2a7d1e2bd2",
+			"commitAuthorOld": "Steven Rowe",
+			"daysBetweenCommits": 0.1,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "lucene/src/java/org/apache/lucene/queryParser/QueryParserBase.java",
+				"newPath": "modules/queryparser/src/java/org/apache/lucene/queryparser/classic/QueryParserBase.java"
+			}
+		},
+		"8b4c80f04b4255b6f1f7309ffb01ccbea6db029b": {
+			"type": "Ymovefromfile",
+			"commitMessage": "LUCENE-2718: pull java code out of the QP .jj\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/dev/trunk@1026331 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2010-10-22, 8:04 AM",
+			"commitName": "8b4c80f04b4255b6f1f7309ffb01ccbea6db029b",
+			"commitAuthor": "Yonik Seeley",
+			"commitDateOld": "2010-10-22, 7:31 AM",
+			"commitNameOld": "e999b25d05c8fa7403d8c9e48fb042e087f6b95e",
+			"commitAuthorOld": "Robert Muir",
+			"daysBetweenCommits": 0.02,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "lucene/src/java/org/apache/lucene/queryParser/QueryParser.java",
+				"newPath": "lucene/src/java/org/apache/lucene/queryParser/QueryParserBase.java",
+				"oldMethodName": "addClause",
+				"newMethodName": "addClause"
+			}
+		},
+		"778d96752fa94636a2136ea2b4d58a3fcbe283ec": {
+			"type": "Yfilerename",
+			"commitMessage": "SVN-GIT conversion, path copy emulation.\n",
+			"commitDate": "2016-01-22, 5:18 PM",
+			"commitName": "778d96752fa94636a2136ea2b4d58a3fcbe283ec",
+			"commitAuthor": "Dawid Weiss",
+			"commitDateOld": "2010-03-17, 8:57 AM",
+			"commitNameOld": "2e5c6cdadc820220f8cb86e1b6e215da941649f9",
+			"commitAuthorOld": "Uwe Schindler",
+			"daysBetweenCommits": 2137.39,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "src/java/org/apache/lucene/queryParser/QueryParser.java",
+				"newPath": "lucene/src/java/org/apache/lucene/queryParser/QueryParser.java"
+			}
+		},
+		"649a0e83a47185fd5771e7d7492462d646789a80": {
+			"type": "Ymultichange(Yparameterchange,Ybodychange)",
+			"commitMessage": "Remove deprecations from QueryParser and generify (LUCENE-1257) QueryParser\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/java/trunk@827717 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2009-10-20, 10:06 AM",
+			"commitName": "649a0e83a47185fd5771e7d7492462d646789a80",
+			"commitAuthor": "Uwe Schindler",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "Remove deprecations from QueryParser and generify (LUCENE-1257) QueryParser\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/java/trunk@827717 13f79535-47bb-0310-9956-ffa450edef68\n",
+					"commitDate": "2009-10-20, 10:06 AM",
+					"commitName": "649a0e83a47185fd5771e7d7492462d646789a80",
+					"commitAuthor": "Uwe Schindler",
+					"commitDateOld": "2009-10-18, 5:21 PM",
+					"commitNameOld": "3645281a5db9e18e06387781fb5630ceb2a91f62",
+					"commitAuthorOld": "Uwe Schindler",
+					"daysBetweenCommits": 1.7,
+					"commitsBetweenForRepo": 9,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,49 +1,49 @@\n-  protected void addClause(List clauses, int conj, int mods, Query q) {\n+  protected void addClause(List<BooleanClause> clauses, int conj, int mods, Query q) {\n     boolean required, prohibited;\n \n     // If this term is introduced by AND, make the preceding term required,\n     // unless it's already prohibited\n     if (clauses.size() > 0 && conj == CONJ_AND) {\n-      BooleanClause c = (BooleanClause) clauses.get(clauses.size()-1);\n+      BooleanClause c = clauses.get(clauses.size()-1);\n       if (!c.isProhibited())\n         c.setOccur(BooleanClause.Occur.MUST);\n     }\n \n     if (clauses.size() > 0 && operator == AND_OPERATOR && conj == CONJ_OR) {\n       // If this term is introduced by OR, make the preceding term optional,\n       // unless it's prohibited (that means we leave -a OR b but +a OR b-->a OR b)\n       // notice if the input is a OR b, first term is parsed as required; without\n       // this modification a OR b would parsed as +a OR b\n-      BooleanClause c = (BooleanClause) clauses.get(clauses.size()-1);\n+      BooleanClause c = clauses.get(clauses.size()-1);\n       if (!c.isProhibited())\n         c.setOccur(BooleanClause.Occur.SHOULD);\n     }\n \n     // We might have been passed a null query; the term might have been\n     // filtered away by the analyzer.\n     if (q == null)\n       return;\n \n     if (operator == OR_OPERATOR) {\n       // We set REQUIRED if we're introduced by AND or +; PROHIBITED if\n       // introduced by NOT or -; make sure not to set both.\n       prohibited = (mods == MOD_NOT);\n       required = (mods == MOD_REQ);\n       if (conj == CONJ_AND && !prohibited) {\n         required = true;\n       }\n     } else {\n       // We set PROHIBITED if we're introduced by NOT or -; We set REQUIRED\n       // if not PROHIBITED and not introduced by OR\n       prohibited = (mods == MOD_NOT);\n       required   = (!prohibited && conj != CONJ_OR);\n     }\n     if (required && !prohibited)\n       clauses.add(newBooleanClause(q, BooleanClause.Occur.MUST));\n     else if (!required && !prohibited)\n       clauses.add(newBooleanClause(q, BooleanClause.Occur.SHOULD));\n     else if (!required && prohibited)\n       clauses.add(newBooleanClause(q, BooleanClause.Occur.MUST_NOT));\n     else\n       throw new RuntimeException(\"Clause cannot be both required and prohibited\");\n   }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[clauses-List, conj-int, mods-int, q-Query]",
+						"newValue": "[clauses-List<BooleanClause>, conj-int, mods-int, q-Query]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Remove deprecations from QueryParser and generify (LUCENE-1257) QueryParser\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/java/trunk@827717 13f79535-47bb-0310-9956-ffa450edef68\n",
+					"commitDate": "2009-10-20, 10:06 AM",
+					"commitName": "649a0e83a47185fd5771e7d7492462d646789a80",
+					"commitAuthor": "Uwe Schindler",
+					"commitDateOld": "2009-10-18, 5:21 PM",
+					"commitNameOld": "3645281a5db9e18e06387781fb5630ceb2a91f62",
+					"commitAuthorOld": "Uwe Schindler",
+					"daysBetweenCommits": 1.7,
+					"commitsBetweenForRepo": 9,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,49 +1,49 @@\n-  protected void addClause(List clauses, int conj, int mods, Query q) {\n+  protected void addClause(List<BooleanClause> clauses, int conj, int mods, Query q) {\n     boolean required, prohibited;\n \n     // If this term is introduced by AND, make the preceding term required,\n     // unless it's already prohibited\n     if (clauses.size() > 0 && conj == CONJ_AND) {\n-      BooleanClause c = (BooleanClause) clauses.get(clauses.size()-1);\n+      BooleanClause c = clauses.get(clauses.size()-1);\n       if (!c.isProhibited())\n         c.setOccur(BooleanClause.Occur.MUST);\n     }\n \n     if (clauses.size() > 0 && operator == AND_OPERATOR && conj == CONJ_OR) {\n       // If this term is introduced by OR, make the preceding term optional,\n       // unless it's prohibited (that means we leave -a OR b but +a OR b-->a OR b)\n       // notice if the input is a OR b, first term is parsed as required; without\n       // this modification a OR b would parsed as +a OR b\n-      BooleanClause c = (BooleanClause) clauses.get(clauses.size()-1);\n+      BooleanClause c = clauses.get(clauses.size()-1);\n       if (!c.isProhibited())\n         c.setOccur(BooleanClause.Occur.SHOULD);\n     }\n \n     // We might have been passed a null query; the term might have been\n     // filtered away by the analyzer.\n     if (q == null)\n       return;\n \n     if (operator == OR_OPERATOR) {\n       // We set REQUIRED if we're introduced by AND or +; PROHIBITED if\n       // introduced by NOT or -; make sure not to set both.\n       prohibited = (mods == MOD_NOT);\n       required = (mods == MOD_REQ);\n       if (conj == CONJ_AND && !prohibited) {\n         required = true;\n       }\n     } else {\n       // We set PROHIBITED if we're introduced by NOT or -; We set REQUIRED\n       // if not PROHIBITED and not introduced by OR\n       prohibited = (mods == MOD_NOT);\n       required   = (!prohibited && conj != CONJ_OR);\n     }\n     if (required && !prohibited)\n       clauses.add(newBooleanClause(q, BooleanClause.Occur.MUST));\n     else if (!required && !prohibited)\n       clauses.add(newBooleanClause(q, BooleanClause.Occur.SHOULD));\n     else if (!required && prohibited)\n       clauses.add(newBooleanClause(q, BooleanClause.Occur.MUST_NOT));\n     else\n       throw new RuntimeException(\"Clause cannot be both required and prohibited\");\n   }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"d5a40278bc39ec0c4f300d68c9f5bd4be0fea85b": {
+			"type": "Ymultichange(Yparameterchange,Ybodychange)",
+			"commitMessage": "LUCENE-1369: switch from Hashtable to HashMap and from Vector to List, when possible\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/java/trunk@692921 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2008-09-07, 1:22 PM",
+			"commitName": "d5a40278bc39ec0c4f300d68c9f5bd4be0fea85b",
+			"commitAuthor": "Michael McCandless",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "LUCENE-1369: switch from Hashtable to HashMap and from Vector to List, when possible\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/java/trunk@692921 13f79535-47bb-0310-9956-ffa450edef68\n",
+					"commitDate": "2008-09-07, 1:22 PM",
+					"commitName": "d5a40278bc39ec0c4f300d68c9f5bd4be0fea85b",
+					"commitAuthor": "Michael McCandless",
+					"commitDateOld": "2008-08-30, 11:12 AM",
+					"commitNameOld": "1bbfaa54451f5654abd9c5976c865dae47d83cb4",
+					"commitAuthorOld": "Michael McCandless",
+					"daysBetweenCommits": 8.09,
+					"commitsBetweenForRepo": 15,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,49 +1,49 @@\n-  protected void addClause(Vector clauses, int conj, int mods, Query q) {\n+  protected void addClause(List clauses, int conj, int mods, Query q) {\n     boolean required, prohibited;\n \n     // If this term is introduced by AND, make the preceding term required,\n     // unless it's already prohibited\n     if (clauses.size() > 0 && conj == CONJ_AND) {\n-      BooleanClause c = (BooleanClause) clauses.elementAt(clauses.size()-1);\n+      BooleanClause c = (BooleanClause) clauses.get(clauses.size()-1);\n       if (!c.isProhibited())\n         c.setOccur(BooleanClause.Occur.MUST);\n     }\n \n     if (clauses.size() > 0 && operator == AND_OPERATOR && conj == CONJ_OR) {\n       // If this term is introduced by OR, make the preceding term optional,\n       // unless it's prohibited (that means we leave -a OR b but +a OR b-->a OR b)\n       // notice if the input is a OR b, first term is parsed as required; without\n       // this modification a OR b would parsed as +a OR b\n-      BooleanClause c = (BooleanClause) clauses.elementAt(clauses.size()-1);\n+      BooleanClause c = (BooleanClause) clauses.get(clauses.size()-1);\n       if (!c.isProhibited())\n         c.setOccur(BooleanClause.Occur.SHOULD);\n     }\n \n     // We might have been passed a null query; the term might have been\n     // filtered away by the analyzer.\n     if (q == null)\n       return;\n \n     if (operator == OR_OPERATOR) {\n       // We set REQUIRED if we're introduced by AND or +; PROHIBITED if\n       // introduced by NOT or -; make sure not to set both.\n       prohibited = (mods == MOD_NOT);\n       required = (mods == MOD_REQ);\n       if (conj == CONJ_AND && !prohibited) {\n         required = true;\n       }\n     } else {\n       // We set PROHIBITED if we're introduced by NOT or -; We set REQUIRED\n       // if not PROHIBITED and not introduced by OR\n       prohibited = (mods == MOD_NOT);\n       required   = (!prohibited && conj != CONJ_OR);\n     }\n     if (required && !prohibited)\n-      clauses.addElement(newBooleanClause(q, BooleanClause.Occur.MUST));\n+      clauses.add(newBooleanClause(q, BooleanClause.Occur.MUST));\n     else if (!required && !prohibited)\n-      clauses.addElement(newBooleanClause(q, BooleanClause.Occur.SHOULD));\n+      clauses.add(newBooleanClause(q, BooleanClause.Occur.SHOULD));\n     else if (!required && prohibited)\n-      clauses.addElement(newBooleanClause(q, BooleanClause.Occur.MUST_NOT));\n+      clauses.add(newBooleanClause(q, BooleanClause.Occur.MUST_NOT));\n     else\n       throw new RuntimeException(\"Clause cannot be both required and prohibited\");\n   }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[clauses-Vector, conj-int, mods-int, q-Query]",
+						"newValue": "[clauses-List, conj-int, mods-int, q-Query]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "LUCENE-1369: switch from Hashtable to HashMap and from Vector to List, when possible\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/java/trunk@692921 13f79535-47bb-0310-9956-ffa450edef68\n",
+					"commitDate": "2008-09-07, 1:22 PM",
+					"commitName": "d5a40278bc39ec0c4f300d68c9f5bd4be0fea85b",
+					"commitAuthor": "Michael McCandless",
+					"commitDateOld": "2008-08-30, 11:12 AM",
+					"commitNameOld": "1bbfaa54451f5654abd9c5976c865dae47d83cb4",
+					"commitAuthorOld": "Michael McCandless",
+					"daysBetweenCommits": 8.09,
+					"commitsBetweenForRepo": 15,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,49 +1,49 @@\n-  protected void addClause(Vector clauses, int conj, int mods, Query q) {\n+  protected void addClause(List clauses, int conj, int mods, Query q) {\n     boolean required, prohibited;\n \n     // If this term is introduced by AND, make the preceding term required,\n     // unless it's already prohibited\n     if (clauses.size() > 0 && conj == CONJ_AND) {\n-      BooleanClause c = (BooleanClause) clauses.elementAt(clauses.size()-1);\n+      BooleanClause c = (BooleanClause) clauses.get(clauses.size()-1);\n       if (!c.isProhibited())\n         c.setOccur(BooleanClause.Occur.MUST);\n     }\n \n     if (clauses.size() > 0 && operator == AND_OPERATOR && conj == CONJ_OR) {\n       // If this term is introduced by OR, make the preceding term optional,\n       // unless it's prohibited (that means we leave -a OR b but +a OR b-->a OR b)\n       // notice if the input is a OR b, first term is parsed as required; without\n       // this modification a OR b would parsed as +a OR b\n-      BooleanClause c = (BooleanClause) clauses.elementAt(clauses.size()-1);\n+      BooleanClause c = (BooleanClause) clauses.get(clauses.size()-1);\n       if (!c.isProhibited())\n         c.setOccur(BooleanClause.Occur.SHOULD);\n     }\n \n     // We might have been passed a null query; the term might have been\n     // filtered away by the analyzer.\n     if (q == null)\n       return;\n \n     if (operator == OR_OPERATOR) {\n       // We set REQUIRED if we're introduced by AND or +; PROHIBITED if\n       // introduced by NOT or -; make sure not to set both.\n       prohibited = (mods == MOD_NOT);\n       required = (mods == MOD_REQ);\n       if (conj == CONJ_AND && !prohibited) {\n         required = true;\n       }\n     } else {\n       // We set PROHIBITED if we're introduced by NOT or -; We set REQUIRED\n       // if not PROHIBITED and not introduced by OR\n       prohibited = (mods == MOD_NOT);\n       required   = (!prohibited && conj != CONJ_OR);\n     }\n     if (required && !prohibited)\n-      clauses.addElement(newBooleanClause(q, BooleanClause.Occur.MUST));\n+      clauses.add(newBooleanClause(q, BooleanClause.Occur.MUST));\n     else if (!required && !prohibited)\n-      clauses.addElement(newBooleanClause(q, BooleanClause.Occur.SHOULD));\n+      clauses.add(newBooleanClause(q, BooleanClause.Occur.SHOULD));\n     else if (!required && prohibited)\n-      clauses.addElement(newBooleanClause(q, BooleanClause.Occur.MUST_NOT));\n+      clauses.add(newBooleanClause(q, BooleanClause.Occur.MUST_NOT));\n     else\n       throw new RuntimeException(\"Clause cannot be both required and prohibited\");\n   }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"1bbfaa54451f5654abd9c5976c865dae47d83cb4": {
+			"type": "Ybodychange",
+			"commitMessage": "LUCENE-1061: make it simpler to override concrete Query implementations created by QueryParser by factoring out protected newXXXQuery() methods\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/java/trunk@690535 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2008-08-30, 11:12 AM",
+			"commitName": "1bbfaa54451f5654abd9c5976c865dae47d83cb4",
+			"commitAuthor": "Michael McCandless",
+			"commitDateOld": "2008-08-20, 8:38 AM",
+			"commitNameOld": "bb6b7117186b656b4777850fdc463e0eaa541130",
+			"commitAuthorOld": "Michael McCandless",
+			"daysBetweenCommits": 10.11,
+			"commitsBetweenForRepo": 12,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,49 +1,49 @@\n   protected void addClause(Vector clauses, int conj, int mods, Query q) {\n     boolean required, prohibited;\n \n     // If this term is introduced by AND, make the preceding term required,\n     // unless it's already prohibited\n     if (clauses.size() > 0 && conj == CONJ_AND) {\n       BooleanClause c = (BooleanClause) clauses.elementAt(clauses.size()-1);\n       if (!c.isProhibited())\n         c.setOccur(BooleanClause.Occur.MUST);\n     }\n \n     if (clauses.size() > 0 && operator == AND_OPERATOR && conj == CONJ_OR) {\n       // If this term is introduced by OR, make the preceding term optional,\n       // unless it's prohibited (that means we leave -a OR b but +a OR b-->a OR b)\n       // notice if the input is a OR b, first term is parsed as required; without\n       // this modification a OR b would parsed as +a OR b\n       BooleanClause c = (BooleanClause) clauses.elementAt(clauses.size()-1);\n       if (!c.isProhibited())\n         c.setOccur(BooleanClause.Occur.SHOULD);\n     }\n \n     // We might have been passed a null query; the term might have been\n     // filtered away by the analyzer.\n     if (q == null)\n       return;\n \n     if (operator == OR_OPERATOR) {\n       // We set REQUIRED if we're introduced by AND or +; PROHIBITED if\n       // introduced by NOT or -; make sure not to set both.\n       prohibited = (mods == MOD_NOT);\n       required = (mods == MOD_REQ);\n       if (conj == CONJ_AND && !prohibited) {\n         required = true;\n       }\n     } else {\n       // We set PROHIBITED if we're introduced by NOT or -; We set REQUIRED\n       // if not PROHIBITED and not introduced by OR\n       prohibited = (mods == MOD_NOT);\n       required   = (!prohibited && conj != CONJ_OR);\n     }\n     if (required && !prohibited)\n-      clauses.addElement(new BooleanClause(q, BooleanClause.Occur.MUST));\n+      clauses.addElement(newBooleanClause(q, BooleanClause.Occur.MUST));\n     else if (!required && !prohibited)\n-      clauses.addElement(new BooleanClause(q, BooleanClause.Occur.SHOULD));\n+      clauses.addElement(newBooleanClause(q, BooleanClause.Occur.SHOULD));\n     else if (!required && prohibited)\n-      clauses.addElement(new BooleanClause(q, BooleanClause.Occur.MUST_NOT));\n+      clauses.addElement(newBooleanClause(q, BooleanClause.Occur.MUST_NOT));\n     else\n       throw new RuntimeException(\"Clause cannot be both required and prohibited\");\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"197ad763d1a6320b60dfd21a5bfb13fa71144afa": {
+			"type": "Ybodychange",
+			"commitMessage": "get/setOperator becomes get/setDefaultOperator and its parameter is now typsafe\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/java/trunk@150668 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2004-11-23, 4:13 PM",
+			"commitName": "197ad763d1a6320b60dfd21a5bfb13fa71144afa",
+			"commitAuthor": "Daniel Naber",
+			"commitDateOld": "2004-11-13, 8:11 AM",
+			"commitNameOld": "f8d0d0b140defd38f9fe15710f61b53a2a531a49",
+			"commitAuthorOld": "Daniel Naber",
+			"daysBetweenCommits": 10.33,
+			"commitsBetweenForRepo": 29,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,49 +1,49 @@\n   protected void addClause(Vector clauses, int conj, int mods, Query q) {\n     boolean required, prohibited;\n \n     // If this term is introduced by AND, make the preceding term required,\n     // unless it's already prohibited\n     if (clauses.size() > 0 && conj == CONJ_AND) {\n       BooleanClause c = (BooleanClause) clauses.elementAt(clauses.size()-1);\n       if (!c.isProhibited())\n         c.setOccur(BooleanClause.Occur.MUST);\n     }\n \n-    if (clauses.size() > 0 && operator == DEFAULT_OPERATOR_AND && conj == CONJ_OR) {\n+    if (clauses.size() > 0 && operator == AND_OPERATOR && conj == CONJ_OR) {\n       // If this term is introduced by OR, make the preceding term optional,\n       // unless it's prohibited (that means we leave -a OR b but +a OR b-->a OR b)\n       // notice if the input is a OR b, first term is parsed as required; without\n       // this modification a OR b would parsed as +a OR b\n       BooleanClause c = (BooleanClause) clauses.elementAt(clauses.size()-1);\n       if (!c.isProhibited())\n         c.setOccur(BooleanClause.Occur.SHOULD);\n     }\n \n     // We might have been passed a null query; the term might have been\n     // filtered away by the analyzer.\n     if (q == null)\n       return;\n \n-    if (operator == DEFAULT_OPERATOR_OR) {\n+    if (operator == OR_OPERATOR) {\n       // We set REQUIRED if we're introduced by AND or +; PROHIBITED if\n       // introduced by NOT or -; make sure not to set both.\n       prohibited = (mods == MOD_NOT);\n       required = (mods == MOD_REQ);\n       if (conj == CONJ_AND && !prohibited) {\n         required = true;\n       }\n     } else {\n       // We set PROHIBITED if we're introduced by NOT or -; We set REQUIRED\n       // if not PROHIBITED and not introduced by OR\n       prohibited = (mods == MOD_NOT);\n       required   = (!prohibited && conj != CONJ_OR);\n     }\n     if (required && !prohibited)\n       clauses.addElement(new BooleanClause(q, BooleanClause.Occur.MUST));\n     else if (!required && !prohibited)\n       clauses.addElement(new BooleanClause(q, BooleanClause.Occur.SHOULD));\n     else if (!required && prohibited)\n       clauses.addElement(new BooleanClause(q, BooleanClause.Occur.MUST_NOT));\n     else\n       throw new RuntimeException(\"Clause cannot be both required and prohibited\");\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"dfeed0220e6c4aa0c3a25157ce411ce25782a3f8": {
+			"type": "Ybodychange",
+			"commitMessage": "Fix ArrayIndexOutOfBoundsExceptions\nThis patch is common to several patches\nfor QueryParser see e.g. Bug 9110 and it cannot have any\nnegative side effects.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/java/trunk@150498 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2004-09-08, 7:31 AM",
+			"commitName": "dfeed0220e6c4aa0c3a25157ce411ce25782a3f8",
+			"commitAuthor": "Christoph Goller",
+			"commitDateOld": "2004-09-03, 3:12 PM",
+			"commitNameOld": "f085bc15f589345f3fba62b13d9a1eae2aff70c7",
+			"commitAuthorOld": "Daniel Naber",
+			"daysBetweenCommits": 4.68,
+			"commitsBetweenForRepo": 17,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,49 +1,49 @@\n   protected void addClause(Vector clauses, int conj, int mods, Query q) {\n     boolean required, prohibited;\n \n     // If this term is introduced by AND, make the preceding term required,\n     // unless it's already prohibited\n-    if (conj == CONJ_AND) {\n+    if (clauses.size() > 0 && conj == CONJ_AND) {\n       BooleanClause c = (BooleanClause) clauses.elementAt(clauses.size()-1);\n       if (!c.isProhibited())\n         c.setOccur(BooleanClause.Occur.MUST);\n     }\n \n-    if (operator == DEFAULT_OPERATOR_AND && conj == CONJ_OR) {\n+    if (clauses.size() > 0 && operator == DEFAULT_OPERATOR_AND && conj == CONJ_OR) {\n       // If this term is introduced by OR, make the preceding term optional,\n       // unless it's prohibited (that means we leave -a OR b but +a OR b-->a OR b)\n       // notice if the input is a OR b, first term is parsed as required; without\n       // this modification a OR b would parsed as +a OR b\n       BooleanClause c = (BooleanClause) clauses.elementAt(clauses.size()-1);\n       if (!c.isProhibited())\n         c.setOccur(BooleanClause.Occur.SHOULD);\n     }\n \n     // We might have been passed a null query; the term might have been\n     // filtered away by the analyzer.\n     if (q == null)\n       return;\n \n     if (operator == DEFAULT_OPERATOR_OR) {\n       // We set REQUIRED if we're introduced by AND or +; PROHIBITED if\n       // introduced by NOT or -; make sure not to set both.\n       prohibited = (mods == MOD_NOT);\n       required = (mods == MOD_REQ);\n       if (conj == CONJ_AND && !prohibited) {\n         required = true;\n       }\n     } else {\n       // We set PROHIBITED if we're introduced by NOT or -; We set REQUIRED\n       // if not PROHIBITED and not introduced by OR\n       prohibited = (mods == MOD_NOT);\n       required   = (!prohibited && conj != CONJ_OR);\n     }\n     if (required && !prohibited)\n       clauses.addElement(new BooleanClause(q, BooleanClause.Occur.MUST));\n     else if (!required && !prohibited)\n       clauses.addElement(new BooleanClause(q, BooleanClause.Occur.SHOULD));\n     else if (!required && prohibited)\n       clauses.addElement(new BooleanClause(q, BooleanClause.Occur.MUST_NOT));\n     else\n       throw new RuntimeException(\"Clause cannot be both required and prohibited\");\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"f6c12e189a8bcb0291b70d6272ec81acc3f0fcc6": {
+			"type": "Ybodychange",
+			"commitMessage": "don't use the deprecated API for BooleanQuery.add()\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/java/trunk@150461 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2004-08-27, 3:50 PM",
+			"commitName": "f6c12e189a8bcb0291b70d6272ec81acc3f0fcc6",
+			"commitAuthor": "Daniel Naber",
+			"commitDateOld": "2004-05-22, 11:34 AM",
+			"commitNameOld": "ee00e19246fa777e891202422a22316445585210",
+			"commitAuthorOld": "Erik Hatcher",
+			"daysBetweenCommits": 97.18,
+			"commitsBetweenForRepo": 104,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,42 +1,49 @@\n   protected void addClause(Vector clauses, int conj, int mods, Query q) {\n     boolean required, prohibited;\n \n     // If this term is introduced by AND, make the preceding term required,\n     // unless it's already prohibited\n     if (conj == CONJ_AND) {\n       BooleanClause c = (BooleanClause) clauses.elementAt(clauses.size()-1);\n-      if (!c.prohibited)\n-        c.required = true;\n+      if (!c.isProhibited())\n+        c.setOccur(BooleanClause.Occur.MUST);\n     }\n \n     if (operator == DEFAULT_OPERATOR_AND && conj == CONJ_OR) {\n       // If this term is introduced by OR, make the preceding term optional,\n       // unless it's prohibited (that means we leave -a OR b but +a OR b-->a OR b)\n       // notice if the input is a OR b, first term is parsed as required; without\n       // this modification a OR b would parsed as +a OR b\n       BooleanClause c = (BooleanClause) clauses.elementAt(clauses.size()-1);\n-      if (!c.prohibited)\n-        c.required = false;\n+      if (!c.isProhibited())\n+        c.setOccur(BooleanClause.Occur.SHOULD);\n     }\n \n     // We might have been passed a null query; the term might have been\n     // filtered away by the analyzer.\n     if (q == null)\n       return;\n \n     if (operator == DEFAULT_OPERATOR_OR) {\n       // We set REQUIRED if we're introduced by AND or +; PROHIBITED if\n       // introduced by NOT or -; make sure not to set both.\n       prohibited = (mods == MOD_NOT);\n       required = (mods == MOD_REQ);\n       if (conj == CONJ_AND && !prohibited) {\n         required = true;\n       }\n     } else {\n       // We set PROHIBITED if we're introduced by NOT or -; We set REQUIRED\n       // if not PROHIBITED and not introduced by OR\n       prohibited = (mods == MOD_NOT);\n       required   = (!prohibited && conj != CONJ_OR);\n     }\n-    clauses.addElement(new BooleanClause(q, required, prohibited));\n+    if (required && !prohibited)\n+      clauses.addElement(new BooleanClause(q, BooleanClause.Occur.MUST));\n+    else if (!required && !prohibited)\n+      clauses.addElement(new BooleanClause(q, BooleanClause.Occur.SHOULD));\n+    else if (!required && prohibited)\n+      clauses.addElement(new BooleanClause(q, BooleanClause.Occur.MUST_NOT));\n+    else\n+      throw new RuntimeException(\"Clause cannot be both required and prohibited\");\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"2af2d858774f7391f13341b8f588e75287868237": {
+			"type": "Yintroduced",
+			"commitMessage": "PR 19468, but not exactly as it was done in the provided patches.  JavaCC is no longer required to build Lucene, but can be run optionally\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/java/trunk@150017 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2003-09-10, 7:51 PM",
+			"commitName": "2af2d858774f7391f13341b8f588e75287868237",
+			"commitAuthor": "Erik Hatcher"
+		}
+	},
+	"sha": "38bf976cd4b9e324c21664bd7ae3d554df803705"
+}

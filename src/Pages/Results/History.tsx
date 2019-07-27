@@ -100,8 +100,8 @@ export class ReactHistory extends FadeableElement<IReactHistoryProps, IReactHist
 				}}
 			>
 				{
-					this.props.history.getCommits().map((commit: ICommit, i: number) => {
-						return <ReactCommit commit={commit} key={i} active={this.props.active} repo={this.props.repo} windowHeight={this.props.windowHeight} windowWidth={this.props.windowWidth}/>;
+					this.props.history.getCommits().map((commit: ICommit) => {
+						return <ReactCommit commit={commit} key={commit.commitName} active={this.props.active} repo={this.props.repo} windowHeight={this.props.windowHeight} windowWidth={this.props.windowWidth}/>;
 					})
 				}
 			</div>

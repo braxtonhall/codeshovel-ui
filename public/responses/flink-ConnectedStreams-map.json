@@ -1,0 +1,332 @@
+{
+	"repo": "https://github.com/apache/flink.git",
+	"file": "flink-streaming-java/src/main/java/org/apache/flink/streaming/api/datastream/ConnectedStreams.java",
+	"method": {
+		"longName": "ConnectedStreams::map(CoMapFunction<IN1, IN2, R> coMapper)",
+		"startLine": 226,
+		"methodName": "map",
+		"isStatic": false,
+		"isAbstract": false,
+		"visibility": "public"
+	},
+	"history": {
+		"ddba1b69f43cbb885e178dfaafa120f1fe196a13": {
+			"type": "Ybodychange",
+			"commitMessage": "[FLINK-7251] [types] Remove the flink-java8 module and improve lambda type extraction\n\nThis commit removes the flink-java8 module and merges some tests into flink-core/flink-runtime. It ensures to have the possibility for passing explicit type information in DataStream API as a fallback. Since the tycho compiler approach was very hacky and seems not to work anymore, this commit also removes all references in the docs and quickstarts.\n\nThis closes #6120.\n",
+			"commitDate": "2018-07-20, 12:06 AM",
+			"commitName": "ddba1b69f43cbb885e178dfaafa120f1fe196a13",
+			"commitAuthor": "Timo Walther",
+			"commitDateOld": "2017-06-08, 2:42 AM",
+			"commitNameOld": "bcaf816dc5313c6c7de1e3436cc87036fd2ea3d0",
+			"commitAuthorOld": "Dawid Wysakowicz",
+			"daysBetweenCommits": 406.89,
+			"commitsBetweenForRepo": 2893,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,19 +1,17 @@\n \tpublic <R> SingleOutputStreamOperator<R> map(CoMapFunction<IN1, IN2, R> coMapper) {\n \n \t\tTypeInformation<R> outTypeInfo = TypeExtractor.getBinaryOperatorReturnType(\n \t\t\tcoMapper,\n \t\t\tCoMapFunction.class,\n \t\t\t0,\n \t\t\t1,\n \t\t\t2,\n \t\t\tTypeExtractor.NO_INDEX,\n-\t\t\tTypeExtractor.NO_INDEX,\n-\t\t\tTypeExtractor.NO_INDEX,\n \t\t\tgetType1(),\n \t\t\tgetType2(),\n \t\t\tUtils.getCallLocationName(),\n \t\t\ttrue);\n \n \t\treturn transform(\"Co-Map\", outTypeInfo, new CoStreamMap<>(inputStream1.clean(coMapper)));\n \n \t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"bcaf816dc5313c6c7de1e3436cc87036fd2ea3d0": {
+			"type": "Ybodychange",
+			"commitMessage": "[FLINK-6783] Changed passing index of type argument while extracting return type.\n",
+			"commitDate": "2017-06-08, 2:42 AM",
+			"commitName": "bcaf816dc5313c6c7de1e3436cc87036fd2ea3d0",
+			"commitAuthor": "Dawid Wysakowicz",
+			"commitDateOld": "2017-05-22, 2:22 PM",
+			"commitNameOld": "12b4185c6c09101b64e12a84c33dc4d28f95cff9",
+			"commitAuthorOld": "Greg Hogan",
+			"daysBetweenCommits": 16.51,
+			"commitsBetweenForRepo": 129,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,9 +1,19 @@\n \tpublic <R> SingleOutputStreamOperator<R> map(CoMapFunction<IN1, IN2, R> coMapper) {\n \n-\t\tTypeInformation<R> outTypeInfo = TypeExtractor.getBinaryOperatorReturnType(coMapper,\n-\t\t\t\tCoMapFunction.class, false, true, getType1(), getType2(),\n-\t\t\t\tUtils.getCallLocationName(), true);\n+\t\tTypeInformation<R> outTypeInfo = TypeExtractor.getBinaryOperatorReturnType(\n+\t\t\tcoMapper,\n+\t\t\tCoMapFunction.class,\n+\t\t\t0,\n+\t\t\t1,\n+\t\t\t2,\n+\t\t\tTypeExtractor.NO_INDEX,\n+\t\t\tTypeExtractor.NO_INDEX,\n+\t\t\tTypeExtractor.NO_INDEX,\n+\t\t\tgetType1(),\n+\t\t\tgetType2(),\n+\t\t\tUtils.getCallLocationName(),\n+\t\t\ttrue);\n \n \t\treturn transform(\"Co-Map\", outTypeInfo, new CoStreamMap<>(inputStream1.clean(coMapper)));\n \n \t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"a922473c0835a757e7108c79ad52f103ace86030": {
+			"type": "Ymultichange(Yparameterchange,Yreturntypechange,Ybodychange)",
+			"commitMessage": "[FLINK-3548] [api-breaking] Remove unnecessary generic parameter from SingleOutputStreamOperator\n",
+			"commitDate": "2016-02-29, 1:37 PM",
+			"commitName": "a922473c0835a757e7108c79ad52f103ace86030",
+			"commitAuthor": "Aljoscha Krettek",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "[FLINK-3548] [api-breaking] Remove unnecessary generic parameter from SingleOutputStreamOperator\n",
+					"commitDate": "2016-02-29, 1:37 PM",
+					"commitName": "a922473c0835a757e7108c79ad52f103ace86030",
+					"commitAuthor": "Aljoscha Krettek",
+					"commitDateOld": "2016-02-17, 7:09 AM",
+					"commitNameOld": "06a42bf6d64734621cc6aa92d5823d935c07e02c",
+					"commitAuthorOld": "Stephan Ewen",
+					"daysBetweenCommits": 12.27,
+					"commitsBetweenForRepo": 100,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,9 +1,9 @@\n-\tpublic <OUT> SingleOutputStreamOperator<OUT, ?> map(CoMapFunction<IN1, IN2, OUT> coMapper) {\n+\tpublic <R> SingleOutputStreamOperator<R> map(CoMapFunction<IN1, IN2, R> coMapper) {\n \n-\t\tTypeInformation<OUT> outTypeInfo = TypeExtractor.getBinaryOperatorReturnType(coMapper,\n+\t\tTypeInformation<R> outTypeInfo = TypeExtractor.getBinaryOperatorReturnType(coMapper,\n \t\t\t\tCoMapFunction.class, false, true, getType1(), getType2(),\n \t\t\t\tUtils.getCallLocationName(), true);\n \n \t\treturn transform(\"Co-Map\", outTypeInfo, new CoStreamMap<>(inputStream1.clean(coMapper)));\n \n \t}\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[coMapper-CoMapFunction<IN1,IN2,OUT>]",
+						"newValue": "[coMapper-CoMapFunction<IN1,IN2,R>]"
+					}
+				},
+				{
+					"type": "Yreturntypechange",
+					"commitMessage": "[FLINK-3548] [api-breaking] Remove unnecessary generic parameter from SingleOutputStreamOperator\n",
+					"commitDate": "2016-02-29, 1:37 PM",
+					"commitName": "a922473c0835a757e7108c79ad52f103ace86030",
+					"commitAuthor": "Aljoscha Krettek",
+					"commitDateOld": "2016-02-17, 7:09 AM",
+					"commitNameOld": "06a42bf6d64734621cc6aa92d5823d935c07e02c",
+					"commitAuthorOld": "Stephan Ewen",
+					"daysBetweenCommits": 12.27,
+					"commitsBetweenForRepo": 100,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,9 +1,9 @@\n-\tpublic <OUT> SingleOutputStreamOperator<OUT, ?> map(CoMapFunction<IN1, IN2, OUT> coMapper) {\n+\tpublic <R> SingleOutputStreamOperator<R> map(CoMapFunction<IN1, IN2, R> coMapper) {\n \n-\t\tTypeInformation<OUT> outTypeInfo = TypeExtractor.getBinaryOperatorReturnType(coMapper,\n+\t\tTypeInformation<R> outTypeInfo = TypeExtractor.getBinaryOperatorReturnType(coMapper,\n \t\t\t\tCoMapFunction.class, false, true, getType1(), getType2(),\n \t\t\t\tUtils.getCallLocationName(), true);\n \n \t\treturn transform(\"Co-Map\", outTypeInfo, new CoStreamMap<>(inputStream1.clean(coMapper)));\n \n \t}\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "SingleOutputStreamOperator<OUT,?>",
+						"newValue": "SingleOutputStreamOperator<R>"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "[FLINK-3548] [api-breaking] Remove unnecessary generic parameter from SingleOutputStreamOperator\n",
+					"commitDate": "2016-02-29, 1:37 PM",
+					"commitName": "a922473c0835a757e7108c79ad52f103ace86030",
+					"commitAuthor": "Aljoscha Krettek",
+					"commitDateOld": "2016-02-17, 7:09 AM",
+					"commitNameOld": "06a42bf6d64734621cc6aa92d5823d935c07e02c",
+					"commitAuthorOld": "Stephan Ewen",
+					"daysBetweenCommits": 12.27,
+					"commitsBetweenForRepo": 100,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,9 +1,9 @@\n-\tpublic <OUT> SingleOutputStreamOperator<OUT, ?> map(CoMapFunction<IN1, IN2, OUT> coMapper) {\n+\tpublic <R> SingleOutputStreamOperator<R> map(CoMapFunction<IN1, IN2, R> coMapper) {\n \n-\t\tTypeInformation<OUT> outTypeInfo = TypeExtractor.getBinaryOperatorReturnType(coMapper,\n+\t\tTypeInformation<R> outTypeInfo = TypeExtractor.getBinaryOperatorReturnType(coMapper,\n \t\t\t\tCoMapFunction.class, false, true, getType1(), getType2(),\n \t\t\t\tUtils.getCallLocationName(), true);\n \n \t\treturn transform(\"Co-Map\", outTypeInfo, new CoStreamMap<>(inputStream1.clean(coMapper)));\n \n \t}\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"06f6ac5d3edbc8dd20baf6e1b30900c189a68876": {
+			"type": "Yfilerename",
+			"commitMessage": "[FLINK-2877] Move Streaming API out of Staging package\n",
+			"commitDate": "2015-10-21, 3:01 AM",
+			"commitName": "06f6ac5d3edbc8dd20baf6e1b30900c189a68876",
+			"commitAuthor": "Rufus Refactor",
+			"commitDateOld": "2015-10-21, 2:35 AM",
+			"commitNameOld": "42a3d8cfa9eacc19ac04004b256b6eb51422b523",
+			"commitAuthorOld": "Maximilian Michels",
+			"daysBetweenCommits": 0.02,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/ConnectedStreams.java",
+				"newPath": "flink-streaming-java/src/main/java/org/apache/flink/streaming/api/datastream/ConnectedStreams.java"
+			}
+		},
+		"23d8e26438370d8c99c24c8b43d543e953775fd2": {
+			"type": "Ymultichange(Ymovefromfile,Ybodychange)",
+			"commitMessage": "[FLINK-2550] Rename ConnectedDataStream to ConnectedStreams, Remove some operations\n\nThe removed operations are tricky and some of them are not working\ncorrectly. For now, co-reduce, stream-cross and stream-join are\nremoved.\n\nI'm planning to add a new join implementation based on tagged union\nthat uses the new windowing code.\n",
+			"commitDate": "2015-10-05, 8:36 AM",
+			"commitName": "23d8e26438370d8c99c24c8b43d543e953775fd2",
+			"commitAuthor": "Aljoscha Krettek",
+			"subchanges": [
+				{
+					"type": "Ymovefromfile",
+					"commitMessage": "[FLINK-2550] Rename ConnectedDataStream to ConnectedStreams, Remove some operations\n\nThe removed operations are tricky and some of them are not working\ncorrectly. For now, co-reduce, stream-cross and stream-join are\nremoved.\n\nI'm planning to add a new join implementation based on tagged union\nthat uses the new windowing code.\n",
+					"commitDate": "2015-10-05, 8:36 AM",
+					"commitName": "23d8e26438370d8c99c24c8b43d543e953775fd2",
+					"commitAuthor": "Aljoscha Krettek",
+					"commitDateOld": "2015-10-05, 8:36 AM",
+					"commitNameOld": "9e6e0aeca01c50640827adbdd60089761cd5e8d2",
+					"commitAuthorOld": "Aljoscha Krettek",
+					"daysBetweenCommits": 0,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,10 +1,9 @@\n \tpublic <OUT> SingleOutputStreamOperator<OUT, ?> map(CoMapFunction<IN1, IN2, OUT> coMapper) {\n \n \t\tTypeInformation<OUT> outTypeInfo = TypeExtractor.getBinaryOperatorReturnType(coMapper,\n \t\t\t\tCoMapFunction.class, false, true, getType1(), getType2(),\n \t\t\t\tUtils.getCallLocationName(), true);\n \n-\t\treturn transform(\"Co-Map\", outTypeInfo, new CoStreamMap<IN1, IN2, OUT>(\n-\t\t\t\tclean(coMapper)));\n+\t\treturn transform(\"Co-Map\", outTypeInfo, new CoStreamMap<>(inputStream1.clean(coMapper)));\n \n \t}\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldPath": "flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/ConnectedDataStream.java",
+						"newPath": "flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/ConnectedStreams.java",
+						"oldMethodName": "map",
+						"newMethodName": "map"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "[FLINK-2550] Rename ConnectedDataStream to ConnectedStreams, Remove some operations\n\nThe removed operations are tricky and some of them are not working\ncorrectly. For now, co-reduce, stream-cross and stream-join are\nremoved.\n\nI'm planning to add a new join implementation based on tagged union\nthat uses the new windowing code.\n",
+					"commitDate": "2015-10-05, 8:36 AM",
+					"commitName": "23d8e26438370d8c99c24c8b43d543e953775fd2",
+					"commitAuthor": "Aljoscha Krettek",
+					"commitDateOld": "2015-10-05, 8:36 AM",
+					"commitNameOld": "9e6e0aeca01c50640827adbdd60089761cd5e8d2",
+					"commitAuthorOld": "Aljoscha Krettek",
+					"daysBetweenCommits": 0,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,10 +1,9 @@\n \tpublic <OUT> SingleOutputStreamOperator<OUT, ?> map(CoMapFunction<IN1, IN2, OUT> coMapper) {\n \n \t\tTypeInformation<OUT> outTypeInfo = TypeExtractor.getBinaryOperatorReturnType(coMapper,\n \t\t\t\tCoMapFunction.class, false, true, getType1(), getType2(),\n \t\t\t\tUtils.getCallLocationName(), true);\n \n-\t\treturn transform(\"Co-Map\", outTypeInfo, new CoStreamMap<IN1, IN2, OUT>(\n-\t\t\t\tclean(coMapper)));\n+\t\treturn transform(\"Co-Map\", outTypeInfo, new CoStreamMap<>(inputStream1.clean(coMapper)));\n \n \t}\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"6df1dd2cc848d0a691a98309a3bb760f9a998673": {
+			"type": "Ybodychange",
+			"commitMessage": "[FLINK-1909] [streaming] Type handling refactor for sources + scala api\n",
+			"commitDate": "2015-04-22, 7:50 AM",
+			"commitName": "6df1dd2cc848d0a691a98309a3bb760f9a998673",
+			"commitAuthor": "Gyula Fora",
+			"commitDateOld": "2015-04-15, 3:35 AM",
+			"commitNameOld": "4754a97b19c96647886a46131750db26a0b5f618",
+			"commitAuthorOld": "Gyula Fora",
+			"daysBetweenCommits": 7.18,
+			"commitsBetweenForRepo": 28,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,10 +1,10 @@\n \tpublic <OUT> SingleOutputStreamOperator<OUT, ?> map(CoMapFunction<IN1, IN2, OUT> coMapper) {\n \n \t\tTypeInformation<OUT> outTypeInfo = TypeExtractor.getBinaryOperatorReturnType(coMapper,\n-\t\t\t\tCoMapFunction.class, false, true, getInputType1(), getInputType2(),\n+\t\t\t\tCoMapFunction.class, false, true, getType1(), getType2(),\n \t\t\t\tUtils.getCallLocationName(), true);\n \n-\t\treturn addCoFunction(\"Co-Map\", outTypeInfo, new CoStreamMap<IN1, IN2, OUT>(\n+\t\treturn transform(\"Co-Map\", outTypeInfo, new CoStreamMap<IN1, IN2, OUT>(\n \t\t\t\tclean(coMapper)));\n \n \t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"4754a97b19c96647886a46131750db26a0b5f618": {
+			"type": "Ybodychange",
+			"commitMessage": "[streaming] Major internal renaming and restructure\n\nCloses #594\n",
+			"commitDate": "2015-04-15, 3:35 AM",
+			"commitName": "4754a97b19c96647886a46131750db26a0b5f618",
+			"commitAuthor": "Gyula Fora",
+			"commitDateOld": "2015-04-14, 11:41 PM",
+			"commitNameOld": "f1b445b0eb481d2f66d1a8598dd10af16c101f18",
+			"commitAuthorOld": "Gyula Fora",
+			"daysBetweenCommits": 0.16,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,10 +1,10 @@\n \tpublic <OUT> SingleOutputStreamOperator<OUT, ?> map(CoMapFunction<IN1, IN2, OUT> coMapper) {\n \n \t\tTypeInformation<OUT> outTypeInfo = TypeExtractor.getBinaryOperatorReturnType(coMapper,\n \t\t\t\tCoMapFunction.class, false, true, getInputType1(), getInputType2(),\n \t\t\t\tUtils.getCallLocationName(), true);\n \n-\t\treturn addCoFunction(\"Co-Map\", outTypeInfo, new CoMapInvokable<IN1, IN2, OUT>(\n+\t\treturn addCoFunction(\"Co-Map\", outTypeInfo, new CoStreamMap<IN1, IN2, OUT>(\n \t\t\t\tclean(coMapper)));\n \n \t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"1cf49e90cddea610b4cfa3623a53ced66aadfc2d": {
+			"type": "Ybodychange",
+			"commitMessage": "[FLINK-1824] [streaming] Support added for missing types in DataStream api\n\nCloses #567\n",
+			"commitDate": "2015-04-05, 2:51 AM",
+			"commitName": "1cf49e90cddea610b4cfa3623a53ced66aadfc2d",
+			"commitAuthor": "Gyula Fora",
+			"commitDateOld": "2015-03-23, 2:03 AM",
+			"commitNameOld": "cf84bca124ac34875ef3e559abbbf509c1218542",
+			"commitAuthorOld": "Maximilian Michels",
+			"daysBetweenCommits": 13.03,
+			"commitsBetweenForRepo": 86,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,8 +1,10 @@\n \tpublic <OUT> SingleOutputStreamOperator<OUT, ?> map(CoMapFunction<IN1, IN2, OUT> coMapper) {\n-\t\tTypeInformation<OUT> outTypeInfo = TypeExtractor.createTypeInfo(CoMapFunction.class,\n-\t\t\t\tcoMapper.getClass(), 2, null, null);\n+\n+\t\tTypeInformation<OUT> outTypeInfo = TypeExtractor.getBinaryOperatorReturnType(coMapper,\n+\t\t\t\tCoMapFunction.class, false, true, getInputType1(), getInputType2(),\n+\t\t\t\tUtils.getCallLocationName(), true);\n \n \t\treturn addCoFunction(\"Co-Map\", outTypeInfo, new CoMapInvokable<IN1, IN2, OUT>(\n \t\t\t\tclean(coMapper)));\n \n \t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"f94112fbbaaf2ecc6a9ecb314a5565203ce779a7": {
+			"type": "Yfilerename",
+			"commitMessage": "[FLINK-1452] Rename 'flink-addons' to 'flink-staging'\n",
+			"commitDate": "2015-02-02, 11:40 AM",
+			"commitName": "f94112fbbaaf2ecc6a9ecb314a5565203ce779a7",
+			"commitAuthor": "Robert Metzger",
+			"commitDateOld": "2015-02-01, 4:27 PM",
+			"commitNameOld": "563e546236217dace58a8031d56d08a27e08160b",
+			"commitAuthorOld": "zentol",
+			"daysBetweenCommits": 0.8,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "flink-addons/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/ConnectedDataStream.java",
+				"newPath": "flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/ConnectedDataStream.java"
+			}
+		},
+		"82c420022ef3ffe3d7ad2172b4338ed12baf9e0e": {
+			"type": "Ybodychange",
+			"commitMessage": "[FLINK-1434] [FLINK-1401] Streaming support added for webclient\n\nCloses #334\n",
+			"commitDate": "2015-01-27, 3:31 PM",
+			"commitName": "82c420022ef3ffe3d7ad2172b4338ed12baf9e0e",
+			"commitAuthor": "Gyula Fora",
+			"commitDateOld": "2015-01-21, 8:06 AM",
+			"commitNameOld": "e3b608ce20f2c06b6c9ce8f231b6f53ab73f1de5",
+			"commitAuthorOld": "Gyula Fora",
+			"daysBetweenCommits": 6.31,
+			"commitsBetweenForRepo": 32,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,8 +1,8 @@\n \tpublic <OUT> SingleOutputStreamOperator<OUT, ?> map(CoMapFunction<IN1, IN2, OUT> coMapper) {\n \t\tTypeInformation<OUT> outTypeInfo = TypeExtractor.createTypeInfo(CoMapFunction.class,\n \t\t\t\tcoMapper.getClass(), 2, null, null);\n \n-\t\treturn addCoFunction(\"coMap\", outTypeInfo, new CoMapInvokable<IN1, IN2, OUT>(\n+\t\treturn addCoFunction(\"Co-Map\", outTypeInfo, new CoMapInvokable<IN1, IN2, OUT>(\n \t\t\t\tclean(coMapper)));\n \n \t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"34353f6658e9a4dd50ad860e17eee94804b76ccb": {
+			"type": "Ybodychange",
+			"commitMessage": "[scala] [streaming] Base functionality added for streaming scala api\n",
+			"commitDate": "2015-01-02, 10:34 AM",
+			"commitName": "34353f6658e9a4dd50ad860e17eee94804b76ccb",
+			"commitAuthor": "Gyula Fora",
+			"commitDateOld": "2014-12-17, 12:34 PM",
+			"commitNameOld": "5f7800702ad1762eef4d2a25b09615f65bf3761c",
+			"commitAuthorOld": "mbalassi",
+			"daysBetweenCommits": 15.92,
+			"commitsBetweenForRepo": 60,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,7 +1,8 @@\n \tpublic <OUT> SingleOutputStreamOperator<OUT, ?> map(CoMapFunction<IN1, IN2, OUT> coMapper) {\n \t\tTypeInformation<OUT> outTypeInfo = TypeExtractor.createTypeInfo(CoMapFunction.class,\n \t\t\t\tcoMapper.getClass(), 2, null, null);\n \n-\t\treturn addCoFunction(\"coMap\", clean(coMapper), outTypeInfo,\n-\t\t\t\tnew CoMapInvokable<IN1, IN2, OUT>(clean(coMapper)));\n+\t\treturn addCoFunction(\"coMap\", outTypeInfo, new CoMapInvokable<IN1, IN2, OUT>(\n+\t\t\t\tclean(coMapper)));\n+\n \t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"5f7800702ad1762eef4d2a25b09615f65bf3761c": {
+			"type": "Ybodychange",
+			"commitMessage": "[FLINK-1325] [streaming] Added clousure cleaning to streaming\n\nThis closes #273\n",
+			"commitDate": "2014-12-17, 12:34 PM",
+			"commitName": "5f7800702ad1762eef4d2a25b09615f65bf3761c",
+			"commitAuthor": "mbalassi",
+			"commitDateOld": "2014-12-10, 5:27 AM",
+			"commitNameOld": "51c1f67791307c2b9355171f7398d104befc8de5",
+			"commitAuthorOld": "Gyula Fora",
+			"daysBetweenCommits": 7.3,
+			"commitsBetweenForRepo": 40,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,7 +1,7 @@\n \tpublic <OUT> SingleOutputStreamOperator<OUT, ?> map(CoMapFunction<IN1, IN2, OUT> coMapper) {\n \t\tTypeInformation<OUT> outTypeInfo = TypeExtractor.createTypeInfo(CoMapFunction.class,\n \t\t\t\tcoMapper.getClass(), 2, null, null);\n \n-\t\treturn addCoFunction(\"coMap\", coMapper, outTypeInfo, new CoMapInvokable<IN1, IN2, OUT>(\n-\t\t\t\tcoMapper));\n+\t\treturn addCoFunction(\"coMap\", clean(coMapper), outTypeInfo,\n+\t\t\t\tnew CoMapInvokable<IN1, IN2, OUT>(clean(coMapper)));\n \t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"51c1f67791307c2b9355171f7398d104befc8de5": {
+			"type": "Ybodychange",
+			"commitMessage": "[FLINK-1161] [streaming] Streaming API type handling rework to support java 8 lambdas\n",
+			"commitDate": "2014-12-10, 5:27 AM",
+			"commitName": "51c1f67791307c2b9355171f7398d104befc8de5",
+			"commitAuthor": "Gyula Fora",
+			"commitDateOld": "2014-12-05, 8:45 AM",
+			"commitNameOld": "64baa00b130bae4d602ccafd52f5a687d6042279",
+			"commitAuthorOld": "ghermann",
+			"daysBetweenCommits": 4.86,
+			"commitsBetweenForRepo": 15,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,11 +1,7 @@\n \tpublic <OUT> SingleOutputStreamOperator<OUT, ?> map(CoMapFunction<IN1, IN2, OUT> coMapper) {\n-\t\tFunctionTypeWrapper<IN1> in1TypeWrapper = new FunctionTypeWrapper<IN1>(coMapper,\n-\t\t\t\tCoMapFunction.class, 0);\n-\t\tFunctionTypeWrapper<IN2> in2TypeWrapper = new FunctionTypeWrapper<IN2>(coMapper,\n-\t\t\t\tCoMapFunction.class, 1);\n-\t\tFunctionTypeWrapper<OUT> outTypeWrapper = new FunctionTypeWrapper<OUT>(coMapper,\n-\t\t\t\tCoMapFunction.class, 2);\n+\t\tTypeInformation<OUT> outTypeInfo = TypeExtractor.createTypeInfo(CoMapFunction.class,\n+\t\t\t\tcoMapper.getClass(), 2, null, null);\n \n-\t\treturn addCoFunction(\"coMap\", coMapper, in1TypeWrapper, in2TypeWrapper, outTypeWrapper,\n-\t\t\t\tnew CoMapInvokable<IN1, IN2, OUT>(coMapper));\n+\t\treturn addCoFunction(\"coMap\", coMapper, outTypeInfo, new CoMapInvokable<IN1, IN2, OUT>(\n+\t\t\t\tcoMapper));\n \t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"1b046f4e334926e560456c2b2ef3b67e635e4700": {
+			"type": "Ybodychange",
+			"commitMessage": "[streaming] Refactored stream components with InputHandler & OutputHandler\n",
+			"commitDate": "2014-08-29, 1:01 PM",
+			"commitName": "1b046f4e334926e560456c2b2ef3b67e635e4700",
+			"commitAuthor": "ghermann",
+			"commitDateOld": "2014-08-29, 1:01 PM",
+			"commitNameOld": "75960122b47f84d258273c0cd7f36b2aae7a684d",
+			"commitAuthorOld": "szape",
+			"daysBetweenCommits": 0,
+			"commitsBetweenForRepo": 4,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,4 +1,13 @@\n-\tpublic <OUT> SingleOutputStreamOperator<OUT, ?> map(CoMapFunction<IN1, IN2, OUT> coMapper) {\n-\t\treturn addCoFunction(\"coMap\", coMapper, new FunctionTypeWrapper<IN1, IN2, OUT>(coMapper,\n-\t\t\t\tCoMapFunction.class, 0, 1, 2), new CoMapInvokable<IN1, IN2, OUT>(coMapper));\n+\tpublic <OUT> SingleOutputStreamOperator<OUT, ?> map(\n+\t\t\tCoMapFunction<IN1, IN2, OUT> coMapper) {\n+\t\tFunctionTypeWrapper<IN1> in1TypeWrapper = new FunctionTypeWrapper<IN1>(\n+\t\t\t\tcoMapper, CoMapFunction.class, 0);\n+\t\tFunctionTypeWrapper<IN2> in2TypeWrapper = new FunctionTypeWrapper<IN2>(\n+\t\t\t\tcoMapper, CoMapFunction.class, 1);\n+\t\tFunctionTypeWrapper<OUT> outTypeWrapper = new FunctionTypeWrapper<OUT>(\n+\t\t\t\tcoMapper, CoMapFunction.class, 2);\n+\n+\t\treturn addCoFunction(\"coMap\", coMapper,\n+\t\t\t\tin1TypeWrapper, in2TypeWrapper, outTypeWrapper,\n+\t\t\t\tnew CoMapInvokable<IN1, IN2, OUT>(coMapper));\n \t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"696bce02f42973777304b0ad3fe4cc62a4f5e976": {
+			"type": "Ymovefromfile",
+			"commitMessage": "[streaming] Added groupBy operator to DataStream + name refactor\n",
+			"commitDate": "2014-08-18, 8:23 AM",
+			"commitName": "696bce02f42973777304b0ad3fe4cc62a4f5e976",
+			"commitAuthor": "gyfora",
+			"commitDateOld": "2014-08-18, 8:23 AM",
+			"commitNameOld": "e089959c0e4bb3e08a95b1b6b9076935c87a5a02",
+			"commitAuthorOld": "ghermann",
+			"daysBetweenCommits": 0,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "flink-addons/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/CoDataStream.java",
+				"newPath": "flink-addons/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/ConnectedDataStream.java",
+				"oldMethodName": "map",
+				"newMethodName": "map"
+			}
+		},
+		"d56d48f1a1933f138f5d97f42b71aa64fad6bc6f": {
+			"type": "Yintroduced",
+			"commitMessage": "[streaming] API update with more differentiated DataStream types and javadoc + several fixes\n",
+			"commitDate": "2014-08-18, 8:23 AM",
+			"commitName": "d56d48f1a1933f138f5d97f42b71aa64fad6bc6f",
+			"commitAuthor": "gyfora"
+		}
+	},
+	"sha": "9e936a5f8198b0059e9b5fba33163c2bbe3efbdd"
+}

@@ -1,0 +1,298 @@
+{
+	"repo": "https://github.com/junit-team/junit4.git",
+	"file": "src/main/java/org/junit/runners/Parameterized.java",
+	"method": {
+		"longName": "Parameterized$RunnersFactory::createRunnersForParameters(Iterable<Object> allParameters, String namePattern, ParametersRunnerFactory runnerFactory)",
+		"startLine": 439,
+		"methodName": "createRunnersForParameters",
+		"isStatic": false,
+		"isAbstract": false,
+		"visibility": "private"
+	},
+	"history": {
+		"1bf8438b65858565dbb64736bfe13aae9cfc1b5a": {
+			"type": "Ybodychange",
+			"commitMessage": "@BeforeParam/@AfterParam for Parameterized runner (#1435)\n\nCloses #45 ",
+			"commitDate": "2017-04-20, 6:19 PM",
+			"commitName": "1bf8438b65858565dbb64736bfe13aae9cfc1b5a",
+			"commitAuthor": "Alex Panchenko",
+			"commitDateOld": "2015-04-14, 12:27 PM",
+			"commitNameOld": "9f87b7819a63b53aae70e79fb72cc00e1837a3b6",
+			"commitAuthorOld": "Dmitry Baev",
+			"daysBetweenCommits": 737.24,
+			"commitsBetweenForRepo": 117,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,16 +1,16 @@\n         private List<Runner> createRunnersForParameters(\n                 Iterable<Object> allParameters, String namePattern,\n                 ParametersRunnerFactory runnerFactory) throws Exception {\n             try {\n                 List<TestWithParameters> tests = createTestsForParameters(\n                         allParameters, namePattern);\n                 List<Runner> runners = new ArrayList<Runner>();\n                 for (TestWithParameters test : tests) {\n                     runners.add(runnerFactory\n                             .createRunnerForTestWithParameters(test));\n                 }\n                 return runners;\n             } catch (ClassCastException e) {\n-                throw parametersMethodReturnedWrongType();\n+                throw parametersMethodReturnedWrongType(testClass, parametersMethod);\n             }\n         }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"c391c25b230e880289484202f3dc3aa81c373a1c": {
+			"type": "Yexceptionschange",
+			"commitMessage": "Remove redundant exception from method signature.\n\nA more general exception is already part of the signature.\n",
+			"commitDate": "2014-11-13, 4:14 PM",
+			"commitName": "c391c25b230e880289484202f3dc3aa81c373a1c",
+			"commitAuthor": "Stefan Birkner",
+			"commitDateOld": "2014-06-24, 1:30 PM",
+			"commitNameOld": "4eecfb1eff9aa5304f6b30874a26734124ac902d",
+			"commitAuthorOld": "vimil",
+			"daysBetweenCommits": 142.16,
+			"commitsBetweenForRepo": 63,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,18 +1,17 @@\n     private List<Runner> createRunnersForParameters(\n             Iterable<Object> allParameters, String namePattern,\n             ParametersRunnerFactory runnerFactory)\n-            throws InitializationError,\n-            Exception {\n+            throws Exception {\n         try {\n             List<TestWithParameters> tests = createTestsForParameters(\n                     allParameters, namePattern);\n             List<Runner> runners = new ArrayList<Runner>();\n             for (TestWithParameters test : tests) {\n                 runners.add(runnerFactory\n                         .createRunnerForTestWithParameters(test));\n             }\n             return runners;\n         } catch (ClassCastException e) {\n             throw parametersMethodReturnedWrongType();\n         }\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {
+				"oldValue": "[InitializationError, Exception]",
+				"newValue": "[Exception]"
+			}
+		},
+		"cb6abf6fc729f07c5d60b0756e91af444400b4b5": {
+			"type": "Ymultichange(Yparameterchange,Yexceptionschange,Ybodychange)",
+			"commitMessage": "Use a ParametersRunnerFactory for creating the test for a set of parameters.\n\nThere's now an explicit component for creating the runner of a single set of parameters. IMHO this is a better extension point than overriding a method.\n\nThe factory can be specified by the @UseParametersRunnerFactory\nannotation or you can subclass the Parameterized class and provide\nthe factory to its constructor.\n",
+			"commitDate": "2014-02-26, 11:58 AM",
+			"commitName": "cb6abf6fc729f07c5d60b0756e91af444400b4b5",
+			"commitAuthor": "Stefan Birkner",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "Use a ParametersRunnerFactory for creating the test for a set of parameters.\n\nThere's now an explicit component for creating the runner of a single set of parameters. IMHO this is a better extension point than overriding a method.\n\nThe factory can be specified by the @UseParametersRunnerFactory\nannotation or you can subclass the Parameterized class and provide\nthe factory to its constructor.\n",
+					"commitDate": "2014-02-26, 11:58 AM",
+					"commitName": "cb6abf6fc729f07c5d60b0756e91af444400b4b5",
+					"commitAuthor": "Stefan Birkner",
+					"commitDateOld": "2014-02-26, 11:58 AM",
+					"commitNameOld": "dca4a949f93bb85cc8ee0eb8789979a18aa3ffc7",
+					"commitAuthorOld": "Stefan Birkner",
+					"daysBetweenCommits": 0,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,13 +1,18 @@\n-    private List<Runner> createRunnersForParameters(Iterable<Object> allParameters, String namePattern) throws Exception {\n+    private List<Runner> createRunnersForParameters(\n+            Iterable<Object> allParameters, String namePattern,\n+            ParametersRunnerFactory runnerFactory)\n+            throws InitializationError,\n+            Exception {\n         try {\n-            int i = 0;\n-            List<Runner> children = new ArrayList<Runner>();\n-            for (Object parametersOfSingleTest : allParameters) {\n-                children.add(createRunnerWithNotNormalizedParameters(\n-                    namePattern, i++, parametersOfSingleTest));\n+            List<TestWithParameters> tests = createTestsForParameters(\n+                    allParameters, namePattern);\n+            List<Runner> runners = new ArrayList<Runner>();\n+            for (TestWithParameters test : tests) {\n+                runners.add(runnerFactory\n+                        .createRunnerForTestWithParameters(test));\n             }\n-            return children;\n+            return runners;\n         } catch (ClassCastException e) {\n             throw parametersMethodReturnedWrongType();\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[allParameters-Iterable<Object>, namePattern-String]",
+						"newValue": "[allParameters-Iterable<Object>, namePattern-String, runnerFactory-ParametersRunnerFactory]"
+					}
+				},
+				{
+					"type": "Yexceptionschange",
+					"commitMessage": "Use a ParametersRunnerFactory for creating the test for a set of parameters.\n\nThere's now an explicit component for creating the runner of a single set of parameters. IMHO this is a better extension point than overriding a method.\n\nThe factory can be specified by the @UseParametersRunnerFactory\nannotation or you can subclass the Parameterized class and provide\nthe factory to its constructor.\n",
+					"commitDate": "2014-02-26, 11:58 AM",
+					"commitName": "cb6abf6fc729f07c5d60b0756e91af444400b4b5",
+					"commitAuthor": "Stefan Birkner",
+					"commitDateOld": "2014-02-26, 11:58 AM",
+					"commitNameOld": "dca4a949f93bb85cc8ee0eb8789979a18aa3ffc7",
+					"commitAuthorOld": "Stefan Birkner",
+					"daysBetweenCommits": 0,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,13 +1,18 @@\n-    private List<Runner> createRunnersForParameters(Iterable<Object> allParameters, String namePattern) throws Exception {\n+    private List<Runner> createRunnersForParameters(\n+            Iterable<Object> allParameters, String namePattern,\n+            ParametersRunnerFactory runnerFactory)\n+            throws InitializationError,\n+            Exception {\n         try {\n-            int i = 0;\n-            List<Runner> children = new ArrayList<Runner>();\n-            for (Object parametersOfSingleTest : allParameters) {\n-                children.add(createRunnerWithNotNormalizedParameters(\n-                    namePattern, i++, parametersOfSingleTest));\n+            List<TestWithParameters> tests = createTestsForParameters(\n+                    allParameters, namePattern);\n+            List<Runner> runners = new ArrayList<Runner>();\n+            for (TestWithParameters test : tests) {\n+                runners.add(runnerFactory\n+                        .createRunnerForTestWithParameters(test));\n             }\n-            return children;\n+            return runners;\n         } catch (ClassCastException e) {\n             throw parametersMethodReturnedWrongType();\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[Exception]",
+						"newValue": "[InitializationError, Exception]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Use a ParametersRunnerFactory for creating the test for a set of parameters.\n\nThere's now an explicit component for creating the runner of a single set of parameters. IMHO this is a better extension point than overriding a method.\n\nThe factory can be specified by the @UseParametersRunnerFactory\nannotation or you can subclass the Parameterized class and provide\nthe factory to its constructor.\n",
+					"commitDate": "2014-02-26, 11:58 AM",
+					"commitName": "cb6abf6fc729f07c5d60b0756e91af444400b4b5",
+					"commitAuthor": "Stefan Birkner",
+					"commitDateOld": "2014-02-26, 11:58 AM",
+					"commitNameOld": "dca4a949f93bb85cc8ee0eb8789979a18aa3ffc7",
+					"commitAuthorOld": "Stefan Birkner",
+					"daysBetweenCommits": 0,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,13 +1,18 @@\n-    private List<Runner> createRunnersForParameters(Iterable<Object> allParameters, String namePattern) throws Exception {\n+    private List<Runner> createRunnersForParameters(\n+            Iterable<Object> allParameters, String namePattern,\n+            ParametersRunnerFactory runnerFactory)\n+            throws InitializationError,\n+            Exception {\n         try {\n-            int i = 0;\n-            List<Runner> children = new ArrayList<Runner>();\n-            for (Object parametersOfSingleTest : allParameters) {\n-                children.add(createRunnerWithNotNormalizedParameters(\n-                    namePattern, i++, parametersOfSingleTest));\n+            List<TestWithParameters> tests = createTestsForParameters(\n+                    allParameters, namePattern);\n+            List<Runner> runners = new ArrayList<Runner>();\n+            for (TestWithParameters test : tests) {\n+                runners.add(runnerFactory\n+                        .createRunnerForTestWithParameters(test));\n             }\n-            return children;\n+            return runners;\n         } catch (ClassCastException e) {\n             throw parametersMethodReturnedWrongType();\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"f6a3d7405b72966d3714355804e1b3c14b1425cb": {
+			"type": "Ymultichange(Yparameterchange,Ybodychange)",
+			"commitMessage": "Support more return types for the @Parameters method. Fixes #700.\n\nSupport the return types Iterator<? extends Object>, Object[] and Object[][]. You don't have to wrap arrays with Iterables and single parameters with Object arrays.\n",
+			"commitDate": "2013-07-13, 10:19 AM",
+			"commitName": "f6a3d7405b72966d3714355804e1b3c14b1425cb",
+			"commitAuthor": "Stefan Birkner",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "Support more return types for the @Parameters method. Fixes #700.\n\nSupport the return types Iterator<? extends Object>, Object[] and Object[][]. You don't have to wrap arrays with Iterables and single parameters with Object arrays.\n",
+					"commitDate": "2013-07-13, 10:19 AM",
+					"commitName": "f6a3d7405b72966d3714355804e1b3c14b1425cb",
+					"commitAuthor": "Stefan Birkner",
+					"commitDateOld": "2013-07-02, 2:13 PM",
+					"commitNameOld": "334bd9ce923cf0293cbca49be4ae5947abf51897",
+					"commitAuthorOld": "Tibor Digana",
+					"daysBetweenCommits": 10.84,
+					"commitsBetweenForRepo": 3,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,12 +1,13 @@\n-    private List<Runner> createRunnersForParameters(Iterable<Object[]> allParameters, String namePattern) throws Exception {\n+    private List<Runner> createRunnersForParameters(Iterable<Object> allParameters, String namePattern) throws Exception {\n         try {\n             int i = 0;\n             List<Runner> children = new ArrayList<Runner>();\n-            for (Object[] parametersOfSingleTest : allParameters) {\n-                children.add(createRunner(namePattern, i++, parametersOfSingleTest));\n+            for (Object parametersOfSingleTest : allParameters) {\n+                children.add(createRunnerWithNotNormalizedParameters(\n+                    namePattern, i++, parametersOfSingleTest));\n             }\n             return children;\n         } catch (ClassCastException e) {\n             throw parametersMethodReturnedWrongType();\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[allParameters-Iterable<Object[]>, namePattern-String]",
+						"newValue": "[allParameters-Iterable<Object>, namePattern-String]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Support more return types for the @Parameters method. Fixes #700.\n\nSupport the return types Iterator<? extends Object>, Object[] and Object[][]. You don't have to wrap arrays with Iterables and single parameters with Object arrays.\n",
+					"commitDate": "2013-07-13, 10:19 AM",
+					"commitName": "f6a3d7405b72966d3714355804e1b3c14b1425cb",
+					"commitAuthor": "Stefan Birkner",
+					"commitDateOld": "2013-07-02, 2:13 PM",
+					"commitNameOld": "334bd9ce923cf0293cbca49be4ae5947abf51897",
+					"commitAuthorOld": "Tibor Digana",
+					"daysBetweenCommits": 10.84,
+					"commitsBetweenForRepo": 3,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,12 +1,13 @@\n-    private List<Runner> createRunnersForParameters(Iterable<Object[]> allParameters, String namePattern) throws Exception {\n+    private List<Runner> createRunnersForParameters(Iterable<Object> allParameters, String namePattern) throws Exception {\n         try {\n             int i = 0;\n             List<Runner> children = new ArrayList<Runner>();\n-            for (Object[] parametersOfSingleTest : allParameters) {\n-                children.add(createRunner(namePattern, i++, parametersOfSingleTest));\n+            for (Object parametersOfSingleTest : allParameters) {\n+                children.add(createRunnerWithNotNormalizedParameters(\n+                    namePattern, i++, parametersOfSingleTest));\n             }\n             return children;\n         } catch (ClassCastException e) {\n             throw parametersMethodReturnedWrongType();\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"68b4e393388627201265eb3924f3628b1c27e6ff": {
+			"type": "Ybodychange",
+			"commitMessage": "shorten line, renamed var, removed unnecessary empty array in varargs.\n",
+			"commitDate": "2013-06-08, 3:24 AM",
+			"commitName": "68b4e393388627201265eb3924f3628b1c27e6ff",
+			"commitAuthor": "Tibor Digana",
+			"commitDateOld": "2013-06-03, 6:19 PM",
+			"commitNameOld": "ede492496de0f3c0872216ac9c9b88a00fdef09e",
+			"commitAuthorOld": "Tibor Digana",
+			"daysBetweenCommits": 4.38,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,12 +1,12 @@\n     private List<Runner> createRunnersForParameters(Iterable<Object[]> allParameters, String namePattern) throws Exception {\n         try {\n             int i = 0;\n-            List<Runner> runners = new ArrayList<Runner>();\n+            List<Runner> children = new ArrayList<Runner>();\n             for (Object[] parametersOfSingleTest : allParameters) {\n-                runners.add(createRunner(namePattern, i++, parametersOfSingleTest));\n+                children.add(createRunner(namePattern, i++, parametersOfSingleTest));\n             }\n-            return runners;\n+            return children;\n         } catch (ClassCastException e) {\n             throw parametersMethodReturnedWrongType();\n         }\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"ede492496de0f3c0872216ac9c9b88a00fdef09e": {
+			"type": "Ymultichange(Yreturntypechange,Ybodychange)",
+			"commitMessage": "changes with unmodifiable collections\n",
+			"commitDate": "2013-06-03, 6:19 PM",
+			"commitName": "ede492496de0f3c0872216ac9c9b88a00fdef09e",
+			"commitAuthor": "Tibor Digana",
+			"subchanges": [
+				{
+					"type": "Yreturntypechange",
+					"commitMessage": "changes with unmodifiable collections\n",
+					"commitDate": "2013-06-03, 6:19 PM",
+					"commitName": "ede492496de0f3c0872216ac9c9b88a00fdef09e",
+					"commitAuthor": "Tibor Digana",
+					"commitDateOld": "2013-04-11, 5:11 PM",
+					"commitNameOld": "83a25d440d118b7d10779a884d35f31045949e27",
+					"commitAuthorOld": "Tibor Digana",
+					"daysBetweenCommits": 53.05,
+					"commitsBetweenForRepo": 6,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,10 +1,12 @@\n-    private void createRunnersForParameters(Iterable<Object[]> allParameters, String namePattern) throws Exception {\n+    private List<Runner> createRunnersForParameters(Iterable<Object[]> allParameters, String namePattern) throws Exception {\n         try {\n             int i = 0;\n+            List<Runner> runners = new ArrayList<Runner>();\n             for (Object[] parametersOfSingleTest : allParameters) {\n                 runners.add(createRunner(namePattern, i++, parametersOfSingleTest));\n             }\n+            return runners;\n         } catch (ClassCastException e) {\n             throw parametersMethodReturnedWrongType();\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "void",
+						"newValue": "List<Runner>"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "changes with unmodifiable collections\n",
+					"commitDate": "2013-06-03, 6:19 PM",
+					"commitName": "ede492496de0f3c0872216ac9c9b88a00fdef09e",
+					"commitAuthor": "Tibor Digana",
+					"commitDateOld": "2013-04-11, 5:11 PM",
+					"commitNameOld": "83a25d440d118b7d10779a884d35f31045949e27",
+					"commitAuthorOld": "Tibor Digana",
+					"daysBetweenCommits": 53.05,
+					"commitsBetweenForRepo": 6,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,10 +1,12 @@\n-    private void createRunnersForParameters(Iterable<Object[]> allParameters, String namePattern) throws Exception {\n+    private List<Runner> createRunnersForParameters(Iterable<Object[]> allParameters, String namePattern) throws Exception {\n         try {\n             int i = 0;\n+            List<Runner> runners = new ArrayList<Runner>();\n             for (Object[] parametersOfSingleTest : allParameters) {\n                 runners.add(createRunner(namePattern, i++, parametersOfSingleTest));\n             }\n+            return runners;\n         } catch (ClassCastException e) {\n             throw parametersMethodReturnedWrongType();\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"61badf2f7f147d6e782e1700b24da4ac06ce070c": {
+			"type": "Ymultichange(Yexceptionschange,Ybodychange)",
+			"commitMessage": "allow configurable creation of child runners of parameterized suites\n",
+			"commitDate": "2012-12-04, 6:17 AM",
+			"commitName": "61badf2f7f147d6e782e1700b24da4ac06ce070c",
+			"commitAuthor": "Francesco Mari",
+			"subchanges": [
+				{
+					"type": "Yexceptionschange",
+					"commitMessage": "allow configurable creation of child runners of parameterized suites\n",
+					"commitDate": "2012-12-04, 6:17 AM",
+					"commitName": "61badf2f7f147d6e782e1700b24da4ac06ce070c",
+					"commitAuthor": "Francesco Mari",
+					"commitDateOld": "2012-11-19, 8:24 AM",
+					"commitNameOld": "70e2f2e369829a7443e96c29f922be9e04da93dd",
+					"commitAuthorOld": "Matthew Farwell",
+					"daysBetweenCommits": 14.91,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,16 +1,10 @@\n-    private void createRunnersForParameters(Iterable<Object[]> allParameters,\n-            String namePattern) throws InitializationError, Exception {\n+    private void createRunnersForParameters(Iterable<Object[]> allParameters, String namePattern) throws Exception {\n         try {\n             int i = 0;\n             for (Object[] parametersOfSingleTest : allParameters) {\n-                String name = nameFor(namePattern, i, parametersOfSingleTest);\n-                TestClassRunnerForParameters runner = new TestClassRunnerForParameters(\n-                        getTestClass().getJavaClass(), parametersOfSingleTest,\n-                        name);\n-                runners.add(runner);\n-                ++i;\n+                runners.add(createRunner(namePattern, i++, parametersOfSingleTest));\n             }\n         } catch (ClassCastException e) {\n             throw parametersMethodReturnedWrongType();\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[InitializationError, Exception]",
+						"newValue": "[Exception]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "allow configurable creation of child runners of parameterized suites\n",
+					"commitDate": "2012-12-04, 6:17 AM",
+					"commitName": "61badf2f7f147d6e782e1700b24da4ac06ce070c",
+					"commitAuthor": "Francesco Mari",
+					"commitDateOld": "2012-11-19, 8:24 AM",
+					"commitNameOld": "70e2f2e369829a7443e96c29f922be9e04da93dd",
+					"commitAuthorOld": "Matthew Farwell",
+					"daysBetweenCommits": 14.91,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,16 +1,10 @@\n-    private void createRunnersForParameters(Iterable<Object[]> allParameters,\n-            String namePattern) throws InitializationError, Exception {\n+    private void createRunnersForParameters(Iterable<Object[]> allParameters, String namePattern) throws Exception {\n         try {\n             int i = 0;\n             for (Object[] parametersOfSingleTest : allParameters) {\n-                String name = nameFor(namePattern, i, parametersOfSingleTest);\n-                TestClassRunnerForParameters runner = new TestClassRunnerForParameters(\n-                        getTestClass().getJavaClass(), parametersOfSingleTest,\n-                        name);\n-                runners.add(runner);\n-                ++i;\n+                runners.add(createRunner(namePattern, i++, parametersOfSingleTest));\n             }\n         } catch (ClassCastException e) {\n             throw parametersMethodReturnedWrongType();\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"e0cddcdfa8ec823da136af500cce0910a1dd2264": {
+			"type": "Ymultichange(Yparameterchange,Ybodychange)",
+			"commitMessage": "Add names for parameterized tests. Fixes #24 and #44.\n\nIn order that you can easily identify individual test, you may provide\na name for the Parameters annotation.\n @Parameters(name=\"my test\")\nThis name is allowed to contain placeholders, which are replaced at\nruntime. The placeholders are\n* {index} - the current parameter index\n* {0} - the first parameter\n* {1} - the second parameter\n* ... - the other parameters\nIf you don't use the name parameter, then the current parameter index\nis used as name.\n\nExample:\nWhen you use @Parameters(name=\"fib({0})={1}\") with the Fibonacci\nexample, then you get test names like \"fib(3)=2\".\n\nThis feature is based on the work of Dimitar Dimitrov (pull request\n#145).\nThank\nyou.",
+			"commitDate": "2012-03-02, 3:18 PM",
+			"commitName": "e0cddcdfa8ec823da136af500cce0910a1dd2264",
+			"commitAuthor": "Stefan Birkner",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "Add names for parameterized tests. Fixes #24 and #44.\n\nIn order that you can easily identify individual test, you may provide\na name for the Parameters annotation.\n @Parameters(name=\"my test\")\nThis name is allowed to contain placeholders, which are replaced at\nruntime. The placeholders are\n* {index} - the current parameter index\n* {0} - the first parameter\n* {1} - the second parameter\n* ... - the other parameters\nIf you don't use the name parameter, then the current parameter index\nis used as name.\n\nExample:\nWhen you use @Parameters(name=\"fib({0})={1}\") with the Fibonacci\nexample, then you get test names like \"fib(3)=2\".\n\nThis feature is based on the work of Dimitar Dimitrov (pull request\n#145).\nThank\nyou.",
+					"commitDate": "2012-03-02, 3:18 PM",
+					"commitName": "e0cddcdfa8ec823da136af500cce0910a1dd2264",
+					"commitAuthor": "Stefan Birkner",
+					"commitDateOld": "2011-10-20, 5:29 PM",
+					"commitNameOld": "5475e12b57f5af0140deffa7f45c75dc47803167",
+					"commitAuthorOld": "Stefan Birkner",
+					"daysBetweenCommits": 133.95,
+					"commitsBetweenForRepo": 5,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,15 +1,16 @@\n-\tprivate void createRunnersForParameters(Iterable<Object[]> allParameters)\n-\t\t\tthrows InitializationError, Exception {\n+\tprivate void createRunnersForParameters(Iterable<Object[]> allParameters,\n+\t\t\tString namePattern) throws InitializationError, Exception {\n \t\ttry {\n \t\t\tint i= 0;\n \t\t\tfor (Object[] parametersOfSingleTest : allParameters) {\n+\t\t\t\tString name= nameFor(namePattern, i, parametersOfSingleTest);\n \t\t\t\tTestClassRunnerForParameters runner= new TestClassRunnerForParameters(\n \t\t\t\t\t\tgetTestClass().getJavaClass(), parametersOfSingleTest,\n-\t\t\t\t\t\ti);\n+\t\t\t\t\t\tname);\n \t\t\t\trunners.add(runner);\n \t\t\t\t++i;\n \t\t\t}\n \t\t} catch (ClassCastException e) {\n \t\t\tthrow parametersMethodReturnedWrongType();\n \t\t}\n \t}\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[allParameters-Iterable<Object[]>]",
+						"newValue": "[allParameters-Iterable<Object[]>, namePattern-String]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Add names for parameterized tests. Fixes #24 and #44.\n\nIn order that you can easily identify individual test, you may provide\na name for the Parameters annotation.\n @Parameters(name=\"my test\")\nThis name is allowed to contain placeholders, which are replaced at\nruntime. The placeholders are\n* {index} - the current parameter index\n* {0} - the first parameter\n* {1} - the second parameter\n* ... - the other parameters\nIf you don't use the name parameter, then the current parameter index\nis used as name.\n\nExample:\nWhen you use @Parameters(name=\"fib({0})={1}\") with the Fibonacci\nexample, then you get test names like \"fib(3)=2\".\n\nThis feature is based on the work of Dimitar Dimitrov (pull request\n#145).\nThank\nyou.",
+					"commitDate": "2012-03-02, 3:18 PM",
+					"commitName": "e0cddcdfa8ec823da136af500cce0910a1dd2264",
+					"commitAuthor": "Stefan Birkner",
+					"commitDateOld": "2011-10-20, 5:29 PM",
+					"commitNameOld": "5475e12b57f5af0140deffa7f45c75dc47803167",
+					"commitAuthorOld": "Stefan Birkner",
+					"daysBetweenCommits": 133.95,
+					"commitsBetweenForRepo": 5,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,15 +1,16 @@\n-\tprivate void createRunnersForParameters(Iterable<Object[]> allParameters)\n-\t\t\tthrows InitializationError, Exception {\n+\tprivate void createRunnersForParameters(Iterable<Object[]> allParameters,\n+\t\t\tString namePattern) throws InitializationError, Exception {\n \t\ttry {\n \t\t\tint i= 0;\n \t\t\tfor (Object[] parametersOfSingleTest : allParameters) {\n+\t\t\t\tString name= nameFor(namePattern, i, parametersOfSingleTest);\n \t\t\t\tTestClassRunnerForParameters runner= new TestClassRunnerForParameters(\n \t\t\t\t\t\tgetTestClass().getJavaClass(), parametersOfSingleTest,\n-\t\t\t\t\t\ti);\n+\t\t\t\t\t\tname);\n \t\t\t\trunners.add(runner);\n \t\t\t\t++i;\n \t\t\t}\n \t\t} catch (ClassCastException e) {\n \t\t\tthrow parametersMethodReturnedWrongType();\n \t\t}\n \t}\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"5475e12b57f5af0140deffa7f45c75dc47803167": {
+			"type": "Yintroduced",
+			"commitMessage": "Use Iterable for the parameters of Parameterized (fixes #104).\n\nThe method annotated with @Parameterized returns an Iterable<Object[]>\n(was List<Object[]> before). The test fails with a meaningful exception\notherwise.\n",
+			"commitDate": "2011-10-20, 5:29 PM",
+			"commitName": "5475e12b57f5af0140deffa7f45c75dc47803167",
+			"commitAuthor": "Stefan Birkner"
+		}
+	},
+	"sha": "02c328028b4d32c15bbf0becc9838e54ecbafcbf"
+}

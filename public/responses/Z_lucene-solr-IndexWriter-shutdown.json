@@ -1,0 +1,117 @@
+{
+	"repo": "https://github.com/apache/lucene-solr.git",
+	"file": "lucene/core/src/java/org/apache/lucene/index/IndexWriter.java",
+	"method": {
+		"longName": "IndexWriter::shutdown()",
+		"startLine": 1013,
+		"methodName": "shutdown",
+		"isStatic": false,
+		"isAbstract": false,
+		"visibility": "private"
+	},
+	"history": {
+		"5dfba25e3496063b82d53aa759796a639b1d8e3b": {
+			"type": "Ybodychange",
+			"commitMessage": "LUCENE-8205: Simplify AbortingException handling and tragic event logic\n\nToday we try to signal via exception handling if an exception is aborting\nand/or a tragic event. This causes today that we ignore certain exception if we\nare in the process of handling a such which is generally bad practice. This\nchange simplify the signaling of aborting exceptions and separates acting on\ntragic events and closing the writer because of a tragic event. This in-turn\nsimplifies lock ordering since we never acquire a lock anymore inside the\ntragic event code.\n",
+			"commitDate": "2018-03-15, 6:46 AM",
+			"commitName": "5dfba25e3496063b82d53aa759796a639b1d8e3b",
+			"commitAuthor": "Simon Willnauer",
+			"commitDateOld": "2018-03-14, 2:09 AM",
+			"commitNameOld": "ef291c9767640198e1d79132b460a88f93b25456",
+			"commitAuthorOld": "Simon Willnauer",
+			"daysBetweenCommits": 1.19,
+			"commitsBetweenForRepo": 11,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,30 +1,27 @@\n   private void shutdown() throws IOException {\n     if (pendingCommit != null) {\n       throw new IllegalStateException(\"cannot close: prepareCommit was already called with no corresponding call to commit\");\n     }\n     // Ensure that only one thread actually gets to do the\n     // closing\n     if (shouldClose(true)) {\n-      boolean success = false;\n       try {\n         if (infoStream.isEnabled(\"IW\")) {\n           infoStream.message(\"IW\", \"now flush at close\");\n         }\n \n         flush(true, true);\n         waitForMerges();\n         commitInternal(config.getMergePolicy());\n         rollbackInternal(); // ie close, since we just committed\n-        success = true;\n-      } finally {\n-        if (success == false) {\n-          // Be certain to close the index on any exception\n-          try {\n-            rollbackInternal();\n-          } catch (Throwable t) {\n-            // Suppress so we keep throwing original exception\n-          }\n+      } catch (Throwable t) {\n+        // Be certain to close the index on any exception\n+        try {\n+          rollbackInternal();\n+        } catch (Throwable t1) {\n+          t.addSuppressed(t1);\n         }\n+        throw t;\n       }\n     }\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"926397824e9fd4b7f480cff547a73aad3c056974": {
+			"type": "Ybodychange",
+			"commitMessage": "LUCENE-6579: exceptions during merging are now tragic\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/dev/trunk@1690886 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2015-07-14, 3:38 AM",
+			"commitName": "926397824e9fd4b7f480cff547a73aad3c056974",
+			"commitAuthor": "Michael McCandless",
+			"commitDateOld": "2015-07-10, 12:09 PM",
+			"commitNameOld": "a6301dd9005220ff4e1c9461660b7d6978c54bc6",
+			"commitAuthorOld": "Michael McCandless",
+			"daysBetweenCommits": 3.65,
+			"commitsBetweenForRepo": 24,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,29 +1,29 @@\n   private void shutdown() throws IOException {\n     if (pendingCommit != null) {\n       throw new IllegalStateException(\"cannot close: prepareCommit was already called with no corresponding call to commit\");\n     }\n     // Ensure that only one thread actually gets to do the\n     // closing\n-    if (shouldClose()) {\n+    if (shouldClose(true)) {\n       boolean success = false;\n       try {\n         if (infoStream.isEnabled(\"IW\")) {\n           infoStream.message(\"IW\", \"now flush at close\");\n         }\n         flush(true, true);\n         waitForMerges();\n         commitInternal(config.getMergePolicy());\n         rollbackInternal(); // ie close, since we just committed\n         success = true;\n       } finally {\n         if (success == false) {\n           // Be certain to close the index on any exception\n           try {\n             rollbackInternal();\n           } catch (Throwable t) {\n             // Suppress so we keep throwing original exception\n           }\n         }\n       }\n     }\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"52b2a30bccb6ef4e50124559bf734d5cf0df7b37": {
+			"type": "Ybodychange",
+			"commitMessage": "Fix waitForMerges to allow merge schedule to run one last time\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/dev/trunk@1618667 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2014-08-18, 11:16 AM",
+			"commitName": "52b2a30bccb6ef4e50124559bf734d5cf0df7b37",
+			"commitAuthor": "Ryan Ernst",
+			"commitDateOld": "2014-08-15, 1:15 PM",
+			"commitNameOld": "73bb9c91d9da485b07b09cdfcb8efe0180282fe8",
+			"commitAuthorOld": "Ryan Ernst",
+			"daysBetweenCommits": 2.92,
+			"commitsBetweenForRepo": 16,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,29 +1,29 @@\n   private void shutdown() throws IOException {\n     if (pendingCommit != null) {\n       throw new IllegalStateException(\"cannot close: prepareCommit was already called with no corresponding call to commit\");\n     }\n     // Ensure that only one thread actually gets to do the\n     // closing\n     if (shouldClose()) {\n       boolean success = false;\n       try {\n         if (infoStream.isEnabled(\"IW\")) {\n           infoStream.message(\"IW\", \"now flush at close\");\n         }\n         flush(true, true);\n-        finishMerges(true);\n+        waitForMerges();\n         commitInternal(config.getMergePolicy());\n         rollbackInternal(); // ie close, since we just committed\n         success = true;\n       } finally {\n         if (success == false) {\n           // Be certain to close the index on any exception\n           try {\n             rollbackInternal();\n           } catch (Throwable t) {\n             // Suppress so we keep throwing original exception\n           }\n         }\n       }\n     }\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"ba04a792ce932779ecb44a971d3ae56dbe9a9a57": {
+			"type": "Ybodychange",
+			"commitMessage": "LUCENE-5871: one one thread can IW.close at once\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/dev/trunk@1617961 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2014-08-14, 8:51 AM",
+			"commitName": "ba04a792ce932779ecb44a971d3ae56dbe9a9a57",
+			"commitAuthor": "Michael McCandless",
+			"commitDateOld": "2014-08-14, 5:18 AM",
+			"commitNameOld": "c8e92093835bd06201f17851e7fd23b44b7f6eda",
+			"commitAuthorOld": "Shai Erera",
+			"daysBetweenCommits": 0.15,
+			"commitsBetweenForRepo": 6,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,25 +1,29 @@\n   private void shutdown() throws IOException {\n     if (pendingCommit != null) {\n       throw new IllegalStateException(\"cannot close: prepareCommit was already called with no corresponding call to commit\");\n     }\n-    if (infoStream.isEnabled(\"IW\")) {\n-      infoStream.message(\"IW\", \"now flush at close\");\n-    }\n-    boolean success = false;\n-    try {\n-      flush(true, true);\n-      finishMerges(true);\n-      commit();\n-      rollback(); // ie close, since we just committed\n-      success = true;\n-    } finally {\n-      if (success == false) {\n-        // Be certain to close the index on any exception\n-        try {\n-          rollback();\n-        } catch (Throwable t) {\n-          // Suppress so we keep throwing original exception\n+    // Ensure that only one thread actually gets to do the\n+    // closing\n+    if (shouldClose()) {\n+      boolean success = false;\n+      try {\n+        if (infoStream.isEnabled(\"IW\")) {\n+          infoStream.message(\"IW\", \"now flush at close\");\n+        }\n+        flush(true, true);\n+        finishMerges(true);\n+        commitInternal(config.getMergePolicy());\n+        rollbackInternal(); // ie close, since we just committed\n+        success = true;\n+      } finally {\n+        if (success == false) {\n+          // Be certain to close the index on any exception\n+          try {\n+            rollbackInternal();\n+          } catch (Throwable t) {\n+            // Suppress so we keep throwing original exception\n+          }\n         }\n       }\n     }\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"872bd9145cd9504fc16b318f7ea0a666d9429103": {
+			"type": "Ymultichange(Ymodifierchange,Ybodychange)",
+			"commitMessage": "LUCENE-5871: Remove Version from IndexWriterConfig\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/dev/trunk@1617004 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2014-08-09, 12:54 PM",
+			"commitName": "872bd9145cd9504fc16b318f7ea0a666d9429103",
+			"commitAuthor": "Ryan Ernst",
+			"subchanges": [
+				{
+					"type": "Ymodifierchange",
+					"commitMessage": "LUCENE-5871: Remove Version from IndexWriterConfig\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/dev/trunk@1617004 13f79535-47bb-0310-9956-ffa450edef68\n",
+					"commitDate": "2014-08-09, 12:54 PM",
+					"commitName": "872bd9145cd9504fc16b318f7ea0a666d9429103",
+					"commitAuthor": "Ryan Ernst",
+					"commitDateOld": "2014-07-29, 9:34 AM",
+					"commitNameOld": "858e309c7b1f9339f7102c7445ef29b9ca10e750",
+					"commitAuthorOld": "Michael McCandless",
+					"daysBetweenCommits": 11.14,
+					"commitsBetweenForRepo": 45,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,3 +1,25 @@\n-  public void shutdown() throws IOException {\n-    shutdown(true);\n+  private void shutdown() throws IOException {\n+    if (pendingCommit != null) {\n+      throw new IllegalStateException(\"cannot close: prepareCommit was already called with no corresponding call to commit\");\n+    }\n+    if (infoStream.isEnabled(\"IW\")) {\n+      infoStream.message(\"IW\", \"now flush at close\");\n+    }\n+    boolean success = false;\n+    try {\n+      flush(true, true);\n+      finishMerges(true);\n+      commit();\n+      rollback(); // ie close, since we just committed\n+      success = true;\n+    } finally {\n+      if (success == false) {\n+        // Be certain to close the index on any exception\n+        try {\n+          rollback();\n+        } catch (Throwable t) {\n+          // Suppress so we keep throwing original exception\n+        }\n+      }\n+    }\n   }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[public]",
+						"newValue": "[private]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "LUCENE-5871: Remove Version from IndexWriterConfig\n\ngit-svn-id: https://svn.apache.org/repos/asf/lucene/dev/trunk@1617004 13f79535-47bb-0310-9956-ffa450edef68\n",
+					"commitDate": "2014-08-09, 12:54 PM",
+					"commitName": "872bd9145cd9504fc16b318f7ea0a666d9429103",
+					"commitAuthor": "Ryan Ernst",
+					"commitDateOld": "2014-07-29, 9:34 AM",
+					"commitNameOld": "858e309c7b1f9339f7102c7445ef29b9ca10e750",
+					"commitAuthorOld": "Michael McCandless",
+					"daysBetweenCommits": 11.14,
+					"commitsBetweenForRepo": 45,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,3 +1,25 @@\n-  public void shutdown() throws IOException {\n-    shutdown(true);\n+  private void shutdown() throws IOException {\n+    if (pendingCommit != null) {\n+      throw new IllegalStateException(\"cannot close: prepareCommit was already called with no corresponding call to commit\");\n+    }\n+    if (infoStream.isEnabled(\"IW\")) {\n+      infoStream.message(\"IW\", \"now flush at close\");\n+    }\n+    boolean success = false;\n+    try {\n+      flush(true, true);\n+      finishMerges(true);\n+      commit();\n+      rollback(); // ie close, since we just committed\n+      success = true;\n+    } finally {\n+      if (success == false) {\n+        // Be certain to close the index on any exception\n+        try {\n+          rollback();\n+        } catch (Throwable t) {\n+          // Suppress so we keep throwing original exception\n+        }\n+      }\n+    }\n   }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		}
+	},
+	"sha": "38bf976cd4b9e324c21664bd7ae3d554df803705"
+}

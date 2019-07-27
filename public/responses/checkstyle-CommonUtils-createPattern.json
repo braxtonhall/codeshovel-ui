@@ -1,0 +1,480 @@
+{
+	"repo": "https://github.com/checkstyle/checkstyle.git",
+	"file": "src/main/java/com/puppycrawl/tools/checkstyle/utils/CommonUtils.java",
+	"method": {
+		"longName": "CommonUtils::createPattern(String pattern, int flags)",
+		"startLine": 104,
+		"methodName": "createPattern",
+		"isStatic": true,
+		"isAbstract": false,
+		"visibility": "public"
+	},
+	"history": {
+		"ce21086e087661553f3a774c38362327ee88996a": {
+			"type": "Ybodychange",
+			"commitMessage": "Issue #3763: Try to avoid non-jdk runtime exceptions in code\n",
+			"commitDate": "2017-02-26, 8:25 PM",
+			"commitName": "ce21086e087661553f3a774c38362327ee88996a",
+			"commitAuthor": "Vladislav Lisetskii",
+			"commitDateOld": "2017-01-27, 7:31 AM",
+			"commitNameOld": "b4a337a599e853cdc44b19a76da28fcfab2956cd",
+			"commitAuthorOld": "Roman Ivanov",
+			"daysBetweenCommits": 30.54,
+			"commitsBetweenForRepo": 104,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,9 +1,9 @@\n     public static Pattern createPattern(String pattern, int flags) {\n         try {\n             return Pattern.compile(pattern, flags);\n         }\n         catch (final PatternSyntaxException ex) {\n-            throw new ConversionException(\n+            throw new IllegalArgumentException(\n                 \"Failed to initialise regular expression \" + pattern, ex);\n         }\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"f65b17cbc30795247fef3077cce16a8bb53e9ffc": {
+			"type": "Ybodychange",
+			"commitMessage": "Issue #2616: Fix CatchParameterName check violations in Checkstyle code\n",
+			"commitDate": "2015-12-03, 4:16 PM",
+			"commitName": "f65b17cbc30795247fef3077cce16a8bb53e9ffc",
+			"commitAuthor": "Michal Kordas",
+			"commitDateOld": "2015-10-29, 10:12 PM",
+			"commitNameOld": "f2c6263e151e8a7300755b36fbb41511c0a0cca1",
+			"commitAuthorOld": "rnveach",
+			"daysBetweenCommits": 34.79,
+			"commitsBetweenForRepo": 173,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,9 +1,9 @@\n     public static Pattern createPattern(String pattern, int flags) {\n         try {\n             return Pattern.compile(pattern, flags);\n         }\n-        catch (final PatternSyntaxException e) {\n+        catch (final PatternSyntaxException ex) {\n             throw new ConversionException(\n-                    \"Failed to initialise regular expression \" + pattern, e);\n+                    \"Failed to initialise regular expression \" + pattern, ex);\n         }\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"f2c6263e151e8a7300755b36fbb41511c0a0cca1": {
+			"type": "Ymultichange(Yparameterchange,Ybodychange)",
+			"commitMessage": "Issue #2451: removed excess hierarchy from RegexpCheck",
+			"commitDate": "2015-10-29, 10:12 PM",
+			"commitName": "f2c6263e151e8a7300755b36fbb41511c0a0cca1",
+			"commitAuthor": "rnveach",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "Issue #2451: removed excess hierarchy from RegexpCheck",
+					"commitDate": "2015-10-29, 10:12 PM",
+					"commitName": "f2c6263e151e8a7300755b36fbb41511c0a0cca1",
+					"commitAuthor": "rnveach",
+					"commitDateOld": "2015-10-14, 6:52 AM",
+					"commitNameOld": "d2551035044a845fd1b3e345f2470875a43a8991",
+					"commitAuthorOld": "Ilja Dubinin",
+					"daysBetweenCommits": 15.64,
+					"commitsBetweenForRepo": 88,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,9 +1,9 @@\n-    public static Pattern createPattern(String pattern) {\n+    public static Pattern createPattern(String pattern, int flags) {\n         try {\n-            return Pattern.compile(pattern);\n+            return Pattern.compile(pattern, flags);\n         }\n         catch (final PatternSyntaxException e) {\n             throw new ConversionException(\n                     \"Failed to initialise regular expression \" + pattern, e);\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[pattern-String]",
+						"newValue": "[pattern-String, flags-int]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Issue #2451: removed excess hierarchy from RegexpCheck",
+					"commitDate": "2015-10-29, 10:12 PM",
+					"commitName": "f2c6263e151e8a7300755b36fbb41511c0a0cca1",
+					"commitAuthor": "rnveach",
+					"commitDateOld": "2015-10-14, 6:52 AM",
+					"commitNameOld": "d2551035044a845fd1b3e345f2470875a43a8991",
+					"commitAuthorOld": "Ilja Dubinin",
+					"daysBetweenCommits": 15.64,
+					"commitsBetweenForRepo": 88,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,9 +1,9 @@\n-    public static Pattern createPattern(String pattern) {\n+    public static Pattern createPattern(String pattern, int flags) {\n         try {\n-            return Pattern.compile(pattern);\n+            return Pattern.compile(pattern, flags);\n         }\n         catch (final PatternSyntaxException e) {\n             throw new ConversionException(\n                     \"Failed to initialise regular expression \" + pattern, e);\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"cdf3e56bacd3895262af8a1df9ca5c81f4071970": {
+			"type": "Ymovefromfile",
+			"commitMessage": "Utils class has been splitted to CommonUtils and TokenUtils. Issue #1898\n",
+			"commitDate": "2015-08-27, 6:17 AM",
+			"commitName": "cdf3e56bacd3895262af8a1df9ca5c81f4071970",
+			"commitAuthor": "Ilja Dubinin",
+			"commitDateOld": "2015-08-27, 6:17 AM",
+			"commitNameOld": "ed595de84fba2db507adaf01d04cb089a5e0bac5",
+			"commitAuthorOld": "Ilja Dubinin",
+			"daysBetweenCommits": 0,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,9 +1,9 @@\n     public static Pattern createPattern(String pattern) {\n         try {\n             return Pattern.compile(pattern);\n         }\n         catch (final PatternSyntaxException e) {\n             throw new ConversionException(\n-                \"Failed to initialise regular expression \" + pattern, e);\n+                    \"Failed to initialise regular expression \" + pattern, e);\n         }\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {
+				"oldPath": "src/main/java/com/puppycrawl/tools/checkstyle/utils/Utils.java",
+				"newPath": "src/main/java/com/puppycrawl/tools/checkstyle/utils/CommonUtils.java",
+				"oldMethodName": "createPattern",
+				"newMethodName": "createPattern"
+			}
+		},
+		"ed595de84fba2db507adaf01d04cb089a5e0bac5": {
+			"type": "Yfilerename",
+			"commitMessage": "Utils classes have been moved to utils package. Issue #1898\n",
+			"commitDate": "2015-08-27, 6:17 AM",
+			"commitName": "ed595de84fba2db507adaf01d04cb089a5e0bac5",
+			"commitAuthor": "Ilja Dubinin",
+			"commitDateOld": "2015-08-26, 7:08 PM",
+			"commitNameOld": "f6113bb56d695719a8803274effb3596cb82120f",
+			"commitAuthorOld": "Michal Kordas",
+			"daysBetweenCommits": 0.46,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "src/main/java/com/puppycrawl/tools/checkstyle/Utils.java",
+				"newPath": "src/main/java/com/puppycrawl/tools/checkstyle/utils/Utils.java"
+			}
+		},
+		"081c654df8d801f576506265681654a730cfc375": {
+			"type": "Yexceptionschange",
+			"commitMessage": "Remove superfluous runtime exception declarations. #46\n",
+			"commitDate": "2015-08-01, 2:24 PM",
+			"commitName": "081c654df8d801f576506265681654a730cfc375",
+			"commitAuthor": "Michal Kordas",
+			"commitDateOld": "2015-07-19, 8:15 AM",
+			"commitNameOld": "41d538f9be41a0561ca7a28b159c034bcd3810e8",
+			"commitAuthorOld": "Baratali Izmailov",
+			"daysBetweenCommits": 13.26,
+			"commitsBetweenForRepo": 159,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,10 +1,9 @@\n-    public static Pattern createPattern(String pattern)\n-        throws ConversionException {\n+    public static Pattern createPattern(String pattern) {\n         try {\n             return Pattern.compile(pattern);\n         }\n         catch (final PatternSyntaxException e) {\n             throw new ConversionException(\n                 \"Failed to initialise regular expression \" + pattern, e);\n         }\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {
+				"oldValue": "[ConversionException]",
+				"newValue": "[]"
+			}
+		},
+		"97f0829897b9000236489295f89d57a77d8006b4": {
+			"type": "Ybodychange",
+			"commitMessage": "Added test method for Utils.isPatternValid method\n\nPull #861\n",
+			"commitDate": "2015-03-27, 4:34 PM",
+			"commitName": "97f0829897b9000236489295f89d57a77d8006b4",
+			"commitAuthor": "Damian Szczepanik",
+			"commitDateOld": "2015-03-27, 3:39 PM",
+			"commitNameOld": "ebd4afdebe8ee09c0e6c7d1239e2ca982f87e51c",
+			"commitAuthorOld": "Damian Szczepanik",
+			"daysBetweenCommits": 0.04,
+			"commitsBetweenForRepo": 2,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,11 +1,11 @@\n     public static Pattern createPattern(String pattern)\n         throws ConversionException\n     {\n         try {\n             return Pattern.compile(pattern);\n         }\n         catch (final PatternSyntaxException e) {\n             throw new ConversionException(\n-                \"Failed to initialise regexp expression \" + pattern, e);\n+                \"Failed to initialise regular expression \" + pattern, e);\n         }\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"ebd4afdebe8ee09c0e6c7d1239e2ca982f87e51c": {
+			"type": "Ybodychange",
+			"commitMessage": "Deleted cache from Utils class + unified setters with patterns\n\nIssue #845\n",
+			"commitDate": "2015-03-27, 3:39 PM",
+			"commitName": "ebd4afdebe8ee09c0e6c7d1239e2ca982f87e51c",
+			"commitAuthor": "Damian Szczepanik",
+			"commitDateOld": "2015-03-26, 3:15 PM",
+			"commitNameOld": "b771841de7524abd86473664a8d6fc1409398c3a",
+			"commitAuthorOld": "Michal Kordas",
+			"daysBetweenCommits": 1.02,
+			"commitsBetweenForRepo": 4,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,13 +1,11 @@\n     public static Pattern createPattern(String pattern)\n         throws ConversionException\n     {\n-        Pattern retVal = null;\n         try {\n-            retVal = getPattern(pattern);\n+            return Pattern.compile(pattern);\n         }\n         catch (final PatternSyntaxException e) {\n             throw new ConversionException(\n                 \"Failed to initialise regexp expression \" + pattern, e);\n         }\n-        return retVal;\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"1c15b6a36baa68dc3f2ebdf9baac131e98bb9e04": {
+			"type": "Ymovefromfile",
+			"commitMessage": "Moved all methods from checkstyle.api.utils to checkstyle.utils, issue #661\n",
+			"commitDate": "2015-03-15, 3:22 PM",
+			"commitName": "1c15b6a36baa68dc3f2ebdf9baac131e98bb9e04",
+			"commitAuthor": "alexkravin",
+			"commitDateOld": "2015-03-15, 3:17 PM",
+			"commitNameOld": "9c4cd707e349660cfe32f095a2a96a0a0f854e67",
+			"commitAuthorOld": "Michal Kordas",
+			"daysBetweenCommits": 0,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "src/main/java/com/puppycrawl/tools/checkstyle/api/Utils.java",
+				"newPath": "src/main/java/com/puppycrawl/tools/checkstyle/Utils.java",
+				"oldMethodName": "createPattern",
+				"newMethodName": "createPattern"
+			}
+		},
+		"b94bac0719851b65b59b4aafc5bd3ef029321ed7": {
+			"type": "Ymultichange(Yparameterchange,Ybodychange)",
+			"commitMessage": "Prefixes, api, #512\n",
+			"commitDate": "2015-01-19, 7:19 AM",
+			"commitName": "b94bac0719851b65b59b4aafc5bd3ef029321ed7",
+			"commitAuthor": "alexkravin",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "Prefixes, api, #512\n",
+					"commitDate": "2015-01-19, 7:19 AM",
+					"commitName": "b94bac0719851b65b59b4aafc5bd3ef029321ed7",
+					"commitAuthor": "alexkravin",
+					"commitDateOld": "2014-11-06, 10:25 PM",
+					"commitNameOld": "ae9d1d6217ad7dbc2e6f1faa890298c68726dcb4",
+					"commitAuthorOld": "Vladimir Sitnikov",
+					"daysBetweenCommits": 73.37,
+					"commitsBetweenForRepo": 228,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,13 +1,13 @@\n-    public static Pattern createPattern(String aPattern)\n+    public static Pattern createPattern(String pattern)\n         throws ConversionException\n     {\n         Pattern retVal = null;\n         try {\n-            retVal = getPattern(aPattern);\n+            retVal = getPattern(pattern);\n         }\n         catch (final PatternSyntaxException e) {\n             throw new ConversionException(\n-                \"Failed to initialise regexp expression \" + aPattern, e);\n+                \"Failed to initialise regexp expression \" + pattern, e);\n         }\n         return retVal;\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[aPattern-String]",
+						"newValue": "[pattern-String]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Prefixes, api, #512\n",
+					"commitDate": "2015-01-19, 7:19 AM",
+					"commitName": "b94bac0719851b65b59b4aafc5bd3ef029321ed7",
+					"commitAuthor": "alexkravin",
+					"commitDateOld": "2014-11-06, 10:25 PM",
+					"commitNameOld": "ae9d1d6217ad7dbc2e6f1faa890298c68726dcb4",
+					"commitAuthorOld": "Vladimir Sitnikov",
+					"daysBetweenCommits": 73.37,
+					"commitsBetweenForRepo": 228,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,13 +1,13 @@\n-    public static Pattern createPattern(String aPattern)\n+    public static Pattern createPattern(String pattern)\n         throws ConversionException\n     {\n         Pattern retVal = null;\n         try {\n-            retVal = getPattern(aPattern);\n+            retVal = getPattern(pattern);\n         }\n         catch (final PatternSyntaxException e) {\n             throw new ConversionException(\n-                \"Failed to initialise regexp expression \" + aPattern, e);\n+                \"Failed to initialise regexp expression \" + pattern, e);\n         }\n         return retVal;\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"f1efb27670a93690577f1bae17fc9dcbd88a795d": {
+			"type": "Yfilerename",
+			"commitMessage": "moving to standard directory layout\n",
+			"commitDate": "2014-03-04, 10:18 AM",
+			"commitName": "f1efb27670a93690577f1bae17fc9dcbd88a795d",
+			"commitAuthor": "Ivan Sopov",
+			"commitDateOld": "2014-02-26, 11:35 PM",
+			"commitNameOld": "1cdaeaaa4fbf02a7388f1fcbea1c86ef0ea32fed",
+			"commitAuthorOld": "Andrew Gaul",
+			"daysBetweenCommits": 5.45,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "src/checkstyle/com/puppycrawl/tools/checkstyle/api/Utils.java",
+				"newPath": "src/main/java/com/puppycrawl/tools/checkstyle/api/Utils.java"
+			}
+		},
+		"35d1673788bbbac8263fdb69275dc6a63b095a24": {
+			"type": "Ybodychange",
+			"commitMessage": "Making local variables final where possible.\n",
+			"commitDate": "2006-07-06, 9:44 PM",
+			"commitName": "35d1673788bbbac8263fdb69275dc6a63b095a24",
+			"commitAuthor": "Oliver Burn",
+			"commitDateOld": "2006-06-17, 8:18 AM",
+			"commitNameOld": "81b52e27c5077f9a4f426d32b0e39a785052c715",
+			"commitAuthorOld": "Oliver Burn",
+			"daysBetweenCommits": 19.56,
+			"commitsBetweenForRepo": 7,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,13 +1,13 @@\n     public static Pattern createPattern(String aPattern)\n         throws ConversionException\n     {\n         Pattern retVal = null;\n         try {\n             retVal = getPattern(aPattern);\n         }\n-        catch (PatternSyntaxException e) {\n+        catch (final PatternSyntaxException e) {\n             throw new ConversionException(\n                 \"Failed to initialise regexp expression \" + aPattern, e);\n         }\n         return retVal;\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"e27489c7721909245ea5055eac3b9c7c659081f6": {
+			"type": "Ymultichange(Yrename,Yreturntypechange,Ybodychange)",
+			"commitMessage": "initial replacing RE by Pattern (need to update docs)\n",
+			"commitDate": "2005-05-11, 10:48 AM",
+			"commitName": "e27489c7721909245ea5055eac3b9c7c659081f6",
+			"commitAuthor": "Oleg Sukhodolsky",
+			"subchanges": [
+				{
+					"type": "Yrename",
+					"commitMessage": "initial replacing RE by Pattern (need to update docs)\n",
+					"commitDate": "2005-05-11, 10:48 AM",
+					"commitName": "e27489c7721909245ea5055eac3b9c7c659081f6",
+					"commitAuthor": "Oleg Sukhodolsky",
+					"commitDateOld": "2005-01-09, 3:50 AM",
+					"commitNameOld": "0d887cde58e54d920644ee543dab346b93e8aae9",
+					"commitAuthorOld": "Lars Kühne",
+					"daysBetweenCommits": 122.25,
+					"commitsBetweenForRepo": 118,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,13 +1,13 @@\n-    public static RE createRE(String aPattern)\n+    public static Pattern createPattern(String aPattern)\n         throws ConversionException\n     {\n-        RE retVal = null;\n+        Pattern retVal = null;\n         try {\n-            retVal = getRE(aPattern);\n+            retVal = getPattern(aPattern);\n         }\n-        catch (RESyntaxException e) {\n+        catch (PatternSyntaxException e) {\n             throw new ConversionException(\n                 \"Failed to initialise regexp expression \" + aPattern, e);\n         }\n         return retVal;\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "createRE",
+						"newValue": "createPattern"
+					}
+				},
+				{
+					"type": "Yreturntypechange",
+					"commitMessage": "initial replacing RE by Pattern (need to update docs)\n",
+					"commitDate": "2005-05-11, 10:48 AM",
+					"commitName": "e27489c7721909245ea5055eac3b9c7c659081f6",
+					"commitAuthor": "Oleg Sukhodolsky",
+					"commitDateOld": "2005-01-09, 3:50 AM",
+					"commitNameOld": "0d887cde58e54d920644ee543dab346b93e8aae9",
+					"commitAuthorOld": "Lars Kühne",
+					"daysBetweenCommits": 122.25,
+					"commitsBetweenForRepo": 118,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,13 +1,13 @@\n-    public static RE createRE(String aPattern)\n+    public static Pattern createPattern(String aPattern)\n         throws ConversionException\n     {\n-        RE retVal = null;\n+        Pattern retVal = null;\n         try {\n-            retVal = getRE(aPattern);\n+            retVal = getPattern(aPattern);\n         }\n-        catch (RESyntaxException e) {\n+        catch (PatternSyntaxException e) {\n             throw new ConversionException(\n                 \"Failed to initialise regexp expression \" + aPattern, e);\n         }\n         return retVal;\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "RE",
+						"newValue": "Pattern"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "initial replacing RE by Pattern (need to update docs)\n",
+					"commitDate": "2005-05-11, 10:48 AM",
+					"commitName": "e27489c7721909245ea5055eac3b9c7c659081f6",
+					"commitAuthor": "Oleg Sukhodolsky",
+					"commitDateOld": "2005-01-09, 3:50 AM",
+					"commitNameOld": "0d887cde58e54d920644ee543dab346b93e8aae9",
+					"commitAuthorOld": "Lars Kühne",
+					"daysBetweenCommits": 122.25,
+					"commitsBetweenForRepo": 118,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,13 +1,13 @@\n-    public static RE createRE(String aPattern)\n+    public static Pattern createPattern(String aPattern)\n         throws ConversionException\n     {\n-        RE retVal = null;\n+        Pattern retVal = null;\n         try {\n-            retVal = getRE(aPattern);\n+            retVal = getPattern(aPattern);\n         }\n-        catch (RESyntaxException e) {\n+        catch (PatternSyntaxException e) {\n             throw new ConversionException(\n                 \"Failed to initialise regexp expression \" + aPattern, e);\n         }\n         return retVal;\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"b0db9beefa6e08f88e72dc2868767f7a9db62f51": {
+			"type": "Ybodychange",
+			"commitMessage": "removed (old debugging?) output code.\n",
+			"commitDate": "2002-12-08, 4:58 AM",
+			"commitName": "b0db9beefa6e08f88e72dc2868767f7a9db62f51",
+			"commitAuthor": "Rick Giles",
+			"commitDateOld": "2002-12-07, 10:11 PM",
+			"commitNameOld": "b2704f029aacdb186f889377b8d051030498f2cc",
+			"commitAuthorOld": "Oliver Burn",
+			"daysBetweenCommits": 0.28,
+			"commitsBetweenForRepo": 4,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,16 +1,13 @@\n     public static RE createRE(String aPattern)\n         throws ConversionException\n     {\n         RE retVal = null;\n         try {\n             retVal = getRE(aPattern);\n         }\n         catch (RESyntaxException e) {\n-            System.out.println(\"Failed to initialise regexp expression \"\n-                               + aPattern);\n-            e.printStackTrace(System.out);\n             throw new ConversionException(\n                 \"Failed to initialise regexp expression \" + aPattern, e);\n         }\n         return retVal;\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"419d9243861ac99e80a7783547a51adf8b284817": {
+			"type": "Yexceptionschange",
+			"commitMessage": "corrected checkstyle errors\n",
+			"commitDate": "2002-12-06, 4:23 AM",
+			"commitName": "419d9243861ac99e80a7783547a51adf8b284817",
+			"commitAuthor": "Rick Giles",
+			"commitDateOld": "2002-12-06, 3:38 AM",
+			"commitNameOld": "302031989566e096adc3e87c935ab47202a7ce3e",
+			"commitAuthorOld": "Rick Giles",
+			"daysBetweenCommits": 0.03,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,15 +1,16 @@\n     public static RE createRE(String aPattern)\n+        throws ConversionException\n     {\n         RE retVal = null;\n         try {\n             retVal = getRE(aPattern);\n         }\n         catch (RESyntaxException e) {\n             System.out.println(\"Failed to initialise regexp expression \"\n                                + aPattern);\n             e.printStackTrace(System.out);\n             throw new ConversionException(\n                 \"Failed to initialise regexp expression \" + aPattern, e);\n         }\n         return retVal;\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {
+				"oldValue": "[]",
+				"newValue": "[ConversionException]"
+			}
+		},
+		"59222296258fecc02db44eeae1cb65b44b68c267": {
+			"type": "Ymultichange(Ymovefromfile,Ymodifierchange,Ybodychange)",
+			"commitMessage": "Implemented the first Javadoc test. Still need to add some Javadoc (no pun\nintended) and also refactor the utility methods.\n",
+			"commitDate": "2002-10-24, 8:33 AM",
+			"commitName": "59222296258fecc02db44eeae1cb65b44b68c267",
+			"commitAuthor": "Oliver Burn",
+			"subchanges": [
+				{
+					"type": "Ymovefromfile",
+					"commitMessage": "Implemented the first Javadoc test. Still need to add some Javadoc (no pun\nintended) and also refactor the utility methods.\n",
+					"commitDate": "2002-10-24, 8:33 AM",
+					"commitName": "59222296258fecc02db44eeae1cb65b44b68c267",
+					"commitAuthor": "Oliver Burn",
+					"commitDateOld": "2002-10-24, 7:34 AM",
+					"commitNameOld": "7af9e82fc16545a8153b529fba91df0fb310e2e6",
+					"commitAuthorOld": "Oliver Burn",
+					"daysBetweenCommits": 0.04,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,14 +1,15 @@\n-    private static RE createRE(String aPattern)\n+    public static RE createRE(String aPattern)\n     {\n         RE retVal = null;\n         try {\n-            retVal = Utils.getRE(aPattern);\n+            retVal = getRE(aPattern);\n         }\n         catch (RESyntaxException e) {\n             System.out.println(\"Failed to initialise regexp expression \"\n                                + aPattern);\n             e.printStackTrace(System.out);\n-            System.exit(1);\n+            throw new ConversionException(\n+                \"Failed to initialise regexp expression \" + aPattern, e);\n         }\n         return retVal;\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldPath": "src/checkstyle/com/puppycrawl/tools/checkstyle/Verifier.java",
+						"newPath": "src/checkstyle/com/puppycrawl/tools/checkstyle/api/Utils.java",
+						"oldMethodName": "createRE",
+						"newMethodName": "createRE"
+					}
+				},
+				{
+					"type": "Ymodifierchange",
+					"commitMessage": "Implemented the first Javadoc test. Still need to add some Javadoc (no pun\nintended) and also refactor the utility methods.\n",
+					"commitDate": "2002-10-24, 8:33 AM",
+					"commitName": "59222296258fecc02db44eeae1cb65b44b68c267",
+					"commitAuthor": "Oliver Burn",
+					"commitDateOld": "2002-10-24, 7:34 AM",
+					"commitNameOld": "7af9e82fc16545a8153b529fba91df0fb310e2e6",
+					"commitAuthorOld": "Oliver Burn",
+					"daysBetweenCommits": 0.04,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,14 +1,15 @@\n-    private static RE createRE(String aPattern)\n+    public static RE createRE(String aPattern)\n     {\n         RE retVal = null;\n         try {\n-            retVal = Utils.getRE(aPattern);\n+            retVal = getRE(aPattern);\n         }\n         catch (RESyntaxException e) {\n             System.out.println(\"Failed to initialise regexp expression \"\n                                + aPattern);\n             e.printStackTrace(System.out);\n-            System.exit(1);\n+            throw new ConversionException(\n+                \"Failed to initialise regexp expression \" + aPattern, e);\n         }\n         return retVal;\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[private, static]",
+						"newValue": "[public, static]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Implemented the first Javadoc test. Still need to add some Javadoc (no pun\nintended) and also refactor the utility methods.\n",
+					"commitDate": "2002-10-24, 8:33 AM",
+					"commitName": "59222296258fecc02db44eeae1cb65b44b68c267",
+					"commitAuthor": "Oliver Burn",
+					"commitDateOld": "2002-10-24, 7:34 AM",
+					"commitNameOld": "7af9e82fc16545a8153b529fba91df0fb310e2e6",
+					"commitAuthorOld": "Oliver Burn",
+					"daysBetweenCommits": 0.04,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,14 +1,15 @@\n-    private static RE createRE(String aPattern)\n+    public static RE createRE(String aPattern)\n     {\n         RE retVal = null;\n         try {\n-            retVal = Utils.getRE(aPattern);\n+            retVal = getRE(aPattern);\n         }\n         catch (RESyntaxException e) {\n             System.out.println(\"Failed to initialise regexp expression \"\n                                + aPattern);\n             e.printStackTrace(System.out);\n-            System.exit(1);\n+            throw new ConversionException(\n+                \"Failed to initialise regexp expression \" + aPattern, e);\n         }\n         return retVal;\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"7b849d58d5a6da2a1384091e3fc7ebb07ba1d957": {
+			"type": "Ybodychange",
+			"commitMessage": "Implemented a factory to create RE objects. Also improved error handling. This\nmay improve performance?\n",
+			"commitDate": "2002-05-13, 10:41 PM",
+			"commitName": "7b849d58d5a6da2a1384091e3fc7ebb07ba1d957",
+			"commitAuthor": "Oliver Burn",
+			"commitDateOld": "2002-05-13, 6:52 AM",
+			"commitNameOld": "fca8c918043974fcf6cc59e5d4161ada0b7c4c76",
+			"commitAuthorOld": "Oliver Burn",
+			"daysBetweenCommits": 0.66,
+			"commitsBetweenForRepo": 2,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,14 +1,14 @@\n     private static RE createRE(String aPattern)\n     {\n         RE retVal = null;\n         try {\n-            retVal = new RE(aPattern);\n+            retVal = Utils.getRE(aPattern);\n         }\n         catch (RESyntaxException e) {\n             System.out.println(\"Failed to initialise regexp expression \" +\n                                aPattern);\n             e.printStackTrace(System.out);\n             System.exit(1);\n         }\n         return retVal;\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"8d6fa332a9c8b0c350dfcb1d923d70bc5f3d921b": {
+			"type": "Ymovefromfile",
+			"commitMessage": "Re-factored VerifierImpl to be called Verifier. The original intention of\nthe interface was to allow different verifiers to be swapped in. Considering\nhow much work would be required to create a verifier from scratch, people\nare more likely to just want to extend VerifierImpl.\n",
+			"commitDate": "2002-01-13, 7:56 PM",
+			"commitName": "8d6fa332a9c8b0c350dfcb1d923d70bc5f3d921b",
+			"commitAuthor": "Oliver Burn",
+			"commitDateOld": "2002-01-13, 6:33 PM",
+			"commitNameOld": "f8ea4c69a2228c5aca6c0b6e08a39a613d157708",
+			"commitAuthorOld": "Oliver Burn",
+			"daysBetweenCommits": 0.06,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "src/checkstyle/com/puppycrawl/tools/checkstyle/VerifierImpl.java",
+				"newPath": "src/checkstyle/com/puppycrawl/tools/checkstyle/Verifier.java",
+				"oldMethodName": "createRE",
+				"newMethodName": "createRE"
+			}
+		},
+		"f0f7f3e762ffef78dcf82bf1611c10da48b96cb9": {
+			"type": "Ybodychange",
+			"commitMessage": "changed for release 1.2\n",
+			"commitDate": "2001-06-28, 7:10 AM",
+			"commitName": "f0f7f3e762ffef78dcf82bf1611c10da48b96cb9",
+			"commitAuthor": "Oliver Burn",
+			"commitDateOld": "2001-06-22, 7:24 AM",
+			"commitNameOld": "0fd69594a4c3e82f92f93f0371791da66938f8c3",
+			"commitAuthorOld": "Oliver Burn",
+			"daysBetweenCommits": 5.99,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,14 +1,14 @@\n     private static RE createRE(String aPattern)\n     {\n         RE retVal = null;\n         try {\n             retVal = new RE(aPattern);\n         }\n         catch (RESyntaxException e) {\n-            System.err.println(\"Failed to initialise regexp expression \" +\n+            System.out.println(\"Failed to initialise regexp expression \" +\n                                aPattern);\n-            e.printStackTrace(System.err);\n+            e.printStackTrace(System.out);\n             System.exit(1);\n         }\n         return retVal;\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"0fd69594a4c3e82f92f93f0371791da66938f8c3": {
+			"type": "Yintroduced",
+			"commitMessage": "first cut\n",
+			"commitDate": "2001-06-22, 7:24 AM",
+			"commitName": "0fd69594a4c3e82f92f93f0371791da66938f8c3",
+			"commitAuthor": "Oliver Burn"
+		}
+	},
+	"sha": "119fd4fb33bef9f5c66fc950396669af842c21a3"
+}

@@ -1,0 +1,195 @@
+{
+	"repo": "https://github.com/pmd/pmd.git",
+	"file": "pmd-java/src/main/java/net/sourceforge/pmd/lang/java/ast/FormalComment.java",
+	"method": {
+		"longName": "FormalComment::findJavadocs()",
+		"startLine": 30,
+		"methodName": "findJavadocs",
+		"isStatic": false,
+		"isAbstract": false,
+		"visibility": "private"
+	},
+	"history": {
+		"913fe67db10cc4d93587ad55b40d0edfeb662ebe": {
+			"type": "Ymultichange(Yparameterchange,Ybodychange)",
+			"commitMessage": "Corrections for PR review\n",
+			"commitDate": "2018-06-24, 2:15 AM",
+			"commitName": "913fe67db10cc4d93587ad55b40d0edfeb662ebe",
+			"commitAuthor": "Andreas Dangel",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "Corrections for PR review\n",
+					"commitDate": "2018-06-24, 2:15 AM",
+					"commitName": "913fe67db10cc4d93587ad55b40d0edfeb662ebe",
+					"commitAuthor": "Andreas Dangel",
+					"commitDateOld": "2018-06-22, 2:37 PM",
+					"commitNameOld": "b82e56158af895dd4f658a265ce33b0c50fcf496",
+					"commitAuthorOld": "Andreas Dangel",
+					"daysBetweenCommits": 1.48,
+					"commitsBetweenForRepo": 2,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,16 +1,16 @@\n-    private void findJavadocs(String commentText) {\n+    private void findJavadocs() {\n         Collection<JavadocElement> kids = new ArrayList<>();\n \n-        Map<String, Integer> tags = CommentUtil.javadocTagsIn(commentText);\n-        for (Map.Entry<String, Integer> entry : tags.entrySet()) {\n-            JavadocTag tag = JavadocTag.tagFor(entry.getKey());\n-            if (tag == null) {\n-                continue;\n+        Matcher javadocTagMatcher = JAVADOC_TAG.matcher(getFilteredComment());\n+        while (javadocTagMatcher.find()) {\n+            JavadocTag tag = JavadocTag.tagFor(javadocTagMatcher.group(1));\n+            int tagStartIndex = javadocTagMatcher.start(1);\n+            if (tag != null) {\n+                kids.add(new JavadocElement(getBeginLine(), getBeginLine(),\n+                        // TODO valid?\n+                        tagStartIndex, tagStartIndex + tag.label.length() + 1, tag));\n             }\n-            kids.add(new JavadocElement(getBeginLine(), getBeginLine(),\n-                    // TODO valid?\n-                    entry.getValue() + 1, entry.getValue() + tag.label.length() + 1, tag));\n         }\n \n         children = kids.toArray(new Node[0]);\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[commentText-String]",
+						"newValue": "[]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Corrections for PR review\n",
+					"commitDate": "2018-06-24, 2:15 AM",
+					"commitName": "913fe67db10cc4d93587ad55b40d0edfeb662ebe",
+					"commitAuthor": "Andreas Dangel",
+					"commitDateOld": "2018-06-22, 2:37 PM",
+					"commitNameOld": "b82e56158af895dd4f658a265ce33b0c50fcf496",
+					"commitAuthorOld": "Andreas Dangel",
+					"daysBetweenCommits": 1.48,
+					"commitsBetweenForRepo": 2,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,16 +1,16 @@\n-    private void findJavadocs(String commentText) {\n+    private void findJavadocs() {\n         Collection<JavadocElement> kids = new ArrayList<>();\n \n-        Map<String, Integer> tags = CommentUtil.javadocTagsIn(commentText);\n-        for (Map.Entry<String, Integer> entry : tags.entrySet()) {\n-            JavadocTag tag = JavadocTag.tagFor(entry.getKey());\n-            if (tag == null) {\n-                continue;\n+        Matcher javadocTagMatcher = JAVADOC_TAG.matcher(getFilteredComment());\n+        while (javadocTagMatcher.find()) {\n+            JavadocTag tag = JavadocTag.tagFor(javadocTagMatcher.group(1));\n+            int tagStartIndex = javadocTagMatcher.start(1);\n+            if (tag != null) {\n+                kids.add(new JavadocElement(getBeginLine(), getBeginLine(),\n+                        // TODO valid?\n+                        tagStartIndex, tagStartIndex + tag.label.length() + 1, tag));\n             }\n-            kids.add(new JavadocElement(getBeginLine(), getBeginLine(),\n-                    // TODO valid?\n-                    entry.getValue() + 1, entry.getValue() + tag.label.length() + 1, tag));\n         }\n \n         children = kids.toArray(new Node[0]);\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"7221903f73dff36842abe6a024d2090021117fe1": {
+			"type": "Ymovefromfile",
+			"commitMessage": "[java] Deprecated CommentUtil, move parts to AST Comment, fix FormalComment\n",
+			"commitDate": "2018-06-22, 2:23 PM",
+			"commitName": "7221903f73dff36842abe6a024d2090021117fe1",
+			"commitAuthor": "Andreas Dangel",
+			"commitDateOld": "2018-06-22, 1:18 PM",
+			"commitNameOld": "908d65f8c9063ba0571e7614da3a531e2974a901",
+			"commitAuthorOld": "Andreas Dangel",
+			"daysBetweenCommits": 0.05,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,17 +1,16 @@\n     private void findJavadocs(String commentText) {\n-\n         Collection<JavadocElement> kids = new ArrayList<>();\n \n         Map<String, Integer> tags = CommentUtil.javadocTagsIn(commentText);\n         for (Map.Entry<String, Integer> entry : tags.entrySet()) {\n             JavadocTag tag = JavadocTag.tagFor(entry.getKey());\n             if (tag == null) {\n                 continue;\n             }\n             kids.add(new JavadocElement(getBeginLine(), getBeginLine(),\n                     // TODO valid?\n                     entry.getValue() + 1, entry.getValue() + tag.label.length() + 1, tag));\n         }\n \n         children = kids.toArray(new Node[0]);\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {
+				"oldPath": "pmd-java/src/main/java/net/sourceforge/pmd/lang/java/ast/Comment.java",
+				"newPath": "pmd-java/src/main/java/net/sourceforge/pmd/lang/java/ast/FormalComment.java",
+				"oldMethodName": "findJavadocs",
+				"newMethodName": "findJavadocs"
+			}
+		},
+		"8bd1e3b486de39438d9412335742ea4aa01e6483": {
+			"type": "Ybodychange",
+			"commitMessage": "Fix PMD dogfood: UncommentedEmptyMethodBody, SimplifyBooleanReturns,\nUnnecessaryLocalBeforeReturn, OptimizableToArrayCall,\nClassWithOnlyPrivateConstructorsShouldBeFinal,\nUseLocaleWithCaseConversions, NonStaticInitializer, UseCollectionIsEmpty\n",
+			"commitDate": "2018-03-10, 4:04 AM",
+			"commitName": "8bd1e3b486de39438d9412335742ea4aa01e6483",
+			"commitAuthor": "Andreas Dangel",
+			"commitDateOld": "2016-12-02, 4:42 AM",
+			"commitNameOld": "9e2bade8c24e9b2bdc2ef4a29421922faf569d85",
+			"commitAuthorOld": "Andreas Dangel",
+			"daysBetweenCommits": 462.97,
+			"commitsBetweenForRepo": 2334,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,17 +1,17 @@\n     private void findJavadocs(String commentText) {\n \n         Collection<JavadocElement> kids = new ArrayList<>();\n \n         Map<String, Integer> tags = CommentUtil.javadocTagsIn(commentText);\n         for (Map.Entry<String, Integer> entry : tags.entrySet()) {\n             JavadocTag tag = JavadocTag.tagFor(entry.getKey());\n             if (tag == null) {\n                 continue;\n             }\n             kids.add(new JavadocElement(getBeginLine(), getBeginLine(),\n                     // TODO valid?\n                     entry.getValue() + 1, entry.getValue() + tag.label.length() + 1, tag));\n         }\n \n-        children = kids.toArray(new Node[kids.size()]);\n+        children = kids.toArray(new Node[0]);\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"9e2bade8c24e9b2bdc2ef4a29421922faf569d85": {
+			"type": "Ybodychange",
+			"commitMessage": "pmd-java: checkstyle fixes\n",
+			"commitDate": "2016-12-02, 4:42 AM",
+			"commitName": "9e2bade8c24e9b2bdc2ef4a29421922faf569d85",
+			"commitAuthor": "Andreas Dangel",
+			"commitDateOld": "2016-12-02, 3:32 AM",
+			"commitNameOld": "2680c33d84306aed438baeedaca115fe1b6f2d05",
+			"commitAuthorOld": "Andreas Dangel",
+			"daysBetweenCommits": 0.05,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,17 +1,17 @@\n     private void findJavadocs(String commentText) {\n \n         Collection<JavadocElement> kids = new ArrayList<>();\n \n         Map<String, Integer> tags = CommentUtil.javadocTagsIn(commentText);\n         for (Map.Entry<String, Integer> entry : tags.entrySet()) {\n             JavadocTag tag = JavadocTag.tagFor(entry.getKey());\n             if (tag == null) {\n                 continue;\n             }\n-            kids.add(new JavadocElement(getBeginLine(), getBeginLine(), // TODO\n-                                                                        // valid?\n+            kids.add(new JavadocElement(getBeginLine(), getBeginLine(),\n+                    // TODO valid?\n                     entry.getValue() + 1, entry.getValue() + tag.label.length() + 1, tag));\n         }\n \n         children = kids.toArray(new Node[kids.size()]);\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"2680c33d84306aed438baeedaca115fe1b6f2d05": {
+			"type": "Ybodychange",
+			"commitMessage": "pmd-java: checkstyle fixes\n",
+			"commitDate": "2016-12-02, 3:32 AM",
+			"commitName": "2680c33d84306aed438baeedaca115fe1b6f2d05",
+			"commitAuthor": "Andreas Dangel",
+			"commitDateOld": "2015-11-25, 2:06 PM",
+			"commitNameOld": "fd2dcddc447c8ae88fe5b1df9fca0326017309f8",
+			"commitAuthorOld": "Andreas Dangel",
+			"daysBetweenCommits": 372.56,
+			"commitsBetweenForRepo": 477,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,16 +1,17 @@\n     private void findJavadocs(String commentText) {\n \n         Collection<JavadocElement> kids = new ArrayList<>();\n \n         Map<String, Integer> tags = CommentUtil.javadocTagsIn(commentText);\n         for (Map.Entry<String, Integer> entry : tags.entrySet()) {\n             JavadocTag tag = JavadocTag.tagFor(entry.getKey());\n             if (tag == null) {\n                 continue;\n             }\n-            kids.add(new JavadocElement(getBeginLine(), getBeginLine(), // TODO valid?\n+            kids.add(new JavadocElement(getBeginLine(), getBeginLine(), // TODO\n+                                                                        // valid?\n                     entry.getValue() + 1, entry.getValue() + tag.label.length() + 1, tag));\n         }\n \n         children = kids.toArray(new Node[kids.size()]);\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"fd2dcddc447c8ae88fe5b1df9fca0326017309f8": {
+			"type": "Ybodychange",
+			"commitMessage": "Java 7 changes and some compiler warnings fixed\n",
+			"commitDate": "2015-11-25, 2:06 PM",
+			"commitName": "fd2dcddc447c8ae88fe5b1df9fca0326017309f8",
+			"commitAuthor": "Andreas Dangel",
+			"commitDateOld": "2015-03-21, 4:30 PM",
+			"commitNameOld": "10ae0fb999e53a911c1847ebfdb2e563fcd80861",
+			"commitAuthorOld": "Andreas Dangel",
+			"daysBetweenCommits": 248.94,
+			"commitsBetweenForRepo": 257,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,16 +1,16 @@\n     private void findJavadocs(String commentText) {\n \n-        Collection<JavadocElement> kids = new ArrayList<JavadocElement>();\n+        Collection<JavadocElement> kids = new ArrayList<>();\n \n         Map<String, Integer> tags = CommentUtil.javadocTagsIn(commentText);\n         for (Map.Entry<String, Integer> entry : tags.entrySet()) {\n             JavadocTag tag = JavadocTag.tagFor(entry.getKey());\n             if (tag == null) {\n                 continue;\n             }\n             kids.add(new JavadocElement(getBeginLine(), getBeginLine(), // TODO valid?\n                     entry.getValue() + 1, entry.getValue() + tag.label.length() + 1, tag));\n         }\n \n         children = kids.toArray(new Node[kids.size()]);\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"10ae0fb999e53a911c1847ebfdb2e563fcd80861": {
+			"type": "Ybodychange",
+			"commitMessage": "dogfood, whitespaces\n",
+			"commitDate": "2015-03-21, 4:30 PM",
+			"commitName": "10ae0fb999e53a911c1847ebfdb2e563fcd80861",
+			"commitAuthor": "Andreas Dangel",
+			"commitDateOld": "2014-10-04, 9:36 AM",
+			"commitNameOld": "ad88b4784d78bf1698fac72cad3825144caf6863",
+			"commitAuthorOld": "Andreas Dangel",
+			"daysBetweenCommits": 168.29,
+			"commitsBetweenForRepo": 250,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,18 +1,16 @@\n     private void findJavadocs(String commentText) {\n \n-    \tCollection<JavadocElement> kids = new ArrayList<JavadocElement>();\n+        Collection<JavadocElement> kids = new ArrayList<JavadocElement>();\n \n-    \tMap<String, Integer> tags = CommentUtil.javadocTagsIn(commentText);\n-    \tfor (Map.Entry<String, Integer> entry : tags.entrySet()) {\n-    \t\tJavadocTag tag = JavadocTag.tagFor(entry.getKey());\n-    \t\tif (tag == null) continue;\n-    \t\tkids.add(\n-    \t\t\tnew JavadocElement(\n-    \t\t\t\tgetBeginLine(), getBeginLine(),\t// TODO valid?\n-    \t\t\t\tentry.getValue() + 1, entry.getValue() + tag.label.length() + 1 ,tag\n-    \t\t\t\t)\n-    \t\t\t);\n-    \t}\n+        Map<String, Integer> tags = CommentUtil.javadocTagsIn(commentText);\n+        for (Map.Entry<String, Integer> entry : tags.entrySet()) {\n+            JavadocTag tag = JavadocTag.tagFor(entry.getKey());\n+            if (tag == null) {\n+                continue;\n+            }\n+            kids.add(new JavadocElement(getBeginLine(), getBeginLine(), // TODO valid?\n+                    entry.getValue() + 1, entry.getValue() + tag.label.length() + 1, tag));\n+        }\n \n-    \tchildren = kids.toArray(new Node[kids.size()]);\n+        children = kids.toArray(new Node[kids.size()]);\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"ad88b4784d78bf1698fac72cad3825144caf6863": {
+			"type": "Yfilerename",
+			"commitMessage": "Move java into own sub-module pmd-java\n",
+			"commitDate": "2014-10-04, 9:36 AM",
+			"commitName": "ad88b4784d78bf1698fac72cad3825144caf6863",
+			"commitAuthor": "Andreas Dangel",
+			"commitDateOld": "2014-10-04, 8:59 AM",
+			"commitNameOld": "fa950a82960993c7a7d70e276553b85174eec8b2",
+			"commitAuthorOld": "Andreas Dangel",
+			"daysBetweenCommits": 0.03,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "pmd/src/main/java/net/sourceforge/pmd/lang/java/ast/Comment.java",
+				"newPath": "pmd-java/src/main/java/net/sourceforge/pmd/lang/java/ast/Comment.java"
+			}
+		},
+		"75daf38ed303bcdbfe1034fd3a070a4306402c2d": {
+			"type": "Yfilerename",
+			"commitMessage": "pmd: Move all java sources to src/main/java, adapt pom.xml, test and other files accordingly\n\ngit-svn-id: https://pmd.svn.sourceforge.net/svnroot/pmd/trunk@7476 51baf565-9d33-0410-a72c-fc3788e3496d\n",
+			"commitDate": "2011-11-21, 1:45 PM",
+			"commitName": "75daf38ed303bcdbfe1034fd3a070a4306402c2d",
+			"commitAuthor": "Romain Pelisse",
+			"commitDateOld": "2011-11-21, 11:10 AM",
+			"commitNameOld": "821f452f692c1497e2849302b5d9417c90edc054",
+			"commitAuthorOld": "Brian Remedios",
+			"daysBetweenCommits": 0.11,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "pmd/src/net/sourceforge/pmd/lang/java/ast/Comment.java",
+				"newPath": "pmd/src/main/java/net/sourceforge/pmd/lang/java/ast/Comment.java"
+			}
+		},
+		"4ffa5c453f41ca0b8ae9f317570453064ed48f3d": {
+			"type": "Yintroduced",
+			"commitMessage": "refactored comment-related AST classes, updated rules\n\ngit-svn-id: https://pmd.svn.sourceforge.net/svnroot/pmd/trunk@7183 51baf565-9d33-0410-a72c-fc3788e3496d\n",
+			"commitDate": "2011-01-29, 3:13 AM",
+			"commitName": "4ffa5c453f41ca0b8ae9f317570453064ed48f3d",
+			"commitAuthor": "Brian Remedios"
+		}
+	},
+	"sha": "d528dcd5d45582229ab3410deb7c40b2143d015d"
+}

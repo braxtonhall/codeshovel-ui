@@ -1,0 +1,22 @@
+{
+	"repo": "https://github.com/hibernate/hibernate-orm.git",
+	"file": "hibernate-core/src/main/java/org/hibernate/boot/internal/SessionFactoryBuilderImpl.java",
+	"method": {
+		"longName": "SessionFactoryBuilderImpl::unwrap(Class<T> type)",
+		"startLine": 460,
+		"methodName": "unwrap",
+		"isStatic": false,
+		"isAbstract": false,
+		"visibility": "public"
+	},
+	"history": {
+		"2c968538a542fd5f6c705745f235be118c07370a": {
+			"type": "Yintroduced",
+			"commitMessage": "HHH-9728 - Audit Settings to decide what should become a SessionFactoryServiceRegistry service\n",
+			"commitDate": "2015-04-15, 11:59 PM",
+			"commitName": "2c968538a542fd5f6c705745f235be118c07370a",
+			"commitAuthor": "Steve Ebersole"
+		}
+	},
+	"sha": "8bd79b29cfa7b2d539a746dc356d60b66e1e596b"
+}

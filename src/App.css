@@ -41,6 +41,9 @@
 
 .CommitRowCell {
     text-align: center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .SubtleButton {
@@ -65,7 +68,7 @@
 }
 
 .Underline {
-    text-decoration: underline;
+    /*text-decoration: underline;*/
 }
 
 .d2h-file-diff {
