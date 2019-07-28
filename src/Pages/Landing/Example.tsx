@@ -18,7 +18,7 @@ export class Example extends React.Component<IReactExampleProps, IReactExampleSt
 	}
 
 	private static getFontSize(s: string, modifier: number = 1): string {
-		return (Math.log(Math.max(s.length, 10)) * Constants.EXAMPLE_TEXT_SIZE * modifier) + "px";
+		return (10 / (Math.log(Math.max(s.length, 10))) * Constants.EXAMPLE_TEXT_SIZE * modifier) + "px";
 	}
 
 	private handleClick(): void {
@@ -46,7 +46,6 @@ export class Example extends React.Component<IReactExampleProps, IReactExampleSt
 							marginTop: "3px",
 							marginBottom: "3px",
 							height: "40px",
-							font: Constants.FONT,
 							width: Example.getWidth(display),
 							overflow: "hidden",
 							zIndex: 9999,

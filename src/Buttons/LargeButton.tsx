@@ -26,6 +26,7 @@ export default class LargeButton extends FadeableElement<ICopyRawProps, ICopyRaw
 							bottom: this.props.bottom + "px",
 							left: (this.props.shift + this.props.left) +"px",
 							font: Constants.FONT,
+							fontSize:  "24px",
 							color: "rgb(0, 0, 0)",
 							backgroundColor: this.props.displayNotification ? "rgb(124, 203, 126)" : "rgb(183, 166, 108)",
 							opacity: this.props.active ? 1 : 0,

@@ -4,17 +4,13 @@ import {ReactNode} from "react";
 import * as React from "react";
 import {IChange, ICommitx} from "../../Types";
 import {Changes} from "../../Enums";
+import {ICommitRowProps, ReactCommitRow} from "./CommitRow";
 
-export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommitState> {
+export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitState> {
 	protected readonly fadeOutTime: number = 300;
 	private diffDeleter: any = undefined;
-	private datec: string = "";
-	private authc: string = "";
-	private filec: string = "";
-	private comtc: string = "";
-	private detlc: string = "";
-	private typec: string = "";
 	private changes: IChange[];
+	private readonly file: string | undefined;
 
 	constructor(props: IReactCommitProps) {
 		super(props);
@@ -23,6 +19,11 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 			this.changes = this.props.commit.subchanges;
 		} else {
 			this.changes = [this.props.commit]
+		}
+		if (this.props.commit.file) {
+			this.file = (this.props.commit.file.split('/').pop() as string).split('.')[0];
+		} else {
+			this.file = undefined;
 		}
 		this.setUpColours();
 		this.goToCommit = this.goToCommit.bind(this);
@@ -34,21 +35,6 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		this.enableDiff = this.enableDiff.bind(this);
 		this.getBackgroundImage = this.getBackgroundImage.bind(this);
 		this.getFontSize = this.getFontSize.bind(this);
-	}
-
-	private setUpColours(): void {
-		let temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
-		this.datec = temp < 10 ? "0" + temp : "" + temp;
-		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
-		this.authc = temp < 10 ? "0" + temp : "" + temp;
-		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
-		this.filec = temp < 10 ? "0" + temp : "" + temp;
-		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
-		this.comtc = temp < 10 ? "0" + temp : "" + temp;
-		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
-		this.detlc = temp < 10 ? "0" + temp : "" + temp;
-		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
-		this.typec = temp < 10 ? "0" + temp : "" + temp;
 	}
 
 	private goToCommit(): void {
@@ -186,10 +172,6 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 		return (height * modifier) + "px";
 	}
 
-	private getFontSize(s: string, modifier: number = 1): string {
-		return (this.props.windowWidth * (1 / Math.max(s.length, 8)) * 0.01 * Constants.COMMIT_FONT_APPROX_SIZE * modifier) + "px";
-	}
-
 	private enableDiff(): void {
 		if (this.state.expanded) {
 			const state: IReactCommitState = Object.assign({}, this.state);
@@ -274,12 +256,12 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 						</div>
 						{this.props.repo.replace(".git", "") !== "" ?
 							<div className="CommitRowCell SubtleButton Underline" onClick={this.goToCommit} style={{fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
-								View<br/>{this.props.commit.commitName.substring(34)}
+								{this.props.commit.commitName.substring(34)}
 							</div> : <div/>
 						}
-						{this.props.commit.file && this.props.repo.replace(".git", "") !== "" ?
-							<div className="CommitRowCell SubtleButton Underline" onClick={this.goToFileInCommit} style={{fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
-								View<br/>File
+						{this.file && this.props.repo.replace(".git", "") !== "" ?
+							<div className="CommitRowCell SubtleButton Underline" onClick={this.goToFileInCommit} style={{fontSize: this.getFontSize(this.file as string), backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
+								{this.file}
 							</div> : <div/>
 						}
 						<div className="CommitRowCell SubtleButton" onClick={this.toggleExpanded} style={{fontSize: this.getFontSize("Details"), backgroundColor: `rgba(255, 255, 255, 0.${this.detlc})`}}>
@@ -292,7 +274,6 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 							return (<div
 								className={this.getClassName(change.type)}
 								style={{
-									// width: this.changes.length > 1 ? "95%" : "100%",
 									margin: "0 auto",
 									height: this.state.expanded ? this.getHeight(true) : 0,
 									backgroundImage: this.getBackgroundImage(change.type),
@@ -304,7 +285,7 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 									position: "relative",
 									marginBottom: i === this.changes.length - 1 && this.props.commit.diff ? this.getHeight(true, 0.25) : "0",
 								}}
-								key={this.props.commit.commitName + i}
+								key={`${this.props.commit.commitName}-${i}`}
 							>
 									{this.state.expanded ?
 										<div
@@ -337,11 +318,9 @@ export class ReactCommit extends FadeableElement<IReactCommitProps, IReactCommit
 	}
 }
 
-export interface IReactCommitProps extends IFadeableElementProps {
+export interface IReactCommitProps extends ICommitRowProps {
 	commit: ICommitx;
 	repo: string;
-	windowHeight: number;
-	windowWidth: number;
 }
 
 export interface IReactCommitState extends IFadeableElementState {

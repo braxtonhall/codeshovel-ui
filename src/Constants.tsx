@@ -75,7 +75,7 @@ export class Constants {
 	public static readonly TEST: string = "r2";
 	public static readonly MANIFEST_PATH: string = "/responses.json";
 
-	public static readonly NOTIFICATION_DISPLAY_TIME: number = 1000;
+	public static readonly NOTIFICATION_DISPLAY_TIME: number = 3000;
 	public static readonly SHOW_ABOUT_DELAY_TIME: number = 3000;
 
 	public static readonly BACKGROUND_TEXT_OPACITY: number = 0.5;
@@ -90,7 +90,7 @@ export class Constants {
 	public static readonly INTERNAL_ERROR_TEXT: string = "The server is having trouble processing this specific request. Please try another.";
 	public static readonly CACHE_ERROR_TEXT: string = "Oddly we couldn't couldn't find this response in our cache.";
 
-	public static readonly EXAMPLE_TEXT_SIZE: number = 5;
+	public static readonly EXAMPLE_TEXT_SIZE: number = 6;
 	public static readonly EXAMPLE_ROW_WIDTH: number = 10;
 
 	public static readonly FILE_REQUEST_ERROR_TEXT: string = "There don't appear to be any .java files in this repo. Please try another.";

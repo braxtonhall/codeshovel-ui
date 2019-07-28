@@ -319,9 +319,6 @@ export default class App extends React.Component<any, IAppState> {
 		const lastPage: Pages | undefined = this.history.pop();
 		if (lastPage !== undefined && lastPage !== state.page) {
 			state.page = lastPage;
-			if (lastPage === Pages.LANDING) {
-				state.sha = "HEAD"; // TODO move this to Landing's HANDLENEXT
-			}
 			this.setState(state);
 		}
 	}
@@ -474,17 +471,17 @@ export default class App extends React.Component<any, IAppState> {
 						bottom={5}
 						width={180}
 					/>
-					<LargeButton
-						active={this.state.page === Pages.LANDING && !this.state.examplesHidden && this.state.examples.length > 0}
-						handleClick={this.toggleExamples}
-						shift={this.state.page === Pages.LANDING && !this.state.examplesHidden && this.state.examples.length > 0 ? 0 : 35}
-						displayNotification={false}
-						text={"Hide Examples"}
-						backgroundImage={""}
-						left={225}
-						bottom={5}
-						width={240}
-					/>
+					{/*<LargeButton*/}
+						{/*active={this.state.page === Pages.LANDING && !this.state.examplesHidden && this.state.examples.length > 0}*/}
+						{/*handleClick={this.toggleExamples}*/}
+						{/*shift={this.state.page === Pages.LANDING && !this.state.examplesHidden && this.state.examples.length > 0 ? 0 : 35}*/}
+						{/*displayNotification={false}*/}
+						{/*text={"Hide Examples"}*/}
+						{/*backgroundImage={""}*/}
+						{/*left={225}*/}
+						{/*bottom={5}*/}
+						{/*width={240}*/}
+					{/*/>*/}
 					<LoadingPane windowWidth={this.state.width} text={`$ git ${this.state.sha === "HEAD" ? `clone ${this.state.link}` : `checkout ${this.state.sha}`} && ls -R | grep *.java`} active={this.state.loading && this.state.page === Pages.LANDING} size={{height: 30, width: 72}}/>
 					<LoadingPane windowWidth={this.state.width} text={`$ vim ${this.state.file.split('/').pop()}`} active={this.state.loading && this.state.page === Pages.FILES} size={{height: 30, width: 72}}/>
 					<LoadingPane windowWidth={this.state.width} text={`$ java -jar codeshovel.jar -m ${this.state.method.methodName}`} active={this.state.loading && this.state.page === Pages.METHODS} size={{height: 30, width: 72}}/>

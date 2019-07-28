@@ -8,16 +8,20 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 	private readonly fadeOutTime: number = 700;
 	public render(): ReactNode {
 		return(
-			<div>
+			<div
+				style={{
+					whiteSpace: "nowrap",
+					textAlign: "left",
+					fontStyle: "italic",
+				}}
+			>
 				<div
 					style={{
 						position: "absolute",
 						top: "15%",
 						left: "2%",
 						font: "900% \"Courier New\", Futura, sans-serif",
-						textAlign: "left",
-						fontStyle: "italic",
-						opacity: this.props.page >= Pages.FILES ? Constants.BACKGROUND_TEXT_OPACITY : 0,
+						opacity: this.props.page >= Pages.FILES && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
 					}}
@@ -30,9 +34,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						top: "57%",
 						left: "10%",
 						font: "800% \"Courier New\", Futura, sans-serif",
-						textAlign: "left",
-						fontStyle: "italic",
-						opacity: this.props.page >= Pages.FILES ? Constants.BACKGROUND_TEXT_OPACITY : 0,
+						opacity: this.props.page >= Pages.FILES && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
 					}}
@@ -45,9 +47,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						top: "80%",
 						left: "60%",
 						font: "650% \"Courier New\", Futura, sans-serif",
-						textAlign: "left",
-						fontStyle: "italic",
-						opacity: this.props.page >= Pages.FILES ? Constants.BACKGROUND_TEXT_OPACITY : 0,
+						opacity: this.props.page >= Pages.FILES && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
 					}}
@@ -60,9 +60,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						top: "40%",
 						left: "35%",
 						font: "700% \"Courier New\", Futura, sans-serif",
-						textAlign: "left",
-						fontStyle: "italic",
-						opacity: this.props.page >= Pages.METHODS ? Constants.BACKGROUND_TEXT_OPACITY : 0,
+						opacity: this.props.page >= Pages.METHODS && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
 					}}

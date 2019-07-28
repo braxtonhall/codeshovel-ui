@@ -4,6 +4,7 @@ import * as React from "react";
 import {IChange, ICommit, ICommitx, IHistoryTransport} from "../../Types";
 import {ReactCommit} from "./Commit";
 import {Changes} from "../../Enums";
+import {Constants} from "../../Constants";
 
 export class History {
 	private commits: ICommitx[];
@@ -90,20 +91,25 @@ export class ReactHistory extends FadeableElement<IReactHistoryProps, IReactHist
 
 
 	protected createReactNode(): ReactNode {
+		const marginTop: number = Math.log(this.props.windowHeight) * Constants.COMMIT_ROW_HEIGHT + 3;
 		return(
-			<div
-				className="Panel"
-				style={{
-					display: "block",
-					width: "100%",
-					marginBottom: "1em",
-				}}
-			>
-				{
-					this.props.history.getCommits().map((commit: ICommit) => {
-						return <ReactCommit commit={commit} key={commit.commitName} active={this.props.active} repo={this.props.repo} windowHeight={this.props.windowHeight} windowWidth={this.props.windowWidth}/>;
-					})
-				}
+			<div>
+				<div
+					className="Panel"
+					style={{
+						marginTop,
+						display: "block",
+						width: "100%",
+						marginBottom: "1em",
+						overflowY: "scroll",
+					}}
+				>
+					{
+						this.props.history.getCommits().map((commit: ICommit) => {
+							return <ReactCommit commit={commit} key={commit.commitName} active={this.props.active} repo={this.props.repo} windowHeight={this.props.windowHeight} windowWidth={this.props.windowWidth}/>;
+						})
+					}
+				</div>
 			</div>
 		);
 	}

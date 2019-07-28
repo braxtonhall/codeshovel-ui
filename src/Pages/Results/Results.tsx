@@ -4,6 +4,7 @@ import {IPageProps, IPageState, Page} from "../Page";
 import {Pages} from "../../Enums";
 import {IHistoryTransport} from "../../Types";
 import {History, ReactHistory} from "./History";
+import {Header} from "./Header";
 
 export class Results extends Page<IHistoryProps, IHistoryState> {
 	protected readonly page: Pages = Pages.RESULTS;
@@ -49,6 +50,21 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 					}}
 				>
 					<ReactHistory history={this.history} active={this.props.active} repo={this.props.repo} windowHeight={this.props.windowHeight} windowWidth={this.props.windowWidth}/>
+				</div>
+				<div
+					style={{
+						opacity: this.props.active ? 0.8 : 0,
+						position: "relative",
+						transform: this.chooseTransform(),
+						left: "50%",
+						transition: `${this.fadeOutTime}ms ease-in-out`,
+					}}
+				>
+					<Header
+						windowWidth={this.props.windowWidth}
+						windowHeight={this.props.windowHeight}
+						active={this.props.active}
+					/>
 				</div>
 			</div>
 		);

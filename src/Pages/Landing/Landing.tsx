@@ -9,6 +9,7 @@ import {IPageProps, IPageState, Page} from "../Page";
 import {IManifestEntry} from "../../Types";
 import {Example} from "./Example";
 import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../../FadeableElement";
+import SmallButton from "../../Buttons/SmallButton";
 
 export class Landing extends Page<ILandingProps, ILandingState> {
 	private readonly placeholder: string;
@@ -56,7 +57,6 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 	public createReactNode(): ReactNode {
 		const examplesShown: boolean = this.props.examples.length > 0 && !this.props.examplesHidden;
 		return (
-			this.state.onScreen || this.props.active ?
 			<div style={{
 				position: "absolute",
 				top: "50%",
@@ -74,7 +74,7 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 					style={{
 						position: "absolute",
 						width: "5%",
-						height: "50%",
+						height: "75%",
 						zIndex: 0
 					}}
 					onMouseEnter={() => {
@@ -85,8 +85,10 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 				/>
 				<ExampleContainer
 					active={examplesShown}
-					tellParent={this.props.tellParent}
+					tellParentExampleClicked={this.props.tellParent}
 					examples={this.props.examples}
+					examplesHidden={this.props.examplesHidden}
+					toggleExamplesHidden={this.props.toggleHidden}
 				/>
 				<div style={{
 					position: "absolute",
@@ -111,16 +113,7 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 					<Button style={{pointerEvents: "auto"}} variant="primary" onClick={this.handleNext} disabled={this.state.error}>Next</Button>
 				</div>
 				<ErrorPane text={this.errorText} active={this.state.error} exit={this.toggleError} size={{height: 30, width: 72}}/>
-			</div> :
-			<div
-				style={{
-					position: "absolute",
-					top: "50%",
-					left: "50%",
-					opacity: 0,
-					transform: this.chooseTransform(),
-				}}
-			/>
+			</div>
 		);
 	}
 }
@@ -133,11 +126,11 @@ class ExampleContainer extends FadeableElement<IExampleContainerProps, IExampleC
 		this.state = {
 			onScreen: this.props.active,
 		};
-		this.tellParent = this.tellParent.bind(this);
+		this.tellParentExampleClicked = this.tellParentExampleClicked.bind(this);
 	}
 
-	private tellParent(example: IManifestEntry): void {
-		this.props.tellParent(example);
+	private tellParentExampleClicked(example: IManifestEntry): void {
+		this.props.tellParentExampleClicked(example);
 	}
 
 	protected createReactNode(): ReactNode {
@@ -146,6 +139,7 @@ class ExampleContainer extends FadeableElement<IExampleContainerProps, IExampleC
 				className="Panel"
 				style={{
 					display: "block",
+					font: Constants.FONT,
 					textAlign: "left",
 					height: "100%",
 					width: "50%",
@@ -155,6 +149,37 @@ class ExampleContainer extends FadeableElement<IExampleContainerProps, IExampleC
 					zIndex: 2,
 				}}
 			>
+				<div
+					style={{display: "inline-block", opacity: 0.5, position: "relative"}}
+				>
+					<div
+						style={{
+							textAlign: "left",
+							left: "20%",
+							top: "10%",
+							fontSize: "20px",
+							marginTop: "6px",
+							marginLeft: "6px",
+						}}
+					>
+						Sample <code>codeshovel</code> Executions
+					</div>
+					<SmallButton
+						height={15}
+						width={15}
+						left={350}
+						backgroundSize={10}
+						backgroundImage={"url(/cross.png)"}
+						onClick={() => {
+							if (!this.props.examplesHidden) {
+								this.props.toggleExamplesHidden()
+							}
+						}}
+						bottom={4}
+						shift={0}
+						active={true}
+					/>
+				</div>
 				<div
 					style={{
 						position: "absolute",
@@ -167,7 +192,7 @@ class ExampleContainer extends FadeableElement<IExampleContainerProps, IExampleC
 							.map((example: IManifestEntry, i: number) => (
 								<Example
 									example={example}
-									tellParent={this.tellParent}
+									tellParent={this.tellParentExampleClicked}
 									key={i}
 								/>
 							))
@@ -191,8 +216,10 @@ export interface ILandingState extends IPageState {
 }
 
 interface IExampleContainerProps extends IFadeableElementProps {
-	tellParent: (example: IManifestEntry) => void;
+	tellParentExampleClicked: (example: IManifestEntry) => void;
 	examples: IManifestEntry[];
+	examplesHidden: boolean;
+	toggleExamplesHidden: () => void;
 }
 
 interface IExampleContainerState extends IFadeableElementState {
