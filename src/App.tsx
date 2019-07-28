@@ -103,6 +103,9 @@ export default class App extends React.Component<any, IAppState> {
 	}
 
 	private toggleExamples(): void {
+		if (this.state.loading) {
+			return;
+		}
 		const examplesHidden: boolean = !this.state.examplesHidden;
 		this.setState({examplesHidden});
 		setImmediate(() => Cookies.set('examplesHidden', examplesHidden.toString()));
