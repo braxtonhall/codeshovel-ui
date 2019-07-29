@@ -59,7 +59,8 @@ export default class App extends React.Component<any, IAppState> {
 			width: window.innerWidth,
 			height: window.innerHeight,
 			examplesHidden: Cookies.get("examplesHidden") === 'true',
-			examples: []
+			examples: [],
+			shaRefresh: false,
 		};
 		this.history = [];
 		this.proceedToPage = this.proceedToPage.bind(this);
@@ -184,6 +185,9 @@ export default class App extends React.Component<any, IAppState> {
 		}
 		switch (page) {
 			case Pages.FILES:
+				if (state.sha !== "HEAD") {
+					state.shaRefresh = true;
+				}
 				state.loading = true;
 				state.fileContent = null;
 				state.file = "";
@@ -240,6 +244,7 @@ export default class App extends React.Component<any, IAppState> {
 			state.page = page;
 		}
 		state.loading = false;
+		state.shaRefresh = false;
 		if (error){
 			if (error instanceof ServerBusyError) {
 				state.serverBusyError = true;
@@ -482,8 +487,8 @@ export default class App extends React.Component<any, IAppState> {
 						bottom={5}
 						width={180}
 					/>
-					<LoadingPane windowWidth={this.state.width} text={`$ git ${this.state.sha === "HEAD" ? `clone ${this.state.link}` : `checkout ${this.state.sha}`} && ls -R | grep *.java`} active={this.state.loading && this.state.page === Pages.LANDING} size={{height: 30, width: 72}}/>
-					<LoadingPane windowWidth={this.state.width} text={`$ vim ${this.state.file.split('/').pop()}`} active={this.state.loading && this.state.page === Pages.FILES} size={{height: 30, width: 72}}/>
+					<LoadingPane windowWidth={this.state.width} text={`$ git clone ${this.state.link} && ls -R | grep *.java`} active={this.state.loading && this.state.page === Pages.LANDING} size={{height: 30, width: 72}}/>
+					<LoadingPane windowWidth={this.state.width} text={this.state.shaRefresh ? `$ git checkout ${this.state.sha} && ls -R | grep *.java` : `$ vim ${this.state.file.split('/').pop()}`} active={this.state.loading && this.state.page === Pages.FILES} size={{height: 30, width: 72}}/>
 					<LoadingPane windowWidth={this.state.width} text={`$ java -jar codeshovel.jar -m ${this.state.method.methodName}`} active={this.state.loading && this.state.page === Pages.METHODS} size={{height: 30, width: 72}}/>
 					<ErrorPane text={App.serverBusyErrorText} active={this.state.serverBusyError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
 					<ErrorPane text={App.cacheErrorText} active={this.state.cachedError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
@@ -519,4 +524,5 @@ export interface IAppState {
 	examplesHidden: boolean;
 	examples: IManifestEntry[];
 	cachedError: boolean;
+	shaRefresh: boolean;
 }

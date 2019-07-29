@@ -4,10 +4,12 @@ import {Constants} from "../Constants";
 
 export default class LoadingPane extends FadeableElement<ILoadingPaneProps, ILoadingPaneState> {
 	protected readonly fadeOutTime: number = 500;
+	private text: string;
 
 	public constructor(props: ILoadingPaneProps) {
 		super(props);
 		this.state = {onScreen: this.props.active};
+		this.text = this.props.text;
 	}
 
 	private getFontSize(s: string, modifier: number = 1): string {
@@ -15,6 +17,9 @@ export default class LoadingPane extends FadeableElement<ILoadingPaneProps, ILoa
 	}
 
 	public createReactNode(): ReactNode {
+		if (this.props.active) {
+			this.text = this.props.text;
+		}
 		return (this.state.onScreen || this.props.active ?
 			<div
 				style={{
@@ -36,13 +41,13 @@ export default class LoadingPane extends FadeableElement<ILoadingPaneProps, ILoa
 						width: "100%",
 						height: "100%",
 						font: "100% \"Courier New\", Futura, sans-serif",
-						fontSize: this.getFontSize(this.props.text),
+						fontSize: this.getFontSize(this.text),
 						verticalAlign: "middle",
 						justifyContent: "center",
 						alignItems: "center",
 					}}
 				>
-					{this.props.text}
+					{this.text}
 				</div>
 			</div> :
 			<div

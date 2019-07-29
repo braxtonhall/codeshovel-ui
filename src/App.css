@@ -56,7 +56,7 @@
 
 .InvertedSubtleButton {
     cursor: pointer;
-    opacity: 0.2;
+    opacity: 0.5;
 }
 
 .InvertedSubtleButton:hover {
