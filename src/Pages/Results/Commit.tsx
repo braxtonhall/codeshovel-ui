@@ -1,4 +1,4 @@
-import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../../FadeableElement";
+import {IFadeableElementState} from "../../FadeableElement";
 import {Constants} from "../../Constants";
 import {ReactNode} from "react";
 import * as React from "react";

@@ -12,7 +12,6 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 				style={{
 					whiteSpace: "nowrap",
 					textAlign: "left",
-					fontStyle: "italic",
 				}}
 			>
 				<div
@@ -24,6 +23,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						opacity: this.props.page >= Pages.FILES && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
+						fontStyle: "italic",
 					}}
 				>
 					{(this.props.repo.split("/").pop() as string).replace(".git", "")}
@@ -37,6 +37,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						opacity: this.props.page >= Pages.FILES && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
+						fontStyle: "italic",
 					}}
 				>
 					{this.props.file.split("/").pop()}
@@ -50,6 +51,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						opacity: this.props.page >= Pages.FILES && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
+						fontStyle: "italic",
 					}}
 				>
 					{this.props.sha === "HEAD" ? "" : this.props.sha}
@@ -63,6 +65,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						opacity: this.props.page >= Pages.METHODS && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
 						filter: "blur(12px)",
 						transition: this.fadeOutTime + "ms ease-in-out",
+						fontStyle: "italic",
 					}}
 				>
 					{this.props.method.methodName}

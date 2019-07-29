@@ -24,6 +24,7 @@ import {TestController} from "./TestRequestController";
 import LargeButton from "./Buttons/LargeButton";
 import SmallButton from "./Buttons/SmallButton";
 import Cookies from 'js-cookie';
+import {About} from "./Pages/About";
 
 export default class App extends React.Component<any, IAppState> {
 	private history: Pages[];
@@ -441,6 +442,13 @@ export default class App extends React.Component<any, IAppState> {
 						windowHeight={this.state.height}
 						windowWidth={this.state.width}
 					/>
+					<About
+						proceedToPage={this.proceedToPage}
+						active={this.state.page === Pages.ABOUT}
+						page={this.state.page}
+						windowHeight={this.state.height}
+						windowWidth={this.state.width}
+					/>
 					<SmallButton
 						active={this.history.length > 0}
 						onClick={this.goBack}
@@ -474,21 +482,9 @@ export default class App extends React.Component<any, IAppState> {
 						bottom={5}
 						width={180}
 					/>
-					{/*<LargeButton*/}
-						{/*active={this.state.page === Pages.LANDING && !this.state.examplesHidden && this.state.examples.length > 0}*/}
-						{/*handleClick={this.toggleExamples}*/}
-						{/*shift={this.state.page === Pages.LANDING && !this.state.examplesHidden && this.state.examples.length > 0 ? 0 : 35}*/}
-						{/*displayNotification={false}*/}
-						{/*text={"Hide Examples"}*/}
-						{/*backgroundImage={""}*/}
-						{/*left={225}*/}
-						{/*bottom={5}*/}
-						{/*width={240}*/}
-					{/*/>*/}
 					<LoadingPane windowWidth={this.state.width} text={`$ git ${this.state.sha === "HEAD" ? `clone ${this.state.link}` : `checkout ${this.state.sha}`} && ls -R | grep *.java`} active={this.state.loading && this.state.page === Pages.LANDING} size={{height: 30, width: 72}}/>
 					<LoadingPane windowWidth={this.state.width} text={`$ vim ${this.state.file.split('/').pop()}`} active={this.state.loading && this.state.page === Pages.FILES} size={{height: 30, width: 72}}/>
 					<LoadingPane windowWidth={this.state.width} text={`$ java -jar codeshovel.jar -m ${this.state.method.methodName}`} active={this.state.loading && this.state.page === Pages.METHODS} size={{height: 30, width: 72}}/>
-					{/*<LoadingPane text={App.loadingText} active={this.state.loading && this.state.page !== Pages.LANDING} size={{height: 30, width: 72}}/>*/}
 					<ErrorPane text={App.serverBusyErrorText} active={this.state.serverBusyError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
 					<ErrorPane text={App.cacheErrorText} active={this.state.cachedError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
 					<ErrorPane text={App.internalErrorText} active={this.state.internalError} size={{height: 30, width: 72}} exit={this.closeErrors}/>

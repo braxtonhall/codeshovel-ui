@@ -64,7 +64,7 @@ export class Example extends React.Component<IReactExampleProps, IReactExampleSt
 							gridTemplateColumns: new Array(this.props.example.historyShort.length).fill("1fr").join(" "),
 						}}>
 							{
-								this.props.example.historyShort.map((change: Changes, i: number) => <div key={i} className={change}/>)
+								this.props.example.historyShort.map((change: Changes, i: number) => <div key={`${this.props.example.longName}-${i}`} className={change}/>)
 							}
 						</div>
 					</div>
