@@ -81,9 +81,9 @@ export class About extends Page<IAboutProps, IAboutState> {
 				<div
 					style={{
 						width: "30%",
-						height: "60%",
+						height: "70%",
 						right: "10%",
-						top: "15%",
+						top: "10%",
 						position: "absolute",
 					}}
 				>
@@ -96,9 +96,16 @@ export class About extends Page<IAboutProps, IAboutState> {
 					/>
 					<Contributor
 						image={"url(https://avatars2.githubusercontent.com/u/2560480?s=400&v=4)"}
-						name={"Nick Bradley"}
+						name={"Nick C. Bradley"}
 						github={"nickbradley"}
 						info={"Nick is codeshovel's stepmom?"}
+
+					/>
+					<Contributor
+						image={"url(https://avatars1.githubusercontent.com/u/89003?s=400&v=4)"}
+						name={"Reid Holmes"}
+						github={"rtholmes"}
+						info={"Reid was the midwife at codeshovel's birth."}
 
 					/>
 					<Contributor
@@ -113,7 +120,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 							backgroundImage: "url(https://news.ok.ubc.ca/wp-content/uploads/2015/09/ubc-logo.png)",
 							backgroundSize: "100%",
 							backgroundRepeat: "no-repeat",
-							height: "100%",
+							height: "20%",
 							width: "30%",
 							position: "absolute"
 						}}
@@ -136,28 +143,63 @@ export class About extends Page<IAboutProps, IAboutState> {
 				</div>
 				<div
 					style={{
-						display: "grid",
-						gridTemplateColumns: "1fr 1fr 1fr 1fr",
 						backgroundColor: "rgb(183, 166, 108)",
-						height: "5%",
-						width: "60%",
-						left: "50%",
+						height: "10%",
+						width: this.getFontSize("", 16.5),
+						left: "10%",
 						bottom: "10%",
-						transform: "translate(-50%, 0)",
-						position: "absolute"
+						// transform: "translate(-50%, 0)",
+						position: "absolute",
+						overflow: "hidden"
 					}}
 				>
-					<div className="SubtleButton CommitRowCell" style={{backgroundColor: "rgba(255, 255, 255, 0.3)"}}>
-						codeshovel
-					</div>
-					<div className="SubtleButton CommitRowCell" style={{backgroundColor: "rgba(255, 255, 255, 0.1)"}}>
-						webservice
-					</div>
-					<div className="SubtleButton CommitRowCell" style={{backgroundColor: "rgba(255, 255, 255, 0.2)"}}>
-						ui
-					</div>
-					<div className="SubtleButton CommitRowCell" style={{backgroundColor: "rgba(255, 255, 255, 0.15)"}}>
-						paper
+					<div
+						style={{
+							display: "grid",
+							gridTemplateColumns: "1fr 1fr",
+							width: "100%",
+							height: "100%",
+							zIndex: 1000,
+							color: "rgb(0,0,0)"
+						}}
+					>
+						<div
+							className="SubtleButton CommitRowCell"
+							style={{backgroundColor: "rgba(255, 255, 255, 0.3)"}}
+							onClick={() => {
+								window.open(`https://github.com/ataraxie/codeshovel`, "_blank");
+							}}
+
+						>
+							codeshovel
+						</div>
+						<div
+							className="SubtleButton CommitRowCell"
+							style={{backgroundColor: "rgba(255, 255, 255, 0.1)"}}
+							onClick={() => {
+								window.open(`https://github.com/braxtonhall/codeshovel-webservice`, "_blank");
+							}}
+						>
+							webservice
+						</div>
+						<div
+							className="SubtleButton CommitRowCell"
+							style={{backgroundColor: "rgba(255, 255, 255, 0.2)"}}
+							onClick={() => {
+								window.open(`https://github.com/braxtonhall/codeshovel-ui`, "_blank");
+							}}
+						>
+							ui
+						</div>
+						<div
+							className="SubtleButton CommitRowCell"
+							style={{backgroundColor: "rgba(255, 255, 255, 0.15)"}}
+							onClick={() => {
+								window.open(`https://github.com/ataraxie/codeshovel-paper`, "_blank");
+							}}
+						>
+							paper
+						</div>
 					</div>
 				</div>
 			</div>
@@ -179,7 +221,7 @@ class Contributor extends React.Component<IContributorProps, any> {
 				style={{
 					// backgroundColor: "red",
 					width: "100%",
-					height: "30%",
+					height: "25%",
 					position: "relative",
 					display: "inline-block"
 				}}

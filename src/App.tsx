@@ -488,7 +488,7 @@ export default class App extends React.Component<any, IAppState> {
 						width={180}
 					/>
 					<LoadingPane windowWidth={this.state.width} text={`$ git clone ${this.state.link} && ls -R | grep *.java`} active={this.state.loading && this.state.page === Pages.LANDING} size={{height: 30, width: 72}}/>
-					<LoadingPane windowWidth={this.state.width} text={this.state.shaRefresh ? `$ git checkout ${this.state.sha} && ls -R | grep *.java` : `$ vim ${this.state.file.split('/').pop()}`} active={this.state.loading && this.state.page === Pages.FILES} size={{height: 30, width: 72}}/>
+					<LoadingPane windowWidth={this.state.width} text={this.state.shaRefresh ? `$ git checkout ${this.state.sha} && ls -R | grep *.java` : `$ nano ${this.state.file.split('/').pop()}`} active={this.state.loading && this.state.page === Pages.FILES} size={{height: 30, width: 72}}/>
 					<LoadingPane windowWidth={this.state.width} text={`$ java -jar codeshovel.jar -m ${this.state.method.methodName}`} active={this.state.loading && this.state.page === Pages.METHODS} size={{height: 30, width: 72}}/>
 					<ErrorPane text={App.serverBusyErrorText} active={this.state.serverBusyError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
 					<ErrorPane text={App.cacheErrorText} active={this.state.cachedError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
