@@ -47,13 +47,13 @@ export class About extends Page<IAboutProps, IAboutState> {
 					backgroundRepeat: "no-repeat",
 					opacity: 0.5,
 					top: "-20%",
-					left: "5%",
+					left: "10%",
 				}}/>
 				<div
 					style={{
 						fontSize: this.getFontSize("codeshovel", 3),
 						top: "5%",
-						left: "5%",
+						left: "10%",
 						position: "absolute",
 						textAlign: "center",
 						whiteSpace: "nowrap"
@@ -62,6 +62,21 @@ export class About extends Page<IAboutProps, IAboutState> {
 					<code>codeshovel</code>
 					<br/>
 					<div style={{fontSize: this.getFontSize("Unearthing Method Histories")}}>Unearthing Method Histories</div>
+				</div>
+				<div
+					style={{textAlign: "left", position: "absolute", top: "40%", width: this.getFontSize("", 16.5), left: "10%"}}
+				>
+					<div style={{marginBottom: "5%", fontSize: "70%"}}>
+						Take this shovel and dig through source code history for changes to specific methods.
+						Currently implemented for Java with more languages to follow.
+					</div>
+					<div style={{marginBottom: "5%", fontSize: "60%"}}>
+						<code>codeshovel</code> is a tool for navigating dedicated method histories, across all kinds of changes that the method saw throughout its life span.
+						It is capable of tracking a method not only as it moves between line ranges, but as it moves through classes and around a codebase, from file to file, across traditionally disparate histories.
+					</div>
+					<div style={{marginBottom: "5%", fontSize: "60%"}}>
+						Enter a repository link, open a file, and select a method to try it for yourself.
+					</div>
 				</div>
 				<div
 					style={{
@@ -83,14 +98,14 @@ export class About extends Page<IAboutProps, IAboutState> {
 						image={"url(https://avatars2.githubusercontent.com/u/2560480?s=400&v=4)"}
 						name={"Nick Bradley"}
 						github={"nickbradley"}
-						info={"Nick is a codeshovel's stepmom?"}
+						info={"Nick is codeshovel's stepmom?"}
 
 					/>
 					<Contributor
 						image={"url(https://avatars3.githubusercontent.com/u/35436247?s=400&v=4)"}
 						name={"Braxton Hall"}
 						github={"braxtonhall"}
-						info={"Braxton dressed codeshovel for its interview"}
+						info={"Braxton dressed codeshovel for its interview."}
 
 					/>
 					<div
@@ -118,6 +133,32 @@ export class About extends Page<IAboutProps, IAboutState> {
 							window.open(`https://spl.cs.ubc.ca/`, "_blank");
 						}}
 					/>
+				</div>
+				<div
+					style={{
+						display: "grid",
+						gridTemplateColumns: "1fr 1fr 1fr 1fr",
+						backgroundColor: "rgb(183, 166, 108)",
+						height: "5%",
+						width: "60%",
+						left: "50%",
+						bottom: "10%",
+						transform: "translate(-50%, 0)",
+						position: "absolute"
+					}}
+				>
+					<div className="SubtleButton CommitRowCell" style={{backgroundColor: "rgba(255, 255, 255, 0.3)"}}>
+						codeshovel
+					</div>
+					<div className="SubtleButton CommitRowCell" style={{backgroundColor: "rgba(255, 255, 255, 0.1)"}}>
+						webservice
+					</div>
+					<div className="SubtleButton CommitRowCell" style={{backgroundColor: "rgba(255, 255, 255, 0.2)"}}>
+						ui
+					</div>
+					<div className="SubtleButton CommitRowCell" style={{backgroundColor: "rgba(255, 255, 255, 0.15)"}}>
+						paper
+					</div>
 				</div>
 			</div>
 		);
@@ -194,6 +235,6 @@ export interface IAboutState extends IPageState {
 interface IContributorProps {
 	image: string;
 	name: string;
-	github: string; // ataraxie, nickbradley
+	github: string;
 	info: string;
 }

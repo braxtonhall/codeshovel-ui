@@ -472,7 +472,7 @@ export default class App extends React.Component<any, IAppState> {
 						height={30}
 						backgroundImage={"url(/question.png)"}
 						backgroundSize={15}
-						shift={this.history.length > 0 && this.state.page !== Pages.ABOUT ? 35 : 0}
+						shift={this.history.length > 0 || this.state.page !== Pages.LANDING ? 35 : 0}
 						left={5}
 						bottom={5}
 					/>

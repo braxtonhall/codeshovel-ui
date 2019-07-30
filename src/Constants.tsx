@@ -76,7 +76,7 @@ export class Constants {
 	public static readonly MANIFEST_PATH: string = "/responses.json";
 
 	public static readonly NOTIFICATION_DISPLAY_TIME: number = 3000;
-	public static readonly SHOW_ABOUT_DELAY_TIME: number = 3000;
+	public static readonly SHOW_ABOUT_DELAY_TIME: number = 1000;
 
 	public static readonly BACKGROUND_TEXT_OPACITY: number = 0.5;
 
