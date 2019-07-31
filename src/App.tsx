@@ -447,6 +447,7 @@ export default class App extends React.Component<any, IAppState> {
 						file={this.state.file}
 						windowHeight={this.state.height}
 						windowWidth={this.state.width}
+						methodLongName={this.state.method.longName}
 					/>
 					<About
 						proceedToPage={this.proceedToPage}

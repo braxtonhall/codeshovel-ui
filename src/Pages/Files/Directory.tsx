@@ -259,9 +259,9 @@ export class ReactDirectory extends ReactFileSystemNode<IReactDirectoryProps, IR
 					{name}
 				</div>
 				{this.props.dir.getDirectories()
-					.map((dir: Directory, i: number) => <ReactDirectory dir={dir} level={this.props.level + 1} key={i} active={this.props.expanded && this.props.active} highlight={dir.shouldHighlightThis()} expanded={dir.isExpanded()}/>)}
+					.map((dir: Directory, i: number) => <ReactDirectory dir={dir} level={this.props.level + 1} key={`${dir.getName()}-${i}`} active={this.props.expanded && this.props.active} highlight={dir.shouldHighlightThis()} expanded={dir.isExpanded()}/>)}
 				{this.props.dir.getFiles()
-					.map((file: File, i: number) => <ReactFile file={file} level={this.props.level + 1} key={i} active={this.props.expanded && this.props.active} highlight={file.shouldHighlightThis()}/>)}
+					.map((file: File, i: number) => <ReactFile file={file} level={this.props.level + 1} key={`${file.getName()}-${i}`} active={this.props.expanded && this.props.active} highlight={file.shouldHighlightThis()}/>)}
 
 			</div> :  <div style={style}/>
 		);

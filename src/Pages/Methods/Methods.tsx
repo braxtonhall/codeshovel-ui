@@ -165,7 +165,7 @@ class MethodContainer extends React.Component<IMethodContainerProps, any> {
 									tellParent={this.tellParent}
 									active={method.longName.includes(this.props.search)}
 									index={i}
-									key={i}
+									key={`${method.longName}-${i}`}
 								/>
 							))
 					}

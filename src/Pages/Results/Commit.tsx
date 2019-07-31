@@ -285,7 +285,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 									position: "relative",
 									marginBottom: i === this.changes.length - 1 && this.props.commit.diff ? this.getHeight(true, 0.25) : "0",
 								}}
-								key={`${this.props.commit.commitName}-${i}`}
+								key={`${this.props.commit.commitName}-${this.props.methodLongName}-${i}`}
 							>
 									{this.state.expanded ?
 										<div
@@ -321,6 +321,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 export interface IReactCommitProps extends ICommitRowProps {
 	commit: ICommitx;
 	repo: string;
+	methodLongName: string;
 }
 
 export interface IReactCommitState extends IFadeableElementState {

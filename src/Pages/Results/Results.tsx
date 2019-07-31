@@ -49,7 +49,14 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 						transition: `${this.fadeOutTime}ms ease-in-out`,
 					}}
 				>
-					<ReactHistory history={this.history} active={this.props.active} repo={this.props.repo} windowHeight={this.props.windowHeight} windowWidth={this.props.windowWidth}/>
+					<ReactHistory
+						history={this.history}
+						active={this.props.active}
+						repo={this.props.repo}
+						windowHeight={this.props.windowHeight}
+						windowWidth={this.props.windowWidth}
+						methodLongName={this.props.methodLongName}
+					/>
 				</div>
 				<div
 					style={{
@@ -77,6 +84,7 @@ export interface IHistoryProps extends IPageProps {
 	file: string;
 	windowHeight: number;
 	windowWidth: number;
+	methodLongName: string;
 }
 
 export interface IHistoryState extends IPageState {
