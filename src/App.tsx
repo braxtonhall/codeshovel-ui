@@ -11,7 +11,8 @@ import {
 	IManifest,
 	IManifestEntry,
 	IMethodTransport,
-	InternalError, ParseCachedError,
+	InternalError,
+	ParseCachedError,
 	ServerBusyError
 } from "./Types";
 import {BackgroundText} from "./BackgroundText";
@@ -35,6 +36,8 @@ export default class App extends React.Component<any, IAppState> {
 	private static readonly serverBusyErrorText = Constants.SERVER_BUSY_ERROR_TEXT;
 	private static readonly internalErrorText = Constants.INTERNAL_ERROR_TEXT;
 	private static readonly cacheErrorText = Constants.CACHE_ERROR_TEXT;
+	private oldFileContentStorage: string[] | null = null;
+	private oldShaStorage: string = "HEAD";
 
 	public constructor(props: any) {
 		super(props);
@@ -78,6 +81,7 @@ export default class App extends React.Component<any, IAppState> {
 		this.toggleExamples = this.toggleExamples.bind(this);
 		this.handleExample = this.handleExample.bind(this);
 		this.getExamples = this.getExamples.bind(this);
+		this.isError = this.isError.bind(this);
 	}
 
 	public componentDidMount(): void {
@@ -177,8 +181,8 @@ export default class App extends React.Component<any, IAppState> {
 	}
 
 	private proceedToPage(page: Pages, state: IAppState | null = null): void {
-		if(this.state.loading) {
-			return; // TODO is this bad?
+		if(this.state.loading || this.isError()) {
+			return;
 		}
 		if (!state) {
 			state = Object.assign({}, this.state);
@@ -189,6 +193,7 @@ export default class App extends React.Component<any, IAppState> {
 					state.shaRefresh = true;
 				}
 				state.loading = true;
+				this.oldFileContentStorage = state.fileContent;
 				state.fileContent = null;
 				state.file = "";
 				this.rc.listFiles(state.link, state.sha)
@@ -243,13 +248,15 @@ export default class App extends React.Component<any, IAppState> {
 			this.history.push(state.page);
 			state.page = page;
 		}
-		state.loading = false;
-		state.shaRefresh = false;
 		if (error){
 			if (error instanceof ServerBusyError) {
 				state.serverBusyError = true;
 			} else if (error instanceof InternalError) {
 				state.internalError = true;
+				if (state.shaRefresh) {
+					state.fileContent = this.oldFileContentStorage;
+					state.sha = this.oldShaStorage;
+				}
 			} else if (error instanceof ParseCachedError) {
 				state.cachedError = true
 			} else {
@@ -266,6 +273,8 @@ export default class App extends React.Component<any, IAppState> {
 				}
 			}
 		}
+		state.loading = false;
+		state.shaRefresh = false;
 		this.setState(state);
 	}
 
@@ -284,6 +293,7 @@ export default class App extends React.Component<any, IAppState> {
 				state.file = arg;
 				break;
 			case ArgKind.SHA:
+				this.oldShaStorage = state.sha;
 				state.sha = arg;
 				break;
 			case ArgKind.METHOD:
@@ -291,6 +301,7 @@ export default class App extends React.Component<any, IAppState> {
 				break;
 			case ArgKind.REPO:
 				state.link = arg;
+				this.oldShaStorage = "HEAD";
 				state.sha = "HEAD";
 				break;
 			default:
@@ -337,14 +348,18 @@ export default class App extends React.Component<any, IAppState> {
 
 	}
 
+	private isError(): boolean {
+		return this.state.loadFilesError ||
+			this.state.loadMethodsError ||
+			this.state.loadHistoryError ||
+			this.state.serverBusyError ||
+			this.state.internalError ||
+			this.state.cachedError;
+	}
+
 	private closeErrors(): void {
 		const state: IAppState = Object.assign({}, this.state);
-		if (state.loadFilesError ||
-			state.loadMethodsError ||
-			state.loadHistoryError ||
-			state.serverBusyError ||
-			state.internalError ||
-			state.cachedError) {
+		if (this.isError()) {
 			state.loadFilesError = false;
 			state.loadMethodsError = false;
 			state.loadHistoryError = false;
@@ -500,7 +515,7 @@ export default class App extends React.Component<any, IAppState> {
 					<ErrorPane text={App.loadHistoryErrorText} active={this.state.loadHistoryError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
 				</div>
 			</header>
-		); // TODO loading sha refresh doesn't work
+		);
 	}
 }
 

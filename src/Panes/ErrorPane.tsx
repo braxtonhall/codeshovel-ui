@@ -11,6 +11,10 @@ export default class ErrorPane extends FadeableElement<IErrorPaneProps, IErrorPa
 		this.exit = this.exit.bind(this);
 	}
 
+	public componentDidMount(): void {
+		document.addEventListener('keydown', () => setImmediate(this.exit));
+	}
+
 	private exit(): void {
 		if (this.props.active) {
 			this.props.exit();
@@ -18,8 +22,6 @@ export default class ErrorPane extends FadeableElement<IErrorPaneProps, IErrorPa
 	}
 
 	public createReactNode(): ReactNode {
-		// if (this.state.onScreen || this.props.active) {
-		// 	setImmediate(this.setOnScreen);
 			return (this.state.onScreen || this.props.active ?
 				<OutsideAlerter
 					child={
@@ -36,7 +38,6 @@ export default class ErrorPane extends FadeableElement<IErrorPaneProps, IErrorPa
 								backgroundColor: "rgb(255, 124, 124)",
 								opacity: this.props.active ? 1 : 0,
 								transition: this.fadeOutTime + "ms ease-in-out",
-								// animation: `Fade-${this.props.active ? "In" : "Out"}  ${this.fadeOutTime}ms ease-in-out`,
 							}}
 						>
 							<div

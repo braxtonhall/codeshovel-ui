@@ -90,21 +90,21 @@ export class About extends Page<IAboutProps, IAboutState> {
 					<Contributor
 						image={"url(https://avatars2.githubusercontent.com/u/1646086?s=400&v=4)"}
 						name={"Felix Grund"}
-						github={"ataraxie"}
-						info={"Felix software developer, grad student at UBC, and the founder of codeshovel."}
+						username={"ataraxie"}
+						info={"Felix software developer, MSc student at UBC, and the founder of codeshovel."}
 
 					/>
 					<Contributor
 						image={"url(https://avatars2.githubusercontent.com/u/2560480?s=400&v=4)"}
 						name={"Nick C. Bradley"}
-						github={"nickbradley"}
-						info={"Nick is codeshovel's stepmom?"}
+						username={"nickbradley"}
+						info={"Nick is a PhD student at UBC, and co-author of the the codeshovel thesis paper."}
 
 					/>
 					<Contributor
 						image={"url(https://avatars1.githubusercontent.com/u/89003?s=400&v=4)"}
 						name={"Reid Holmes"}
-						github={"rtholmes"}
+						username={"rtholmes"}
 						info={"Reid is an Associate Professor of Computer Science at UBC, and supervisor on the project."}
 						link={"https://www.cs.ubc.ca/~rtholmes/"}
 
@@ -112,8 +112,8 @@ export class About extends Page<IAboutProps, IAboutState> {
 					<Contributor
 						image={"url(https://avatars3.githubusercontent.com/u/35436247?s=400&v=4)"}
 						name={"Braxton Hall"}
-						github={"braxtonhall"}
-						info={"Braxton dressed codeshovel for its interview."}
+						username={"braxtonhall"}
+						info={"Braxton is a BA student at UBC, and the developer of this website."}
 
 					/>
 					<div
@@ -149,7 +149,6 @@ export class About extends Page<IAboutProps, IAboutState> {
 						width: this.getFontSize("", 16.5),
 						left: "10%",
 						bottom: "10%",
-						// transform: "translate(-50%, 0)",
 						position: "absolute",
 						overflow: "hidden"
 					}}
@@ -209,18 +208,27 @@ export class About extends Page<IAboutProps, IAboutState> {
 }
 
 class Contributor extends React.Component<IContributorProps, any> {
+	private readonly link: string;
+	private readonly linkDesc: string;
+
 	constructor(props: IContributorProps) {
 		super(props);
 		this.state = {
 
 		};
+		if (this.props.link) {
+			this.link = this.props.link;
+			this.linkDesc = `cs.ubc/${this.props.username}`;
+		} else {
+			this.link = `https://github.com/${this.props.username}`;
+			this.linkDesc = `github/${this.props.username}`
+		}
 	}
 
 	public render(): ReactNode {
 		return (
 			<div
 				style={{
-					// backgroundColor: "red",
 					width: "100%",
 					height: "25%",
 					position: "relative",
@@ -250,10 +258,10 @@ class Contributor extends React.Component<IContributorProps, any> {
 						className="SubtleButton"
 						style={{fontSize: "50%"}}
 						onClick={() => {
-							window.open(`https://github.com/${this.props.github}`, "_blank");
+							window.open(this.link, "_blank");
 						}}
 					>
-						{this.props.github}
+						{this.linkDesc}
 					</div>
 					<div
 						style={{fontSize: "70%", marginTop: "5%"}}
@@ -278,7 +286,7 @@ export interface IAboutState extends IPageState {
 interface IContributorProps {
 	image: string;
 	name: string;
-	github: string;
+	username: string;
 	info: string;
 	link?: string;
 }
