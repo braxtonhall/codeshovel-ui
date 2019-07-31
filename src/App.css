@@ -113,6 +113,8 @@
     position: absolute;
     overflow: scroll scroll;
     -ms-overflow-style: none;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
 }
 

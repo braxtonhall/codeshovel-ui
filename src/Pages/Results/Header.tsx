@@ -24,7 +24,7 @@ export class Header extends ReactCommitRow<IHeaderProps, IHeaderState> {
 					marginBottom: "3px",
 					textAlign: "left",
 					font: Constants.FONT,
-					width: Constants.COMMIT_ROW_WIDTH + "%",
+					width: (this.props.windowWidth * 0.01 * Constants.COMMIT_ROW_WIDTH) + "px",
 					overflow: "hidden",
 					zIndex: 9999,
 					transition: this.fadeOutTime + "ms ease-in-out",

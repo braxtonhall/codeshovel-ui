@@ -37,9 +37,9 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 		return(
 			<div>
 				<div
+					className="Panel"
 					style={{
 						position: "fixed",
-						overflowY: "scroll",
 						height: "100%",
 						width: "100%",
 						top: "50%",

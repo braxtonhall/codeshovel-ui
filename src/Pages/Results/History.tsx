@@ -93,33 +93,31 @@ export class ReactHistory extends FadeableElement<IReactHistoryProps, IReactHist
 	protected createReactNode(): ReactNode {
 		const marginTop: number = Math.log(this.props.windowHeight) * Constants.COMMIT_ROW_HEIGHT + 3;
 		return(
-			<div>
-				<div
-					className="Panel"
-					style={{
-						marginTop,
-						display: "block",
-						width: "100%",
-						marginBottom: "1em",
-						overflowY: "scroll",
-					}}
-				>
-					{
-						this.props.history.getCommits().map((commit: ICommit) => {
-							return (
-								<ReactCommit
-									commit={commit}
-									key={`${commit.commitName}-${this.props.methodLongName}`}
-									active={this.props.active}
-									repo={this.props.repo}
-									windowHeight={this.props.windowHeight}
-									windowWidth={this.props.windowWidth}
-									methodLongName={this.props.methodLongName}
-								/>
-							);
-						})
-					}
-				</div>
+			<div
+				className="Panel"
+				style={{
+					marginTop,
+					display: "block",
+					width: "100%",
+					marginBottom: "1em",
+					overflowY: "scroll",
+				}}
+			>
+				{
+					this.props.history.getCommits().map((commit: ICommit) => {
+						return (
+							<ReactCommit
+								commit={commit}
+								key={`${commit.commitName}-${this.props.methodLongName}`}
+								active={this.props.active}
+								repo={this.props.repo}
+								windowHeight={this.props.windowHeight}
+								windowWidth={this.props.windowWidth}
+								methodLongName={this.props.methodLongName}
+							/>
+						);
+					})
+				}
 			</div>
 		);
 	}

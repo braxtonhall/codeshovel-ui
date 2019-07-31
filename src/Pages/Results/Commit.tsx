@@ -231,7 +231,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						textAlign: "left",
 						height: this.getHeight(),
 						font: Constants.FONT,
-						width: (Constants.COMMIT_ROW_WIDTH + (this.state.expanded ? Constants.COMMIT_WIDTH_MODIFIER : 0)) + "%",
+						width: (this.props.windowWidth * 0.01 * (Constants.COMMIT_ROW_WIDTH + (this.state.expanded ? Constants.COMMIT_WIDTH_MODIFIER : 0))) + "px",
 						overflow: "hidden",
 						zIndex: 9999,
 						transition: this.fadeOutTime + "ms ease-in-out",
