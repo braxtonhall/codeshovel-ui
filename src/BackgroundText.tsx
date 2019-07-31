@@ -6,6 +6,11 @@ import {Constants} from "./Constants";
 
 export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 	private readonly fadeOutTime: number = 700;
+
+	private getBlur(): string {
+		return `blur(${Math.floor(Math.log(this.props.windowArea) * Constants.BLUR_FACTOR)}px)`;
+	}
+
 	public render(): ReactNode {
 		return(
 			<div
@@ -21,7 +26,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						left: "2%",
 						font: "900% \"Courier New\", Futura, sans-serif",
 						opacity: this.props.page >= Pages.FILES && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
-						filter: "blur(12px)",
+						filter: this.getBlur(),
 						transition: this.fadeOutTime + "ms ease-in-out",
 						fontStyle: "italic",
 					}}
@@ -35,7 +40,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						left: "10%",
 						font: "800% \"Courier New\", Futura, sans-serif",
 						opacity: this.props.page >= Pages.FILES && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
-						filter: "blur(12px)",
+						filter: this.getBlur(),
 						transition: this.fadeOutTime + "ms ease-in-out",
 						fontStyle: "italic",
 					}}
@@ -49,7 +54,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						left: "60%",
 						font: "650% \"Courier New\", Futura, sans-serif",
 						opacity: this.props.page >= Pages.FILES && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
-						filter: "blur(12px)",
+						filter: this.getBlur(),
 						transition: this.fadeOutTime + "ms ease-in-out",
 						fontStyle: "italic",
 					}}
@@ -63,7 +68,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						left: "35%",
 						font: "700% \"Courier New\", Futura, sans-serif",
 						opacity: this.props.page >= Pages.METHODS && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
-						filter: "blur(12px)",
+						filter: this.getBlur(),
 						transition: this.fadeOutTime + "ms ease-in-out",
 						fontStyle: "italic",
 					}}
@@ -81,4 +86,5 @@ export interface IBackgroundTextProps {
 	method: IMethodTransport;
 	sha: string;
 	repo: string;
+	windowArea: number;
 }

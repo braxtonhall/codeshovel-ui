@@ -410,6 +410,7 @@ export default class App extends React.Component<any, IAppState> {
 						method={this.state.method}
 						sha={this.state.sha}
 						repo={this.state.link}
+						windowArea={this.state.width * this.state.height}
 					/>
 					<Landing
 						proceedToPage={this.proceedToPage}

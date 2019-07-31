@@ -63,7 +63,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 					<br/>
 					<div style={{fontSize: this.getFontSize("Unearthing Method Histories")}}>Unearthing Method Histories</div>
 				</div>
-				<div
+				<div // TODO child this to same container as the picture and give it a small margin
 					style={{textAlign: "left", position: "absolute", top: "40%", width: this.getFontSize("", 16.5), left: "10%"}}
 				>
 					<div style={{marginBottom: "5%", fontSize: "70%"}}>
@@ -80,7 +80,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 				</div>
 				<div
 					style={{
-						width: "30%",
+						width: "35%",
 						height: "70%",
 						right: "10%",
 						top: "10%",
@@ -238,7 +238,7 @@ class Contributor extends React.Component<IContributorProps, any> {
 						height: "100%",
 						position: "absolute",
 						top: "5%",
-						left: "40%",
+						left: "35%",
 						textAlign: "left"
 					}}
 				>
