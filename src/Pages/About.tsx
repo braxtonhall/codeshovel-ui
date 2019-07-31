@@ -91,7 +91,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 						image={"url(https://avatars2.githubusercontent.com/u/1646086?s=400&v=4)"}
 						name={"Felix Grund"}
 						github={"ataraxie"}
-						info={"Felix is codeshovel's dad."}
+						info={"Felix software developer, grad student at UBC, and the founder of codeshovel."}
 
 					/>
 					<Contributor
@@ -105,7 +105,8 @@ export class About extends Page<IAboutProps, IAboutState> {
 						image={"url(https://avatars1.githubusercontent.com/u/89003?s=400&v=4)"}
 						name={"Reid Holmes"}
 						github={"rtholmes"}
-						info={"Reid was the midwife at codeshovel's birth."}
+						info={"Reid is an Associate Professor of Computer Science at UBC, and supervisor on the project."}
+						link={"https://www.cs.ubc.ca/~rtholmes/"}
 
 					/>
 					<Contributor
@@ -279,4 +280,5 @@ interface IContributorProps {
 	name: string;
 	github: string;
 	info: string;
+	link?: string;
 }
