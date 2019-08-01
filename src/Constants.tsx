@@ -3,17 +3,17 @@ import {Changes} from "./Enums";
 
 export class Constants {
 	public static readonly EXAMPLE_LINKS: string[] = [
-		"https://username.com/apache/commons-lang",
-		"https://username.com/apache/flink",
+		"https://github.com/apache/commons-lang",
+		"https://github.com/apache/flink",
 		// "https://github.com/apache/lucene-solr",
-		"https://username.com/checkstyle/checkstyle",
-		"https://username.com/eclipse/jetty.project",
+		"https://github.com/checkstyle/checkstyle",
+		"https://github.com/eclipse/jetty.project",
 		// "https://github.com/hibernate/hibernate-orm",
 		// "https://github.com/hibernate/hibernate-search",
-		"https://username.com/javaparser/javaparser",
+		"https://github.com/javaparser/javaparser",
 		// "https://github.com/JetBrains/intellij-community",
-		"https://username.com/kiegroup/drools",
-		"https://username.com/mockito/mockito",
+		"https://github.com/kiegroup/drools",
+		"https://github.com/mockito/mockito",
 		// "https://github.com/spring-projects/spring-boot",
 	];
 
@@ -75,7 +75,7 @@ export class Constants {
 	public static readonly TEST: string = "r2";
 	public static readonly MANIFEST_PATH: string = "/responses.json";
 
-	public static readonly NOTIFICATION_DISPLAY_TIME: number = 3000;
+	public static readonly NOTIFICATION_DISPLAY_TIME: number = 1000;
 	public static readonly SHOW_ABOUT_DELAY_TIME: number = 1000;
 
 	public static readonly BACKGROUND_TEXT_OPACITY: number = 0.5;

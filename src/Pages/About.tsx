@@ -91,21 +91,21 @@ export class About extends Page<IAboutProps, IAboutState> {
 						image={"url(https://avatars2.githubusercontent.com/u/1646086?s=400&v=4)"}
 						name={"Felix Grund"}
 						username={"ataraxie"}
-						info={"Felix software developer, MSc student at UBC, and the founder of codeshovel."}
+						info={"Felix is a software developer, MSc student, and the founder of codeshovel."}
 
 					/>
 					<Contributor
 						image={"url(https://avatars2.githubusercontent.com/u/2560480?s=400&v=4)"}
 						name={"Nick C. Bradley"}
 						username={"nickbradley"}
-						info={"Nick is a PhD student at UBC, and co-author of the the codeshovel thesis paper."}
+						info={"Nick is a PhD student, and co-author of the codeshovel thesis paper."}
 
 					/>
 					<Contributor
 						image={"url(https://avatars1.githubusercontent.com/u/89003?s=400&v=4)"}
 						name={"Reid Holmes"}
 						username={"rtholmes"}
-						info={"Reid is an Associate Professor of Computer Science at UBC, and supervisor on the project."}
+						info={"Reid is an Associate Professor of Computer Science, and supervisor on the project."}
 						link={"https://www.cs.ubc.ca/~rtholmes/"}
 
 					/>
@@ -113,7 +113,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 						image={"url(https://avatars3.githubusercontent.com/u/35436247?s=400&v=4)"}
 						name={"Braxton Hall"}
 						username={"braxtonhall"}
-						info={"Braxton is a BA student at UBC, and the developer of this website."}
+						info={"Braxton is a BA student, and the developer of this website."}
 
 					/>
 					<div
