@@ -63,8 +63,20 @@
     opacity: 1;
 }
 
+.HoverOpacityUp {
+    opacity: 0.8;
+}
+
+.HoverOpacityUp:hover {
+    opacity: 1;
+}
+
 .ExampleRow {
     background-color: rgb(75, 90, 149);
+}
+
+.SampleExampleRow {
+    background-color: rgb(145, 137, 58);
 }
 
 .Underline {

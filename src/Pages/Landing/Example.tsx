@@ -1,13 +1,41 @@
 import {IManifestEntry} from "../../Types";
 import {Constants} from "../../Constants";
-import {ReactNode} from "react";
 import * as React from "react";
+import {ReactNode} from "react";
 import {Changes} from "../../Enums";
 
 export class Example extends React.Component<IReactExampleProps, IReactExampleState> {
+	private readonly example : IManifestEntry;
+	private readonly className: string;
+	private readonly gridTemplateColumns: string;
+	private readonly changePreview: ReactNode[];
 
 	constructor(props: IReactExampleProps) {
 		super(props);
+		if (this.props.example) {
+			this.example = this.props.example;
+			this.className = `InvertedSubtleButton ExampleRow`;
+		} else {
+			this.example = {
+				longName: "",
+				repoShort: "org/repo",
+				file: "",
+				methodName: "method",
+				historyShort: [
+					Changes.FILE_RENAME,
+					Changes.MOV_FROM_FILE,
+					Changes.EXCEPS_CHANGE,
+					Changes.PARAM_CHANGE,
+					Changes.RETURN_CHANGE,
+					Changes.BODY_CHANGE,
+					Changes.RENAME,
+					Changes.INTRODUCED
+				]
+			};
+			this.className = `HoverOpacityUp SampleExampleRow`;
+		}
+		this.gridTemplateColumns = new Array(this.example.historyShort.length).fill("1fr").join(" ");
+		this.changePreview = this.example.historyShort.map((change: Changes, i: number) => <div key={`${this.example.longName}-${i}`} className={change}/>);
 		this.handleClick = this.handleClick.bind(this);
 		this.mouseDown = this.mouseDown.bind(this);
 		this.tellParent = this.tellParent.bind(this);
@@ -22,7 +50,7 @@ export class Example extends React.Component<IReactExampleProps, IReactExampleSt
 	}
 
 	private handleClick(): void {
-		this.props.tellParent(this.props.example);
+		this.props.tellParent(this.example);
 	}
 
 	private mouseDown(): void {
@@ -34,13 +62,13 @@ export class Example extends React.Component<IReactExampleProps, IReactExampleSt
 	}
 
 	public render(): ReactNode {
-		const display: string = `${this.props.example.repoShort}->${this.props.example.methodName}`;
+		const display: string = `${this.example.repoShort}->${this.example.methodName}`;
 		return(
 				<div
 					style={{display: "block"}}
 				>
 					<div
-						className="InvertedSubtleButton ExampleRow"
+						className={this.className}
 						style={{
 							position: "relative",
 							marginTop: "3px",
@@ -61,11 +89,9 @@ export class Example extends React.Component<IReactExampleProps, IReactExampleSt
 							position: "absolute",
 							bottom: "0",
 							display: "grid",
-							gridTemplateColumns: new Array(this.props.example.historyShort.length).fill("1fr").join(" "),
+							gridTemplateColumns: this.gridTemplateColumns,
 						}}>
-							{
-								this.props.example.historyShort.map((change: Changes, i: number) => <div key={`${this.props.example.longName}-${i}`} className={change}/>)
-							}
+							{this.changePreview}
 						</div>
 					</div>
 				</div>
@@ -74,7 +100,7 @@ export class Example extends React.Component<IReactExampleProps, IReactExampleSt
 }
 
 export interface IReactExampleProps {
-	example: IManifestEntry;
+	example: IManifestEntry | false;
 	tellParent: (example: IManifestEntry) => void;
 }
 

@@ -12,8 +12,8 @@ import {
 import fetch from "node-fetch";
 
 export class RequestController {
-	private readonly server: string = Constants.SERVER_ADDRESS;
-	private readonly opts: rp.RequestPromiseOptions = {
+	private static readonly server: string = Constants.SERVER_ADDRESS;
+	private static readonly opts: rp.RequestPromiseOptions = {
 		rejectUnauthorized: false,
 		strictSSL: false,
 		method: 'get',
@@ -36,7 +36,7 @@ export class RequestController {
 	}
 
 	public async listFiles(gitUrl: string, sha: string): Promise<string[]> {
-		const url = this.server + "/listFiles";
+		const url = RequestController.server + "/listFiles";
 		const qs: {[key: string]: string | boolean} = {
 			gitUrl,
 			sha,
@@ -50,7 +50,7 @@ export class RequestController {
 	}
 
 	public async listMethods(gitUrl: string, sha: string, filePath: string): Promise<IMethodTransport[]> {
-		const url = this.server + "/listMethods";
+		const url = RequestController.server + "/listMethods";
 		const qs: {[key: string]: string | boolean} = {
 			gitUrl,
 			sha,
@@ -73,7 +73,7 @@ export class RequestController {
 	}
 
 	public async getHistory(gitUrl: string, sha: string, filePath: string, startLine: number, methodName: string): Promise<IHistoryTransport> {
-		const url = this.server + "/getHistory";
+		const url = RequestController.server + "/getHistory";
 		const qs: {[key: string]: string | boolean | number} = {
 			gitUrl,
 			sha,
@@ -89,10 +89,16 @@ export class RequestController {
 		}
 	}
 
+	public static async echo(msg: string = "echo"): Promise<string> {
+		const url = RequestController.server + "/echo";
+		const qs: {[key: string]: string} = { msg };
+		return await RequestController.request(url, qs);
+	}
+
 	private static async request(url: string, qs: {[key: string]: string | boolean | number}): Promise<any> {
 		try {
 			// @ts-ignore
-			return JSON.parse(await rp(url, {qs, ...this.opts}));
+			return JSON.parse(await rp(url, {qs, ...RequestController.opts}));
 		} catch (err) {
 			console.log("RequestController::request - ERROR: " + err.message);
 			if (err.statusCode === 503) {

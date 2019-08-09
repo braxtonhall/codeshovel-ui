@@ -83,7 +83,7 @@ export class Constants {
 
 	public static readonly FONT: string = "100% \"Courier New\", Futura, sans-serif";
 
-	public static readonly SERVER_ADDRESS: string = "http://localhost:1234";
+	public static readonly SERVER_ADDRESS: string = "http://localhost:8080";
 
 	public static readonly INVALID_URL_ERROR_TEXT: string = "Please enter a link to proceed.";
 

@@ -187,6 +187,10 @@ class ExampleContainer extends FadeableElement<IExampleContainerProps, IExampleC
 						marginBottom: "1em"
 					}}
 				>
+					<Example
+						example={false}
+						tellParent={() => {}}
+					/>
 					{
 						this.props.examples
 							.map((example: IManifestEntry, i: number) => (
