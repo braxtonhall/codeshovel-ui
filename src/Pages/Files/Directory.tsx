@@ -41,7 +41,7 @@ export class Directory {
 			if (path.length === 1) {
 				this.files.push(new File(entry, this.tellParent));
 			} else {
-				if (!subDirs[path[0]]) {
+				if (!Array.isArray(subDirs[path[0]])) {
 					subDirs[path[0]] = [];
 				}
 				subDirs[path[0]].push(path[1]);
