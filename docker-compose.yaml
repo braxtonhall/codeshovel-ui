@@ -1,0 +1,9 @@
+version: "3.5"
+
+services:
+  frontend:
+    build:
+      context: https://${GITHUB_TOKEN}@github.com/braxtonhall/codeshovel-ui
+    container_name: frontend
+    ports:
+    - 8080:5000
