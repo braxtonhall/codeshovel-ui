@@ -6,4 +6,4 @@ services:
       context: https://${GITHUB_TOKEN}@github.com/braxtonhall/codeshovel-ui.git
     container_name: frontend
     ports:
-    - 8080:5000
+    - 80:5000
