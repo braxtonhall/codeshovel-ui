@@ -87,7 +87,7 @@ export class Constants {
 
 	public static readonly INVALID_URL_ERROR_TEXT: string = "Please enter a link to proceed.";
 
-	public static readonly SERVER_BUSY_ERROR_TEXT: string = "The server is under heavy load. Please try again in a moment!";
+	public static readonly SERVER_BUSY_ERROR_TEXT: string = "The server is under heavy load. Please try again in a few minutes!";
 	public static readonly INTERNAL_ERROR_TEXT: string = "The server is having trouble processing this specific request. Please try another.";
 	public static readonly CACHE_ERROR_TEXT: string = "Oddly we couldn't couldn't find this response in our cache.";
 

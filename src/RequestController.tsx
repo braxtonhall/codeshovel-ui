@@ -101,7 +101,7 @@ export class RequestController {
 			return JSON.parse(await rp(url, {qs, ...RequestController.opts}));
 		} catch (err) {
 			console.log("RequestController::request - ERROR: " + err.message);
-			if (err.statusCode === 503) {
+			if (err.statusCode === undefined || err.statusCode === 503) {
 				throw new ServerBusyError("RequestController able to handle request.");
 			} else {
 				throw new InternalError("RequestController able to handle request.");
