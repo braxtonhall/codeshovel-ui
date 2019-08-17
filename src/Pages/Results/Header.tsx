@@ -55,7 +55,7 @@ export class Header extends ReactCommitRow<IHeaderProps, IHeaderState> {
 					View<br/>File
 				</div>
 				<div className="CommitRowCell" style={{fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(0, 0, 0, 0.${this.detlc})`}}>
-					View<br/>Details
+					View<br/>Diff
 				</div>
 			</div>
 		);

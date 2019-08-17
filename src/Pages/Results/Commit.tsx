@@ -14,7 +14,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 
 	constructor(props: IReactCommitProps) {
 		super(props);
-		this.state = {onScreen: this.props.active, expanded: false, diffVisible: false};
+		this.state = {onScreen: this.props.active, diff: false, details: false, diffVisible: false};
 		if (this.props.commit.type.startsWith(Changes.MULTI_CHANGE) && this.props.commit.subchanges) {
 			this.changes = this.props.commit.subchanges;
 		} else {
@@ -28,7 +28,8 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		this.setUpColours();
 		this.goToCommit = this.goToCommit.bind(this);
 		this.goToFileInCommit = this.goToFileInCommit.bind(this);
-		this.toggleExpanded = this.toggleExpanded.bind(this);
+		this.toggleDiff = this.toggleDiff.bind(this);
+		this.toggleDetails = this.toggleDetails.bind(this);
 		this.getClassName = this.getClassName.bind(this);
 		this.getDate = this.getDate.bind(this);
 		this.getHeight = this.getHeight.bind(this);
@@ -167,23 +168,26 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 			return (height * modifier) + "px";
 		}
 		const diff: Element | null = document.getElementById(this.props.commit.commitName);
-		height = this.state.expanded ? height + (height * (this.changes.length + (diff && this.props.commit.diff ? 0.5 : 0))) : height;
-		height = diff ? height + diff.clientHeight : height;
-		return (height * modifier) + "px";
+		let newHeight = height;
+		newHeight = newHeight + (diff && diff.clientHeight > 1 ? (0.5 * height) + diff.clientHeight : 0);
+		newHeight = this.state.details ? newHeight + (this.changes.length * height) : newHeight;
+		// height = this.state.diff ? height + (height * (this.changes.length + (diff && this.props.commit.diff ? 0.5 : 0))) : height;
+		// height = diff ? height + diff.clientHeight : height;
+		return (newHeight * modifier) + "px";
 	}
 
 	private enableDiff(): void {
-		if (this.state.expanded) {
+		if (this.state.diff) {
 			const state: IReactCommitState = Object.assign({}, this.state);
 			state.diffVisible = true;
 			this.setState(state);
 		}
 	}
 
-	private toggleExpanded(): void {
+	private toggleDiff(): void {
 		const state: IReactCommitState = Object.assign({}, this.state);
-		state.expanded = !state.expanded;
-		if (state.expanded) {
+		state.diff = !state.diff;
+		if (state.diff) {
 			// TODO not this
 			if (this.props.commit.diff) {
 				/* eslint-disable */
@@ -214,6 +218,10 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		this.setState(state);
 	}
 
+	private toggleDetails(): void {
+		this.setState({details: !this.state.details});
+	}
+
 	protected createReactNode(): ReactNode {
 		const date = this.getDate();
 		const author = this.props.commit.commitAuthor;
@@ -231,7 +239,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						textAlign: "left",
 						height: this.getHeight(),
 						font: Constants.FONT,
-						width: (this.props.windowWidth * 0.01 * (Constants.COMMIT_ROW_WIDTH + (this.state.expanded ? Constants.COMMIT_WIDTH_MODIFIER : 0))) + "px",
+						width: (this.props.windowWidth * 0.01 * (Constants.COMMIT_ROW_WIDTH + (this.state.diff || this.state.details ? Constants.COMMIT_WIDTH_MODIFIER : 0))) + "px",
 						overflow: "hidden",
 						zIndex: 9999,
 						transition: this.fadeOutTime + "ms ease-in-out",
@@ -251,7 +259,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						<div className="CommitRowCell" style={{fontSize: this.getFontSize(author), backgroundColor: `rgba(255, 255, 255, 0.${this.authc})`}}>
 							{author}
 						</div>
-						<div className="CommitRowCell" style={{fontSize: this.getFontSize(change), backgroundColor: `rgba(255, 255, 255, 0.${this.typec})`}}>
+						<div className="CommitRowCell SubtleButton" onClick={this.toggleDetails} style={{fontSize: this.getFontSize(change), backgroundColor: `rgba(255, 255, 255, 0.${this.typec})`}}>
 							{change}
 						</div>
 						{this.props.repo.replace(".git", "") !== "" ?
@@ -264,9 +272,21 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 								{this.file}
 							</div> : <div/>
 						}
-						<div className="CommitRowCell SubtleButton" onClick={this.toggleExpanded} style={{fontSize: this.getFontSize("Details"), backgroundColor: `rgba(255, 255, 255, 0.${this.detlc})`}}>
-							Details
-						</div>
+						{this.props.commit.diff ?
+							<div className="CommitRowCell SubtleButton" onClick={this.toggleDiff} style={{
+								fontSize: this.getFontSize("Diff"),
+								backgroundColor: `rgba(255, 255, 255, 0.${this.detlc})`
+							}}>
+								Diff
+							</div> :
+							<div className="CommitRowCell" style={{
+								fontSize: this.getFontSize("Diff"),
+								color: `rgba(255, 255, 255, 0.2)`,
+								backgroundColor: `rgba(255, 255, 255, 0.${this.detlc})`
+							}}>
+								Diff
+							</div>
+						}
 					</div>
 					{
 						this.changes.map((change, i) => {
@@ -275,9 +295,9 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 								className={this.getClassName(change.type)}
 								style={{
 									margin: "0 auto",
-									height: this.state.expanded ? this.getHeight(true) : 0,
+									height: this.state.details ? this.getHeight(true) : 0,
 									backgroundImage: this.getBackgroundImage(change.type),
-									opacity: this.state.expanded ? 0.8 : 0,
+									opacity: this.state.details ? 0.8 : 0,
 									backgroundSize: (this.props.windowHeight * 0.04 * Constants.COMMIT_ROW_HEIGHT) + "px",
 									backgroundRepeat: "no-repeat",
 									backgroundPosition: "left",
@@ -287,7 +307,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 								}}
 								key={`${this.props.commit.commitName}-${this.props.methodLongName}-${i}`}
 							>
-									{this.state.expanded ?
+									{this.state.details ?
 										<div
 											style={{
 												fontSize: this.getFontSize(desc, desc.length /  (Math.sqrt(desc.length) + 2)),
@@ -325,6 +345,7 @@ export interface IReactCommitProps extends ICommitRowProps {
 }
 
 export interface IReactCommitState extends IFadeableElementState {
-	expanded: boolean;
+	diff: boolean;
+	details: boolean;
 	diffVisible: boolean;
 }
