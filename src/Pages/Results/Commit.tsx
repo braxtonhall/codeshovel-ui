@@ -5,6 +5,7 @@ import * as React from "react";
 import {IChange, ICommitx} from "../../Types";
 import {Changes} from "../../Enums";
 import {ICommitRowProps, ReactCommitRow} from "./CommitRow";
+import {RequestController} from "../../RequestController";
 
 export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitState> {
 	protected readonly fadeOutTime: number = 300;
@@ -38,6 +39,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		this.enableDiff = this.enableDiff.bind(this);
 		this.getBackgroundImage = this.getBackgroundImage.bind(this);
 		this.getFontSize = this.getFontSize.bind(this);
+		this.goToAuthor = this.goToAuthor.bind(this);
 	}
 
 	private goToCommit(): void {
@@ -55,6 +57,18 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		if(baseUrl !== "") {
 			window.open(link, "_blank");
 		}
+	}
+
+	private goToAuthor(): void {
+		const link: string[] = this.props.repo.replace(".git", "").split('/');
+		const org: string = link[link.length - 2];
+		const repo: string = link[link.length - 1];
+		RequestController.getAuthorUrl(org, repo, this.props.commit.commitName)
+			.then((authorUrl: string) => {
+				window.open(authorUrl, "_blank");
+			}).catch((err) => {
+				window.open(`https://github.com/search?q=${this.props.commit.commitAuthor.replace(' ', '+')}&type=Users`, "_blank");
+			});
 	}
 
 	private chooseDiffText(): string {
@@ -218,6 +232,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 			}
 		} else {
 			state.diffVisible = false;
+			state.details = false;
 			this.diffDeleter = setTimeout(() => {
 				const diff = document.getElementById(this.props.commit.commitName);
 				const rename = document.getElementById(this.props.commit.commitName + "rename");
@@ -272,11 +287,8 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						<div className="CommitRowCell" style={{fontSize: this.getFontSize(date), backgroundColor: `rgba(255, 255, 255, 0.${this.datec})`}}>
 							{date}<br/>{this.getTime()}
 						</div>
-						<div className="CommitRowCell" style={{fontSize: this.getFontSize(author), backgroundColor: `rgba(255, 255, 255, 0.${this.authc})`}}>
+						<div className="CommitRowCell SubtleButton Underline" onClick={this.goToAuthor} style={{fontSize: this.getFontSize(author), backgroundColor: `rgba(255, 255, 255, 0.${this.authc})`}}>
 							{author}
-						</div>
-						<div className="CommitRowCell SubtleButton" onClick={this.toggleDetails} style={{fontSize: this.getFontSize(change), backgroundColor: `rgba(255, 255, 255, 0.${this.typec})`}}>
-							{change}
 						</div>
 						{this.props.repo.replace(".git", "") !== "" ?
 							<div className="CommitRowCell SubtleButton Underline" onClick={this.goToCommit} style={{fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
@@ -288,6 +300,9 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 								{this.file}
 							</div> : <div/>
 						}
+						<div className="CommitRowCell SubtleButton" onClick={this.toggleDetails} style={{fontSize: this.getFontSize(change), backgroundColor: `rgba(255, 255, 255, 0.${this.typec})`}}>
+							{change}
+						</div>
 						{this.props.commit.diff ?
 							<div className="CommitRowCell SubtleButton" onClick={this.toggleDiff} style={{
 								fontSize: this.getFontSize("Diff"),

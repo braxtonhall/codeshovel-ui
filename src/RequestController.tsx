@@ -35,6 +35,15 @@ export class RequestController {
 		return JSON.parse(await (await fetch(`/responses/${file}.json`)).text()).methods;
 	}
 
+	public static async getAuthorUrl(org: string, repo: string, sha: string): Promise<string> {
+		try {
+			const response: any = await RequestController.request(`https://api.github.com/repos/${org}/${repo}/commits/${sha}`, {});
+			return response.author.html_url as string;
+		} catch (err) {
+			throw new Error("Wasn't able to get the required information from GitHub");
+		}
+}
+
 	public async listFiles(gitUrl: string, sha: string): Promise<string[]> {
 		const url = RequestController.server + "/listFiles";
 		const qs: {[key: string]: string | boolean} = {

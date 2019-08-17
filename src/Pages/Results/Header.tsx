@@ -44,18 +44,17 @@ export class Header extends ReactCommitRow<IHeaderProps, IHeaderState> {
 				<div className="CommitRowCell" style={{fontSize: this.getFontSize("Author"), backgroundColor: `rgba(0, 0, 0, 0.${this.authc})`}}>
 					Author
 				</div>
+				<div className="CommitRowCell" style={{fontSize: this.getFontSize("Commit"), backgroundColor: `rgba(0, 0, 0, 0.${this.comtc})`}}>
+					Commit
+				</div>
+				<div className="CommitRowCell" style={{fontSize: this.getFontSize("File"), backgroundColor: `rgba(0, 0, 0, 0.${this.filec})`}}>
+					File
+				</div>
 				<div className="CommitRowCell" style={{fontSize: this.getFontSize("Type"), backgroundColor: `rgba(0, 0, 0, 0.${this.typec})`}}>
 					Type
 				</div>
-
-				<div className="CommitRowCell" style={{fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(0, 0, 0, 0.${this.comtc})`}}>
-					View<br/>Commit
-				</div>
-				<div className="CommitRowCell" style={{fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(0, 0, 0, 0.${this.filec})`}}>
-					View<br/>File
-				</div>
-				<div className="CommitRowCell" style={{fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(0, 0, 0, 0.${this.detlc})`}}>
-					View<br/>Diff
+				<div className="CommitRowCell" style={{fontSize: this.getFontSize("Diff"), backgroundColor: `rgba(0, 0, 0, 0.${this.detlc})`}}>
+					Diff
 				</div>
 			</div>
 		);
