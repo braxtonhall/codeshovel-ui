@@ -20,6 +20,7 @@ export class History {
 			commit["file"] = file;
 			if (commit.type === Changes.FILE_RENAME || commit.type === Changes.MOV_FROM_FILE) {
 				file = commit.extendedDetails.oldPath;
+				commit.diff = History.buildFileChangeDiff(commit.extendedDetails.oldPath, commit.extendedDetails.newPath);
 			} else if (commit.type.startsWith(Changes.MULTI_CHANGE)) {
 				if (commit.subchanges) {
 					for (const change of commit.subchanges) {
@@ -34,6 +35,9 @@ export class History {
 					for (const subChange of subChanges) {
 						if (subChange.type === Changes.FILE_RENAME || subChange.type === Changes.MOV_FROM_FILE) {
 							file = subChange.extendedDetails.oldPath;
+							if (!commit.diff) {
+								commit.diff = History.buildFileChangeDiff(subChange.extendedDetails.oldPath, subChange.extendedDetails.newPath);
+							}
 							break;
 						}
 					}
@@ -41,15 +45,32 @@ export class History {
 			}
 
 		}
+
+		function validDiff(commit: ICommitx): boolean {
+			if (commit.type !== Changes.MULTI_CHANGE) {
+				return commit.diff !== undefined && commit.type !== Changes.FILE_RENAME && commit.type !== Changes.MOV_FROM_FILE;
+			} else {
+				return commit.subchanges ? commit.subchanges.some((change: IChange) => {
+					return change.type !== Changes.FILE_RENAME && change.type !== Changes.MOV_FROM_FILE && change.diff !== undefined;
+				}) : false;
+			}
+		}
+
 		if (commits.length >= 2) {
 			for (let i = commits.length - 2; i >= 0; i--) {
-				if (commits[i].diff) {
+				if (validDiff(commits[i])) {
 					commits[commits.length - 1].diff = History.buildFirstDiff(commits[i].diff);
 					break;
 				}
 			}
 		}
 		return commits;
+	}
+
+	private static buildFileChangeDiff(oldPath: string, newPath: string): undefined | string {
+		if (oldPath !== newPath) {
+			return `@@ -1,1 +1,1 @@\n-\t${oldPath}\n+\t${newPath}\n`;
+		}
 	}
 
 	private static buildFirstDiff(oldDiff: string | undefined): string | undefined {

@@ -11,6 +11,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 	private diffDeleter: any = undefined;
 	private changes: IChange[];
 	private readonly file: string | undefined;
+	private readonly diffText: string;
 
 	constructor(props: IReactCommitProps) {
 		super(props);
@@ -25,6 +26,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		} else {
 			this.file = undefined;
 		}
+		this.diffText = this.chooseDiffText();
 		this.setUpColours();
 		this.goToCommit = this.goToCommit.bind(this);
 		this.goToFileInCommit = this.goToFileInCommit.bind(this);
@@ -52,6 +54,20 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		const link: string = `${baseUrl}/blob/${this.props.commit.commitName}/${this.props.commit.file}`;
 		if(baseUrl !== "") {
 			window.open(link, "_blank");
+		}
+	}
+
+	private chooseDiffText(): string {
+		if (!this.props.commit.diff) {
+			return "Diff";
+		} else if (this.props.commit.type === Changes.MOV_FROM_FILE || this.props.commit.type === Changes.FILE_RENAME) {
+			return "Path";
+		} else if (this.props.commit.type !== Changes.MULTI_CHANGE) {
+			return "Code";
+		} else {
+			return (this.props.commit.subchanges && this.props.commit.subchanges.some((change: IChange) => {
+				return change.type !== Changes.FILE_RENAME && change.type !== Changes.MOV_FROM_FILE && change.diff !== undefined;
+			})) ? "Code" : "Path";
 		}
 	}
 
@@ -277,14 +293,14 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 								fontSize: this.getFontSize("Diff"),
 								backgroundColor: `rgba(255, 255, 255, 0.${this.detlc})`
 							}}>
-								Diff
+								{this.diffText}
 							</div> :
 							<div className="CommitRowCell" style={{
 								fontSize: this.getFontSize("Diff"),
 								color: `rgba(255, 255, 255, 0.2)`,
 								backgroundColor: `rgba(255, 255, 255, 0.${this.detlc})`
 							}}>
-								Diff
+								{this.diffText}
 							</div>
 						}
 					</div>
