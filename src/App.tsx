@@ -87,6 +87,7 @@ export default class App extends React.Component<any, IAppState> {
 	public componentDidMount(): void {
 		document.addEventListener('keydown', this.handleKey);
 		window.addEventListener("resize", this.updateSize);
+		window.onpopstate = this.goBack;
 		setTimeout(this.showAbout, Constants.SHOW_ABOUT_DELAY_TIME);
 		setImmediate(this.getExamples);
 	}
@@ -123,7 +124,7 @@ export default class App extends React.Component<any, IAppState> {
 		}
 		if (event.code === Key.BACKSPACE) {
 			console.log(document.activeElement ? document.activeElement.className : "NULL");
-			setImmediate(this.goBack)
+			setImmediate(() => window.history.back())
 		}
 		if (Constants.IN_TEST) {
 			switch(event.code) {
@@ -245,6 +246,7 @@ export default class App extends React.Component<any, IAppState> {
 			state = Object.assign({}, this.state);
 		}
 		if (state.page !== page) {
+			window.history.pushState('', '', page.toString());
 			this.history.push(state.page);
 			state.page = page;
 		}
@@ -473,7 +475,7 @@ export default class App extends React.Component<any, IAppState> {
 					/>
 					<SmallButton
 						active={this.history.length > 0}
-						onClick={this.goBack}
+						onClick={() => window.history.back()}
 						width={30}
 						height={30}
 						backgroundImage={"url(/left.png)"}
