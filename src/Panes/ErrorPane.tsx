@@ -38,6 +38,7 @@ export default class ErrorPane extends FadeableElement<IErrorPaneProps, IErrorPa
 								backgroundColor: "rgb(255, 124, 124)",
 								opacity: this.props.active ? 1 : 0,
 								transition: this.fadeOutTime + "ms ease-in-out",
+								zIndex: 9999,
 							}}
 						>
 							<div
