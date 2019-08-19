@@ -83,6 +83,10 @@
     /*text-decoration: underline;*/
 }
 
+.d2h-code-linenumber {
+    cursor: auto;
+}
+
 .d2h-file-diff {
     background-color: rgba(224, 224, 224, 0.99);
     overflow: scroll scroll;
