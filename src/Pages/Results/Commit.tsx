@@ -293,12 +293,26 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						{this.props.repo.replace(".git", "") !== "" ?
 							<div className="CommitRowCell SubtleButton Underline" onClick={this.goToCommit} style={{fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
 								{this.props.commit.commitName.substring(34)}
-							</div> : <div/>
+							</div> :
+							<div className="CommitRowCell" style={{
+								fontSize: this.getFontSize("Commit"),
+								color: `rgba(255, 255, 255, 0.2)`,
+								backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`
+							}}>
+								Commit
+							</div>
 						}
 						{this.file && this.props.repo.replace(".git", "") !== "" ?
 							<div className="CommitRowCell SubtleButton Underline" onClick={this.goToFileInCommit} style={{fontSize: this.getFontSize(this.file as string), backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
 								{this.file}
-							</div> : <div/>
+							</div> :
+							<div className="CommitRowCell" style={{
+								fontSize: this.getFontSize("File"),
+								color: `rgba(255, 255, 255, 0.2)`,
+								backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`
+							}}>
+								File
+							</div>
 						}
 						<div className="CommitRowCell SubtleButton" onClick={this.toggleDetails} style={{fontSize: this.getFontSize(change), backgroundColor: `rgba(255, 255, 255, 0.${this.typec})`}}>
 							{change}
@@ -324,6 +338,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 							const desc: string = this.getDescription(change);
 							return (<div
 								className={this.getClassName(change.type)}
+								// className={this.getClassName(this.props.commit.type)}
 								style={{
 									margin: "0 auto",
 									height: this.state.details ? this.getHeight(true) : 0,
