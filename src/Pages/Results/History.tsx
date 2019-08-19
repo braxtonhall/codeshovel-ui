@@ -46,24 +46,6 @@ export class History {
 
 		}
 
-		function validDiff(commit: ICommitx): boolean {
-			if (commit.type !== Changes.MULTI_CHANGE) {
-				return commit.diff !== undefined && commit.type !== Changes.FILE_RENAME && commit.type !== Changes.MOV_FROM_FILE;
-			} else {
-				return commit.subchanges ? commit.subchanges.some((change: IChange) => {
-					return change.type !== Changes.FILE_RENAME && change.type !== Changes.MOV_FROM_FILE && change.diff !== undefined;
-				}) : false;
-			}
-		}
-
-		if (commits.length >= 2) {
-			for (let i = commits.length - 2; i >= 0; i--) {
-				if (validDiff(commits[i])) {
-					commits[commits.length - 1].diff = History.buildFirstDiff(commits[i].diff);
-					break;
-				}
-			}
-		}
 		return commits;
 	}
 
@@ -71,29 +53,6 @@ export class History {
 		if (oldPath !== newPath) {
 			return `@@ -1,1 +1,1 @@\n-\t${oldPath}\n+\t${newPath}\n`;
 		}
-	}
-
-	private static buildFirstDiff(oldDiff: string | undefined): string | undefined {
-		if (!oldDiff) {
-			return oldDiff;
-		}
-		const oldLines: string[] = oldDiff.split('\n');
-		const newLines: string[] = [];
-		for (const line of oldLines) {
-			if (line.startsWith('+')) {
-				// Do nothing
-			} else if (line.startsWith('@@') || line.startsWith('\\ No newline at end of file')) {
-				newLines.push(line);
-			} else {
-				newLines.push('+' + line.substring(1));
-			}
-		}
-		if (newLines.length < 2) {
-			return undefined;
-		}
-		newLines[0] = `@@ -1,0 +1,${newLines.length - 3} @@`;
-		newLines[newLines.length - 1] = "";
-		return newLines.join('\n');
 	}
 
 	public getCommits(): ICommit[] {
