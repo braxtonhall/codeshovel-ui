@@ -2,7 +2,7 @@ import {IFadeableElementState} from "../../FadeableElement";
 import {Constants} from "../../Constants";
 import {ReactNode} from "react";
 import * as React from "react";
-import {IChange, ICommitx} from "../../Types";
+import {IChange, ICommitx, IMethodTransport} from "../../Types";
 import {Changes} from "../../Enums";
 import {ICommitRowProps, ReactCommitRow} from "./CommitRow";
 import {RequestController} from "../../RequestController";
@@ -16,6 +16,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 	private readonly date: string;
 	private readonly time: string;
 	private readonly type: string;
+	private readonly diffId: string;
 
 	constructor(props: IReactCommitProps) {
 		super(props);
@@ -30,6 +31,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		this.date = this.getDate();
 		this.time = this.getTime();
 		this.type = this.getChangeType();
+		this.diffId = `${this.props.commit.commitName}-${this.props.method.startLine}-${this.props.method.methodName}-diff`;
 		this.setUpColours();
 		this.goToCommit = this.goToCommit.bind(this);
 		this.goToFileInCommit = this.goToFileInCommit.bind(this);
@@ -184,12 +186,16 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 	}
 
 	private getFileName(): string | undefined {
-		if (this.props.commit.file) {
-			let file: string = (this.props.commit.file.split('/').pop() as string).split('.')[0];
-			if (file.length > 15) {
-				file = `${file.substring(0, 10)}...`;
+		try {
+			if (this.props.commit.file) {
+				let file: string = (this.props.commit.file.split('/').pop() as string).split('.')[0];
+				if (file.length > 15) {
+					file = `${file.substring(0, 10)}...`;
+				}
+				return file;
 			}
-			return file;
+		} catch (err) {
+			return;
 		}
 	}
 
@@ -209,7 +215,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		if (baseOnly) {
 			return (height * modifier) + "px";
 		}
-		const diff: Element | null = document.getElementById(this.props.commit.commitName);
+		const diff: Element | null = document.getElementById(this.diffId);
 		let newHeight = height;
 		newHeight = newHeight + (diff && diff.clientHeight > 1 ? (0.5 * height) + diff.clientHeight : 0);
 		newHeight = this.state.details ? newHeight + (this.changes.length * height) : newHeight;
@@ -235,8 +241,8 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 				/* eslint-disable */
 				// @ts-ignore
 				const diffDrawer = new Diff2HtmlUI({diff: "--- a/file.fake\n+++ b/file.fake\n" + this.props.commit.diff});
-				diffDrawer.draw(`#${this.props.commit.commitName}`, {inputFormat: 'diff', showFiles: false, matching: 'lines', outputFormat: 'line-by-line'});
-				diffDrawer.highlightCode(`#${this.props.commit.commitName}`);
+				diffDrawer.draw(`#${this.diffId}`, {inputFormat: 'diff', showFiles: false, matching: 'lines', outputFormat: 'line-by-line'});
+				diffDrawer.highlightCode(`#${this.diffId}`);
 				if (this.diffDeleter) {
 					clearTimeout(this.diffDeleter);
 				}
@@ -246,13 +252,9 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 			state.diffVisible = false;
 			state.details = false;
 			this.diffDeleter = setTimeout(() => {
-				const diff = document.getElementById(this.props.commit.commitName);
-				const rename = document.getElementById(this.props.commit.commitName + "rename");
+				const diff = document.getElementById(this.diffId);
 				if (diff) {
 					diff.innerHTML = "<div/>";
-				}
-				if (rename) {
-					rename.innerHTML = "<div/>";
 				}
 				this.diffDeleter = undefined;
 				this.forceUpdate();
@@ -361,7 +363,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 									position: "relative",
 									marginBottom: i === this.changes.length - 1 && this.props.commit.diff ? this.getHeight(true, 0.25) : "0",
 								}}
-								key={`${this.props.commit.commitName}-${this.props.methodLongName}-${i}`}
+								key={`${this.props.commit.commitName}-${this.props.method.longName}-${this.props.method.startLine}-${i}`}
 							>
 									{this.state.details ?
 										<div
@@ -380,7 +382,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						})
 					}
 					<div
-						id={this.props.commit.commitName}
+						id={this.diffId}
 						style={{
 							width: "90%",
 							margin: "0 auto",
@@ -397,7 +399,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 export interface IReactCommitProps extends ICommitRowProps {
 	commit: ICommitx;
 	repo: string;
-	methodLongName: string;
+	method: IMethodTransport;
 }
 
 export interface IReactCommitState extends IFadeableElementState {

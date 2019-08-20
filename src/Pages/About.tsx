@@ -117,6 +117,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 
 					/>
 					<div
+						className="SubtleButton"
 						style={{
 							backgroundImage: "url(https://news.ok.ubc.ca/wp-content/uploads/2015/09/ubc-logo.png)",
 							backgroundSize: "100%",
@@ -124,6 +125,9 @@ export class About extends Page<IAboutProps, IAboutState> {
 							height: "20%",
 							width: "30%",
 							position: "absolute"
+						}}
+						onClick={() => {
+							window.open(`https://www.ubc.ca`, "_blank");
 						}}
 					/>
 					<div

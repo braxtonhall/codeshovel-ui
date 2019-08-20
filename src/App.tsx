@@ -438,6 +438,7 @@ export default class App extends React.Component<any, IAppState> {
 						examples={this.state.examples}
 						tellParent={this.handleExample}
 						toggleHidden={this.toggleExamples}
+						windowWidth={this.state.width}
 					/>
 					<Files
 						proceedToPage={this.proceedToPage}
@@ -464,7 +465,7 @@ export default class App extends React.Component<any, IAppState> {
 						file={this.state.file}
 						windowHeight={this.state.height}
 						windowWidth={this.state.width}
-						methodLongName={this.state.method.longName}
+						method={this.state.method}
 					/>
 					<About
 						proceedToPage={this.proceedToPage}

@@ -114,11 +114,14 @@ export class Constants {
 	public static readonly COMMIT_ROW_HEIGHT: number = 8;
 	public static readonly COMMIT_ROW_WIDTH: number = 80;
 	public static readonly COMMIT_WIDTH_MODIFIER: number = 5;
-	public static readonly COMMIT_CELL_COLOUR_VARIANCE_PCT: number = 12;
+	public static readonly COMMIT_CELL_MOBILE_COLOUR_VARIANCE_PCT: number = 4;
+	public static readonly COMMIT_CELL_COLOUR_VARIANCE_PCT: number = 8;
 	public static readonly COMMIT_FONT_APPROX_SIZE: number = 17;
 
 	public static readonly ABOUT_TEXT_SIZE: number = 100;
 
 	public static readonly LOADING_TEXT: string = "Retrieving.";
 	public static readonly LOADING_TEXT_SIZE: number = 100;
+
+	public static readonly MOBILE_WIDTH: number = 500;
 }

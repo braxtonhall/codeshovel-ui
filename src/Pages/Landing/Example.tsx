@@ -41,8 +41,12 @@ export class Example extends React.Component<IReactExampleProps, IReactExampleSt
 		this.tellParent = this.tellParent.bind(this);
 	}
 
-	private static getWidth(s: string): string {
-		return (10 * Math.log(Math.max(10, s.length)) * Constants.EXAMPLE_ROW_WIDTH) + "px";
+	private getWidth(s: string): string {
+		if (this.props.windowWidth < Constants.MOBILE_WIDTH) {
+			return this.props.windowWidth + "px";
+		} else {
+			return (10 * Math.log(Math.max(10, s.length)) * Constants.EXAMPLE_ROW_WIDTH) + "px";
+		}
 	}
 
 	private static getFontSize(s: string, modifier: number = 1): string {
@@ -74,7 +78,7 @@ export class Example extends React.Component<IReactExampleProps, IReactExampleSt
 							marginTop: "3px",
 							marginBottom: "3px",
 							height: "40px",
-							width: Example.getWidth(display),
+							width: this.getWidth(display),
 							overflow: "hidden",
 							zIndex: 9999,
 							fontSize: Example.getFontSize(display),
@@ -102,6 +106,7 @@ export class Example extends React.Component<IReactExampleProps, IReactExampleSt
 export interface IReactExampleProps {
 	example: IManifestEntry | false;
 	tellParent: (example: IManifestEntry) => void;
+	windowWidth: number;
 }
 
 export interface IReactExampleState {

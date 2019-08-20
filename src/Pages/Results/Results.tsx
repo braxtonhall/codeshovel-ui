@@ -2,7 +2,7 @@ import * as React from "react";
 import {ReactNode} from "react";
 import {IPageProps, IPageState, Page} from "../Page";
 import {Pages} from "../../Enums";
-import {IHistoryTransport} from "../../Types";
+import {IHistoryTransport, IMethodTransport} from "../../Types";
 import {History, ReactHistory} from "./History";
 import {Header} from "./Header";
 
@@ -55,7 +55,7 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 						repo={this.props.repo}
 						windowHeight={this.props.windowHeight}
 						windowWidth={this.props.windowWidth}
-						methodLongName={this.props.methodLongName}
+						method={this.props.method}
 					/>
 				</div>
 				<div
@@ -84,7 +84,7 @@ export interface IHistoryProps extends IPageProps {
 	file: string;
 	windowHeight: number;
 	windowWidth: number;
-	methodLongName: string;
+	method: IMethodTransport;
 }
 
 export interface IHistoryState extends IPageState {

@@ -1,7 +1,7 @@
 import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../../FadeableElement";
 import {ReactNode} from "react";
 import * as React from "react";
-import {IChange, ICommit, ICommitx, IHistoryTransport} from "../../Types";
+import {IChange, ICommit, ICommitx, IHistoryTransport, IMethodTransport} from "../../Types";
 import {ReactCommit} from "./Commit";
 import {Changes} from "../../Enums";
 import {Constants} from "../../Constants";
@@ -88,12 +88,12 @@ export class ReactHistory extends FadeableElement<IReactHistoryProps, IReactHist
 						return (
 							<ReactCommit
 								commit={commit}
-								key={`${commit.commitName}-${this.props.methodLongName}`}
+								key={`${commit.commitName}-${this.props.method.longName}`}
 								active={this.props.active}
 								repo={this.props.repo}
 								windowHeight={this.props.windowHeight}
 								windowWidth={this.props.windowWidth}
-								methodLongName={this.props.methodLongName}
+								method={this.props.method}
 							/>
 						);
 					})
@@ -108,7 +108,7 @@ export interface IReactHistoryProps extends IFadeableElementProps {
 	repo: string;
 	windowHeight: number;
 	windowWidth: number;
-	methodLongName: string;
+	method: IMethodTransport;
 }
 
 export interface IReactHistoryState extends IFadeableElementState {

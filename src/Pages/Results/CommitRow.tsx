@@ -10,18 +10,23 @@ export abstract class ReactCommitRow<P extends ICommitRowProps, S extends IFadea
 	protected typec: string = "";
 
 	protected setUpColours(): void {
-		let temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
-		this.datec = temp < 10 ? "0" + temp : "" + temp;
-		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
-		this.authc = temp < 10 ? "0" + temp : "" + temp;
-		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
-		this.filec = temp < 10 ? "0" + temp : "" + temp;
-		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
-		this.comtc = temp < 10 ? "0" + temp : "" + temp;
-		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
-		this.detlc = temp < 10 ? "0" + temp : "" + temp;
-		temp = Math.floor(Math.random() * Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT);
-		this.typec = temp < 10 ? "0" + temp : "" + temp;
+		let variance: number;
+		if (this.props.windowWidth < Constants.MOBILE_WIDTH) {
+			variance = Constants.COMMIT_CELL_MOBILE_COLOUR_VARIANCE_PCT;
+		} else {
+			variance = Constants.COMMIT_CELL_COLOUR_VARIANCE_PCT;
+		}
+		function getColour(): string {
+			let temp = Math.floor(Math.random() * variance);
+			return temp < 10 ? "0" + temp : "" + temp;
+		}
+
+		this.datec = getColour();
+		this.authc = getColour();
+		this.filec = getColour();
+		this.comtc = getColour();
+		this.detlc = getColour();
+		this.typec = getColour();
 	}
 
 	protected getFontSize(s: string, modifier: number = 1): string {

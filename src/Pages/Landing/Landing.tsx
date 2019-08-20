@@ -55,7 +55,8 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 	}
 
 	public createReactNode(): ReactNode {
-		const examplesShown: boolean = this.props.examples.length > 0 && !this.props.examplesHidden;
+		const mobileView: boolean = this.props.windowWidth < Constants.MOBILE_WIDTH;
+		const examplesShown: boolean = (this.props.examples.length > 0 && !this.props.examplesHidden) || mobileView;
 		return (
 			<div style={{
 				position: "absolute",
@@ -89,29 +90,35 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 					examples={this.props.examples}
 					examplesHidden={this.props.examplesHidden}
 					toggleExamplesHidden={this.props.toggleHidden}
+					windowWidth={this.props.windowWidth}
 				/>
-				<div style={{
-					position: "absolute",
-					top: "50%",
-					left: "50%",
-					width: "40%",
-					transform: examplesShown ? "translate(-20%, -50%)" : "translate(-50%, -50%)",
-					height: "20%",
-					zIndex: 5000,
-					pointerEvents: "none",
-					transition: `${400 /*This should be the same as ExampleContainer fadeOutTime*/}ms ease-in-out`,
-				}}>
-					<p>
-						Welcome to Felix's Java <code>codeshovel</code>.
-					</p>
-					<p>
-						To begin, enter a link to a Java GitHub repository.
-					</p>
-					<Form style={{pointerEvents: "auto"}} onSubmit={this.handleEnter}>
-						<Form.Control id="repoInput" size="lg" type="text" placeholder={this.placeholder}/>
-					</Form>
-					<Button style={{pointerEvents: "auto"}} variant="primary" onClick={this.handleNext} disabled={this.state.error}>Next</Button>
-				</div>
+				{!mobileView ?
+					<div
+						className="NoClick"
+						style={{
+							position: "absolute",
+							top: "50%",
+							left: "50%",
+							width: "40%",
+							transform: examplesShown ? "translate(-20%, -50%)" : "translate(-50%, -50%)",
+							height: "20%",
+							zIndex: 5000,
+							transition: `${400 /*This should be the same as ExampleContainer fadeOutTime*/}ms ease-in-out`,
+						}}
+					>
+						<p>
+							Welcome to Felix's Java <code>codeshovel</code>.
+						</p>
+						<p>
+							To begin, enter a link to a Java GitHub repository.
+						</p>
+						<Form style={{pointerEvents: "auto"}} onSubmit={this.handleEnter}>
+							<Form.Control id="repoInput" size="lg" type="text" placeholder={this.placeholder}/>
+						</Form>
+						<Button style={{pointerEvents: "auto"}} variant="primary" onClick={this.handleNext}
+								disabled={this.state.error}>Next</Button>
+					</div> : <div/>
+				}
 				<ErrorPane text={this.errorText} active={this.state.error} exit={this.toggleError} size={{height: 30, width: 72}}/>
 			</div>
 		);
@@ -142,7 +149,7 @@ class ExampleContainer extends FadeableElement<IExampleContainerProps, IExampleC
 					font: Constants.FONT,
 					textAlign: "left",
 					height: "100%",
-					width: "50%",
+					width: "100%",
 					left: this.props.active ? "0" : "-50%",
 					opacity: this.props.active ? 1 : 0,
 					transition: `${this.fadeOutTime}ms ease-in-out`,
@@ -188,6 +195,7 @@ class ExampleContainer extends FadeableElement<IExampleContainerProps, IExampleC
 					}}
 				>
 					<Example
+						windowWidth={this.props.windowWidth}
 						example={false}
 						tellParent={() => {}}
 					/>
@@ -195,6 +203,7 @@ class ExampleContainer extends FadeableElement<IExampleContainerProps, IExampleC
 						this.props.examples
 							.map((example: IManifestEntry, i: number) => (
 								<Example
+									windowWidth={this.props.windowWidth}
 									example={example}
 									tellParent={this.tellParentExampleClicked}
 									key={i}
@@ -213,6 +222,7 @@ export interface ILandingProps extends IPageProps {
 	examplesHidden: boolean;
 	tellParent: (example: IManifestEntry) => void;
 	toggleHidden: () => void;
+	windowWidth: number;
 }
 
 export interface ILandingState extends IPageState {
@@ -224,6 +234,7 @@ interface IExampleContainerProps extends IFadeableElementProps {
 	examples: IManifestEntry[];
 	examplesHidden: boolean;
 	toggleExamplesHidden: () => void;
+	windowWidth: number;
 }
 
 interface IExampleContainerState extends IFadeableElementState {
