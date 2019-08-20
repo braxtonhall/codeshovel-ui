@@ -13,6 +13,9 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 	private changes: IChange[];
 	private readonly file: string | undefined;
 	private readonly diffText: string;
+	private readonly date: string;
+	private readonly time: string;
+	private readonly type: string;
 
 	constructor(props: IReactCommitProps) {
 		super(props);
@@ -22,12 +25,11 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		} else {
 			this.changes = [this.props.commit]
 		}
-		if (this.props.commit.file) {
-			this.file = (this.props.commit.file.split('/').pop() as string).split('.')[0];
-		} else {
-			this.file = undefined;
-		}
+		this.file = this.getFileName();
 		this.diffText = this.chooseDiffText();
+		this.date = this.getDate();
+		this.time = this.getTime();
+		this.type = this.getChangeType();
 		this.setUpColours();
 		this.goToCommit = this.goToCommit.bind(this);
 		this.goToFileInCommit = this.goToFileInCommit.bind(this);
@@ -181,6 +183,16 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		}
 	}
 
+	private getFileName(): string | undefined {
+		if (this.props.commit.file) {
+			let file: string = (this.props.commit.file.split('/').pop() as string).split('.')[0];
+			if (file.length > 15) {
+				file = `${file.substring(0, 10)}...`;
+			}
+			return file;
+		}
+	}
+
 	private getTime(): string {
 		const date: Date = new Date(this.props.commit.commitDate);
 		if (date.toDateString() === 'Invalid Date') {
@@ -254,9 +266,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 	}
 
 	protected createReactNode(): ReactNode {
-		const date = this.getDate();
 		const author = this.props.commit.commitAuthor;
-		const change = this.getChangeType();
 		return(
 			<div
 				style={{display: "block", alignItems: "center"}}
@@ -284,8 +294,8 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 							height: this.getHeight(true)
 						}}
 					>
-						<div className="CommitRowCell" style={{fontSize: this.getFontSize(date), backgroundColor: `rgba(255, 255, 255, 0.${this.datec})`}}>
-							{date}<br/>{this.getTime()}
+						<div className="CommitRowCell" style={{fontSize: this.getFontSize(this.date), backgroundColor: `rgba(255, 255, 255, 0.${this.datec})`}}>
+							{this.date/*<br/>{this.time}*/}
 						</div>
 						<div className="CommitRowCell SubtleButton Underline" onClick={this.goToAuthor} style={{fontSize: this.getFontSize(author), backgroundColor: `rgba(255, 255, 255, 0.${this.authc})`}}>
 							{author}
@@ -314,8 +324,8 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 								File
 							</div>
 						}
-						<div className="CommitRowCell SubtleButton" onClick={this.toggleDetails} style={{fontSize: this.getFontSize(change), backgroundColor: `rgba(255, 255, 255, 0.${this.typec})`}}>
-							{change}
+						<div className="CommitRowCell SubtleButton" onClick={this.toggleDetails} style={{fontSize: this.getFontSize(this.type), backgroundColor: `rgba(255, 255, 255, 0.${this.typec})`}}>
+							{this.type}
 						</div>
 						{this.props.commit.diff ?
 							<div className="CommitRowCell SubtleButton" onClick={this.toggleDiff} style={{

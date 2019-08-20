@@ -25,7 +25,10 @@ export abstract class ReactCommitRow<P extends ICommitRowProps, S extends IFadea
 	}
 
 	protected getFontSize(s: string, modifier: number = 1): string {
-		return (this.props.windowWidth * (1 / Math.max(s.length, 8)) * 0.01 * Constants.COMMIT_FONT_APPROX_SIZE * modifier) + "px";
+		return Math.min(
+			(this.props.windowWidth * (1 / Math.max(s.length, 8)) * 0.01 * Constants.COMMIT_FONT_APPROX_SIZE * modifier),
+			(Math.log(this.props.windowHeight) * Constants.COMMIT_ROW_HEIGHT / 2) * modifier
+		) + "px";
 	}
 }
 
