@@ -275,8 +275,8 @@ export class ReactDirectory extends ReactFileSystemNode<IReactDirectoryProps, IR
 					style={{
 						marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px",
 						animation: `${this.props.active ? "Expand" : "Contract"}${this.props.dir.isMinimized() ? "-mini" : ""}  ${this.fadeOutTime}ms ease-in-out`,
-						marginTop: "3px",
-						marginBottom: "3px",
+						marginTop: !this.props.dir.isMinimized() ? "3px" : "0",
+						marginBottom: !this.props.dir.isMinimized() ? "3px" : "1px",
 						backgroundColor: this.props.highlight ? "rgb(124, 0, 6)" : "rgb(75, 75, 124)",
 						height: this.props.active ? (this.props.dir.isMinimized() ? "8px" : "40px") : "0",
 						font: "100% \"Courier New\", Futura, sans-serif",
