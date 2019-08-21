@@ -113,10 +113,12 @@ export class Constants {
 
 	public static readonly COMMIT_ROW_HEIGHT: number = 8;
 	public static readonly COMMIT_ROW_WIDTH: number = 80;
+	public static readonly COMMIT_ROW_MOBILE_WIDTH: number = 100;
 	public static readonly COMMIT_WIDTH_MODIFIER: number = 5;
 	public static readonly COMMIT_CELL_MOBILE_COLOUR_VARIANCE_PCT: number = 4;
 	public static readonly COMMIT_CELL_COLOUR_VARIANCE_PCT: number = 8;
 	public static readonly COMMIT_FONT_APPROX_SIZE: number = 17;
+	public static readonly COMMIT_FONT_MOBILE_APPROX_SIZE: number = 35;
 
 	public static readonly ABOUT_TEXT_SIZE: number = 100;
 

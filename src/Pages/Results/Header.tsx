@@ -15,7 +15,14 @@ export class Header extends ReactCommitRow<IHeaderProps, IHeaderState> {
 	}
 
 	public createReactNode(): ReactNode {
+		const mobileView: boolean = this.props.windowWidth < Constants.MOBILE_WIDTH;
 		let height: number = Math.log(this.props.windowHeight) * Constants.COMMIT_ROW_HEIGHT;
+		let width: number;
+		if (mobileView) {
+			width = this.props.windowWidth * 0.01 * Constants.COMMIT_ROW_MOBILE_WIDTH;
+		} else {
+			width = this.props.windowWidth * 0.01 * Constants.COMMIT_ROW_WIDTH;
+		}
 		return (
 			<div
 				style={{
@@ -24,12 +31,12 @@ export class Header extends ReactCommitRow<IHeaderProps, IHeaderState> {
 					marginBottom: "3px",
 					textAlign: "left",
 					font: Constants.FONT,
-					width: (this.props.windowWidth * 0.01 * Constants.COMMIT_ROW_WIDTH) + "px",
+					width: width + "px",
 					overflow: "hidden",
 					zIndex: 9999,
 					transition: this.fadeOutTime + "ms ease-in-out",
 					display: "grid",
-					gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr",
+					gridTemplateColumns: mobileView ? "1fr 1fr 0fr 0fr 1fr 1fr" : "1fr 1fr 1fr 1fr 1fr 1fr",
 					backgroundColor: "rgb(255, 255, 255)",
 					position: "fixed",
 					left: "50%",
@@ -44,12 +51,22 @@ export class Header extends ReactCommitRow<IHeaderProps, IHeaderState> {
 				<div className="CommitRowCell" style={{fontSize: this.getFontSize("Author"), backgroundColor: `rgba(0, 0, 0, 0.${this.authc})`}}>
 					Author
 				</div>
-				<div className="CommitRowCell" style={{fontSize: this.getFontSize("Commit"), backgroundColor: `rgba(0, 0, 0, 0.${this.comtc})`}}>
-					Commit
-				</div>
-				<div className="CommitRowCell" style={{fontSize: this.getFontSize("File"), backgroundColor: `rgba(0, 0, 0, 0.${this.filec})`}}>
-					File
-				</div>
+				{mobileView ? <div/> :
+					<div className="CommitRowCell" style={{
+						fontSize: this.getFontSize("Commit"),
+						backgroundColor: `rgba(0, 0, 0, 0.${this.comtc})`
+					}}>
+						Commit
+					</div>
+				}
+				{mobileView ? <div/> :
+					<div className="CommitRowCell" style={{
+						fontSize: this.getFontSize("File"),
+						backgroundColor: `rgba(0, 0, 0, 0.${this.filec})`
+					}}>
+						File
+					</div>
+				}
 				<div className="CommitRowCell" style={{fontSize: this.getFontSize("Type"), backgroundColor: `rgba(0, 0, 0, 0.${this.typec})`}}>
 					Type
 				</div>

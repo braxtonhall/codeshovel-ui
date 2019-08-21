@@ -56,7 +56,7 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 
 	public createReactNode(): ReactNode {
 		const mobileView: boolean = this.props.windowWidth < Constants.MOBILE_WIDTH;
-		const examplesShown: boolean = (this.props.examples.length > 0 && !this.props.examplesHidden) || mobileView;
+		const examplesShown: boolean = this.props.examples.length > 0 && (!this.props.examplesHidden || mobileView);
 		return (
 			<div style={{
 				position: "absolute",
@@ -141,6 +141,7 @@ class ExampleContainer extends FadeableElement<IExampleContainerProps, IExampleC
 	}
 
 	protected createReactNode(): ReactNode {
+		const mobileView: boolean = this.props.windowWidth < Constants.MOBILE_WIDTH;
 		return(this.props.active || this.state.onScreen ?
 			<div
 				className="Panel"
@@ -156,37 +157,51 @@ class ExampleContainer extends FadeableElement<IExampleContainerProps, IExampleC
 					zIndex: 2,
 				}}
 			>
-				<div
-					style={{display: "inline-block", opacity: 0.5, position: "relative"}}
-				>
+				{mobileView ?
 					<div
 						style={{
 							textAlign: "left",
 							left: "20%",
 							top: "10%",
-							fontSize: "20px",
+							fontSize: "15px",
 							marginTop: "6px",
 							marginLeft: "6px",
 						}}
 					>
-						Sample <code>codeshovel</code> Executions
+						Welcome to <code>codeshovel</code>. Select a history.
+					</div> :
+					<div
+						style={{display: "inline-block", opacity: 0.5, position: "relative"}}
+					>
+						<div
+							style={{
+								textAlign: "left",
+								left: "20%",
+								top: "10%",
+								fontSize: "20px",
+								marginTop: "6px",
+								marginLeft: "6px",
+							}}
+						>
+							Sample <code>codeshovel</code> Executions
+						</div>
+						<SmallButton
+							height={15}
+							width={15}
+							left={350}
+							backgroundSize={10}
+							backgroundImage={"url(/cross.png)"}
+							onClick={() => {
+								if (!this.props.examplesHidden) {
+									this.props.toggleExamplesHidden()
+								}
+							}}
+							bottom={4}
+							shift={0}
+							active={true}
+						/>
 					</div>
-					<SmallButton
-						height={15}
-						width={15}
-						left={350}
-						backgroundSize={10}
-						backgroundImage={"url(/cross.png)"}
-						onClick={() => {
-							if (!this.props.examplesHidden) {
-								this.props.toggleExamplesHidden()
-							}
-						}}
-						bottom={4}
-						shift={0}
-						active={true}
-					/>
-				</div>
+				}
 				<div
 					style={{
 						position: "absolute",

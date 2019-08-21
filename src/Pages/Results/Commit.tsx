@@ -269,6 +269,13 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 
 	protected createReactNode(): ReactNode {
 		const author = this.props.commit.commitAuthor;
+		const mobileView: boolean = this.props.windowWidth < Constants.MOBILE_WIDTH;
+		let width: number;
+		if (mobileView) {
+			width = this.props.windowWidth * 0.01 * Constants.COMMIT_ROW_MOBILE_WIDTH;
+		} else {
+			width = (this.props.windowWidth * 0.01 * (Constants.COMMIT_ROW_WIDTH + (this.state.diff || this.state.details ? Constants.COMMIT_WIDTH_MODIFIER : 0)));
+		}
 		return(
 			<div
 				style={{display: "block", alignItems: "center"}}
@@ -282,7 +289,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						textAlign: "left",
 						height: this.getHeight(),
 						font: Constants.FONT,
-						width: (this.props.windowWidth * 0.01 * (Constants.COMMIT_ROW_WIDTH + (this.state.diff || this.state.details ? Constants.COMMIT_WIDTH_MODIFIER : 0))) + "px",
+						width: width + "px",
 						overflow: "hidden",
 						zIndex: 9999,
 						transition: this.fadeOutTime + "ms ease-in-out",
@@ -292,7 +299,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						style={{
 							margin: "0 auto",
 							display: "grid",
-							gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr",
+							gridTemplateColumns: mobileView ? "1fr 1fr 0fr 0fr 1fr 1fr" : "1fr 1fr 1fr 1fr 1fr 1fr",
 							height: this.getHeight(true)
 						}}
 					>
@@ -302,29 +309,31 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						<div className="CommitRowCell SubtleButton Underline" onClick={this.goToAuthor} style={{fontSize: this.getFontSize(author), backgroundColor: `rgba(255, 255, 255, 0.${this.authc})`}}>
 							{author}
 						</div>
-						{this.props.repo.replace(".git", "") !== "" ?
-							<div className="CommitRowCell SubtleButton Underline" onClick={this.goToCommit} style={{fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
-								{this.props.commit.commitName.substring(34)}
-							</div> :
-							<div className="CommitRowCell" style={{
-								fontSize: this.getFontSize("Commit"),
-								color: `rgba(255, 255, 255, 0.2)`,
-								backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`
-							}}>
-								Commit
-							</div>
+						{mobileView ? <div/> :
+							this.props.repo.replace(".git", "") !== "" ?
+								<div className="CommitRowCell SubtleButton Underline" onClick={this.goToCommit} style={{fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
+									{this.props.commit.commitName.substring(34)}
+								</div> :
+								<div className="CommitRowCell" style={{
+									fontSize: this.getFontSize("Commit"),
+									color: `rgba(255, 255, 255, 0.2)`,
+									backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`
+								}}>
+									Commit
+								</div>
 						}
-						{this.file && this.props.repo.replace(".git", "") !== "" ?
-							<div className="CommitRowCell SubtleButton Underline" onClick={this.goToFileInCommit} style={{fontSize: this.getFontSize(this.file as string), backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
-								{this.file}
-							</div> :
-							<div className="CommitRowCell" style={{
-								fontSize: this.getFontSize("File"),
-								color: `rgba(255, 255, 255, 0.2)`,
-								backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`
-							}}>
-								File
-							</div>
+						{mobileView ? <div/> :
+							this.file && this.props.repo.replace(".git", "") !== "" ?
+								<div className="CommitRowCell SubtleButton Underline" onClick={this.goToFileInCommit} style={{fontSize: this.getFontSize(this.file as string), backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
+									{this.file}
+								</div> :
+								<div className="CommitRowCell" style={{
+									fontSize: this.getFontSize("File"),
+									color: `rgba(255, 255, 255, 0.2)`,
+									backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`
+								}}>
+									File
+								</div>
 						}
 						<div className="CommitRowCell SubtleButton" onClick={this.toggleDetails} style={{fontSize: this.getFontSize(this.type), backgroundColor: `rgba(255, 255, 255, 0.${this.typec})`}}>
 							{this.type}
