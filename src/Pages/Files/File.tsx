@@ -68,7 +68,7 @@ export class File {
 		const searchWords = searchString.split(/ /);
 		return searchWords.every((searchWord: string) => {
 			if (pathToSearch.includes(searchWord)) {
-				pathToSearch = pathToSearch.split(searchWord).pop() as string;
+				pathToSearch = pathToSearch.substring(pathToSearch.indexOf(searchWord) + searchWord.length);
 				return true;
 			} else {
 				return false;
