@@ -254,8 +254,8 @@
     to {
         height: 8px;
         opacity: 0.5;
-        margin-bottom: 3px;
-        margin-top: 3px;
+        margin-bottom: 1px;
+        margin-top: 0;
     }
 }
 
@@ -263,8 +263,8 @@
     from {
         height: 8px;
         opacity: 0.5;
-        margin-bottom: 3px;
-        margin-top: 3px;
+        margin-bottom: 1px;
+        margin-top: 0;
     }
     to {
         height: 0;
