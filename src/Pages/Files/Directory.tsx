@@ -13,6 +13,7 @@ export class Directory {
 	private readonly alerter: (name: string) => void;
 	private highlight: number | null;
 	private expanded: boolean;
+	private minimized: boolean;
 	private forceUpdate: () => void;
 	private parent: Directory | null;
 
@@ -23,6 +24,7 @@ export class Directory {
 		this.files = [];
 		this.highlight = null;
 		this.expanded = root;
+		this.minimized = false;
 		this.forceUpdate = parentUpdate;
 		this.parent = parent;
 		this.tellParent = this.tellParent.bind(this);
@@ -56,6 +58,33 @@ export class Directory {
 		}
 	}
 
+	public search(searchString: string, parentPath: string): boolean {
+		let newPath: string;
+		if (parentPath === "") {
+			newPath = this.getName();
+		} else {
+			newPath = `${parentPath}/${this.getName()}`
+		}
+		const subDirsContainMatch = this.subDirs
+			.map((subDir: Directory) => subDir.search(searchString, newPath)).includes(true);
+		const filesContainMatch = this.files
+			.map((file: File) => file.search(searchString, newPath)).includes(true);
+		this.expanded = subDirsContainMatch || filesContainMatch;
+		this.minimized = !this.expanded;
+		return this.expanded;
+	}
+
+	public reset(root: boolean = true): void {
+		this.minimized = false;
+		for (const subDir of this.subDirs) {
+			subDir.reset(false);
+		}
+		for (const file of this.files) {
+			file.reset();
+		}
+		this.expanded = root;
+	}
+
 	public setExpanded(expanded: boolean): void {
 		this.expanded = expanded;
 		this.highlight = !this.expanded && this.highlight ? -1 : this.highlight;
@@ -69,6 +98,10 @@ export class Directory {
 
 	public isExpanded(): boolean {
 		return this.expanded;
+	}
+
+	public isMinimized(): boolean {
+		return this.minimized;
 	}
 
 	public removeHighlight(): void {
@@ -241,17 +274,18 @@ export class ReactDirectory extends ReactFileSystemNode<IReactDirectoryProps, IR
 				<div
 					style={{
 						marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px",
-						animation: `${this.props.active ? "Expand" : "Contract"}  ${this.fadeOutTime}ms ease-in-out`,
+						animation: `${this.props.active ? "Expand" : "Contract"}${this.props.dir.isMinimized() ? "-mini" : ""}  ${this.fadeOutTime}ms ease-in-out`,
 						marginTop: "3px",
 						marginBottom: "3px",
 						backgroundColor: this.props.highlight ? "rgb(124, 0, 6)" : "rgb(75, 75, 124)",
-						height: this.props.active ? "40px" : "0",
+						height: this.props.active ? (this.props.dir.isMinimized() ? "8px" : "40px") : "0",
 						font: "100% \"Courier New\", Futura, sans-serif",
 						width: "650px",
 						overflow: "hidden",
 						zIndex: 9999,
 						transition: this.fadeOutTime + "ms ease-in-out",
-						fontSize: ReactFileSystemNode.getFontSize(name),
+						fontSize: ReactFileSystemNode.getFontSize(name, this.props.dir.isMinimized() ? 1/12 : 1),
+						opacity: this.props.dir.isMinimized() ? 0.5 : 1,
 					}}
 					onClick={this.toggleExpanded}
 					onMouseDown={this.mouseDown}

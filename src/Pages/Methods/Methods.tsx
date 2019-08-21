@@ -25,7 +25,7 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 	}
 
 	private handleKey(): void {
-		const searchElement: HTMLInputElement = (document.getElementById("searchInput") as HTMLInputElement);
+		const searchElement: HTMLInputElement = (document.getElementById("methodSearchInput") as HTMLInputElement);
 		if (searchElement && typeof searchElement.value === "string" && searchElement.value !== this.state.search) {
 			const state: IMethodsState = Object.assign({}, this.state);
 			state.search = searchElement.value;
@@ -60,7 +60,7 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 	}
 
 	public createReactNode(): ReactNode {
-		const searchElement: HTMLInputElement = (document.getElementById("searchInput") as HTMLInputElement);
+		const searchElement: HTMLInputElement = (document.getElementById("methodSearchInput") as HTMLInputElement);
 		if (searchElement) {
 			searchElement.value = this.state.search;
 		}
@@ -116,7 +116,7 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 								}}
 							>
 								<Form onSubmit={this.handleEnter}>
-									<Form.Control id="searchInput" size="sm" type="text" placeholder={this.methodInputPlaceholder} onChange={this.handleKey}/>
+									<Form.Control id="methodSearchInput" size="sm" type="text" placeholder={this.methodInputPlaceholder} onChange={this.handleKey}/>
 								</Form>
 							</div>
 						</div> : <div style={{opacity: 0}}/>
@@ -164,7 +164,7 @@ class MethodContainer extends React.Component<IMethodContainerProps, any> {
 									search={this.props.search}
 									tellParent={this.tellParent}
 									active={method.longName.includes(this.props.search)}
-									index={i}
+									index={i / this.props.methods.length}
 									key={`${method.longName}-${i}`}
 								/>
 							))

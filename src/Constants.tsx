@@ -98,6 +98,7 @@ export class Constants {
 	public static readonly FILE_SHA_PLACEHOLDER_TEXT: string = "Specific commit? Enter the SHA here and reload";
 	public static readonly FILE_SHA_ERROR_TEXT: string = "Enter a SHA to refresh";
 	public static readonly FILE_SYSTEM_TEXT_SIZE: number = 10;
+	public static readonly FILES_SEARCH_TEXT: string = `/regex/ or ordered search strings`;
 
 	public static readonly LIST_ELEMENT_NEW_LINE_PX_COUNT: number = 15;
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {FormEvent, ReactNode} from "react";
 import {IPageProps, IPageState, Page} from "../Page";
-import {ArgKind, Key, Pages} from "../../Enums";
+import {ArgKind, Pages} from "../../Enums";
 import ErrorPane from "../../Panes/ErrorPane";
 import Button from "react-bootstrap/Button";
 import {Constants} from "../../Constants";
@@ -9,6 +9,7 @@ import Form from "react-bootstrap/Form";
 import {Directory} from "./Directory";
 
 export class Files extends Page<IFilesProps, IFilesState> {
+	private readonly fileInputPlaceholder: string = Constants.FILES_SEARCH_TEXT;
 	private readonly shaPlaceholder: string = Constants.FILE_SHA_PLACEHOLDER_TEXT;
 	private readonly shaErrorText: string = Constants.FILE_SHA_ERROR_TEXT;
 	protected readonly page: Pages = Pages.FILES;
@@ -24,6 +25,7 @@ export class Files extends Page<IFilesProps, IFilesState> {
 			onScreen: this.props.active,
 			loading: false,
 			shaError: false,
+			search: "",
 		};
 		this.link = "";
 		this.sha = "HEAD";
@@ -36,6 +38,7 @@ export class Files extends Page<IFilesProps, IFilesState> {
 		this.handleShaEnter = this.handleShaEnter.bind(this);
 		this.handleKey = this.handleKey.bind(this);
 		this.forceUpdate = this.forceUpdate.bind(this);
+		this.handleSearchEnter = this.handleSearchEnter.bind(this);
 	}
 
 	public componentDidMount(): void {
@@ -46,17 +49,36 @@ export class Files extends Page<IFilesProps, IFilesState> {
 		document.removeEventListener('keydown', this.handleKey);
 	}
 
-	private handleKey(event: KeyboardEvent): void {
-		function isArrowKey(code: string): boolean {
-			return code === Key.UP || code === Key.DOWN || code === Key.LEFT || code === Key.RIGHT;
-		}
-
-		if (this.props.active && isArrowKey(event.code)) {
-			event.preventDefault();
-			this.root.moveHighlight(event.code as Key);
-			this.forceUpdate();
+	private handleKey(): void {
+		const searchElement: HTMLInputElement = (document.getElementById("fileSearchInput") as HTMLInputElement);
+		if (searchElement && typeof searchElement.value === "string" && searchElement.value !== this.state.search) {
+			const state: IFilesState = Object.assign({}, this.state);
+			state.search = searchElement.value;
+			this.setState(state);
 		}
 	}
+
+	private handleSearchEnter(event: FormEvent): void {
+		event.preventDefault();
+		if (this.state.search !== "") {
+			this.root.search(this.state.search, "");
+		} else {
+			this.root.reset();
+		}
+		this.forceUpdate();
+	}
+
+	// private handleKey(event: KeyboardEvent): void {
+	// 	function isArrowKey(code: string): boolean {
+	// 		return code === Key.UP || code === Key.DOWN || code === Key.LEFT || code === Key.RIGHT;
+	// 	}
+	//
+	// 	if (this.props.active && isArrowKey(event.code)) {
+	// 		event.preventDefault();
+	// 		this.root.moveHighlight(event.code as Key);
+	// 		this.forceUpdate();
+	// 	}
+	// }
 
 	protected handleNext(): void {
 		if (this.props.file !== "") {
@@ -96,6 +118,10 @@ export class Files extends Page<IFilesProps, IFilesState> {
 	}
 
 	public createReactNode(): ReactNode {
+		const searchElement: HTMLInputElement = (document.getElementById("fileSearchInput") as HTMLInputElement);
+		if (searchElement) {
+			searchElement.value = this.state.search;
+		}
 		if (this.content !== this.props.content) {
 			this.buildDirectory(this.props.content);
 		}
@@ -105,18 +131,18 @@ export class Files extends Page<IFilesProps, IFilesState> {
 					{this.state.onScreen || this.props.active ?
 						<div
 							style={{
+								opacity: this.props.active ? 1 : 0,
+								transition: this.fadeOutTime + "ms ease-in-out",
 								position: "absolute",
-								right: "1%",
-								top: "58%",
+								right: "-1%",
+								top: "2%",
 								font: "200% \"Courier New\", Futura, sans-serif",
 								textAlign: "right",
 								fontStyle: "italic",
-								opacity: this.props.active ? 1 : 0,
-								transition: `${this.fadeOutTime}ms ease-in-out`,
 							}}
 						>
-							Select a<br/>file.{'\u00A0\u00A0'}
-						</div> : <div style={{right: "1%", top: "58%", font: "200% \"Courier New\", Futura, sans-serif", opacity: 0}}/>
+							Select a file.
+						</div> : <div style={{right: "-1%", top: "2%", font: "200% \"Courier New\", Futura, sans-serif", opacity: 0}}/>
 					}
 				</div>
 				<div>
@@ -163,6 +189,37 @@ export class Files extends Page<IFilesProps, IFilesState> {
 						</div> : <div/>
 					}
 				</div>
+				<div>
+					{this.state.onScreen || this.props.active ?
+						<div style={{opacity: this.props.active ? 1 : 0, transition: this.fadeOutTime + "ms ease-in-out",}}>
+							<div
+								style={{
+									width: "20%",
+									position: "absolute",
+									right: "2%",
+									top: "10%",
+								}}
+							>
+								<Form onSubmit={this.handleSearchEnter}>
+									<Form.Control id="fileSearchInput" size="sm" type="text" placeholder={this.fileInputPlaceholder} onChange={this.handleKey}/>
+								</Form>
+								<Button
+									style={{
+										marginTop: "1%",
+										marginLeft: "auto",
+										marginRight: "5%",
+										position: "relative",
+										float: "right",
+									}} variant="primary"
+									onClick={this.handleSearchEnter}
+									disabled={false}
+								>
+									Search
+								</Button>
+							</div>
+						</div> : <div style={{opacity: 0}}/>
+					}
+				</div>
 			</div>
 		);
 	}
@@ -195,4 +252,5 @@ export interface IFilesProps extends IPageProps {
 export interface IFilesState extends IPageState {
 	loading: boolean;
 	shaError: boolean;
+	search: string;
 }

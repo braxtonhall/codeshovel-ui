@@ -8,11 +8,13 @@ export class File {
 	private readonly name: string;
 	private readonly alerter: (name: string) => void;
 	private highlight: boolean;
+	private minimized: boolean;
 
 	constructor(name: string, alerter: (name: string) => void) {
 		this.name = name;
 		this.alerter = alerter;
 		this.highlight = false;
+		this.minimized = false;
 		this.tellParent = this.tellParent.bind(this);
 	}
 
@@ -35,6 +37,44 @@ export class File {
 	public addHighlight(): void {
 		this.highlight = true;
 	}
+
+	public isMinimized(): boolean {
+		return this.minimized;
+	}
+
+	public reset(): void {
+		this.minimized = false;
+	}
+
+	public search(searchString: string, parentPath: string): boolean {
+		const pathToSearch = `${parentPath}/${this.getName()}`;
+		let matches: boolean;
+		if (searchString.startsWith("/") && searchString.endsWith("/")) {
+			matches = File.regexMatch(pathToSearch, searchString);
+		} else {
+			matches = File.stringMatch(pathToSearch, searchString);
+		}
+		this.minimized = !matches;
+		return matches;
+	}
+
+	private static regexMatch(pathToSearch: string, searchString: string): boolean {
+		searchString = searchString.substring(1, searchString.length - 1);
+		const regex: RegExp = new RegExp(searchString);
+		return regex.test(pathToSearch);
+	}
+
+	private static stringMatch(pathToSearch: string, searchString: string): boolean {
+		const searchWords = searchString.split(/ /);
+		return searchWords.every((searchWord: string) => {
+			if (pathToSearch.includes(searchWord)) {
+				pathToSearch = pathToSearch.split(searchWord).pop() as string;
+				return true;
+			} else {
+				return false;
+			}
+		});
+	}
 }
 
 export class ReactFile extends ReactFileSystemNode<IReactFileProps, IReactFileState> {
@@ -48,16 +88,20 @@ export class ReactFile extends ReactFileSystemNode<IReactFileProps, IReactFileSt
 	}
 
 	private handleClick(): void {
-		setImmediate(this.props.file.tellParent);
-		const state: IReactFileState = Object.assign({}, this.state);
-		state.margin = 0;
-		this.setState(state);
+		if (!this.props.file.isMinimized()) {
+			setImmediate(this.props.file.tellParent);
+			const state: IReactFileState = Object.assign({}, this.state);
+			state.margin = 0;
+			this.setState(state);
+		}
 	}
 
 	private mouseDown(): void {
-		const state: IReactFileState = Object.assign({}, this.state);
-		state.margin = Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT;
-		this.setState(state);
+		if (!this.props.file.isMinimized()) {
+			const state: IReactFileState = Object.assign({}, this.state);
+			state.margin = Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT;
+			this.setState(state);
+		}
 	}
 
 	protected createReactNode(): ReactNode {
@@ -70,17 +114,18 @@ export class ReactFile extends ReactFileSystemNode<IReactFileProps, IReactFileSt
 					<div
 						style={{
 							marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px",
-							animation: `${this.props.active ? "Expand" : "Contract"}  ${this.fadeOutTime}ms ease-in-out`,
+							animation: `${this.props.active ? "Expand" : "Contract"}${this.props.file.isMinimized() ? "-mini" : ""}  ${this.fadeOutTime}ms ease-in-out`,
 							marginTop: "3px",
 							marginBottom: "3px",
 							backgroundColor: this.props.highlight ? "rgb(124, 0, 6)" : "rgb(124, 124, 124)",
-							height: this.props.active ? "40px" : "0",
+							height: this.props.active ? (this.props.file.isMinimized() ? "8px" : "40px") : "0",
 							font: "100% \"Courier New\", Futura, sans-serif",
 							width: (650 - Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT * 1.5) + "px",
 							overflow: "hidden",
 							zIndex: 9999,
 							transition: this.fadeOutTime + "ms ease-in-out",
-							fontSize: ReactFileSystemNode.getFontSize(name),
+							fontSize: ReactFileSystemNode.getFontSize(name, this.props.file.isMinimized() ? 1/12 : 1),
+							opacity: this.props.file.isMinimized() ? 0.5 : 1,
 						}}
 						onClick={this.handleClick}
 						onMouseDown={this.mouseDown}

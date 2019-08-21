@@ -6,20 +6,15 @@ import * as React from "react";
 
 export class Method extends React.Component<IReactMethodProps, IReactMethodState> {
 	protected readonly fadeOutTime: number = Constants.METHODS_METHOD_ANIMATE_TIME;
-	protected readonly marginModifier: number;
 	private turnedOn: boolean;
+	private readonly backgroundColor: string;
 
 	constructor(props: IReactMethodProps) {
 		super(props);
-		// const inSearch: boolean = this.props.method.longName.includes(this.props.search);
-		let marginModifier: number = Math.floor(Math.random() * Constants.METHODS_MAX_INDENT_UNIT_COUNT);
-		marginModifier = marginModifier * Constants.METHODS_INDENT_UNIT_PX;
-		marginModifier = marginModifier + this.props.index * Constants.METHODS_INDENT_UNIT_PX;
-		// TODO modify this so it never goes off the edge of the page
-		this.marginModifier = marginModifier;
 		this.state = {
-			margin: this.marginModifier,
+			margin: 0,
 		};
+		this.backgroundColor = `rgb(${124 - Math.floor(this.props.index * 35)}, ${124 - Math.floor(this.props.index * 36)}, ${124 - Math.floor(this.props.index * 3)})`;
 		this.turnedOn = false;
 		this.handleClick = this.handleClick.bind(this);
 		this.mouseDown = this.mouseDown.bind(this);
@@ -35,13 +30,13 @@ export class Method extends React.Component<IReactMethodProps, IReactMethodState
 			setImmediate(this.tellParent);
 		}
 		const state: IReactMethodState = Object.assign({}, this.state);
-		state.margin = this.marginModifier;
+		state.margin = 0;
 		this.setState(state);
 	}
 
 	private mouseDown(): void {
 		const state: IReactMethodState = Object.assign({}, this.state);
-		state.margin = this.marginModifier + Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT;
+		state.margin = Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT;
 		this.setState(state);
 	}
 
@@ -62,7 +57,7 @@ export class Method extends React.Component<IReactMethodProps, IReactMethodState
 					marginLeft: this.state.margin +  "px",
 					marginTop: this.props.active ? "3px" : "0",
 					marginBottom: this.props.active ? "3px" : "1px",
-					backgroundColor: "rgb(124, 124, 124)",
+					backgroundColor: this.backgroundColor,
 					height: this.props.active ? "40px" : "8px",
 					font: "100% \"Courier New\", Futura, sans-serif",
 					fontSize: Method.getFontSize(this.props.method.longName, this.props.active ? 1 : 1/12),
