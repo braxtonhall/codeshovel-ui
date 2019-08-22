@@ -11,7 +11,9 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 	protected readonly fadeOutTime: number = 300;
 	private diffDeleter: any = undefined;
 	private changes: IChange[];
+	private longFile: string | undefined;
 	private readonly file: string | undefined;
+	private readonly sha: string;
 	private readonly diffText: string;
 	private readonly date: string;
 	private readonly time: string;
@@ -32,6 +34,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		this.time = this.getTime();
 		this.type = this.getChangeType();
 		this.diffId = `${this.props.commit.commitName}-${this.props.method.startLine}-${this.props.method.methodName}-diff`;
+		this.sha = this.props.commit.commitName.substring(34);
 		this.setUpColours();
 		this.goToCommit = this.goToCommit.bind(this);
 		this.goToFileInCommit = this.goToFileInCommit.bind(this);
@@ -46,7 +49,8 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		this.goToAuthor = this.goToAuthor.bind(this);
 	}
 
-	private goToCommit(): void {
+	private goToCommit(event: any): void {
+		event.preventDefault();
 		const baseUrl: string = this.props.repo.replace(".git", "");
 		const link: string = `${baseUrl}/commit/${this.props.commit.commitName}`;
 		if(baseUrl !== "") {
@@ -54,7 +58,8 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		}
 	}
 
-	private goToFileInCommit(): void {
+	private goToFileInCommit(event: any): void {
+		event.preventDefault();
 		console.log(this.props.repo);
 		const baseUrl: string = this.props.repo.replace(".git", "");
 		const link: string = `${baseUrl}/blob/${this.props.commit.commitName}/${this.props.commit.file}`;
@@ -63,7 +68,8 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		}
 	}
 
-	private goToAuthor(): void {
+	private goToAuthor(event: any): void {
+		event.preventDefault();
 		const link: string[] = this.props.repo.replace(".git", "").split('/');
 		const org: string = link[link.length - 2];
 		const repo: string = link[link.length - 1];
@@ -189,6 +195,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		try {
 			if (this.props.commit.file) {
 				let file: string = (this.props.commit.file.split('/').pop() as string).split('.')[0];
+				this.longFile = file;
 				if (file.length > 15) {
 					file = `${file.substring(0, 10)}...`;
 				}
@@ -306,14 +313,14 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						<div className="CommitRowCell" style={{fontSize: this.getFontSize(this.date), backgroundColor: `rgba(255, 255, 255, 0.${this.datec})`}}>
 							{this.date/*<br/>{this.time}*/}
 						</div>
-						<div className="CommitRowCell SubtleButton Underline" onClick={this.goToAuthor} style={{fontSize: this.getFontSize(author), backgroundColor: `rgba(255, 255, 255, 0.${this.authc})`}}>
+						<a href={`https://github.com/contributor/${author.replace(/ /g, "")}`} className="CommitRowCell SubtleButton Underline" onClick={this.goToAuthor} style={{color: "white", fontSize: this.getFontSize(author), backgroundColor: `rgba(255, 255, 255, 0.${this.authc})`}}>
 							{author}
-						</div>
+						</a>
 						{mobileView ? <div/> :
 							this.props.repo.replace(".git", "") !== "" ?
-								<div className="CommitRowCell SubtleButton Underline" onClick={this.goToCommit} style={{fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
-									{this.props.commit.commitName.substring(34)}
-								</div> :
+								<a href={`https://github.com/commit/${this.sha}`} className="CommitRowCell SubtleButton Underline" onClick={this.goToCommit} style={{color: "white", fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
+									{this.sha}
+								</a> :
 								<div className="CommitRowCell" style={{
 									fontSize: this.getFontSize("Commit"),
 									color: `rgba(255, 255, 255, 0.2)`,
@@ -324,9 +331,9 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						}
 						{mobileView ? <div/> :
 							this.file && this.props.repo.replace(".git", "") !== "" ?
-								<div className="CommitRowCell SubtleButton Underline" onClick={this.goToFileInCommit} style={{fontSize: this.getFontSize(this.file as string), backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
+								<a href={`https://github.com/file/${this.longFile}`} className="CommitRowCell SubtleButton Underline" onClick={this.goToFileInCommit} style={{color: "white", fontSize: this.getFontSize(this.file as string), backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
 									{this.file}
-								</div> :
+								</a> :
 								<div className="CommitRowCell" style={{
 									fontSize: this.getFontSize("File"),
 									color: `rgba(255, 255, 255, 0.2)`,

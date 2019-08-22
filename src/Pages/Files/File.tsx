@@ -106,18 +106,17 @@ export class ReactFile extends ReactFileSystemNode<IReactFileProps, IReactFileSt
 
 	protected createReactNode(): ReactNode {
 		const name: string = this.props.file.getName();
-		const style = {marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px"};
-		return(this.state.onScreen || this.props.active ?
+		// const style = {marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px", marginBottom: 0, marginTop: 0};
+		return(
 				<div
-					style={{display: "block"}}
+					style={{display: "block", marginTop: 0, marginBottom: 0}}
 				>
 					<div
 						style={{
 							marginLeft: (this.props.level * Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT) + this.state.margin + "px",
-							animation: `${this.props.active ? "Expand" : "Contract"}${this.props.file.isMinimized() ? "-mini" : ""}  ${this.fadeOutTime}ms ease-in-out`,
-							marginTop: !this.props.file.isMinimized() ? "3px" : "0",
-							marginBottom: !this.props.file.isMinimized() ? "3px" : "1px",
-							backgroundColor: this.props.highlight ? "rgb(124, 0, 6)" : "rgb(124, 124, 124)",
+							marginTop: this.props.active ? (!this.props.file.isMinimized() ? "0" : "0") : 0,
+							marginBottom: this.props.active ? (!this.props.file.isMinimized() ? "3px" : "1px") : 0,
+							backgroundColor: "rgb(124, 124, 124)",
 							height: this.props.active ? (this.props.file.isMinimized() ? "8px" : "40px") : "0",
 							font: "100% \"Courier New\", Futura, sans-serif",
 							width: (650 - Constants.LIST_ELEMENT_NEW_LINE_PX_COUNT * 1.5) + "px",
@@ -125,7 +124,7 @@ export class ReactFile extends ReactFileSystemNode<IReactFileProps, IReactFileSt
 							zIndex: 9999,
 							transition: this.fadeOutTime + "ms ease-in-out",
 							fontSize: ReactFileSystemNode.getFontSize(name, this.props.file.isMinimized() ? 1/12 : 1),
-							opacity: this.props.file.isMinimized() ? 0.5 : 1,
+							opacity: this.props.active ? (this.props.file.isMinimized() ? 0.5 : 1) : 0,
 						}}
 						onClick={this.handleClick}
 						onMouseDown={this.mouseDown}
@@ -133,7 +132,7 @@ export class ReactFile extends ReactFileSystemNode<IReactFileProps, IReactFileSt
 						{name}
 					</div>
 
-				</div> :  <div style={style}/>
+				</div>
 		);
 	}
 }
@@ -142,6 +141,7 @@ export interface IReactFileProps extends IFadeableElementProps {
 	file: File;
 	level: number;
 	highlight: boolean;
+	// shouldAnimate: boolean;
 }
 
 export interface IReactFileState extends IFadeableElementState {
