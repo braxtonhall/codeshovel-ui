@@ -44,6 +44,9 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		this.fileLink = this.getFileInCommitLink();
 		this.authorLink = this.getAuthorLink();
 		this.setUpColours();
+		this.goToAuthor = this.goToAuthor.bind(this);
+		this.goToCommit = this.goToCommit.bind(this);
+		this.goToFileInCommit = this.goToFileInCommit.bind(this);
 		this.toggleDiff = this.toggleDiff.bind(this);
 		this.toggleDetails = this.toggleDetails.bind(this);
 		this.getClassName = this.getClassName.bind(this);
@@ -75,8 +78,8 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 	}
 
 	private goToAuthor(event: any): void {
+		event.preventDefault();
 		if (!this.authorRequested) {
-			event.preventDefault();
 			this.authorRequested = true;
 			const link: string[] = this.props.repo.replace(".git", "").split('/');
 			const org: string = link[link.length - 2];
@@ -88,7 +91,19 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 				}).catch((err) => {
 					window.open(this.authorLink, "_blank");
 				});
-			}
+		} else {
+			window.open(this.authorLink, "_blank");
+		}
+	}
+
+	private goToCommit(event: any): void {
+		event.preventDefault();
+		window.open(this.commitLink, "_blank");
+	}
+
+	private goToFileInCommit(event: any): void {
+		event.preventDefault();
+		window.open(this.fileLink, "_blank");
 	}
 
 	private chooseDiffText(): string {
@@ -326,7 +341,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						</a>
 						{mobileView ? <div/> :
 							this.commitLink ?
-								<a href={this.commitLink} className="CommitRowCell SubtleButton Underline" style={{color: "white", fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
+								<a href={this.commitLink} className="CommitRowCell SubtleButton Underline" onClick={this.goToCommit} style={{color: "white", fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
 									{this.sha}
 								</a> :
 								<div className="CommitRowCell" style={{
@@ -339,7 +354,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						}
 						{mobileView ? <div/> :
 							this.fileLink ?
-								<a href={this.fileLink} className="CommitRowCell SubtleButton Underline" style={{color: "white", fontSize: this.getFontSize(this.file as string), backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
+								<a href={this.fileLink} className="CommitRowCell SubtleButton Underline" onClick={this.goToFileInCommit} style={{color: "white", fontSize: this.getFontSize(this.file as string), backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
 									{this.file}
 								</a> :
 								<div className="CommitRowCell" style={{
@@ -391,12 +406,13 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 							>
 									{this.state.details ?
 										<div
+											className="NoClick"
 											style={{
-												fontSize: this.getFontSize(desc, desc.length /  (Math.sqrt(desc.length) + 2)),
+												fontSize: this.getFontSize(desc, desc.length /  (Math.sqrt(desc.length) + 2), 1.2),
 												textAlign: "right",
 												position: "absolute",
 												bottom: "0",
-												right: "0"
+												right: "0",
 											}}
 										>
 											{desc}

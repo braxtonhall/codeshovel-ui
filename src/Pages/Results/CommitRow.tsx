@@ -29,11 +29,11 @@ export abstract class ReactCommitRow<P extends ICommitRowProps, S extends IFadea
 		this.typec = getColour();
 	}
 
-	protected getFontSize(s: string, modifier: number = 1): string {
+	protected getFontSize(s: string, modifier: number = 1, logModifier: number = 1): string {
 		const fontSize: number = this.props.windowWidth < Constants.MOBILE_WIDTH ? Constants.COMMIT_FONT_MOBILE_APPROX_SIZE : Constants.COMMIT_FONT_APPROX_SIZE;
 		return Math.min(
 			(this.props.windowWidth * (1 / Math.max(s.length, 8)) * 0.01 * fontSize * modifier),
-			(Math.log(this.props.windowHeight) * Constants.COMMIT_ROW_HEIGHT / 2) * modifier
+			(Math.log(this.props.windowHeight) * Constants.COMMIT_ROW_HEIGHT / 2) * logModifier
 		) + "px";
 	}
 }

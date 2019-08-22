@@ -79,7 +79,7 @@ export class Constants {
 	public static readonly SHOW_ABOUT_DELAY_TIME: number = 1000;
 
 	public static readonly BACKGROUND_TEXT_OPACITY: number = 0.5;
-	public static readonly BLUR_FACTOR: number = 1.2;
+	public static readonly BLUR_FACTOR: number = 0.016;
 
 	public static readonly FONT: string = "100% \"Courier New\", Futura, sans-serif";
 

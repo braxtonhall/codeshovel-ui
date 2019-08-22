@@ -8,10 +8,11 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 	private readonly fadeOutTime: number = 700;
 
 	private getBlur(): string {
-		return `blur(${Math.floor(Math.log(this.props.windowArea) * Constants.BLUR_FACTOR)}px)`;
+		return `blur(${Math.floor(Math.sqrt(this.props.windowArea) * Constants.BLUR_FACTOR)}px)`;
 	}
 
 	public render(): ReactNode {
+		const filter: string = this.getBlur();
 		return(
 			<div
 				style={{
@@ -26,7 +27,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						left: "2%",
 						font: "900% \"Courier New\", Futura, sans-serif",
 						opacity: this.props.page >= Pages.FILES && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
-						filter: this.getBlur(),
+						filter,
 						transition: this.fadeOutTime + "ms ease-in-out",
 						fontStyle: "italic",
 					}}
@@ -40,7 +41,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						left: "10%",
 						font: "800% \"Courier New\", Futura, sans-serif",
 						opacity: this.props.page >= Pages.FILES && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
-						filter: this.getBlur(),
+						filter,
 						transition: this.fadeOutTime + "ms ease-in-out",
 						fontStyle: "italic",
 					}}
@@ -54,7 +55,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						left: "60%",
 						font: "650% \"Courier New\", Futura, sans-serif",
 						opacity: this.props.page >= Pages.FILES && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
-						filter: this.getBlur(),
+						filter,
 						transition: this.fadeOutTime + "ms ease-in-out",
 						fontStyle: "italic",
 					}}
@@ -68,7 +69,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						left: "35%",
 						font: "700% \"Courier New\", Futura, sans-serif",
 						opacity: this.props.page >= Pages.METHODS && this.props.page < Pages.ABOUT ? Constants.BACKGROUND_TEXT_OPACITY : 0,
-						filter: this.getBlur(),
+						filter,
 						transition: this.fadeOutTime + "ms ease-in-out",
 						fontStyle: "italic",
 					}}
