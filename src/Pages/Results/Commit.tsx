@@ -11,6 +11,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 	protected readonly fadeOutTime: number = 300;
 	private diffDeleter: any = undefined;
 	private changes: IChange[];
+	private authorRequested: boolean;
 	private longFile: string | undefined;
 	private readonly file: string | undefined;
 	private readonly sha: string;
@@ -35,6 +36,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		this.type = this.getChangeType();
 		this.diffId = `${this.props.commit.commitName}-${this.props.method.startLine}-${this.props.method.methodName}-diff`;
 		this.sha = this.props.commit.commitName.substring(34);
+		this.authorRequested = false;
 		this.setUpColours();
 		this.goToCommit = this.goToCommit.bind(this);
 		this.goToFileInCommit = this.goToFileInCommit.bind(this);
@@ -70,15 +72,20 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 
 	private goToAuthor(event: any): void {
 		event.preventDefault();
-		const link: string[] = this.props.repo.replace(".git", "").split('/');
-		const org: string = link[link.length - 2];
-		const repo: string = link[link.length - 1];
-		RequestController.getAuthorUrl(org, repo, this.props.commit.commitName)
-			.then((authorUrl: string) => {
-				window.open(authorUrl, "_blank");
-			}).catch((err) => {
-				window.open(`https://github.com/search?q=${this.props.commit.commitAuthor.replace(' ', '+')}&type=Users`, "_blank");
-			});
+		if (!this.authorRequested) {
+			this.authorRequested = true;
+			const link: string[] = this.props.repo.replace(".git", "").split('/');
+			const org: string = link[link.length - 2];
+			const repo: string = link[link.length - 1];
+			RequestController.getAuthorUrl(org, repo, this.props.commit.commitName)
+				.then((authorUrl: string) => {
+					this.authorRequested = false;
+					window.open(authorUrl, "_blank");
+				}).catch((err) => {
+					this.authorRequested = false;
+					window.open(`https://github.com/search?q=${this.props.commit.commitAuthor.replace(' ', '+')}&type=Users`, "_blank");
+				});
+		}
 	}
 
 	private chooseDiffText(): string {
