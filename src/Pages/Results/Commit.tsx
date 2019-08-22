@@ -11,8 +11,11 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 	protected readonly fadeOutTime: number = 300;
 	private diffDeleter: any = undefined;
 	private changes: IChange[];
-	private authorRequested: boolean;
 	private longFile: string | undefined;
+	private authorRequested: boolean;
+	private authorLink: string;
+	private readonly commitLink: string | undefined;
+	private readonly fileLink: string | undefined;
 	private readonly file: string | undefined;
 	private readonly sha: string;
 	private readonly diffText: string;
@@ -29,6 +32,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		} else {
 			this.changes = [this.props.commit]
 		}
+		this.authorRequested = false;
 		this.file = this.getFileName();
 		this.diffText = this.chooseDiffText();
 		this.date = this.getDate();
@@ -36,10 +40,10 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		this.type = this.getChangeType();
 		this.diffId = `${this.props.commit.commitName}-${this.props.method.startLine}-${this.props.method.methodName}-diff`;
 		this.sha = this.props.commit.commitName.substring(34);
-		this.authorRequested = false;
+		this.commitLink = this.getCommitLink();
+		this.fileLink = this.getFileInCommitLink();
+		this.authorLink = this.getAuthorLink();
 		this.setUpColours();
-		this.goToCommit = this.goToCommit.bind(this);
-		this.goToFileInCommit = this.goToFileInCommit.bind(this);
 		this.toggleDiff = this.toggleDiff.bind(this);
 		this.toggleDetails = this.toggleDetails.bind(this);
 		this.getClassName = this.getClassName.bind(this);
@@ -48,43 +52,46 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		this.enableDiff = this.enableDiff.bind(this);
 		this.getBackgroundImage = this.getBackgroundImage.bind(this);
 		this.getFontSize = this.getFontSize.bind(this);
-		this.goToAuthor = this.goToAuthor.bind(this);
 	}
 
-	private goToCommit(event: any): void {
-		event.preventDefault();
+	private getCommitLink(): string | undefined {
 		const baseUrl: string = this.props.repo.replace(".git", "");
 		const link: string = `${baseUrl}/commit/${this.props.commit.commitName}`;
 		if(baseUrl !== "") {
-			window.open(link, "_blank");
+			return link;
 		}
 	}
 
-	private goToFileInCommit(event: any): void {
-		event.preventDefault();
-		console.log(this.props.repo);
+	private getFileInCommitLink(): string | undefined {
 		const baseUrl: string = this.props.repo.replace(".git", "");
 		const link: string = `${baseUrl}/blob/${this.props.commit.commitName}/${this.props.commit.file}`;
-		if(baseUrl !== "") {
-			window.open(link, "_blank");
+		if(this.file && baseUrl !== "") {
+			return link;
 		}
+	}
+
+	private getAuthorLink(): string {
+		return `https://github.com/search?q=${this.props.commit.commitAuthor.replace(' ', '+')}&type=Users`;
 	}
 
 	private goToAuthor(event: any): void {
-		event.preventDefault();
-		if (!this.authorRequested) {
-			this.authorRequested = true;
-			const link: string[] = this.props.repo.replace(".git", "").split('/');
-			const org: string = link[link.length - 2];
-			const repo: string = link[link.length - 1];
-			RequestController.getAuthorUrl(org, repo, this.props.commit.commitName)
-				.then((authorUrl: string) => {
-					this.authorRequested = false;
-					window.open(authorUrl, "_blank");
-				}).catch((err) => {
-					this.authorRequested = false;
-					window.open(`https://github.com/search?q=${this.props.commit.commitAuthor.replace(' ', '+')}&type=Users`, "_blank");
-				});
+		if (this.authorLink.endsWith("&type=Users")) {
+			event.preventDefault();
+			if (!this.authorRequested) {
+				this.authorRequested = true;
+				const link: string[] = this.props.repo.replace(".git", "").split('/');
+				const org: string = link[link.length - 2];
+				const repo: string = link[link.length - 1];
+				RequestController.getAuthorUrl(org, repo, this.props.commit.commitName)
+					.then((authorUrl: string) => {
+						this.authorRequested = false;
+						this.authorLink = authorUrl;
+						window.open(this.authorLink, "_blank");
+					}).catch((err) => {
+						this.authorRequested = false;
+						window.open(this.authorLink, "_blank");
+					});
+			}
 		}
 	}
 
@@ -233,8 +240,6 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		let newHeight = height;
 		newHeight = newHeight + (diff && diff.clientHeight > 1 ? (0.5 * height) + diff.clientHeight : 0);
 		newHeight = this.state.details ? newHeight + (this.changes.length * height) : newHeight;
-		// height = this.state.diff ? height + (height * (this.changes.length + (diff && this.props.commit.diff ? 0.5 : 0))) : height;
-		// height = diff ? height + diff.clientHeight : height;
 		return (newHeight * modifier) + "px";
 	}
 
@@ -320,12 +325,12 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						<div className="CommitRowCell" style={{fontSize: this.getFontSize(this.date), backgroundColor: `rgba(255, 255, 255, 0.${this.datec})`}}>
 							{this.date/*<br/>{this.time}*/}
 						</div>
-						<a href={`https://github.com/contributor/${author.replace(/ /g, "")}`} className="CommitRowCell SubtleButton Underline" onClick={this.goToAuthor} style={{color: "white", fontSize: this.getFontSize(author), backgroundColor: `rgba(255, 255, 255, 0.${this.authc})`}}>
+						<a href={this.authorLink} className="CommitRowCell SubtleButton Underline" onClick={this.goToAuthor} style={{color: "white", fontSize: this.getFontSize(author), backgroundColor: `rgba(255, 255, 255, 0.${this.authc})`}}>
 							{author}
 						</a>
 						{mobileView ? <div/> :
-							this.props.repo.replace(".git", "") !== "" ?
-								<a href={`https://github.com/commit/${this.sha}`} className="CommitRowCell SubtleButton Underline" onClick={this.goToCommit} style={{color: "white", fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
+							this.commitLink ?
+								<a href={this.commitLink} className="CommitRowCell SubtleButton Underline" style={{color: "white", fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
 									{this.sha}
 								</a> :
 								<div className="CommitRowCell" style={{
@@ -337,8 +342,8 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 								</div>
 						}
 						{mobileView ? <div/> :
-							this.file && this.props.repo.replace(".git", "") !== "" ?
-								<a href={`https://github.com/file/${this.longFile}`} className="CommitRowCell SubtleButton Underline" onClick={this.goToFileInCommit} style={{color: "white", fontSize: this.getFontSize(this.file as string), backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
+							this.fileLink ?
+								<a href={this.fileLink} className="CommitRowCell SubtleButton Underline" style={{color: "white", fontSize: this.getFontSize(this.file as string), backgroundColor: `rgba(255, 255, 255, 0.${this.filec})`}}>
 									{this.file}
 								</a> :
 								<div className="CommitRowCell" style={{
