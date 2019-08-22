@@ -2,7 +2,7 @@
 	"repo": "https://github.com/mockito/mockito.git",
 	"file": "src/main/java/org/mockito/internal/configuration/plugins/PluginLoader.java",
 	"method": {
-		"longName": "PluginLoader::loadPlugin(Class<PreferredType> preferredPluginType, Class<AlternateType> alternatePluginType)",
+		"longName": "Object loadPlugin(Class<PreferredType> preferredPluginType, Class<AlternateType> alternatePluginType);",
 		"startLine": 55,
 		"methodName": "loadPlugin",
 		"isStatic": false,
@@ -13,10 +13,10 @@
 		"ce111925adc1bf72df4e8d518c3af64e33daec2e": {
 			"type": "Ybodychange",
 			"commitMessage": "Added missing unit test coverage\n",
-			"commitDate": "2018-02-18, 10:36 PM",
+			"commitDate": "2018-02-18, 9:36 PM",
 			"commitName": "ce111925adc1bf72df4e8d518c3af64e33daec2e",
 			"commitAuthor": "Szczepan Faber",
-			"commitDateOld": "2018-02-18, 10:36 PM",
+			"commitDateOld": "2018-02-18, 9:36 PM",
 			"commitNameOld": "b1c419992e2c88dcf57dceaadc2bd648cb3af25a",
 			"commitAuthorOld": "Szczepan Faber",
 			"daysBetweenCommits": 0,
@@ -28,10 +28,10 @@
 		"b1c419992e2c88dcf57dceaadc2bd648cb3af25a": {
 			"type": "Ybodychange",
 			"commitMessage": "Busted complexity into separate classes\n\nThis way, it will be easier to write unit tests\n",
-			"commitDate": "2018-02-18, 10:36 PM",
+			"commitDate": "2018-02-18, 9:36 PM",
 			"commitName": "b1c419992e2c88dcf57dceaadc2bd648cb3af25a",
 			"commitAuthor": "Szczepan Faber",
-			"commitDateOld": "2018-02-18, 8:59 PM",
+			"commitDateOld": "2018-02-18, 7:59 PM",
 			"commitNameOld": "fc6afc103ebddba5794856f90244b14c4a042a14",
 			"commitAuthorOld": "Philip P. Moltmann",
 			"daysBetweenCommits": 0.07,
@@ -43,10 +43,10 @@
 		"fc6afc103ebddba5794856f90244b14c4a042a14": {
 			"type": "Ybodychange",
 			"commitMessage": "Unify loadPlugin methods and add @since to new APIs\n",
-			"commitDate": "2018-02-18, 8:59 PM",
+			"commitDate": "2018-02-18, 7:59 PM",
 			"commitName": "fc6afc103ebddba5794856f90244b14c4a042a14",
 			"commitAuthor": "Philip P. Moltmann",
-			"commitDateOld": "2018-02-18, 8:59 PM",
+			"commitDateOld": "2018-02-18, 7:59 PM",
 			"commitNameOld": "08c0931684159e5f00f388e3de55cec97020e107",
 			"commitAuthorOld": "Philip P. Moltmann",
 			"daysBetweenCommits": 0,
@@ -58,9 +58,10 @@
 		"08c0931684159e5f00f388e3de55cec97020e107": {
 			"type": "Yintroduced",
 			"commitMessage": "Move compatiblity plugin loading to PluginLoader\n",
-			"commitDate": "2018-02-18, 8:59 PM",
+			"commitDate": "2018-02-18, 7:59 PM",
 			"commitName": "08c0931684159e5f00f388e3de55cec97020e107",
-			"commitAuthor": "Philip P. Moltmann"
+			"commitAuthor": "Philip P. Moltmann",
+			"diff": "@@ -0,0 +1,24 @@\n+    <PreferredType, AlternateType> Object loadPlugin(final Class<PreferredType> preferredPluginType, final Class<AlternateType> alternatePluginType) {\n+        try {\n+            PreferredType preferredPlugin = loadImpl(preferredPluginType);\n+            if (preferredPlugin != null) {\n+                return preferredPlugin;\n+            } else {\n+                AlternateType alternatePlugin = loadImpl(alternatePluginType);\n+                if (alternatePlugin != null) {\n+                    return alternatePlugin;\n+                }\n+            }\n+\n+            return plugins.getDefaultPlugin(preferredPluginType);\n+        } catch (final Throwable t) {\n+            return Proxy.newProxyInstance(preferredPluginType.getClassLoader(),\n+                new Class<?>[]{preferredPluginType},\n+                new InvocationHandler() {\n+                    @Override\n+                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {\n+                        throw new IllegalStateException(\"Could not initialize plugin: \" + preferredPluginType + \" (alternate \" + alternatePluginType + \")\", t);\n+                    }\n+                });\n+        }\n+    }\n\\ No newline at end of file\n"
 		}
 	},
 	"sha": "077562ea54f1fa87ff8dd233c3060ddbf0f1ce26"

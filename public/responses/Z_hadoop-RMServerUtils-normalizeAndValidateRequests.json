@@ -1,0 +1,223 @@
+{
+	"repo": "https://github.com/apache/hadoop.git",
+	"file": "hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/main/java/org/apache/hadoop/yarn/server/resourcemanager/RMServerUtils.java",
+	"method": {
+		"longName": "public void normalizeAndValidateRequests(List<ResourceRequest> ask, Resource maximumResource, String queueName, YarnScheduler scheduler, RMContext rmContext);",
+		"startLine": 237,
+		"methodName": "normalizeAndValidateRequests",
+		"isStatic": true,
+		"isAbstract": false,
+		"visibility": "public"
+	},
+	"history": {
+		"821b0de4c59156d4a65112de03ba3e7e1c88e309": {
+			"type": "Ybodychange",
+			"commitMessage": "YARN-7574. Add support for Node Labels on Auto Created Leaf Queue Template. Contributed by Suma Shivaprasad.\n",
+			"commitDate": "2018-04-09, 8:47 AM",
+			"commitName": "821b0de4c59156d4a65112de03ba3e7e1c88e309",
+			"commitAuthor": "Sunil G",
+			"commitDateOld": "2018-02-15, 11:07 PM",
+			"commitNameOld": "aae629913cee0157c945a2c7384c7bf398f10616",
+			"commitAuthorOld": "Sunil G",
+			"daysBetweenCommits": 52.36,
+			"commitsBetweenForRepo": 457,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,16 +1,17 @@\n   public static void normalizeAndValidateRequests(List<ResourceRequest> ask,\n       Resource maximumResource, String queueName, YarnScheduler scheduler,\n-      RMContext rmContext)\n-      throws InvalidResourceRequestException {\n+      RMContext rmContext) throws InvalidResourceRequestException {\n     // Get queue from scheduler\n     QueueInfo queueInfo = null;\n     try {\n       queueInfo = scheduler.getQueueInfo(queueName, false, false);\n     } catch (IOException e) {\n+      //Queue may not exist since it could be auto-created in case of\n+      // dynamic queues\n     }\n \n     for (ResourceRequest resReq : ask) {\n       SchedulerUtils.normalizeAndvalidateRequest(resReq, maximumResource,\n           queueName, scheduler, rmContext, queueInfo);\n     }\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"d6f6741296639a73f5306e3ebefec84a40ca03e5": {
+			"type": "Ybodychange",
+			"commitMessage": "YARN-3489. RMServerUtils.validateResourceRequests should only obtain queue info once. (Varun Saxena via wangda)\n",
+			"commitDate": "2015-05-11, 5:31 PM",
+			"commitName": "d6f6741296639a73f5306e3ebefec84a40ca03e5",
+			"commitAuthor": "Wangda Tan",
+			"commitDateOld": "2015-05-07, 5:35 PM",
+			"commitNameOld": "f489a4ec969f3727d03c8e85d51af1018fc0b2a1",
+			"commitAuthorOld": "Jian He",
+			"daysBetweenCommits": 4,
+			"commitsBetweenForRepo": 94,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,9 +1,16 @@\n   public static void normalizeAndValidateRequests(List<ResourceRequest> ask,\n       Resource maximumResource, String queueName, YarnScheduler scheduler,\n       RMContext rmContext)\n       throws InvalidResourceRequestException {\n+    // Get queue from scheduler\n+    QueueInfo queueInfo = null;\n+    try {\n+      queueInfo = scheduler.getQueueInfo(queueName, false, false);\n+    } catch (IOException e) {\n+    }\n+\n     for (ResourceRequest resReq : ask) {\n       SchedulerUtils.normalizeAndvalidateRequest(resReq, maximumResource,\n-          queueName, scheduler, rmContext);\n+          queueName, scheduler, rmContext, queueInfo);\n     }\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"f489a4ec969f3727d03c8e85d51af1018fc0b2a1": {
+			"type": "Ymultichange(Yparameterchange,Ybodychange)",
+			"commitMessage": "YARN-2918. RM should not fail on startup if queue's configured labels do not exist in cluster-node-labels. Contributed by Wangda Tan\n",
+			"commitDate": "2015-05-07, 5:35 PM",
+			"commitName": "f489a4ec969f3727d03c8e85d51af1018fc0b2a1",
+			"commitAuthor": "Jian He",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "YARN-2918. RM should not fail on startup if queue's configured labels do not exist in cluster-node-labels. Contributed by Wangda Tan\n",
+					"commitDate": "2015-05-07, 5:35 PM",
+					"commitName": "f489a4ec969f3727d03c8e85d51af1018fc0b2a1",
+					"commitAuthor": "Jian He",
+					"commitDateOld": "2015-04-17, 5:11 PM",
+					"commitNameOld": "f65eeb412d140a3808bcf99344a9f3a965918f70",
+					"commitAuthorOld": "Wangda Tan",
+					"daysBetweenCommits": 20.02,
+					"commitsBetweenForRepo": 188,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,8 +1,9 @@\n   public static void normalizeAndValidateRequests(List<ResourceRequest> ask,\n-      Resource maximumResource, String queueName, YarnScheduler scheduler)\n+      Resource maximumResource, String queueName, YarnScheduler scheduler,\n+      RMContext rmContext)\n       throws InvalidResourceRequestException {\n     for (ResourceRequest resReq : ask) {\n       SchedulerUtils.normalizeAndvalidateRequest(resReq, maximumResource,\n-          queueName, scheduler);\n+          queueName, scheduler, rmContext);\n     }\n   }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[ask-List<ResourceRequest>, maximumResource-Resource, queueName-String, scheduler-YarnScheduler]",
+						"newValue": "[ask-List<ResourceRequest>, maximumResource-Resource, queueName-String, scheduler-YarnScheduler, rmContext-RMContext]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "YARN-2918. RM should not fail on startup if queue's configured labels do not exist in cluster-node-labels. Contributed by Wangda Tan\n",
+					"commitDate": "2015-05-07, 5:35 PM",
+					"commitName": "f489a4ec969f3727d03c8e85d51af1018fc0b2a1",
+					"commitAuthor": "Jian He",
+					"commitDateOld": "2015-04-17, 5:11 PM",
+					"commitNameOld": "f65eeb412d140a3808bcf99344a9f3a965918f70",
+					"commitAuthorOld": "Wangda Tan",
+					"daysBetweenCommits": 20.02,
+					"commitsBetweenForRepo": 188,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,8 +1,9 @@\n   public static void normalizeAndValidateRequests(List<ResourceRequest> ask,\n-      Resource maximumResource, String queueName, YarnScheduler scheduler)\n+      Resource maximumResource, String queueName, YarnScheduler scheduler,\n+      RMContext rmContext)\n       throws InvalidResourceRequestException {\n     for (ResourceRequest resReq : ask) {\n       SchedulerUtils.normalizeAndvalidateRequest(resReq, maximumResource,\n-          queueName, scheduler);\n+          queueName, scheduler, rmContext);\n     }\n   }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"f65eeb412d140a3808bcf99344a9f3a965918f70": {
+			"type": "Ymultichange(Yrename,Ybodychange)",
+			"commitMessage": "YARN-3493. RM fails to come up with error \"Failed to load/recover state\" when mem settings are changed. (Jian He via wangda)\n",
+			"commitDate": "2015-04-17, 5:11 PM",
+			"commitName": "f65eeb412d140a3808bcf99344a9f3a965918f70",
+			"commitAuthor": "Wangda Tan",
+			"subchanges": [
+				{
+					"type": "Yrename",
+					"commitMessage": "YARN-3493. RM fails to come up with error \"Failed to load/recover state\" when mem settings are changed. (Jian He via wangda)\n",
+					"commitDate": "2015-04-17, 5:11 PM",
+					"commitName": "f65eeb412d140a3808bcf99344a9f3a965918f70",
+					"commitAuthor": "Wangda Tan",
+					"commitDateOld": "2015-02-09, 8:34 PM",
+					"commitNameOld": "23bf6c72071782e3fd5a628e21495d6b974c7a9e",
+					"commitAuthorOld": "Zhijie Shen",
+					"daysBetweenCommits": 66.82,
+					"commitsBetweenForRepo": 615,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,8 +1,8 @@\n-  public static void validateResourceRequests(List<ResourceRequest> ask,\n+  public static void normalizeAndValidateRequests(List<ResourceRequest> ask,\n       Resource maximumResource, String queueName, YarnScheduler scheduler)\n       throws InvalidResourceRequestException {\n     for (ResourceRequest resReq : ask) {\n-      SchedulerUtils.validateResourceRequest(resReq, maximumResource,\n+      SchedulerUtils.normalizeAndvalidateRequest(resReq, maximumResource,\n           queueName, scheduler);\n     }\n   }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "validateResourceRequests",
+						"newValue": "normalizeAndValidateRequests"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "YARN-3493. RM fails to come up with error \"Failed to load/recover state\" when mem settings are changed. (Jian He via wangda)\n",
+					"commitDate": "2015-04-17, 5:11 PM",
+					"commitName": "f65eeb412d140a3808bcf99344a9f3a965918f70",
+					"commitAuthor": "Wangda Tan",
+					"commitDateOld": "2015-02-09, 8:34 PM",
+					"commitNameOld": "23bf6c72071782e3fd5a628e21495d6b974c7a9e",
+					"commitAuthorOld": "Zhijie Shen",
+					"daysBetweenCommits": 66.82,
+					"commitsBetweenForRepo": 615,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,8 +1,8 @@\n-  public static void validateResourceRequests(List<ResourceRequest> ask,\n+  public static void normalizeAndValidateRequests(List<ResourceRequest> ask,\n       Resource maximumResource, String queueName, YarnScheduler scheduler)\n       throws InvalidResourceRequestException {\n     for (ResourceRequest resReq : ask) {\n-      SchedulerUtils.validateResourceRequest(resReq, maximumResource,\n+      SchedulerUtils.normalizeAndvalidateRequest(resReq, maximumResource,\n           queueName, scheduler);\n     }\n   }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"f2ea555ac6c06a3f2f6559731f48711fff05d3f1": {
+			"type": "Ymultichange(Yparameterchange,Ybodychange)",
+			"commitMessage": "YARN-2496. Enhanced Capacity Scheduler to have basic support for allocating resources based on node-labels. Contributed by Wangda Tan.\nYARN-2500. Ehnaced ResourceManager to support schedulers allocating resources based on node-labels. Contributed by Wangda Tan.\n",
+			"commitDate": "2014-10-15, 6:33 PM",
+			"commitName": "f2ea555ac6c06a3f2f6559731f48711fff05d3f1",
+			"commitAuthor": "Vinod Kumar Vavilapalli",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "YARN-2496. Enhanced Capacity Scheduler to have basic support for allocating resources based on node-labels. Contributed by Wangda Tan.\nYARN-2500. Ehnaced ResourceManager to support schedulers allocating resources based on node-labels. Contributed by Wangda Tan.\n",
+					"commitDate": "2014-10-15, 6:33 PM",
+					"commitName": "f2ea555ac6c06a3f2f6559731f48711fff05d3f1",
+					"commitAuthor": "Vinod Kumar Vavilapalli",
+					"commitDateOld": "2014-09-10, 6:20 PM",
+					"commitNameOld": "83be3ad44484bf8a24cb90de4b9c26ab59d226a8",
+					"commitAuthorOld": "Jian He",
+					"daysBetweenCommits": 35.01,
+					"commitsBetweenForRepo": 369,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,6 +1,8 @@\n   public static void validateResourceRequests(List<ResourceRequest> ask,\n-      Resource maximumResource) throws InvalidResourceRequestException {\n+      Resource maximumResource, String queueName, YarnScheduler scheduler)\n+      throws InvalidResourceRequestException {\n     for (ResourceRequest resReq : ask) {\n-      SchedulerUtils.validateResourceRequest(resReq, maximumResource);\n+      SchedulerUtils.validateResourceRequest(resReq, maximumResource,\n+          queueName, scheduler);\n     }\n   }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[ask-List<ResourceRequest>, maximumResource-Resource]",
+						"newValue": "[ask-List<ResourceRequest>, maximumResource-Resource, queueName-String, scheduler-YarnScheduler]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "YARN-2496. Enhanced Capacity Scheduler to have basic support for allocating resources based on node-labels. Contributed by Wangda Tan.\nYARN-2500. Ehnaced ResourceManager to support schedulers allocating resources based on node-labels. Contributed by Wangda Tan.\n",
+					"commitDate": "2014-10-15, 6:33 PM",
+					"commitName": "f2ea555ac6c06a3f2f6559731f48711fff05d3f1",
+					"commitAuthor": "Vinod Kumar Vavilapalli",
+					"commitDateOld": "2014-09-10, 6:20 PM",
+					"commitNameOld": "83be3ad44484bf8a24cb90de4b9c26ab59d226a8",
+					"commitAuthorOld": "Jian He",
+					"daysBetweenCommits": 35.01,
+					"commitsBetweenForRepo": 369,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,6 +1,8 @@\n   public static void validateResourceRequests(List<ResourceRequest> ask,\n-      Resource maximumResource) throws InvalidResourceRequestException {\n+      Resource maximumResource, String queueName, YarnScheduler scheduler)\n+      throws InvalidResourceRequestException {\n     for (ResourceRequest resReq : ask) {\n-      SchedulerUtils.validateResourceRequest(resReq, maximumResource);\n+      SchedulerUtils.validateResourceRequest(resReq, maximumResource,\n+          queueName, scheduler);\n     }\n   }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"48264f1994c8b6002d5f1ac2fea46da28798df2d": {
+			"type": "Ymultichange(Ymovefromfile,Ybodychange)",
+			"commitMessage": "YARN-948. Changed ResourceManager to validate the release container list before actually releasing them. Contributed by Omkar Vinit Joshi.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/hadoop/common/trunk@1508609 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2013-07-30, 1:30 PM",
+			"commitName": "48264f1994c8b6002d5f1ac2fea46da28798df2d",
+			"commitAuthor": "Vinod Kumar Vavilapalli",
+			"subchanges": [
+				{
+					"type": "Ymovefromfile",
+					"commitMessage": "YARN-948. Changed ResourceManager to validate the release container list before actually releasing them. Contributed by Omkar Vinit Joshi.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/hadoop/common/trunk@1508609 13f79535-47bb-0310-9956-ffa450edef68\n",
+					"commitDate": "2013-07-30, 1:30 PM",
+					"commitName": "48264f1994c8b6002d5f1ac2fea46da28798df2d",
+					"commitAuthor": "Vinod Kumar Vavilapalli",
+					"commitDateOld": "2013-07-30, 1:04 PM",
+					"commitNameOld": "1d915238a6a06d09e1789532994f00f496bd969c",
+					"commitAuthorOld": "Vinod Kumar Vavilapalli",
+					"daysBetweenCommits": 0.02,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,6 +1,6 @@\n   public static void validateResourceRequests(List<ResourceRequest> ask,\n       Resource maximumResource) throws InvalidResourceRequestException {\n     for (ResourceRequest resReq : ask) {\n-      validateResourceRequest(resReq, maximumResource);\n+      SchedulerUtils.validateResourceRequest(resReq, maximumResource);\n     }\n   }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldPath": "hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/main/java/org/apache/hadoop/yarn/server/resourcemanager/scheduler/SchedulerUtils.java",
+						"newPath": "hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/main/java/org/apache/hadoop/yarn/server/resourcemanager/RMServerUtils.java",
+						"oldMethodName": "validateResourceRequests",
+						"newMethodName": "validateResourceRequests"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "YARN-948. Changed ResourceManager to validate the release container list before actually releasing them. Contributed by Omkar Vinit Joshi.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/hadoop/common/trunk@1508609 13f79535-47bb-0310-9956-ffa450edef68\n",
+					"commitDate": "2013-07-30, 1:30 PM",
+					"commitName": "48264f1994c8b6002d5f1ac2fea46da28798df2d",
+					"commitAuthor": "Vinod Kumar Vavilapalli",
+					"commitDateOld": "2013-07-30, 1:04 PM",
+					"commitNameOld": "1d915238a6a06d09e1789532994f00f496bd969c",
+					"commitAuthorOld": "Vinod Kumar Vavilapalli",
+					"daysBetweenCommits": 0.02,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,6 +1,6 @@\n   public static void validateResourceRequests(List<ResourceRequest> ask,\n       Resource maximumResource) throws InvalidResourceRequestException {\n     for (ResourceRequest resReq : ask) {\n-      validateResourceRequest(resReq, maximumResource);\n+      SchedulerUtils.validateResourceRequest(resReq, maximumResource);\n     }\n   }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"bc6777dd5bdcbaef09897b506bc6511ae456033d": {
+			"type": "Yintroduced",
+			"commitMessage": "YARN-193. Scheduler.normalizeRequest does not account for allocation requests that exceed maximumAllocation limits (Zhijie Shen via bikas)\n\ngit-svn-id: https://svn.apache.org/repos/asf/hadoop/common/trunk@1465067 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2013-04-05, 10:45 AM",
+			"commitName": "bc6777dd5bdcbaef09897b506bc6511ae456033d",
+			"commitAuthor": "Bikas Saha",
+			"diff": "@@ -0,0 +1,6 @@\n+  public static void validateResourceRequests(List<ResourceRequest> ask,\n+      Resource maximumResource) throws InvalidResourceRequestException {\n+    for (ResourceRequest resReq : ask) {\n+      validateResourceRequest(resReq, maximumResource);\n+    }\n+  }\n\\ No newline at end of file\n"
+		}
+	},
+	"sha": "9c3fc3ef2865164aa5f121793ac914cfeb21a181"
+}

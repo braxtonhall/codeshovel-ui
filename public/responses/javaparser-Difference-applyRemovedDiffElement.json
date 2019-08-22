@@ -2,7 +2,7 @@
 	"repo": "https://github.com/javaparser/javaparser.git",
 	"file": "javaparser-core/src/main/java/com/github/javaparser/printer/lexicalpreservation/Difference.java",
 	"method": {
-		"longName": "Difference::applyRemovedDiffElement(RemovedGroup removedGroup, Removed removed, TextElement originalElement, boolean originalElementIsChild, boolean originalElementIsToken)",
+		"longName": "private void applyRemovedDiffElement(RemovedGroup removedGroup, Removed removed, TextElement originalElement, boolean originalElementIsChild, boolean originalElementIsToken);",
 		"startLine": 339,
 		"methodName": "applyRemovedDiffElement",
 		"isStatic": false,
@@ -13,10 +13,10 @@
 		"4f9e0c67e6f11738be45155bd5606f18445fcec7": {
 			"type": "Ybodychange",
 			"commitMessage": "combined logics to clean the line and added new unit test\n",
-			"commitDate": "2018-06-07, 2:54 PM",
+			"commitDate": "2018-06-07, 1:54 PM",
 			"commitName": "4f9e0c67e6f11738be45155bd5606f18445fcec7",
 			"commitAuthor": "Thomas Leu",
-			"commitDateOld": "2018-06-07, 2:54 PM",
+			"commitDateOld": "2018-06-07, 1:54 PM",
 			"commitNameOld": "2d3f5e219af9d1ba916f1dc21a6169a41a254632",
 			"commitAuthorOld": "Thomas Leu",
 			"daysBetweenCommits": 0,
@@ -28,17 +28,17 @@
 		"2d3f5e219af9d1ba916f1dc21a6169a41a254632": {
 			"type": "Ymultichange(Yparameterchange,Ybodychange)",
 			"commitMessage": "built RemovedGroup into Difference class to be able to handle indentations better for removed elements\n",
-			"commitDate": "2018-06-07, 2:54 PM",
+			"commitDate": "2018-06-07, 1:54 PM",
 			"commitName": "2d3f5e219af9d1ba916f1dc21a6169a41a254632",
 			"commitAuthor": "Thomas Leu",
 			"subchanges": [
 				{
 					"type": "Yparameterchange",
 					"commitMessage": "built RemovedGroup into Difference class to be able to handle indentations better for removed elements\n",
-					"commitDate": "2018-06-07, 2:54 PM",
+					"commitDate": "2018-06-07, 1:54 PM",
 					"commitName": "2d3f5e219af9d1ba916f1dc21a6169a41a254632",
 					"commitAuthor": "Thomas Leu",
-					"commitDateOld": "2018-06-07, 2:54 PM",
+					"commitDateOld": "2018-06-07, 1:54 PM",
 					"commitNameOld": "996b78486d0db86dece4457a7faa9b314dc3b847",
 					"commitAuthorOld": "Thomas Leu",
 					"daysBetweenCommits": 0,
@@ -53,10 +53,10 @@
 				{
 					"type": "Ybodychange",
 					"commitMessage": "built RemovedGroup into Difference class to be able to handle indentations better for removed elements\n",
-					"commitDate": "2018-06-07, 2:54 PM",
+					"commitDate": "2018-06-07, 1:54 PM",
 					"commitName": "2d3f5e219af9d1ba916f1dc21a6169a41a254632",
 					"commitAuthor": "Thomas Leu",
-					"commitDateOld": "2018-06-07, 2:54 PM",
+					"commitDateOld": "2018-06-07, 1:54 PM",
 					"commitNameOld": "996b78486d0db86dece4457a7faa9b314dc3b847",
 					"commitAuthorOld": "Thomas Leu",
 					"daysBetweenCommits": 0,
@@ -70,9 +70,10 @@
 		"b7bd15d12e107c85e29912960f7b4e48aac4dc38": {
 			"type": "Yintroduced",
 			"commitMessage": "Reduced cognitive complexity by extracting some methods\n",
-			"commitDate": "2018-05-18, 7:34 PM",
+			"commitDate": "2018-05-18, 6:34 PM",
 			"commitName": "b7bd15d12e107c85e29912960f7b4e48aac4dc38",
-			"commitAuthor": "Thomas Leu"
+			"commitAuthor": "Thomas Leu",
+			"diff": "@@ -0,0 +1,54 @@\n+    private void applyRemovedDiffElement(Removed removed, TextElement originalElement, boolean originalElementIsChild, boolean originalElementIsToken) {\n+        if (removed.isChild() && originalElementIsChild) {\n+            ChildTextElement originalElementChild = (ChildTextElement)originalElement;\n+            if (originalElementChild.isComment()) {\n+                // We expected to remove a proper node but we found a comment in between.\n+                // If the comment is associated to the node we want to remove we remove it as well, otherwise we keep it\n+                Comment comment = (Comment)originalElementChild.getChild();\n+                if (!comment.isOrphan() && comment.getCommentedNode().isPresent() && comment.getCommentedNode().get().equals(removed.getChild())) {\n+                    nodeText.removeElement(originalIndex);\n+                } else {\n+                    originalIndex++;\n+                }\n+            } else {\n+                nodeText.removeElement(originalIndex);\n+                if (originalIndex < originalElements.size() && originalElements.get(originalIndex).isNewline()) {\n+                    originalIndex = considerCleaningTheLine(nodeText, originalIndex);\n+                } else {\n+                    if (diffIndex + 1 >= diffElements.size() || !(diffElements.get(diffIndex + 1) instanceof Added)) {\n+                        originalIndex = considerEnforcingIndentation(nodeText, originalIndex);\n+                    }\n+                    // If in front we have one space and before also we had space let's drop one space\n+                    if (originalElements.size() > originalIndex && originalIndex > 0) {\n+                        if (originalElements.get(originalIndex).isWhiteSpace()\n+                                && originalElements.get(originalIndex - 1).isWhiteSpace()) {\n+                            // However we do not want to do that when we are about to adding or removing elements\n+                            if ((diffIndex + 1) == diffElements.size() || (diffElements.get(diffIndex + 1) instanceof Kept)) {\n+                                originalElements.remove(originalIndex--);\n+                            }\n+                        }\n+                    }\n+                }\n+                diffIndex++;\n+            }\n+        } else if (removed.isToken() && originalElementIsToken\n+                && (removed.getTokenType() == ((TokenTextElement)originalElement).getTokenKind())) {\n+            nodeText.removeElement(originalIndex);\n+            diffIndex++;\n+        } else if (originalElementIsToken && originalElement.isWhiteSpaceOrComment()) {\n+            originalIndex++;\n+        } else if (removed.isPrimitiveType()) {\n+            if (isPrimitiveType(originalElement)) {\n+                nodeText.removeElement(originalIndex);\n+                diffIndex++;\n+            } else {\n+                throw new UnsupportedOperationException(\"removed \" + removed.getElement() + \" vs \" + originalElement);\n+            }\n+        } else if (removed.isWhiteSpace()) {\n+            diffIndex++;\n+        } else if (originalElement.isWhiteSpace()) {\n+            originalIndex++;\n+        } else {\n+            throw new UnsupportedOperationException(\"removed \" + removed.getElement() + \" vs \" + originalElement);\n+        }\n+    }\n\\ No newline at end of file\n"
 		}
 	},
 	"sha": "97555053af3025556efe1a168fd7943dac28a2a6"

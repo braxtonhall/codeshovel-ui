@@ -2,7 +2,7 @@
 	"repo": "https://github.com/eclipse/jetty.project.git",
 	"file": "jetty-util/src/main/java/org/eclipse/jetty/util/log/StdErrLog.java",
 	"method": {
-		"longName": "StdErrLog::escape(StringBuilder builder, String string)",
+		"longName": "private void escape(StringBuilder builder, String string);",
 		"startLine": 573,
 		"methodName": "escape",
 		"isStatic": false,
@@ -13,10 +13,10 @@
 		"c48cb240a172c3964c2bdfc9b8c535bbab47c31c": {
 			"type": "Ybodychange",
 			"commitMessage": "414763 Added org.eclipse.jetty.util.log.stderr.ESCAPE option\n",
-			"commitDate": "2013-08-11, 7:42 PM",
+			"commitDate": "2013-08-11, 6:42 PM",
 			"commitName": "c48cb240a172c3964c2bdfc9b8c535bbab47c31c",
 			"commitAuthor": "Greg Wilkins",
-			"commitDateOld": "2013-01-11, 4:04 PM",
+			"commitDateOld": "2013-01-11, 3:04 PM",
 			"commitNameOld": "e1c516c7d1937b8604864dfe57236877ef5be4ea",
 			"commitAuthorOld": "",
 			"daysBetweenCommits": 212.11,
@@ -28,10 +28,10 @@
 		"f81c1b68e26e45ffc61b3acd10f1be628fedb2c6": {
 			"type": "Ybodychange",
 			"commitMessage": "358649 - StdErrLog system properties for package/class logging LEVEL.\n\n* Remerging back into master now that 7.5.2 release is done.\n",
-			"commitDate": "2011-10-07, 11:28 AM",
+			"commitDate": "2011-10-07, 10:28 AM",
 			"commitName": "f81c1b68e26e45ffc61b3acd10f1be628fedb2c6",
 			"commitAuthor": "Joakim Erdfelt",
-			"commitDateOld": "2011-10-06, 1:16 PM",
+			"commitDateOld": "2011-10-06, 12:16 PM",
 			"commitNameOld": "9ac4e35b96296490ed58fd5aac973e54a759b33f",
 			"commitAuthorOld": "Jesse McConnell",
 			"daysBetweenCommits": 0.93,
@@ -43,10 +43,10 @@
 		"9ac4e35b96296490ed58fd5aac973e54a759b33f": {
 			"type": "Ybodychange",
 			"commitMessage": "wqRevert \"358649 - StdErrLog system properties for package/class logging LEVEL.\"\n\nThis reverts commit 12dbcadedec19092f39a820ccb37fa7c347ddbc6.\n",
-			"commitDate": "2011-10-06, 1:16 PM",
+			"commitDate": "2011-10-06, 12:16 PM",
 			"commitName": "9ac4e35b96296490ed58fd5aac973e54a759b33f",
 			"commitAuthor": "Jesse McConnell",
-			"commitDateOld": "2011-10-06, 1:04 PM",
+			"commitDateOld": "2011-10-06, 12:04 PM",
 			"commitNameOld": "12dbcadedec19092f39a820ccb37fa7c347ddbc6",
 			"commitAuthorOld": "Joakim Erdfelt",
 			"daysBetweenCommits": 0.01,
@@ -58,10 +58,10 @@
 		"12dbcadedec19092f39a820ccb37fa7c347ddbc6": {
 			"type": "Ybodychange",
 			"commitMessage": "358649 - StdErrLog system properties for package/class logging LEVEL.",
-			"commitDate": "2011-10-06, 1:04 PM",
+			"commitDate": "2011-10-06, 12:04 PM",
 			"commitName": "12dbcadedec19092f39a820ccb37fa7c347ddbc6",
 			"commitAuthor": "Joakim Erdfelt",
-			"commitDateOld": "2011-08-30, 12:05 AM",
+			"commitDateOld": "2011-08-29, 11:05 PM",
 			"commitNameOld": "45148353ec0064d970dbc2ab43c68a9bf8e64864",
 			"commitAuthorOld": "Greg Wilkins",
 			"daysBetweenCommits": 37.54,
@@ -73,9 +73,10 @@
 		"19368f398576bcd1959ab20c8a09b98a4ed30c42": {
 			"type": "Yintroduced",
 			"commitMessage": "Fixes 310603 (Make Logger interface consistent).\n\ngit-svn-id: svn+ssh://dev.eclipse.org/svnroot/rt/org.eclipse.jetty/jetty/trunk@1570 7e9141cc-0065-0410-87d8-b60c137991c4\n",
-			"commitDate": "2010-04-27, 5:04 AM",
+			"commitDate": "2010-04-27, 4:04 AM",
 			"commitName": "19368f398576bcd1959ab20c8a09b98a4ed30c42",
-			"commitAuthor": "Simone Bordet"
+			"commitAuthor": "Simone Bordet",
+			"diff": "@@ -0,0 +1,18 @@\n+    private void escape(StringBuilder builder, String string)\n+    {\n+        for (int i = 0; i < string.length(); ++i)\n+        {\n+            char c = string.charAt(i);\n+            if (Character.isISOControl(c))\n+            {\n+                if (c == '\\n')\n+                    builder.append('|');\n+                else if (c == '\\r')\n+                    builder.append('<');\n+                else\n+                    builder.append('?');\n+            }\n+            else\n+                builder.append(c);\n+        }\n+    }\n\\ No newline at end of file\n"
 		}
 	},
 	"sha": "fc5dd874f3deda71e6cd42af994a5af5cb6be4af"

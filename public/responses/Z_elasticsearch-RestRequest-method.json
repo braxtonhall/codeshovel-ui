@@ -1,0 +1,168 @@
+{
+	"repo": "https://github.com/elastic/elasticsearch.git",
+	"file": "server/src/main/java/org/elasticsearch/rest/RestRequest.java",
+	"method": {
+		"longName": "public Method method();",
+		"startLine": 150,
+		"methodName": "method",
+		"isStatic": false,
+		"isAbstract": false,
+		"visibility": "public"
+	},
+	"history": {
+		"fcf1e41e429b10e03c5cf9b8551636df7519b4c5": {
+			"type": "Ymultichange(Ymovefromfile,Ybodychange)",
+			"commitMessage": "Extract common http logic to server (#31311)\n\nThis is related to #28898. With the addition of the http nio transport,\r\nwe now have two different modules that provide http transports.\r\nCurrently most of the http logic lives at the module level. However,\r\nsome of this logic can live in server. In particular, some of the\r\nsetting of headers, cors, and pipelining. This commit begins this moving\r\nin that direction by introducing lower level abstraction (HttpChannel,\r\nHttpRequest, and HttpResonse) that is implemented by the modules. The\r\nhigher level rest request and rest channel work can live entirely in\r\nserver.",
+			"commitDate": "2018-06-14, 2:10 PM",
+			"commitName": "fcf1e41e429b10e03c5cf9b8551636df7519b4c5",
+			"commitAuthor": "Tim Brooks",
+			"subchanges": [
+				{
+					"type": "Ymovefromfile",
+					"commitMessage": "Extract common http logic to server (#31311)\n\nThis is related to #28898. With the addition of the http nio transport,\r\nwe now have two different modules that provide http transports.\r\nCurrently most of the http logic lives at the module level. However,\r\nsome of this logic can live in server. In particular, some of the\r\nsetting of headers, cors, and pipelining. This commit begins this moving\r\nin that direction by introducing lower level abstraction (HttpChannel,\r\nHttpRequest, and HttpResonse) that is implemented by the modules. The\r\nhigher level rest request and rest channel work can live entirely in\r\nserver.",
+					"commitDate": "2018-06-14, 2:10 PM",
+					"commitName": "fcf1e41e429b10e03c5cf9b8551636df7519b4c5",
+					"commitAuthor": "Tim Brooks",
+					"commitDateOld": "2018-06-14, 1:22 PM",
+					"commitNameOld": "6dd81ead74fd54247198d380b98053124a30f1ee",
+					"commitAuthorOld": "Nik Everett",
+					"daysBetweenCommits": 0.03,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,3 +1,3 @@\n-                    public Method method() {\n-                        return null;\n-                    }\n\\ No newline at end of file\n+    public Method method() {\n+        return httpRequest.method();\n+    }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldPath": "server/src/test/java/org/elasticsearch/rest/BytesRestResponseTests.java",
+						"newPath": "server/src/main/java/org/elasticsearch/rest/RestRequest.java",
+						"oldMethodName": "method",
+						"newMethodName": "method"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Extract common http logic to server (#31311)\n\nThis is related to #28898. With the addition of the http nio transport,\r\nwe now have two different modules that provide http transports.\r\nCurrently most of the http logic lives at the module level. However,\r\nsome of this logic can live in server. In particular, some of the\r\nsetting of headers, cors, and pipelining. This commit begins this moving\r\nin that direction by introducing lower level abstraction (HttpChannel,\r\nHttpRequest, and HttpResonse) that is implemented by the modules. The\r\nhigher level rest request and rest channel work can live entirely in\r\nserver.",
+					"commitDate": "2018-06-14, 2:10 PM",
+					"commitName": "fcf1e41e429b10e03c5cf9b8551636df7519b4c5",
+					"commitAuthor": "Tim Brooks",
+					"commitDateOld": "2018-06-14, 1:22 PM",
+					"commitNameOld": "6dd81ead74fd54247198d380b98053124a30f1ee",
+					"commitAuthorOld": "Nik Everett",
+					"daysBetweenCommits": 0.03,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,3 +1,3 @@\n-                    public Method method() {\n-                        return null;\n-                    }\n\\ No newline at end of file\n+    public Method method() {\n+        return httpRequest.method();\n+    }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"99f88f15c5febbca2d13b5b5fda27b844153bf1a": {
+			"type": "Yfilerename",
+			"commitMessage": "Rename core module to server (#28180)\n\nThis is related to #27933. It renames the core module to server. This is\r\nthe first step towards introducing an elasticsearch-core jar.",
+			"commitDate": "2018-01-11, 10:30 AM",
+			"commitName": "99f88f15c5febbca2d13b5b5fda27b844153bf1a",
+			"commitAuthor": "Tim Brooks",
+			"commitDateOld": "2018-01-11, 8:31 AM",
+			"commitNameOld": "7d0eb3292b8f8ba27ef50dbbf38783dc68c70728",
+			"commitAuthorOld": "Martijn van Groningen",
+			"daysBetweenCommits": 0.08,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "core/src/test/java/org/elasticsearch/rest/BytesRestResponseTests.java",
+				"newPath": "server/src/test/java/org/elasticsearch/rest/BytesRestResponseTests.java"
+			}
+		},
+		"2d1b0587dd57a74c48022f5456467ab8873a2d0c": {
+			"type": "Ymultichange(Ymovefromfile,Yreturntypechange,Yrename,Yparameterchange)",
+			"commitMessage": "Introduce Netty 4\n\nThis commit adds transport-netty4, a transport and HTTP implementation\r\nbased on Netty 4.\r\n\r\nRelates #19526\r\n",
+			"commitDate": "2016-07-22, 7:26 PM",
+			"commitName": "2d1b0587dd57a74c48022f5456467ab8873a2d0c",
+			"commitAuthor": "Jason Tedor",
+			"subchanges": [
+				{
+					"type": "Ymovefromfile",
+					"commitMessage": "Introduce Netty 4\n\nThis commit adds transport-netty4, a transport and HTTP implementation\r\nbased on Netty 4.\r\n\r\nRelates #19526\r\n",
+					"commitDate": "2016-07-22, 7:26 PM",
+					"commitName": "2d1b0587dd57a74c48022f5456467ab8873a2d0c",
+					"commitAuthor": "Jason Tedor",
+					"commitDateOld": "2016-07-22, 3:38 PM",
+					"commitNameOld": "43c15f2b23429f6052431272b2cdc4c23615a312",
+					"commitAuthorOld": "David Pilato",
+					"daysBetweenCommits": 0.16,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,3 +1,3 @@\n-        public String param(String key) {\n-            return null;\n-        }\n\\ No newline at end of file\n+            public Method method() {\n+                return null;\n+            }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldPath": "core/src/test/java/org/elasticsearch/http/HttpServerTests.java",
+						"newPath": "core/src/test/java/org/elasticsearch/rest/BytesRestResponseTests.java",
+						"oldMethodName": "param",
+						"newMethodName": "method"
+					}
+				},
+				{
+					"type": "Yreturntypechange",
+					"commitMessage": "Introduce Netty 4\n\nThis commit adds transport-netty4, a transport and HTTP implementation\r\nbased on Netty 4.\r\n\r\nRelates #19526\r\n",
+					"commitDate": "2016-07-22, 7:26 PM",
+					"commitName": "2d1b0587dd57a74c48022f5456467ab8873a2d0c",
+					"commitAuthor": "Jason Tedor",
+					"commitDateOld": "2016-07-22, 3:38 PM",
+					"commitNameOld": "43c15f2b23429f6052431272b2cdc4c23615a312",
+					"commitAuthorOld": "David Pilato",
+					"daysBetweenCommits": 0.16,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,3 +1,3 @@\n-        public String param(String key) {\n-            return null;\n-        }\n\\ No newline at end of file\n+            public Method method() {\n+                return null;\n+            }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "String",
+						"newValue": "Method"
+					}
+				},
+				{
+					"type": "Yrename",
+					"commitMessage": "Introduce Netty 4\n\nThis commit adds transport-netty4, a transport and HTTP implementation\r\nbased on Netty 4.\r\n\r\nRelates #19526\r\n",
+					"commitDate": "2016-07-22, 7:26 PM",
+					"commitName": "2d1b0587dd57a74c48022f5456467ab8873a2d0c",
+					"commitAuthor": "Jason Tedor",
+					"commitDateOld": "2016-07-22, 3:38 PM",
+					"commitNameOld": "43c15f2b23429f6052431272b2cdc4c23615a312",
+					"commitAuthorOld": "David Pilato",
+					"daysBetweenCommits": 0.16,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,3 +1,3 @@\n-        public String param(String key) {\n-            return null;\n-        }\n\\ No newline at end of file\n+            public Method method() {\n+                return null;\n+            }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "param",
+						"newValue": "method"
+					}
+				},
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "Introduce Netty 4\n\nThis commit adds transport-netty4, a transport and HTTP implementation\r\nbased on Netty 4.\r\n\r\nRelates #19526\r\n",
+					"commitDate": "2016-07-22, 7:26 PM",
+					"commitName": "2d1b0587dd57a74c48022f5456467ab8873a2d0c",
+					"commitAuthor": "Jason Tedor",
+					"commitDateOld": "2016-07-22, 3:38 PM",
+					"commitNameOld": "43c15f2b23429f6052431272b2cdc4c23615a312",
+					"commitAuthorOld": "David Pilato",
+					"daysBetweenCommits": 0.16,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,3 +1,3 @@\n-        public String param(String key) {\n-            return null;\n-        }\n\\ No newline at end of file\n+            public Method method() {\n+                return null;\n+            }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[key-String]",
+						"newValue": "[]"
+					}
+				}
+			]
+		},
+		"117bc68af3987004ade7e56f0aebace72cd1d0ef": {
+			"type": "Yintroduced",
+			"commitMessage": "Limit request size on HTTP level\n\nWith this commit we limit the size of all in-flight requests on\nHTTP level. The size is guarded by the same circuit breaker that\nis also used on transport level. Similarly, the size that is used\nis HTTP content length.\n\nRelates #16011\n",
+			"commitDate": "2016-04-13, 12:58 AM",
+			"commitName": "117bc68af3987004ade7e56f0aebace72cd1d0ef",
+			"commitAuthor": "Daniel Mitterdorfer",
+			"diff": "@@ -0,0 +1,3 @@\n+        public String param(String key) {\n+            return null;\n+        }\n\\ No newline at end of file\n"
+		}
+	},
+	"sha": "767c69593c67befb843686de8ea51b7bc87728c9"
+}

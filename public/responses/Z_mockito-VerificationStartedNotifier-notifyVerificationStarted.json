@@ -2,7 +2,7 @@
 	"repo": "https://github.com/mockito/mockito.git",
 	"file": "src/main/java/org/mockito/internal/listeners/VerificationStartedNotifier.java",
 	"method": {
-		"longName": "VerificationStartedNotifier::notifyVerificationStarted(List<VerificationStartedListener> listeners, MockingDetails originalMockingDetails)",
+		"longName": "public Object notifyVerificationStarted(List<VerificationStartedListener> listeners, MockingDetails originalMockingDetails);",
 		"startLine": 20,
 		"methodName": "notifyVerificationStarted",
 		"isStatic": true,
@@ -13,17 +13,17 @@
 		"4bc732153e83b9490d6d94c2e27ea2f6ac9dc10c": {
 			"type": "Ymultichange(Yparameterchange,Ybodychange)",
 			"commitMessage": "Removed unnecessary type, we can use public type instead\n\n- Instead of MockitoMock, we can simply use our public API: MockingDetails. It allows us to reuse / dogfood our public API and have cleaner codebase.\n- Added new public API: mockingDetails.getMock(). I needed it to implement APIs for Spring Boot integration. Plus, it just make sense to add this method to make MockingDetails type more complete.\n",
-			"commitDate": "2017-10-11, 10:31 AM",
+			"commitDate": "2017-10-11, 9:31 AM",
 			"commitName": "4bc732153e83b9490d6d94c2e27ea2f6ac9dc10c",
 			"commitAuthor": "Szczepan Faber",
 			"subchanges": [
 				{
 					"type": "Yparameterchange",
 					"commitMessage": "Removed unnecessary type, we can use public type instead\n\n- Instead of MockitoMock, we can simply use our public API: MockingDetails. It allows us to reuse / dogfood our public API and have cleaner codebase.\n- Added new public API: mockingDetails.getMock(). I needed it to implement APIs for Spring Boot integration. Plus, it just make sense to add this method to make MockingDetails type more complete.\n",
-					"commitDate": "2017-10-11, 10:31 AM",
+					"commitDate": "2017-10-11, 9:31 AM",
 					"commitName": "4bc732153e83b9490d6d94c2e27ea2f6ac9dc10c",
 					"commitAuthor": "Szczepan Faber",
-					"commitDateOld": "2017-10-11, 10:13 AM",
+					"commitDateOld": "2017-10-11, 9:13 AM",
 					"commitNameOld": "4f0f9c973e31eee30c00700b5db9361d9e3df430",
 					"commitAuthorOld": "Szczepan Faber",
 					"daysBetweenCommits": 0.01,
@@ -38,10 +38,10 @@
 				{
 					"type": "Ybodychange",
 					"commitMessage": "Removed unnecessary type, we can use public type instead\n\n- Instead of MockitoMock, we can simply use our public API: MockingDetails. It allows us to reuse / dogfood our public API and have cleaner codebase.\n- Added new public API: mockingDetails.getMock(). I needed it to implement APIs for Spring Boot integration. Plus, it just make sense to add this method to make MockingDetails type more complete.\n",
-					"commitDate": "2017-10-11, 10:31 AM",
+					"commitDate": "2017-10-11, 9:31 AM",
 					"commitName": "4bc732153e83b9490d6d94c2e27ea2f6ac9dc10c",
 					"commitAuthor": "Szczepan Faber",
-					"commitDateOld": "2017-10-11, 10:13 AM",
+					"commitDateOld": "2017-10-11, 9:13 AM",
 					"commitNameOld": "4f0f9c973e31eee30c00700b5db9361d9e3df430",
 					"commitAuthorOld": "Szczepan Faber",
 					"daysBetweenCommits": 0.01,
@@ -55,17 +55,17 @@
 		"bf9524388ba5fc8f3350399a65c0ccd31442f730": {
 			"type": "Ymultichange(Yparameterchange,Ybodychange)",
 			"commitMessage": "Added coverage for API misuse\n\nIn the event that the user passes a mock with a wrong type, let's fail early. Also added missing coverage.\n",
-			"commitDate": "2017-10-11, 1:18 AM",
+			"commitDate": "2017-10-11, 12:18 AM",
 			"commitName": "bf9524388ba5fc8f3350399a65c0ccd31442f730",
 			"commitAuthor": "Szczepan Faber",
 			"subchanges": [
 				{
 					"type": "Yparameterchange",
 					"commitMessage": "Added coverage for API misuse\n\nIn the event that the user passes a mock with a wrong type, let's fail early. Also added missing coverage.\n",
-					"commitDate": "2017-10-11, 1:18 AM",
+					"commitDate": "2017-10-11, 12:18 AM",
 					"commitName": "bf9524388ba5fc8f3350399a65c0ccd31442f730",
 					"commitAuthor": "Szczepan Faber",
-					"commitDateOld": "2017-10-08, 10:24 AM",
+					"commitDateOld": "2017-10-08, 9:24 AM",
 					"commitNameOld": "f8cd5302bd16432f2f1263e716b1a57c82f086fa",
 					"commitAuthorOld": "Szczepan Faber",
 					"daysBetweenCommits": 2.62,
@@ -80,10 +80,10 @@
 				{
 					"type": "Ybodychange",
 					"commitMessage": "Added coverage for API misuse\n\nIn the event that the user passes a mock with a wrong type, let's fail early. Also added missing coverage.\n",
-					"commitDate": "2017-10-11, 1:18 AM",
+					"commitDate": "2017-10-11, 12:18 AM",
 					"commitName": "bf9524388ba5fc8f3350399a65c0ccd31442f730",
 					"commitAuthor": "Szczepan Faber",
-					"commitDateOld": "2017-10-08, 10:24 AM",
+					"commitDateOld": "2017-10-08, 9:24 AM",
 					"commitNameOld": "f8cd5302bd16432f2f1263e716b1a57c82f086fa",
 					"commitAuthorOld": "Szczepan Faber",
 					"daysBetweenCommits": 2.62,
@@ -97,10 +97,10 @@
 		"83f3ba42f486ca9648e73ea7fafbe1641911c575": {
 			"type": "Ybodychange",
 			"commitMessage": "Added decent exception message for API misuse\n",
-			"commitDate": "2017-10-08, 10:24 AM",
+			"commitDate": "2017-10-08, 9:24 AM",
 			"commitName": "83f3ba42f486ca9648e73ea7fafbe1641911c575",
 			"commitAuthor": "Szczepan Faber",
-			"commitDateOld": "2017-10-08, 10:24 AM",
+			"commitDateOld": "2017-10-08, 9:24 AM",
 			"commitNameOld": "23af43296ae2014776901ebd98d21c259fad5fb8",
 			"commitAuthorOld": "Szczepan Faber",
 			"daysBetweenCommits": 0,
@@ -112,10 +112,10 @@
 		"183ab9d97658ddb3342c60fc6611bcad5aa6d69d": {
 			"type": "Ybodychange",
 			"commitMessage": "Added checking null argument\n\nAlso improved test coverage\n",
-			"commitDate": "2017-10-08, 10:24 AM",
+			"commitDate": "2017-10-08, 9:24 AM",
 			"commitName": "183ab9d97658ddb3342c60fc6611bcad5aa6d69d",
 			"commitAuthor": "Szczepan Faber",
-			"commitDateOld": "2017-10-08, 10:24 AM",
+			"commitDateOld": "2017-10-08, 9:24 AM",
 			"commitNameOld": "1f9b4f3de3af9f29e2123e74c5f6c036bb94d2aa",
 			"commitAuthorOld": "Szczepan Faber",
 			"daysBetweenCommits": 0,
@@ -127,9 +127,10 @@
 		"1f9b4f3de3af9f29e2123e74c5f6c036bb94d2aa": {
 			"type": "Yintroduced",
 			"commitMessage": "Added an API for dual proxy use case (Spring Boot)\n\n- For design and rationale, see #1191\n- For all the details, see Javadoc in VerificationStartedListener\n",
-			"commitDate": "2017-10-08, 10:24 AM",
+			"commitDate": "2017-10-08, 9:24 AM",
 			"commitName": "1f9b4f3de3af9f29e2123e74c5f6c036bb94d2aa",
-			"commitAuthor": "Szczepan Faber"
+			"commitAuthor": "Szczepan Faber",
+			"diff": "@@ -0,0 +1,12 @@\n+    public static Object notifyVerificationStarted(List<VerificationStartedListener> listeners, Object mock) {\n+        if (listeners.isEmpty()) {\n+            //TODO! add unit test\n+            return mock;\n+        }\n+        VerificationStartedEvent event = new DefaultVerificationStartedEvent();\n+        event.setMock(mock);\n+        for (VerificationStartedListener listener : listeners) {\n+            listener.onVerificationStarted(event);\n+        }\n+        return event.getMock();\n+    }\n\\ No newline at end of file\n"
 		}
 	},
 	"sha": "077562ea54f1fa87ff8dd233c3060ddbf0f1ce26"

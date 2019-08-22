@@ -1,0 +1,265 @@
+{
+	"repo": "https://github.com/hibernate/hibernate-search.git",
+	"file": "engine/src/main/java/org/hibernate/search/spatial/impl/DistanceQuery.java",
+	"method": {
+		"longName": "public boolean matches();",
+		"startLine": 156,
+		"methodName": "matches",
+		"isStatic": false,
+		"isAbstract": false,
+		"visibility": "public"
+	},
+	"history": {
+		"991b9e7244fd848ab1806d42fd511e5e27d4ea29": {
+			"type": "Ymultichange(Ymovefromfile,Ymodifierchange,Yexceptionschange,Ybodychange,Yrename,Yparameterchange)",
+			"commitMessage": "HSEARCH-2208 Use Query objects instead of Filters in spatial search\n",
+			"commitDate": "2017-05-09, 4:32 AM",
+			"commitName": "991b9e7244fd848ab1806d42fd511e5e27d4ea29",
+			"commitAuthor": "Yoann Rodière",
+			"subchanges": [
+				{
+					"type": "Ymovefromfile",
+					"commitMessage": "HSEARCH-2208 Use Query objects instead of Filters in spatial search\n",
+					"commitDate": "2017-05-09, 4:32 AM",
+					"commitName": "991b9e7244fd848ab1806d42fd511e5e27d4ea29",
+					"commitAuthor": "Yoann Rodière",
+					"commitDateOld": "2017-05-09, 4:32 AM",
+					"commitNameOld": "08413b5986ba2e7291426fa68906c222e4c731bc",
+					"commitAuthorOld": "Yoann Rodière",
+					"daysBetweenCommits": 0,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,11 +1,12 @@\n-\t\t\tprotected boolean match(int documentIndex) {\n-\t\t\t\tif ( docsWithLatitude.get( documentIndex ) && docsWithLongitude.get( documentIndex ) ) {\n-\t\t\t\t\tdouble lat = coordinate( latitudeValues, documentIndex );\n-\t\t\t\t\tdouble lon = coordinate( longitudeValues, documentIndex );\n+\t\t\tpublic boolean matches() throws IOException {\n+\t\t\t\tlazyInit();\n+\t\t\t\tint docID = approximation().docID();\n+\t\t\t\tif ( docsWithLatitude.get( docID ) && docsWithLongitude.get( docID ) ) {\n+\t\t\t\t\tdouble lat = coordinate( latitudeValues, docID );\n+\t\t\t\t\tdouble lon = coordinate( longitudeValues, docID );\n \t\t\t\t\tif ( center.getDistanceTo( lat, lon ) <= radius ) {\n \t\t\t\t\t\treturn true;\n \t\t\t\t\t}\n \t\t\t\t}\n-\n \t\t\t\treturn false;\n \t\t\t}\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldPath": "engine/src/main/java/org/hibernate/search/spatial/impl/DistanceFilter.java",
+						"newPath": "engine/src/main/java/org/hibernate/search/spatial/impl/DistanceQuery.java",
+						"oldMethodName": "match",
+						"newMethodName": "matches"
+					}
+				},
+				{
+					"type": "Ymodifierchange",
+					"commitMessage": "HSEARCH-2208 Use Query objects instead of Filters in spatial search\n",
+					"commitDate": "2017-05-09, 4:32 AM",
+					"commitName": "991b9e7244fd848ab1806d42fd511e5e27d4ea29",
+					"commitAuthor": "Yoann Rodière",
+					"commitDateOld": "2017-05-09, 4:32 AM",
+					"commitNameOld": "08413b5986ba2e7291426fa68906c222e4c731bc",
+					"commitAuthorOld": "Yoann Rodière",
+					"daysBetweenCommits": 0,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,11 +1,12 @@\n-\t\t\tprotected boolean match(int documentIndex) {\n-\t\t\t\tif ( docsWithLatitude.get( documentIndex ) && docsWithLongitude.get( documentIndex ) ) {\n-\t\t\t\t\tdouble lat = coordinate( latitudeValues, documentIndex );\n-\t\t\t\t\tdouble lon = coordinate( longitudeValues, documentIndex );\n+\t\t\tpublic boolean matches() throws IOException {\n+\t\t\t\tlazyInit();\n+\t\t\t\tint docID = approximation().docID();\n+\t\t\t\tif ( docsWithLatitude.get( docID ) && docsWithLongitude.get( docID ) ) {\n+\t\t\t\t\tdouble lat = coordinate( latitudeValues, docID );\n+\t\t\t\t\tdouble lon = coordinate( longitudeValues, docID );\n \t\t\t\t\tif ( center.getDistanceTo( lat, lon ) <= radius ) {\n \t\t\t\t\t\treturn true;\n \t\t\t\t\t}\n \t\t\t\t}\n-\n \t\t\t\treturn false;\n \t\t\t}\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[protected]",
+						"newValue": "[public]"
+					}
+				},
+				{
+					"type": "Yexceptionschange",
+					"commitMessage": "HSEARCH-2208 Use Query objects instead of Filters in spatial search\n",
+					"commitDate": "2017-05-09, 4:32 AM",
+					"commitName": "991b9e7244fd848ab1806d42fd511e5e27d4ea29",
+					"commitAuthor": "Yoann Rodière",
+					"commitDateOld": "2017-05-09, 4:32 AM",
+					"commitNameOld": "08413b5986ba2e7291426fa68906c222e4c731bc",
+					"commitAuthorOld": "Yoann Rodière",
+					"daysBetweenCommits": 0,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,11 +1,12 @@\n-\t\t\tprotected boolean match(int documentIndex) {\n-\t\t\t\tif ( docsWithLatitude.get( documentIndex ) && docsWithLongitude.get( documentIndex ) ) {\n-\t\t\t\t\tdouble lat = coordinate( latitudeValues, documentIndex );\n-\t\t\t\t\tdouble lon = coordinate( longitudeValues, documentIndex );\n+\t\t\tpublic boolean matches() throws IOException {\n+\t\t\t\tlazyInit();\n+\t\t\t\tint docID = approximation().docID();\n+\t\t\t\tif ( docsWithLatitude.get( docID ) && docsWithLongitude.get( docID ) ) {\n+\t\t\t\t\tdouble lat = coordinate( latitudeValues, docID );\n+\t\t\t\t\tdouble lon = coordinate( longitudeValues, docID );\n \t\t\t\t\tif ( center.getDistanceTo( lat, lon ) <= radius ) {\n \t\t\t\t\t\treturn true;\n \t\t\t\t\t}\n \t\t\t\t}\n-\n \t\t\t\treturn false;\n \t\t\t}\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[]",
+						"newValue": "[IOException]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "HSEARCH-2208 Use Query objects instead of Filters in spatial search\n",
+					"commitDate": "2017-05-09, 4:32 AM",
+					"commitName": "991b9e7244fd848ab1806d42fd511e5e27d4ea29",
+					"commitAuthor": "Yoann Rodière",
+					"commitDateOld": "2017-05-09, 4:32 AM",
+					"commitNameOld": "08413b5986ba2e7291426fa68906c222e4c731bc",
+					"commitAuthorOld": "Yoann Rodière",
+					"daysBetweenCommits": 0,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,11 +1,12 @@\n-\t\t\tprotected boolean match(int documentIndex) {\n-\t\t\t\tif ( docsWithLatitude.get( documentIndex ) && docsWithLongitude.get( documentIndex ) ) {\n-\t\t\t\t\tdouble lat = coordinate( latitudeValues, documentIndex );\n-\t\t\t\t\tdouble lon = coordinate( longitudeValues, documentIndex );\n+\t\t\tpublic boolean matches() throws IOException {\n+\t\t\t\tlazyInit();\n+\t\t\t\tint docID = approximation().docID();\n+\t\t\t\tif ( docsWithLatitude.get( docID ) && docsWithLongitude.get( docID ) ) {\n+\t\t\t\t\tdouble lat = coordinate( latitudeValues, docID );\n+\t\t\t\t\tdouble lon = coordinate( longitudeValues, docID );\n \t\t\t\t\tif ( center.getDistanceTo( lat, lon ) <= radius ) {\n \t\t\t\t\t\treturn true;\n \t\t\t\t\t}\n \t\t\t\t}\n-\n \t\t\t\treturn false;\n \t\t\t}\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				},
+				{
+					"type": "Yrename",
+					"commitMessage": "HSEARCH-2208 Use Query objects instead of Filters in spatial search\n",
+					"commitDate": "2017-05-09, 4:32 AM",
+					"commitName": "991b9e7244fd848ab1806d42fd511e5e27d4ea29",
+					"commitAuthor": "Yoann Rodière",
+					"commitDateOld": "2017-05-09, 4:32 AM",
+					"commitNameOld": "08413b5986ba2e7291426fa68906c222e4c731bc",
+					"commitAuthorOld": "Yoann Rodière",
+					"daysBetweenCommits": 0,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,11 +1,12 @@\n-\t\t\tprotected boolean match(int documentIndex) {\n-\t\t\t\tif ( docsWithLatitude.get( documentIndex ) && docsWithLongitude.get( documentIndex ) ) {\n-\t\t\t\t\tdouble lat = coordinate( latitudeValues, documentIndex );\n-\t\t\t\t\tdouble lon = coordinate( longitudeValues, documentIndex );\n+\t\t\tpublic boolean matches() throws IOException {\n+\t\t\t\tlazyInit();\n+\t\t\t\tint docID = approximation().docID();\n+\t\t\t\tif ( docsWithLatitude.get( docID ) && docsWithLongitude.get( docID ) ) {\n+\t\t\t\t\tdouble lat = coordinate( latitudeValues, docID );\n+\t\t\t\t\tdouble lon = coordinate( longitudeValues, docID );\n \t\t\t\t\tif ( center.getDistanceTo( lat, lon ) <= radius ) {\n \t\t\t\t\t\treturn true;\n \t\t\t\t\t}\n \t\t\t\t}\n-\n \t\t\t\treturn false;\n \t\t\t}\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "match",
+						"newValue": "matches"
+					}
+				},
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "HSEARCH-2208 Use Query objects instead of Filters in spatial search\n",
+					"commitDate": "2017-05-09, 4:32 AM",
+					"commitName": "991b9e7244fd848ab1806d42fd511e5e27d4ea29",
+					"commitAuthor": "Yoann Rodière",
+					"commitDateOld": "2017-05-09, 4:32 AM",
+					"commitNameOld": "08413b5986ba2e7291426fa68906c222e4c731bc",
+					"commitAuthorOld": "Yoann Rodière",
+					"daysBetweenCommits": 0,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,11 +1,12 @@\n-\t\t\tprotected boolean match(int documentIndex) {\n-\t\t\t\tif ( docsWithLatitude.get( documentIndex ) && docsWithLongitude.get( documentIndex ) ) {\n-\t\t\t\t\tdouble lat = coordinate( latitudeValues, documentIndex );\n-\t\t\t\t\tdouble lon = coordinate( longitudeValues, documentIndex );\n+\t\t\tpublic boolean matches() throws IOException {\n+\t\t\t\tlazyInit();\n+\t\t\t\tint docID = approximation().docID();\n+\t\t\t\tif ( docsWithLatitude.get( docID ) && docsWithLongitude.get( docID ) ) {\n+\t\t\t\t\tdouble lat = coordinate( latitudeValues, docID );\n+\t\t\t\t\tdouble lon = coordinate( longitudeValues, docID );\n \t\t\t\t\tif ( center.getDistanceTo( lat, lon ) <= radius ) {\n \t\t\t\t\t\treturn true;\n \t\t\t\t\t}\n \t\t\t\t}\n-\n \t\t\t\treturn false;\n \t\t\t}\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[documentIndex-int]",
+						"newValue": "[]"
+					}
+				}
+			]
+		},
+		"57f2d295ae6825c076a2b1727209b6b25b45edda": {
+			"type": "Ybodychange",
+			"commitMessage": "HSEARCH-2324 Use Double.MAX_VALUE as the default distance (when missing the latitude and/or longitude) in spatial queries\n",
+			"commitDate": "2016-11-28, 3:40 PM",
+			"commitName": "57f2d295ae6825c076a2b1727209b6b25b45edda",
+			"commitAuthor": "Yoann Rodière",
+			"commitDateOld": "2016-11-28, 3:35 PM",
+			"commitNameOld": "62734df875ca07b09a0ee19092f7f0b0a0b0ba80",
+			"commitAuthorOld": "Yoann Rodière",
+			"daysBetweenCommits": 0,
+			"commitsBetweenForRepo": 94,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,10 +1,11 @@\n \t\t\tprotected boolean match(int documentIndex) {\n-\t\t\t\tdouble lat = coordinate( latitudeValues, documentIndex );\n-\t\t\t\tdouble lon = coordinate( longitudeValues, documentIndex );\n-\t\t\t\tif ( center.getDistanceTo( lat, lon ) <= radius ) {\n-\t\t\t\t\treturn true;\n+\t\t\t\tif ( docsWithLatitude.get( documentIndex ) && docsWithLongitude.get( documentIndex ) ) {\n+\t\t\t\t\tdouble lat = coordinate( latitudeValues, documentIndex );\n+\t\t\t\t\tdouble lon = coordinate( longitudeValues, documentIndex );\n+\t\t\t\t\tif ( center.getDistanceTo( lat, lon ) <= radius ) {\n+\t\t\t\t\t\treturn true;\n+\t\t\t\t\t}\n \t\t\t\t}\n-\t\t\t\telse {\n-\t\t\t\t\treturn false;\n-\t\t\t\t}\n+\n+\t\t\t\treturn false;\n \t\t\t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"939270e6c42f1558c2a0469699ab10167a3797c5": {
+			"type": "Ybodychange",
+			"commitMessage": "HSEARCH-1708 Throw exception if DistanceSort is used on non-spatial fields\n",
+			"commitDate": "2015-08-04, 2:57 AM",
+			"commitName": "939270e6c42f1558c2a0469699ab10167a3797c5",
+			"commitAuthor": "Davide D'Alto",
+			"commitDateOld": "2015-07-14, 2:34 PM",
+			"commitNameOld": "b7f583ce2f6ca57ea938f1c80781e362222e3d04",
+			"commitAuthorOld": "Nicolas Helleringer",
+			"daysBetweenCommits": 20.52,
+			"commitsBetweenForRepo": 50,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,10 +1,10 @@\n \t\t\tprotected boolean match(int documentIndex) {\n-\t\t\t\tdouble lat = Double.longBitsToDouble( latitudeValues.get( documentIndex ) );\n-\t\t\t\tdouble lon = Double.longBitsToDouble( longitudeValues.get( documentIndex ) );\n+\t\t\t\tdouble lat = coordinate( latitudeValues, documentIndex );\n+\t\t\t\tdouble lon = coordinate( longitudeValues, documentIndex );\n \t\t\t\tif ( center.getDistanceTo( lat, lon ) <= radius ) {\n \t\t\t\t\treturn true;\n \t\t\t\t}\n \t\t\t\telse {\n \t\t\t\t\treturn false;\n \t\t\t\t}\n \t\t\t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"c426c745258628f795a31c2f23cdf6323f650e83": {
+			"type": "Ybodychange",
+			"commitMessage": "HSEARCH-1910 Use NumericDocValues instead of FieldCache for spatials\n",
+			"commitDate": "2015-07-02, 9:48 AM",
+			"commitName": "c426c745258628f795a31c2f23cdf6323f650e83",
+			"commitAuthor": "Davide D'Alto",
+			"commitDateOld": "2014-05-15, 2:54 AM",
+			"commitNameOld": "5a9396f82246f74a76d3fea15d712711662f11ec",
+			"commitAuthorOld": "Hardy Ferentschik",
+			"daysBetweenCommits": 413.29,
+			"commitsBetweenForRepo": 520,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,9 +1,10 @@\n \t\t\tprotected boolean match(int documentIndex) {\n-\n-\t\t\t\tif ( center.getDistanceTo( latitudeValues.get( documentIndex ), longitudeValues.get( documentIndex ) ) <= radius ) {\n+\t\t\t\tdouble lat = Double.longBitsToDouble( latitudeValues.get( documentIndex ) );\n+\t\t\t\tdouble lon = Double.longBitsToDouble( longitudeValues.get( documentIndex ) );\n+\t\t\t\tif ( center.getDistanceTo( lat, lon ) <= radius ) {\n \t\t\t\t\treturn true;\n \t\t\t\t}\n \t\t\t\telse {\n \t\t\t\t\treturn false;\n \t\t\t\t}\n \t\t\t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"539aeb1fba3570d8e2b6f6870191256a6bcd6a15": {
+			"type": "Ybodychange",
+			"commitMessage": "HSEARCH-1191 Refactor Spatial DistanceFilter to use the new FieldCache API\n",
+			"commitDate": "2014-02-02, 4:39 PM",
+			"commitName": "539aeb1fba3570d8e2b6f6870191256a6bcd6a15",
+			"commitAuthor": "Sanne Grinovero",
+			"commitDateOld": "2014-02-02, 4:39 PM",
+			"commitNameOld": "0384708fd87479dc7549556afde58462ca29c346",
+			"commitAuthorOld": "Sanne Grinovero",
+			"daysBetweenCommits": 0,
+			"commitsBetweenForRepo": 7,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,9 +1,9 @@\n \t\t\tprotected boolean match(int documentIndex) {\n \n-\t\t\t\tif ( center.getDistanceTo( latitudeValues[documentIndex], longitudeValues[documentIndex] ) <= radius ) {\n+\t\t\t\tif ( center.getDistanceTo( latitudeValues.get( documentIndex ), longitudeValues.get( documentIndex ) ) <= radius ) {\n \t\t\t\t\treturn true;\n \t\t\t\t}\n \t\t\t\telse {\n \t\t\t\t\treturn false;\n \t\t\t\t}\n \t\t\t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"354f2cadec6dee7d4dde2250e13f468e2d93cd27": {
+			"type": "Yfilerename",
+			"commitMessage": "HSEARCH-1310 Dropping the hibernate-search directory prefix, renaming hibernate-search into legacy\n",
+			"commitDate": "2013-04-23, 10:02 AM",
+			"commitName": "354f2cadec6dee7d4dde2250e13f468e2d93cd27",
+			"commitAuthor": "Hardy Ferentschik",
+			"commitDateOld": "2013-04-23, 6:27 AM",
+			"commitNameOld": "29a168b99657e8cc302bbb487a67a4ea3856c3a3",
+			"commitAuthorOld": "Sanne Grinovero",
+			"daysBetweenCommits": 0.15,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "hibernate-search-engine/src/main/java/org/hibernate/search/spatial/impl/DistanceFilter.java",
+				"newPath": "engine/src/main/java/org/hibernate/search/spatial/impl/DistanceFilter.java"
+			}
+		},
+		"86c3e92db95c1f8512a65e7a59bc3bec07158832": {
+			"type": "Ybodychange",
+			"commitMessage": "HSEARCH-1174 HSEARCH-1175 Sort by spatial distance & Distance projection after spatial enabled search\n",
+			"commitDate": "2012-10-11, 9:39 AM",
+			"commitName": "86c3e92db95c1f8512a65e7a59bc3bec07158832",
+			"commitAuthor": "Nicolas Helleringer",
+			"commitDateOld": "2012-06-21, 5:15 AM",
+			"commitNameOld": "6c2b245872fdce922e1d8cefceffe97c1139e6f1",
+			"commitAuthorOld": "Emmanuel Bernard",
+			"daysBetweenCommits": 112.18,
+			"commitsBetweenForRepo": 58,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,12 +1,9 @@\n \t\t\tprotected boolean match(int documentIndex) {\n \n-\t\t\t\tdouble documentDistance;\n-\n-\t\t\t\tdocumentDistance = center.getDistanceTo( latitudeValues[documentIndex], longitudeValues[documentIndex] );\n-\t\t\t\tif ( documentDistance <= radius ) {\n+\t\t\t\tif ( center.getDistanceTo( latitudeValues[documentIndex], longitudeValues[documentIndex] ) <= radius ) {\n \t\t\t\t\treturn true;\n \t\t\t\t}\n \t\t\t\telse {\n \t\t\t\t\treturn false;\n \t\t\t\t}\n \t\t\t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"526d8cb0e93012fdca881f6c8a104ebaf086752d": {
+			"type": "Ybodychange",
+			"commitMessage": "HSEARCH-923 Avoid create an useless Point object at each document check\n\nAdded a getDistanceTo from latitude+longitude to Point\nExtracted latitude and longitude normalization methods from constructor\n",
+			"commitDate": "2012-06-21, 5:15 AM",
+			"commitName": "526d8cb0e93012fdca881f6c8a104ebaf086752d",
+			"commitAuthor": "Nicolas Helleringer",
+			"commitDateOld": "2012-06-21, 5:15 AM",
+			"commitNameOld": "afd8aaf584aad80b14589a46ab33fc595ca2c042",
+			"commitAuthorOld": "Emmanuel Bernard",
+			"daysBetweenCommits": 0,
+			"commitsBetweenForRepo": 29,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,15 +1,12 @@\n \t\t\tprotected boolean match(int documentIndex) {\n \n-\t\t\t\tDouble documentDistance;\n-\t\t\t\tPoint documentPosition = Point.fromDegrees(\n-\t\t\t\t\t\tlatitudeValues[documentIndex],\n-\t\t\t\t\t\tlongitudeValues[documentIndex]\n-\t\t\t\t);\n-\t\t\t\tdocumentDistance = documentPosition.getDistanceTo( center );\n+\t\t\t\tdouble documentDistance;\n+\n+\t\t\t\tdocumentDistance = center.getDistanceTo( latitudeValues[documentIndex], longitudeValues[documentIndex] );\n \t\t\t\tif ( documentDistance <= radius ) {\n \t\t\t\t\treturn true;\n \t\t\t\t}\n \t\t\t\telse {\n \t\t\t\t\treturn false;\n \t\t\t\t}\n \t\t\t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"c45fbb6b6cfa5ac5bfb995267761aedff19d4b9b": {
+			"type": "Yfilerename",
+			"commitMessage": "HSEARCH-923 Move private classes of spatial in .impl package\n",
+			"commitDate": "2012-06-21, 5:09 AM",
+			"commitName": "c45fbb6b6cfa5ac5bfb995267761aedff19d4b9b",
+			"commitAuthor": "Emmanuel Bernard",
+			"commitDateOld": "2012-06-21, 5:09 AM",
+			"commitNameOld": "b84beccaa4d29c276f5386a966e37e9ea9ec2254",
+			"commitAuthorOld": "Emmanuel Bernard",
+			"daysBetweenCommits": 0,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "hibernate-search-engine/src/main/java/org/hibernate/search/spatial/DistanceFilter.java",
+				"newPath": "hibernate-search-engine/src/main/java/org/hibernate/search/spatial/impl/DistanceFilter.java"
+			}
+		},
+		"b569d66ddca5855b5ee9811171ed34a48544cad6": {
+			"type": "Yintroduced",
+			"commitMessage": "HSEARCH-923 Import work from Novacodex into Hibernate Search codebase\n\nTests are unfortunately in the orm package as they use Hibernate Core as an event source\n",
+			"commitDate": "2012-06-21, 5:09 AM",
+			"commitName": "b569d66ddca5855b5ee9811171ed34a48544cad6",
+			"commitAuthor": "Emmanuel Bernard",
+			"diff": "@@ -0,0 +1,15 @@\n+\t\t\tprotected boolean match(int documentIndex) {\n+\n+\t\t\t\tDouble documentDistance;\n+\t\t\t\tPoint documentPosition = Point.fromDegrees(\n+\t\t\t\t\t\tlatitudeValues[documentIndex],\n+\t\t\t\t\t\tlongitudeValues[documentIndex]\n+\t\t\t\t);\n+\t\t\t\tdocumentDistance = documentPosition.getDistanceTo( center );\n+\t\t\t\tif ( documentDistance <= radius ) {\n+\t\t\t\t\treturn true;\n+\t\t\t\t}\n+\t\t\t\telse {\n+\t\t\t\t\treturn false;\n+\t\t\t\t}\n+\t\t\t}\n\\ No newline at end of file\n"
+		}
+	},
+	"sha": "5b778035965d7588ad1d1ae522c4bafebd3a0e16"
+}

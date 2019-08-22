@@ -1,0 +1,68 @@
+{
+	"repo": "https://github.com/hibernate/hibernate-search.git",
+	"file": "engine/src/main/java/org/hibernate/search/backend/impl/StreamingOperationDispatcher.java",
+	"method": {
+		"longName": "private void executeWork(LuceneWork work, IndexingMonitor progressMonitor);",
+		"startLine": 49,
+		"methodName": "executeWork",
+		"isStatic": false,
+		"isAbstract": false,
+		"visibility": "private"
+	},
+	"history": {
+		"1cf93d1325d9c1635bf919198916f2fdf6977dd6": {
+			"type": "Ybodychange",
+			"commitMessage": "HSEARCH-2781 Introduce IndexManagerSelector to hide IndexShardingStrategy from SPIs\n\nThis will allow integrators to arbitrarily route indexing works (using\nthe selector) without having to use Class<?> to refer to indexed types\n(which IndexShardingStrategy mandates).\n",
+			"commitDate": "2017-07-03, 9:45 AM",
+			"commitName": "1cf93d1325d9c1635bf919198916f2fdf6977dd6",
+			"commitAuthor": "Yoann Rodière",
+			"commitDateOld": "2017-06-12, 4:27 PM",
+			"commitNameOld": "3c42a071e8d9b163d207e7e2e77e038341bf26e1",
+			"commitAuthorOld": "Sanne Grinovero",
+			"daysBetweenCommits": 20.72,
+			"commitsBetweenForRepo": 40,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,8 +1,8 @@\n \tprivate void executeWork(LuceneWork work, IndexingMonitor progressMonitor) {\n \t\tfinal IndexedTypeIdentifier entityType = work.getEntityType();\n \t\tEntityIndexBinding entityIndexBinding = integrator.getIndexBinding( entityType );\n-\t\tIndexShardingStrategy shardingStrategy = entityIndexBinding.getSelectionStrategy();\n+\t\tIndexManagerSelector selector = entityIndexBinding.getIndexManagerSelector();\n \t\tStreamingOperationExecutor executor =\n \t\t\t\twork.acceptIndexWorkVisitor( StreamingOperationExecutorSelector.INSTANCE, null );\n-\t\texecutor.performStreamOperation( work, shardingStrategy, progressMonitor, forceAsync );\n+\t\texecutor.performStreamOperation( work, selector, progressMonitor, forceAsync );\n \t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"3c42a071e8d9b163d207e7e2e77e038341bf26e1": {
+			"type": "Ybodychange",
+			"commitMessage": "HSEARCH-1404 Introduce the concept of IndexedTypeIdentifier, IndexedTypeMap and IndexedTypeSet\n",
+			"commitDate": "2017-06-12, 4:27 PM",
+			"commitName": "3c42a071e8d9b163d207e7e2e77e038341bf26e1",
+			"commitAuthor": "Sanne Grinovero",
+			"commitDateOld": "2017-04-20, 3:39 AM",
+			"commitNameOld": "bb0e67026acff2766b118ceb1fa1ed4c326a38bf",
+			"commitAuthorOld": "Sanne Grinovero",
+			"daysBetweenCommits": 53.53,
+			"commitsBetweenForRepo": 228,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,8 +1,8 @@\n \tprivate void executeWork(LuceneWork work, IndexingMonitor progressMonitor) {\n-\t\tfinal Class<?> entityType = work.getEntityClass();\n+\t\tfinal IndexedTypeIdentifier entityType = work.getEntityType();\n \t\tEntityIndexBinding entityIndexBinding = integrator.getIndexBinding( entityType );\n \t\tIndexShardingStrategy shardingStrategy = entityIndexBinding.getSelectionStrategy();\n \t\tStreamingOperationExecutor executor =\n \t\t\t\twork.acceptIndexWorkVisitor( StreamingOperationExecutorSelector.INSTANCE, null );\n \t\texecutor.performStreamOperation( work, shardingStrategy, progressMonitor, forceAsync );\n \t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"bb0e67026acff2766b118ceb1fa1ed4c326a38bf": {
+			"type": "Ybodychange",
+			"commitMessage": "HSEARCH-1886 Simplify the new StreamingOperationDispatcher\n",
+			"commitDate": "2017-04-20, 3:39 AM",
+			"commitName": "bb0e67026acff2766b118ceb1fa1ed4c326a38bf",
+			"commitAuthor": "Sanne Grinovero",
+			"commitDateOld": "2017-04-19, 3:10 PM",
+			"commitNameOld": "a3097e1b94884633b6fd72b9aa9e0a575ccb2a2a",
+			"commitAuthorOld": "Yoann Rodière",
+			"daysBetweenCommits": 0.52,
+			"commitsBetweenForRepo": 11,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,8 +1,8 @@\n \tprivate void executeWork(LuceneWork work, IndexingMonitor progressMonitor) {\n \t\tfinal Class<?> entityType = work.getEntityClass();\n-\t\tEntityIndexBinding entityIndexBinding = bindingLookup.apply( entityType );\n+\t\tEntityIndexBinding entityIndexBinding = integrator.getIndexBinding( entityType );\n \t\tIndexShardingStrategy shardingStrategy = entityIndexBinding.getSelectionStrategy();\n \t\tStreamingOperationExecutor executor =\n \t\t\t\twork.acceptIndexWorkVisitor( StreamingOperationExecutorSelector.INSTANCE, null );\n \t\texecutor.performStreamOperation( work, shardingStrategy, progressMonitor, forceAsync );\n \t}\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"a3097e1b94884633b6fd72b9aa9e0a575ccb2a2a": {
+			"type": "Yintroduced",
+			"commitMessage": "HSEARCH-1886 Introduce OperationDispatcher, abstracting LuceneWork dispatching to IndexManagers\n",
+			"commitDate": "2017-04-19, 3:10 PM",
+			"commitName": "a3097e1b94884633b6fd72b9aa9e0a575ccb2a2a",
+			"commitAuthor": "Yoann Rodière",
+			"diff": "@@ -0,0 +1,8 @@\n+\tprivate void executeWork(LuceneWork work, IndexingMonitor progressMonitor) {\n+\t\tfinal Class<?> entityType = work.getEntityClass();\n+\t\tEntityIndexBinding entityIndexBinding = bindingLookup.apply( entityType );\n+\t\tIndexShardingStrategy shardingStrategy = entityIndexBinding.getSelectionStrategy();\n+\t\tStreamingOperationExecutor executor =\n+\t\t\t\twork.acceptIndexWorkVisitor( StreamingOperationExecutorSelector.INSTANCE, null );\n+\t\texecutor.performStreamOperation( work, shardingStrategy, progressMonitor, forceAsync );\n+\t}\n\\ No newline at end of file\n"
+		}
+	},
+	"sha": "5b778035965d7588ad1d1ae522c4bafebd3a0e16"
+}

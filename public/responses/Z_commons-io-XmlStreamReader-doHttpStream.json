@@ -1,0 +1,272 @@
+{
+	"repo": "https://github.com/apache/commons-io.git",
+	"file": "src/main/java/org/apache/commons/io/input/XmlStreamReader.java",
+	"method": {
+		"longName": "private String doHttpStream(BOMInputStream bom, BOMInputStream pis, String httpContentType, boolean lenient);",
+		"startLine": 449,
+		"methodName": "doHttpStream",
+		"isStatic": false,
+		"isAbstract": false,
+		"visibility": "private"
+	},
+	"history": {
+		"8993c0060e4eb2d5bca20e3529a829a9dd90efdf": {
+			"type": "Ybodychange",
+			"commitMessage": "Don't need to nest else clause. Refactor magic numbers into constants.",
+			"commitDate": "2018-03-06, 9:00 AM",
+			"commitName": "8993c0060e4eb2d5bca20e3529a829a9dd90efdf",
+			"commitAuthor": "Gary Gregory",
+			"commitDateOld": "2018-01-14, 2:39 AM",
+			"commitNameOld": "d19259a7774e23ebdaac4af5ee4def8602fe2969",
+			"commitAuthorOld": "luccioman",
+			"daysBetweenCommits": 51.26,
+			"commitsBetweenForRepo": 12,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,16 +1,15 @@\n     private String doHttpStream(final BOMInputStream bom, final BOMInputStream pis, final String httpContentType,\n             final boolean lenient) throws IOException {\n         final String bomEnc      = bom.getBOMCharsetName();\n         final String xmlGuessEnc = pis.getBOMCharsetName();\n         final String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n         try {\n             return calculateHttpEncoding(httpContentType, bomEnc,\n                     xmlGuessEnc, xmlEnc, lenient);\n         } catch (final XmlStreamReaderException ex) {\n             if (lenient) {\n                 return doLenientDetection(httpContentType, ex);\n-            } else {\n-                throw ex;\n             }\n+            throw ex;\n         }\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"6aa00766b9103d75c763160280429af8e1f0549e": {
+			"type": "Ymultichange(Ybodychange,Yparametermetachange)",
+			"commitMessage": "Use final where possible.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1415850 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2012-11-30, 12:51 PM",
+			"commitName": "6aa00766b9103d75c763160280429af8e1f0549e",
+			"commitAuthor": "Gary D. Gregory",
+			"subchanges": [
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Use final where possible.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1415850 13f79535-47bb-0310-9956-ffa450edef68\n",
+					"commitDate": "2012-11-30, 12:51 PM",
+					"commitName": "6aa00766b9103d75c763160280429af8e1f0549e",
+					"commitAuthor": "Gary D. Gregory",
+					"commitDateOld": "2012-06-05, 7:48 AM",
+					"commitNameOld": "e4c65e5424fe7a7c9795348fc855d42a247f0c00",
+					"commitAuthorOld": "Gary D. Gregory",
+					"daysBetweenCommits": 178.25,
+					"commitsBetweenForRepo": 86,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,16 +1,16 @@\n-    private String doHttpStream(BOMInputStream bom, BOMInputStream pis, String httpContentType,\n-            boolean lenient) throws IOException {\n-        String bomEnc      = bom.getBOMCharsetName();\n-        String xmlGuessEnc = pis.getBOMCharsetName();\n-        String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n+    private String doHttpStream(final BOMInputStream bom, final BOMInputStream pis, final String httpContentType,\n+            final boolean lenient) throws IOException {\n+        final String bomEnc      = bom.getBOMCharsetName();\n+        final String xmlGuessEnc = pis.getBOMCharsetName();\n+        final String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n         try {\n             return calculateHttpEncoding(httpContentType, bomEnc,\n                     xmlGuessEnc, xmlEnc, lenient);\n-        } catch (XmlStreamReaderException ex) {\n+        } catch (final XmlStreamReaderException ex) {\n             if (lenient) {\n                 return doLenientDetection(httpContentType, ex);\n             } else {\n                 throw ex;\n             }\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				},
+				{
+					"type": "Yparametermetachange",
+					"commitMessage": "Use final where possible.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1415850 13f79535-47bb-0310-9956-ffa450edef68\n",
+					"commitDate": "2012-11-30, 12:51 PM",
+					"commitName": "6aa00766b9103d75c763160280429af8e1f0549e",
+					"commitAuthor": "Gary D. Gregory",
+					"commitDateOld": "2012-06-05, 7:48 AM",
+					"commitNameOld": "e4c65e5424fe7a7c9795348fc855d42a247f0c00",
+					"commitAuthorOld": "Gary D. Gregory",
+					"daysBetweenCommits": 178.25,
+					"commitsBetweenForRepo": 86,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,16 +1,16 @@\n-    private String doHttpStream(BOMInputStream bom, BOMInputStream pis, String httpContentType,\n-            boolean lenient) throws IOException {\n-        String bomEnc      = bom.getBOMCharsetName();\n-        String xmlGuessEnc = pis.getBOMCharsetName();\n-        String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n+    private String doHttpStream(final BOMInputStream bom, final BOMInputStream pis, final String httpContentType,\n+            final boolean lenient) throws IOException {\n+        final String bomEnc      = bom.getBOMCharsetName();\n+        final String xmlGuessEnc = pis.getBOMCharsetName();\n+        final String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n         try {\n             return calculateHttpEncoding(httpContentType, bomEnc,\n                     xmlGuessEnc, xmlEnc, lenient);\n-        } catch (XmlStreamReaderException ex) {\n+        } catch (final XmlStreamReaderException ex) {\n             if (lenient) {\n                 return doLenientDetection(httpContentType, ex);\n             } else {\n                 throw ex;\n             }\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[bom-BOMInputStream, pis-BOMInputStream, httpContentType-String, lenient-boolean]",
+						"newValue": "[bom-BOMInputStream(modifiers-final), pis-BOMInputStream(modifiers-final), httpContentType-String(modifiers-final), lenient-boolean(modifiers-final)]"
+					}
+				}
+			]
+		},
+		"97191772383bc267d16497c884a1c8b90033911b": {
+			"type": "Ymultichange(Yparameterchange,Ybodychange)",
+			"commitMessage": "IO-258 - Fix XmlStreamReader consumes the stream during encoding detection\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1052161 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2010-12-22, 7:12 PM",
+			"commitName": "97191772383bc267d16497c884a1c8b90033911b",
+			"commitAuthor": "Niall Pemberton",
+			"subchanges": [
+				{
+					"type": "Yparameterchange",
+					"commitMessage": "IO-258 - Fix XmlStreamReader consumes the stream during encoding detection\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1052161 13f79535-47bb-0310-9956-ffa450edef68\n",
+					"commitDate": "2010-12-22, 7:12 PM",
+					"commitName": "97191772383bc267d16497c884a1c8b90033911b",
+					"commitAuthor": "Niall Pemberton",
+					"commitDateOld": "2010-10-12, 11:49 AM",
+					"commitNameOld": "f04a6d47557933a7fb855c1646c350c856def37d",
+					"commitAuthorOld": "Gary D. Gregory",
+					"daysBetweenCommits": 71.35,
+					"commitsBetweenForRepo": 34,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,18 +1,16 @@\n-    private String doHttpStream(InputStream is, String httpContentType,\n+    private String doHttpStream(BOMInputStream bom, BOMInputStream pis, String httpContentType,\n             boolean lenient) throws IOException {\n-        BOMInputStream bom = new BOMInputStream(new BufferedInputStream(is, BUFFER_SIZE), false, BOMS);\n-        BOMInputStream pis = new BOMInputStream(bom, true, XML_GUESS_BYTES);\n         String bomEnc      = bom.getBOMCharsetName();\n         String xmlGuessEnc = pis.getBOMCharsetName();\n         String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n         try {\n             return calculateHttpEncoding(httpContentType, bomEnc,\n                     xmlGuessEnc, xmlEnc, lenient);\n         } catch (XmlStreamReaderException ex) {\n             if (lenient) {\n-                return doLenientDetection(httpContentType, is, ex);\n+                return doLenientDetection(httpContentType, ex);\n             } else {\n                 throw ex;\n             }\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "[is-InputStream, httpContentType-String, lenient-boolean]",
+						"newValue": "[bom-BOMInputStream, pis-BOMInputStream, httpContentType-String, lenient-boolean]"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "IO-258 - Fix XmlStreamReader consumes the stream during encoding detection\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1052161 13f79535-47bb-0310-9956-ffa450edef68\n",
+					"commitDate": "2010-12-22, 7:12 PM",
+					"commitName": "97191772383bc267d16497c884a1c8b90033911b",
+					"commitAuthor": "Niall Pemberton",
+					"commitDateOld": "2010-10-12, 11:49 AM",
+					"commitNameOld": "f04a6d47557933a7fb855c1646c350c856def37d",
+					"commitAuthorOld": "Gary D. Gregory",
+					"daysBetweenCommits": 71.35,
+					"commitsBetweenForRepo": 34,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,18 +1,16 @@\n-    private String doHttpStream(InputStream is, String httpContentType,\n+    private String doHttpStream(BOMInputStream bom, BOMInputStream pis, String httpContentType,\n             boolean lenient) throws IOException {\n-        BOMInputStream bom = new BOMInputStream(new BufferedInputStream(is, BUFFER_SIZE), false, BOMS);\n-        BOMInputStream pis = new BOMInputStream(bom, true, XML_GUESS_BYTES);\n         String bomEnc      = bom.getBOMCharsetName();\n         String xmlGuessEnc = pis.getBOMCharsetName();\n         String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n         try {\n             return calculateHttpEncoding(httpContentType, bomEnc,\n                     xmlGuessEnc, xmlEnc, lenient);\n         } catch (XmlStreamReaderException ex) {\n             if (lenient) {\n-                return doLenientDetection(httpContentType, is, ex);\n+                return doLenientDetection(httpContentType, ex);\n             } else {\n                 throw ex;\n             }\n         }\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"294c570fcae9ca62e3157a9e7b8293a08e68dae2": {
+			"type": "Ymultichange(Yreturntypechange,Ybodychange)",
+			"commitMessage": "Make reader and encoding fields immutable\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1004882 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2010-10-05, 7:36 PM",
+			"commitName": "294c570fcae9ca62e3157a9e7b8293a08e68dae2",
+			"commitAuthor": "Sebastian Bazley",
+			"subchanges": [
+				{
+					"type": "Yreturntypechange",
+					"commitMessage": "Make reader and encoding fields immutable\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1004882 13f79535-47bb-0310-9956-ffa450edef68\n",
+					"commitDate": "2010-10-05, 7:36 PM",
+					"commitName": "294c570fcae9ca62e3157a9e7b8293a08e68dae2",
+					"commitAuthor": "Sebastian Bazley",
+					"commitDateOld": "2010-10-05, 7:23 PM",
+					"commitNameOld": "ec9c918889a17312effbd8b555489103da1df04e",
+					"commitAuthorOld": "Niall Pemberton",
+					"daysBetweenCommits": 0.01,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,19 +1,18 @@\n-    private void doHttpStream(InputStream is, String httpContentType,\n+    private String doHttpStream(InputStream is, String httpContentType,\n             boolean lenient) throws IOException {\n         BOMInputStream bom = new BOMInputStream(new BufferedInputStream(is, BUFFER_SIZE), false, BOMS);\n         BOMInputStream pis = new BOMInputStream(bom, true, XML_GUESS_BYTES);\n         String bomEnc      = bom.getBOMCharsetName();\n         String xmlGuessEnc = pis.getBOMCharsetName();\n         String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n         try {\n-            this.encoding = calculateHttpEncoding(httpContentType, bomEnc,\n+            return calculateHttpEncoding(httpContentType, bomEnc,\n                     xmlGuessEnc, xmlEnc, lenient);\n         } catch (XmlStreamReaderException ex) {\n             if (lenient) {\n-                this.encoding = doLenientDetection(httpContentType, is, ex);\n+                return doLenientDetection(httpContentType, is, ex);\n             } else {\n                 throw ex;\n             }\n         }\n-        this.reader = new InputStreamReader(is, encoding);\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {
+						"oldValue": "void",
+						"newValue": "String"
+					}
+				},
+				{
+					"type": "Ybodychange",
+					"commitMessage": "Make reader and encoding fields immutable\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1004882 13f79535-47bb-0310-9956-ffa450edef68\n",
+					"commitDate": "2010-10-05, 7:36 PM",
+					"commitName": "294c570fcae9ca62e3157a9e7b8293a08e68dae2",
+					"commitAuthor": "Sebastian Bazley",
+					"commitDateOld": "2010-10-05, 7:23 PM",
+					"commitNameOld": "ec9c918889a17312effbd8b555489103da1df04e",
+					"commitAuthorOld": "Niall Pemberton",
+					"daysBetweenCommits": 0.01,
+					"commitsBetweenForRepo": 1,
+					"commitsBetweenForFile": 1,
+					"diff": "@@ -1,19 +1,18 @@\n-    private void doHttpStream(InputStream is, String httpContentType,\n+    private String doHttpStream(InputStream is, String httpContentType,\n             boolean lenient) throws IOException {\n         BOMInputStream bom = new BOMInputStream(new BufferedInputStream(is, BUFFER_SIZE), false, BOMS);\n         BOMInputStream pis = new BOMInputStream(bom, true, XML_GUESS_BYTES);\n         String bomEnc      = bom.getBOMCharsetName();\n         String xmlGuessEnc = pis.getBOMCharsetName();\n         String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n         try {\n-            this.encoding = calculateHttpEncoding(httpContentType, bomEnc,\n+            return calculateHttpEncoding(httpContentType, bomEnc,\n                     xmlGuessEnc, xmlEnc, lenient);\n         } catch (XmlStreamReaderException ex) {\n             if (lenient) {\n-                this.encoding = doLenientDetection(httpContentType, is, ex);\n+                return doLenientDetection(httpContentType, is, ex);\n             } else {\n                 throw ex;\n             }\n         }\n-        this.reader = new InputStreamReader(is, encoding);\n     }\n\\ No newline at end of file\n",
+					"extendedDetails": {}
+				}
+			]
+		},
+		"8a1529917f7aa5604fbdaa689b086c04848779af": {
+			"type": "Ybodychange",
+			"commitMessage": "IO-162 Refactor lenient processing - simplifies the code and avoids reprocessing the stream\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1004871 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2010-10-05, 6:20 PM",
+			"commitName": "8a1529917f7aa5604fbdaa689b086c04848779af",
+			"commitAuthor": "Niall Pemberton",
+			"commitDateOld": "2010-10-05, 3:33 PM",
+			"commitNameOld": "3fb12de7946abf01216f303bd97e1ec051a65d2e",
+			"commitAuthorOld": "Sebastian Bazley",
+			"daysBetweenCommits": 0.12,
+			"commitsBetweenForRepo": 4,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,11 +1,19 @@\n     private void doHttpStream(InputStream is, String httpContentType,\n             boolean lenient) throws IOException {\n         BOMInputStream bom = new BOMInputStream(new BufferedInputStream(is, BUFFER_SIZE), false, BOMS);\n         BOMInputStream pis = new BOMInputStream(bom, true, XML_GUESS_BYTES);\n         String bomEnc      = bom.getBOMCharsetName();\n         String xmlGuessEnc = pis.getBOMCharsetName();\n         String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n-        this.encoding = calculateHttpEncoding(httpContentType, bomEnc,\n-                xmlGuessEnc, xmlEnc, lenient);\n+        try {\n+            this.encoding = calculateHttpEncoding(httpContentType, bomEnc,\n+                    xmlGuessEnc, xmlEnc, lenient);\n+        } catch (XmlStreamReaderException ex) {\n+            if (lenient) {\n+                this.encoding = doLenientDetection(httpContentType, is, ex);\n+            } else {\n+                throw ex;\n+            }\n+        }\n         this.reader = new InputStreamReader(is, encoding);\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"7264eea73bc0f9560520ed6c423ff62f18ab4940": {
+			"type": "Ybodychange",
+			"commitMessage": "Refactoring - move mine/encoding content type detection into the calculateHttpEncoding() method where its used\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1004514 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2010-10-04, 7:58 PM",
+			"commitName": "7264eea73bc0f9560520ed6c423ff62f18ab4940",
+			"commitAuthor": "Niall Pemberton",
+			"commitDateOld": "2010-10-04, 7:49 PM",
+			"commitNameOld": "e4540bba7aebd88d3d4b22e68a6a916ddfc48890",
+			"commitAuthorOld": "Niall Pemberton",
+			"daysBetweenCommits": 0.01,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,13 +1,11 @@\n     private void doHttpStream(InputStream is, String httpContentType,\n             boolean lenient) throws IOException {\n         BOMInputStream bom = new BOMInputStream(new BufferedInputStream(is, BUFFER_SIZE), false, BOMS);\n         BOMInputStream pis = new BOMInputStream(bom, true, XML_GUESS_BYTES);\n-        String cTMime = getContentTypeMime(httpContentType);\n-        String cTEnc = getContentTypeEncoding(httpContentType);\n         String bomEnc      = bom.getBOMCharsetName();\n         String xmlGuessEnc = pis.getBOMCharsetName();\n         String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n-        this.encoding = calculateHttpEncoding(cTMime, cTEnc, bomEnc,\n+        this.encoding = calculateHttpEncoding(httpContentType, bomEnc,\n                 xmlGuessEnc, xmlEnc, lenient);\n         this.reader = new InputStreamReader(is, encoding);\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"e4540bba7aebd88d3d4b22e68a6a916ddfc48890": {
+			"type": "Ybodychange",
+			"commitMessage": "Refactoring to remove the InputStream from XmlStreamReaderException in r1004109 means we don't need to pass the InputStream to the calculateRawEncoding() and calculateHttpEncoding() methods \n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1004512 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2010-10-04, 7:49 PM",
+			"commitName": "e4540bba7aebd88d3d4b22e68a6a916ddfc48890",
+			"commitAuthor": "Niall Pemberton",
+			"commitDateOld": "2010-10-04, 7:40 PM",
+			"commitNameOld": "305062404737ecf9a3ff561bca985513cee818ad",
+			"commitAuthorOld": "Niall Pemberton",
+			"daysBetweenCommits": 0.01,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,13 +1,13 @@\n     private void doHttpStream(InputStream is, String httpContentType,\n             boolean lenient) throws IOException {\n         BOMInputStream bom = new BOMInputStream(new BufferedInputStream(is, BUFFER_SIZE), false, BOMS);\n         BOMInputStream pis = new BOMInputStream(bom, true, XML_GUESS_BYTES);\n         String cTMime = getContentTypeMime(httpContentType);\n         String cTEnc = getContentTypeEncoding(httpContentType);\n         String bomEnc      = bom.getBOMCharsetName();\n         String xmlGuessEnc = pis.getBOMCharsetName();\n         String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n         this.encoding = calculateHttpEncoding(cTMime, cTEnc, bomEnc,\n-                xmlGuessEnc, xmlEnc, pis, lenient);\n+                xmlGuessEnc, xmlEnc, lenient);\n         this.reader = new InputStreamReader(is, encoding);\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"83f7246c3e9fe1d3f1ad6cf7ea0715a573fe2f2a": {
+			"type": "Yfilerename",
+			"commitMessage": "Build changes - re-organize to standard m2 layout, remove useless JIRA report and fix some Ant issues\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1004358 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2010-10-04, 11:54 AM",
+			"commitName": "83f7246c3e9fe1d3f1ad6cf7ea0715a573fe2f2a",
+			"commitAuthor": "Niall Pemberton",
+			"commitDateOld": "2010-10-04, 10:54 AM",
+			"commitNameOld": "19f48eb1711427a43a5e10c84bbbf1218a08bdd2",
+			"commitAuthorOld": "Niall Pemberton",
+			"daysBetweenCommits": 0.04,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "",
+			"extendedDetails": {
+				"oldPath": "src/java/org/apache/commons/io/input/XmlStreamReader.java",
+				"newPath": "src/main/java/org/apache/commons/io/input/XmlStreamReader.java"
+			}
+		},
+		"5a21350fb904af0f0e0f8d1cc5ce484c7183dd13": {
+			"type": "Ybodychange",
+			"commitMessage": "IO-162 and IO-178 Minor refactoring to simplify\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1004123 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2010-10-03, 11:15 PM",
+			"commitName": "5a21350fb904af0f0e0f8d1cc5ce484c7183dd13",
+			"commitAuthor": "Niall Pemberton",
+			"commitDateOld": "2010-10-03, 11:06 PM",
+			"commitNameOld": "1056d5ded9d19c3ee8c013d35fa5679163935935",
+			"commitAuthorOld": "Niall Pemberton",
+			"daysBetweenCommits": 0.01,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,13 +1,13 @@\n     private void doHttpStream(InputStream is, String httpContentType,\n             boolean lenient) throws IOException {\n         BOMInputStream bom = new BOMInputStream(new BufferedInputStream(is, BUFFER_SIZE), false, BOMS);\n         BOMInputStream pis = new BOMInputStream(bom, true, XML_GUESS_BYTES);\n         String cTMime = getContentTypeMime(httpContentType);\n         String cTEnc = getContentTypeEncoding(httpContentType);\n-        String bomEnc      = (bom.hasBOM() ? bom.getBOM().getCharsetName() : null);\n-        String xmlGuessEnc = (pis.hasBOM() ? pis.getBOM().getCharsetName() : null);\n+        String bomEnc      = bom.getBOMCharsetName();\n+        String xmlGuessEnc = pis.getBOMCharsetName();\n         String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n         this.encoding = calculateHttpEncoding(cTMime, cTEnc, bomEnc,\n                 xmlGuessEnc, xmlEnc, pis, lenient);\n         this.reader = new InputStreamReader(is, encoding);\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"50d5aeea6180c582b788aedc44c3ae2c3c441eff": {
+			"type": "Ybodychange",
+			"commitMessage": "IO-162 Slight refactoring to simplify\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1004121 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2010-10-03, 10:39 PM",
+			"commitName": "50d5aeea6180c582b788aedc44c3ae2c3c441eff",
+			"commitAuthor": "Niall Pemberton",
+			"commitDateOld": "2010-10-03, 9:48 PM",
+			"commitNameOld": "5b4212d98988e6798d1ced601a2036f7e98b70e0",
+			"commitAuthorOld": "Niall Pemberton",
+			"daysBetweenCommits": 0.04,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,13 +1,13 @@\n     private void doHttpStream(InputStream is, String httpContentType,\n             boolean lenient) throws IOException {\n-        BOMInputStream bom = createBomStream(new BufferedInputStream(is, BUFFER_SIZE)); \n-        BOMInputStream pis = createXmlStream(bom);\n+        BOMInputStream bom = new BOMInputStream(new BufferedInputStream(is, BUFFER_SIZE), false, BOMS);\n+        BOMInputStream pis = new BOMInputStream(bom, true, XML_GUESS_BYTES);\n         String cTMime = getContentTypeMime(httpContentType);\n         String cTEnc = getContentTypeEncoding(httpContentType);\n         String bomEnc      = (bom.hasBOM() ? bom.getBOM().getCharsetName() : null);\n         String xmlGuessEnc = (pis.hasBOM() ? pis.getBOM().getCharsetName() : null);\n         String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n-        String encoding = calculateHttpEncoding(cTMime, cTEnc, bomEnc,\n+        this.encoding = calculateHttpEncoding(cTMime, cTEnc, bomEnc,\n                 xmlGuessEnc, xmlEnc, pis, lenient);\n-        prepareReader(pis, encoding);\n+        this.reader = new InputStreamReader(is, encoding);\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"2fbbf47aaf12f3efc333caf06bb61d63472d610e": {
+			"type": "Ybodychange",
+			"commitMessage": "Replace BOM detection and XML guess logic with BOMInputStream\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1004092 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2010-10-03, 8:04 PM",
+			"commitName": "2fbbf47aaf12f3efc333caf06bb61d63472d610e",
+			"commitAuthor": "Niall Pemberton",
+			"commitDateOld": "2010-10-03, 7:59 PM",
+			"commitNameOld": "5b75cf83b2db408f8228b26910a8d3d3633cd54f",
+			"commitAuthorOld": "Niall Pemberton",
+			"daysBetweenCommits": 0,
+			"commitsBetweenForRepo": 1,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,12 +1,13 @@\n     private void doHttpStream(InputStream is, String httpContentType,\n             boolean lenient) throws IOException {\n-        BufferedInputStream pis = new BufferedInputStream(is, BUFFER_SIZE);\n+        BOMInputStream bom = createBomStream(new BufferedInputStream(is, BUFFER_SIZE)); \n+        BOMInputStream pis = createXmlStream(bom);\n         String cTMime = getContentTypeMime(httpContentType);\n         String cTEnc = getContentTypeEncoding(httpContentType);\n-        String bomEnc = getBOMEncoding(pis);\n-        String xmlGuessEnc = getXMLGuessEncoding(pis);\n+        String bomEnc      = (bom.hasBOM() ? bom.getBOM().getCharsetName() : null);\n+        String xmlGuessEnc = (pis.hasBOM() ? pis.getBOM().getCharsetName() : null);\n         String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n         String encoding = calculateHttpEncoding(cTMime, cTEnc, bomEnc,\n                 xmlGuessEnc, xmlEnc, pis, lenient);\n         prepareReader(pis, encoding);\n     }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"5b75cf83b2db408f8228b26910a8d3d3633cd54f": {
+			"type": "Yintroduced",
+			"commitMessage": "IO-162 add Xml(Stream)Reader/Writer from ROME - thanks to Hervé Boutemy for the patch\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/io/trunk@1004090 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2010-10-03, 7:59 PM",
+			"commitName": "5b75cf83b2db408f8228b26910a8d3d3633cd54f",
+			"commitAuthor": "Niall Pemberton",
+			"diff": "@@ -0,0 +1,12 @@\n+    private void doHttpStream(InputStream is, String httpContentType,\n+            boolean lenient) throws IOException {\n+        BufferedInputStream pis = new BufferedInputStream(is, BUFFER_SIZE);\n+        String cTMime = getContentTypeMime(httpContentType);\n+        String cTEnc = getContentTypeEncoding(httpContentType);\n+        String bomEnc = getBOMEncoding(pis);\n+        String xmlGuessEnc = getXMLGuessEncoding(pis);\n+        String xmlEnc = getXmlProlog(pis, xmlGuessEnc);\n+        String encoding = calculateHttpEncoding(cTMime, cTEnc, bomEnc,\n+                xmlGuessEnc, xmlEnc, pis, lenient);\n+        prepareReader(pis, encoding);\n+    }\n\\ No newline at end of file\n"
+		}
+	},
+	"sha": "559de2c461e94ab636c959149c775bb27111fb48"
+}

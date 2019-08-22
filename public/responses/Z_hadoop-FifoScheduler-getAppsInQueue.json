@@ -1,0 +1,83 @@
+{
+	"repo": "https://github.com/apache/hadoop.git",
+	"file": "hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/main/java/org/apache/hadoop/yarn/server/resourcemanager/scheduler/fifo/FifoScheduler.java",
+	"method": {
+		"longName": "public List<ApplicationAttemptId> getAppsInQueue(String queueName);",
+		"startLine": 942,
+		"methodName": "getAppsInQueue",
+		"isStatic": false,
+		"isAbstract": false,
+		"visibility": "public"
+	},
+	"history": {
+		"de3b4aac561258ad242a3c5ed1c919428893fd4c": {
+			"type": "Ybodychange",
+			"commitMessage": "YARN-5716. Add global scheduler interface definition and update CapacityScheduler to use it. Contributed by Wangda Tan\n",
+			"commitDate": "2016-11-07, 10:14 AM",
+			"commitName": "de3b4aac561258ad242a3c5ed1c919428893fd4c",
+			"commitAuthor": "Jian He",
+			"commitDateOld": "2016-10-20, 9:17 PM",
+			"commitNameOld": "754cb4e30fac1c5fe8d44626968c0ddbfe459335",
+			"commitAuthorOld": "Karthik Kambatla",
+			"daysBetweenCommits": 17.58,
+			"commitsBetweenForRepo": 196,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,12 +1,12 @@\n       getAppsInQueue(String queueName) {\n     if (queueName.equals(DEFAULT_QUEUE.getQueueName())) {\n       List<ApplicationAttemptId> attempts =\n           new ArrayList<ApplicationAttemptId>(applications.size());\n-      for (SchedulerApplication<FiCaSchedulerApp> app : applications.values()) {\n+      for (SchedulerApplication<FifoAppAttempt> app : applications.values()) {\n         attempts.add(app.getCurrentAppAttempt().getApplicationAttemptId());\n       }\n       return attempts;\n     } else {\n       return null;\n     }\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"82f3454f5ac1f1c457e668e2cee12b4dcc800ee1": {
+			"type": "Ybodychange",
+			"commitMessage": "YARN-2017. Merged some of the common scheduler code. Contributed by Jian He.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/hadoop/common/trunk@1596753 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2014-05-21, 10:32 PM",
+			"commitName": "82f3454f5ac1f1c457e668e2cee12b4dcc800ee1",
+			"commitAuthor": "Vinod Kumar Vavilapalli",
+			"commitDateOld": "2014-05-13, 11:41 PM",
+			"commitNameOld": "84dfae2f8a1c787380c65bf8de59bfd2d65901e3",
+			"commitAuthorOld": "Sanford Ryza",
+			"daysBetweenCommits": 7.95,
+			"commitsBetweenForRepo": 46,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,12 +1,12 @@\n-  public synchronized List<ApplicationAttemptId> getAppsInQueue(String queueName) {\n+      getAppsInQueue(String queueName) {\n     if (queueName.equals(DEFAULT_QUEUE.getQueueName())) {\n-      List<ApplicationAttemptId> attempts = new ArrayList<ApplicationAttemptId>(\n-          applications.size());\n-      for (SchedulerApplication app : applications.values()) {\n+      List<ApplicationAttemptId> attempts =\n+          new ArrayList<ApplicationAttemptId>(applications.size());\n+      for (SchedulerApplication<FiCaSchedulerApp> app : applications.values()) {\n         attempts.add(app.getCurrentAppAttempt().getApplicationAttemptId());\n       }\n       return attempts;\n     } else {\n       return null;\n     }\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"1393581bceda234c88cafec00dbfc0ef2a402e83": {
+			"type": "Ybodychange",
+			"commitMessage": "YARN-1490. Introduced the ability to make ResourceManager optionally not kill all containers when an ApplicationMaster exits. Contributed by Jian He.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/hadoop/common/trunk@1557143 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2014-01-10, 7:04 AM",
+			"commitName": "1393581bceda234c88cafec00dbfc0ef2a402e83",
+			"commitAuthor": "Vinod Kumar Vavilapalli",
+			"commitDateOld": "2014-01-02, 12:19 PM",
+			"commitNameOld": "a45017a5f17ec11814db7e206d1e80aaa4dd8d8f",
+			"commitAuthorOld": "Vinod Kumar Vavilapalli",
+			"daysBetweenCommits": 7.78,
+			"commitsBetweenForRepo": 34,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,12 +1,12 @@\n   public synchronized List<ApplicationAttemptId> getAppsInQueue(String queueName) {\n     if (queueName.equals(DEFAULT_QUEUE.getQueueName())) {\n-      List<ApplicationAttemptId> apps = new ArrayList<ApplicationAttemptId>(\n-          appAttempts.size());\n-      for (FiCaSchedulerApp app : appAttempts.values()) {\n-        apps.add(app.getApplicationAttemptId());\n+      List<ApplicationAttemptId> attempts = new ArrayList<ApplicationAttemptId>(\n+          applications.size());\n+      for (SchedulerApplication app : applications.values()) {\n+        attempts.add(app.getCurrentAppAttempt().getApplicationAttemptId());\n       }\n-      return apps;\n+      return attempts;\n     } else {\n       return null;\n     }\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"a45017a5f17ec11814db7e206d1e80aaa4dd8d8f": {
+			"type": "Ybodychange",
+			"commitMessage": "YARN-1493. Changed ResourceManager and Scheduler interfacing to recognize app-attempts separately from apps. Contributed by Jian He.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/hadoop/common/trunk@1554896 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2014-01-02, 12:19 PM",
+			"commitName": "a45017a5f17ec11814db7e206d1e80aaa4dd8d8f",
+			"commitAuthor": "Vinod Kumar Vavilapalli",
+			"commitDateOld": "2013-12-12, 5:44 PM",
+			"commitNameOld": "28db28d491b4e3e3ddf440db4cebab8c0ad6b7f3",
+			"commitAuthorOld": "Jian He",
+			"daysBetweenCommits": 20.77,
+			"commitsBetweenForRepo": 83,
+			"commitsBetweenForFile": 1,
+			"diff": "@@ -1,12 +1,12 @@\n   public synchronized List<ApplicationAttemptId> getAppsInQueue(String queueName) {\n     if (queueName.equals(DEFAULT_QUEUE.getQueueName())) {\n       List<ApplicationAttemptId> apps = new ArrayList<ApplicationAttemptId>(\n-          applications.size());\n-      for (FiCaSchedulerApp app : applications.values()) {\n+          appAttempts.size());\n+      for (FiCaSchedulerApp app : appAttempts.values()) {\n         apps.add(app.getApplicationAttemptId());\n       }\n       return apps;\n     } else {\n       return null;\n     }\n   }\n\\ No newline at end of file\n",
+			"extendedDetails": {}
+		},
+		"e1d3670f4c233696dc673c37b578ce46b44a6876": {
+			"type": "Yintroduced",
+			"commitMessage": "YARN-807. When querying apps by queue, iterating over all apps is inefficient and limiting (Sandy Ryza)\n\ngit-svn-id: https://svn.apache.org/repos/asf/hadoop/common/trunk@1548983 13f79535-47bb-0310-9956-ffa450edef68\n",
+			"commitDate": "2013-12-07, 7:09 PM",
+			"commitName": "e1d3670f4c233696dc673c37b578ce46b44a6876",
+			"commitAuthor": "Sanford Ryza",
+			"diff": "@@ -0,0 +1,12 @@\n+  public synchronized List<ApplicationAttemptId> getAppsInQueue(String queueName) {\n+    if (queueName.equals(DEFAULT_QUEUE.getQueueName())) {\n+      List<ApplicationAttemptId> apps = new ArrayList<ApplicationAttemptId>(\n+          applications.size());\n+      for (FiCaSchedulerApp app : applications.values()) {\n+        apps.add(app.getApplicationAttemptId());\n+      }\n+      return apps;\n+    } else {\n+      return null;\n+    }\n+  }\n\\ No newline at end of file\n"
+		}
+	},
+	"sha": "9c3fc3ef2865164aa5f121793ac914cfeb21a181"
+}

@@ -2,7 +2,7 @@
 	"repo": "https://github.com/junit-team/junit4.git",
 	"file": "src/main/java/org/junit/runners/Parameterized.java",
 	"method": {
-		"longName": "Parameterized$RunnersFactory::createRunners()",
+		"longName": "private List<Runner> createRunners();",
 		"startLine": 371,
 		"methodName": "createRunners",
 		"isStatic": false,
@@ -13,10 +13,10 @@
 		"7111b9621997f6c660687b8ac04003398343ee3a": {
 			"type": "Ybodychange",
 			"commitMessage": "Handle AssumptionViolatedException in @Parameters method (#1460)\n\n",
-			"commitDate": "2017-06-14, 1:06 PM",
+			"commitDate": "2017-06-14, 12:06 PM",
 			"commitName": "7111b9621997f6c660687b8ac04003398343ee3a",
 			"commitAuthor": "Alex Panchenko",
-			"commitDateOld": "2017-04-20, 6:19 PM",
+			"commitDateOld": "2017-04-20, 5:19 PM",
 			"commitNameOld": "1bf8438b65858565dbb64736bfe13aae9cfc1b5a",
 			"commitAuthorOld": "Alex Panchenko",
 			"daysBetweenCommits": 54.78,
@@ -28,17 +28,17 @@
 		"1bf8438b65858565dbb64736bfe13aae9cfc1b5a": {
 			"type": "Ymultichange(Yexceptionschange,Ybodychange)",
 			"commitMessage": "@BeforeParam/@AfterParam for Parameterized runner (#1435)\n\nCloses #45 ",
-			"commitDate": "2017-04-20, 6:19 PM",
+			"commitDate": "2017-04-20, 5:19 PM",
 			"commitName": "1bf8438b65858565dbb64736bfe13aae9cfc1b5a",
 			"commitAuthor": "Alex Panchenko",
 			"subchanges": [
 				{
 					"type": "Yexceptionschange",
 					"commitMessage": "@BeforeParam/@AfterParam for Parameterized runner (#1435)\n\nCloses #45 ",
-					"commitDate": "2017-04-20, 6:19 PM",
+					"commitDate": "2017-04-20, 5:19 PM",
 					"commitName": "1bf8438b65858565dbb64736bfe13aae9cfc1b5a",
 					"commitAuthor": "Alex Panchenko",
-					"commitDateOld": "2015-04-14, 12:27 PM",
+					"commitDateOld": "2015-04-14, 11:27 AM",
 					"commitNameOld": "9f87b7819a63b53aae70e79fb72cc00e1837a3b6",
 					"commitAuthorOld": "Dmitry Baev",
 					"daysBetweenCommits": 737.24,
@@ -53,10 +53,10 @@
 				{
 					"type": "Ybodychange",
 					"commitMessage": "@BeforeParam/@AfterParam for Parameterized runner (#1435)\n\nCloses #45 ",
-					"commitDate": "2017-04-20, 6:19 PM",
+					"commitDate": "2017-04-20, 5:19 PM",
 					"commitName": "1bf8438b65858565dbb64736bfe13aae9cfc1b5a",
 					"commitAuthor": "Alex Panchenko",
-					"commitDateOld": "2015-04-14, 12:27 PM",
+					"commitDateOld": "2015-04-14, 11:27 AM",
 					"commitNameOld": "9f87b7819a63b53aae70e79fb72cc00e1837a3b6",
 					"commitAuthorOld": "Dmitry Baev",
 					"daysBetweenCommits": 737.24,
@@ -70,9 +70,10 @@
 		"495a9a93e4a1157e707a01467e7cc3f600c88d19": {
 			"type": "Yintroduced",
 			"commitMessage": "Extract class that creates the runners.\n\nThe new code makes it clear that the Parameterized ruinner is a suite\nwith automatically generated runners for each set of parameters.\n",
-			"commitDate": "2014-11-13, 4:14 PM",
+			"commitDate": "2014-11-13, 3:14 PM",
 			"commitName": "495a9a93e4a1157e707a01467e7cc3f600c88d19",
-			"commitAuthor": "Stefan Birkner"
+			"commitAuthor": "Stefan Birkner",
+			"diff": "@@ -0,0 +1,7 @@\n+        private List<Runner> createRunners() throws Throwable {\n+            Parameters parameters = getParametersMethod().getAnnotation(\n+                    Parameters.class);\n+            return Collections.unmodifiableList(createRunnersForParameters(\n+                    allParameters(), parameters.name(),\n+                    getParametersRunnerFactory()));\n+        }\n\\ No newline at end of file\n"
 		}
 	},
 	"sha": "02c328028b4d32c15bbf0becc9838e54ecbafcbf"

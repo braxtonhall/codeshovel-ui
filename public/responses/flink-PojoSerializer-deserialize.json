@@ -2,7 +2,7 @@
 	"repo": "https://github.com/apache/flink.git",
 	"file": "flink-core/src/main/java/org/apache/flink/api/java/typeutils/runtime/PojoSerializer.java",
 	"method": {
-		"longName": "PojoSerializer::deserialize(DataInputView source)",
+		"longName": "public T deserialize(DataInputView source);",
 		"startLine": 369,
 		"methodName": "deserialize",
 		"isStatic": false,
@@ -13,10 +13,10 @@
 		"ae285f9bd5398fe4d8d86eb3207bbc5beb8a24c8": {
 			"type": "Ybodychange",
 			"commitMessage": "[FLINK-6801] [core] Allow deserialized PojoSerializer to have removed fields\n\nPrior to this commit, deserializing the PojoSerializer would fail when\nwe encounter a missing field that existed in the POJO type before. It is\nactually perfectly fine to have a missing field; the deserialized\nPojoSerializer should simply skip reading the removed field's previously\nserialized values, i.e. much like how Java Object Serialization works.\n\nThis commit relaxes the deserialization of the PojoSerializer, so that a\nnull will be used as a placeholder value to indicate a removed field\nthat previously existed. De-/serialization and copying methods on the\nPojoSerializer will respect null Fields and simply skip them.\n",
-			"commitDate": "2017-06-12, 10:38 PM",
+			"commitDate": "2017-06-12, 9:38 PM",
 			"commitName": "ae285f9bd5398fe4d8d86eb3207bbc5beb8a24c8",
 			"commitAuthor": "Tzu-Li (Gordon) Tai",
-			"commitDateOld": "2017-06-12, 10:38 PM",
+			"commitDateOld": "2017-06-12, 9:38 PM",
 			"commitNameOld": "c929eb30867bb1f539c98fe9e47f91790bd85764",
 			"commitAuthorOld": "Tzu-Li (Gordon) Tai",
 			"daysBetweenCommits": 0,
@@ -28,10 +28,10 @@
 		"8aa5e05733655e7b3d1f11ed15f61672d61e5cb5": {
 			"type": "Ybodychange",
 			"commitMessage": "[FLINK-6178] [core] Allow serializer upgrades for managed state\n\nThis commit adds the functionality of allowing serializer upgrades for\nFlink's managed state. It consists of 2 major changes: 1) new\nuser-facing API in `TypeSerializer`, and 2) activate serializer upgrades\nin state backends.\n\nFor 1) new user-facing API for `TypeSerializer`, the following is added:\n- new class: TypeSerializerConfigSnapshot\n- new class: CompatibilityResult\n- new method: TypeSerializer#snapshotConfiguration()\n- new method:\n  TypeSerializer#ensureCompatibility(TypeSerializerConfigSnapshot)\n\nGenerally speaking, configuration snapshots contains a point-in-time\nview of a serializer's state / configuration, and is persisted along\nwith checkpoints. On restore, the configuration is confronted with the\nnew serializer of the state to check for compatibility, which may\nintroduce reconfiguration of the new serializer to be compatible.\n\nThis compatibility check is integrated in the state backends' restore\nflow in 2). Currently, if the check results in the need to perform state\nmigration, the restore simply fails as the state migration feature isn't\nyet available.\n",
-			"commitDate": "2017-05-07, 12:04 PM",
+			"commitDate": "2017-05-07, 11:04 AM",
 			"commitName": "8aa5e05733655e7b3d1f11ed15f61672d61e5cb5",
 			"commitAuthor": "Tzu-Li (Gordon) Tai",
-			"commitDateOld": "2017-02-19, 5:01 PM",
+			"commitDateOld": "2017-02-19, 4:01 PM",
 			"commitNameOld": "082d40fdc415952737a109c913a86d009ed234c1",
 			"commitAuthorOld": "Fabian Hueske",
 			"daysBetweenCommits": 76.75,
@@ -43,10 +43,10 @@
 		"21a715867d655bb61df9a9f7eef37e42b99e206a": {
 			"type": "Yfilerename",
 			"commitMessage": "[FLINK-3303] [core] Move all type utilities to flink-core\n",
-			"commitDate": "2016-02-02, 8:55 AM",
+			"commitDate": "2016-02-02, 7:55 AM",
 			"commitName": "21a715867d655bb61df9a9f7eef37e42b99e206a",
 			"commitAuthor": "Stephan Ewen",
-			"commitDateOld": "2016-02-02, 8:55 AM",
+			"commitDateOld": "2016-02-02, 7:55 AM",
 			"commitNameOld": "7081836e0d640ee640687606bd73b6673d3f2a07",
 			"commitAuthorOld": "Stephan Ewen",
 			"daysBetweenCommits": 0,
@@ -61,10 +61,10 @@
 		"7407076d3990752eb5fa4072cd036efd2f656cbc": {
 			"type": "Ybodychange",
 			"commitMessage": "[FLINK-1369] [types] Add support for Subclasses, Interfaces, Abstract Classes.\n\n- Abstract classes with fields are handled as POJO types.\n- Interfaces and abstract classes without fields are handled as generic types.\n\nThis closes #236\nThis closes #316\n",
-			"commitDate": "2015-02-10, 5:15 AM",
+			"commitDate": "2015-02-10, 4:15 AM",
 			"commitName": "7407076d3990752eb5fa4072cd036efd2f656cbc",
 			"commitAuthor": "Aljoscha Krettek",
-			"commitDateOld": "2015-02-09, 5:19 AM",
+			"commitDateOld": "2015-02-09, 4:19 AM",
 			"commitNameOld": "7bc78cbf97d341ebfed32fdfe20f21e4d146a869",
 			"commitAuthorOld": "Aljoscha Krettek",
 			"daysBetweenCommits": 1,
@@ -76,10 +76,10 @@
 		"926f835adb9cb77bcda19e4ed009cc07c89cea74": {
 			"type": "Ybodychange",
 			"commitMessage": "[FLINK-1032] Rework support for POJO types in the Java API\n",
-			"commitDate": "2014-10-08, 3:39 AM",
+			"commitDate": "2014-10-08, 2:39 AM",
 			"commitName": "926f835adb9cb77bcda19e4ed009cc07c89cea74",
 			"commitAuthor": "Robert Metzger",
-			"commitDateOld": "2014-09-30, 7:10 AM",
+			"commitDateOld": "2014-09-30, 6:10 AM",
 			"commitNameOld": "76d4a75e823c31a899f2143fb6be185b90e55532",
 			"commitAuthorOld": "Stephan Ewen",
 			"daysBetweenCommits": 7.85,
@@ -91,9 +91,10 @@
 		"76d4a75e823c31a899f2143fb6be185b90e55532": {
 			"type": "Yintroduced",
 			"commitMessage": "[FLINK-1005] Extend TypeSerializer interface to handle non-mutable object deserialization more efficiently.\n",
-			"commitDate": "2014-09-30, 7:10 AM",
+			"commitDate": "2014-09-30, 6:10 AM",
 			"commitName": "76d4a75e823c31a899f2143fb6be185b90e55532",
-			"commitAuthor": "Stephan Ewen"
+			"commitAuthor": "Stephan Ewen",
+			"diff": "@@ -0,0 +1,20 @@\n+\tpublic T deserialize(DataInputView source) throws IOException {\n+\t\tT target;\n+\t\ttry {\n+\t\t\ttarget = clazz.newInstance();\n+\t\t}\n+\t\tcatch (Throwable t) {\n+\t\t\tthrow new RuntimeException(\"Cannot instantiate class.\", t);\n+\t\t}\n+\t\t\n+\t\ttry {\n+\t\t\tfor (int i = 0; i < numFields; i++) {\n+\t\t\t\tObject field = fieldSerializers[i].deserialize(source);\n+\t\t\t\tfields[i].set(target, field);\n+\t\t\t}\n+\t\t} catch (IllegalAccessException e) {\n+\t\t\tthrow new RuntimeException(\"Error during POJO copy, this should not happen since we check the fields\" +\n+\t\t\t\t\t\"before.\");\n+\t\t}\n+\t\treturn target;\n+\t}\n\\ No newline at end of file\n"
 		}
 	},
 	"sha": "9e936a5f8198b0059e9b5fba33163c2bbe3efbdd"

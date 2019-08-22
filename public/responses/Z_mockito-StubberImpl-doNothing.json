@@ -2,7 +2,7 @@
 	"repo": "https://github.com/mockito/mockito.git",
 	"file": "src/main/java/org/mockito/internal/stubbing/StubberImpl.java",
 	"method": {
-		"longName": "StubberImpl::doNothing()",
+		"longName": "public Stubber doNothing();",
 		"startLine": 117,
 		"methodName": "doNothing",
 		"isStatic": false,
@@ -13,10 +13,10 @@
 		"275586ecf3a00da078b6fb7e9cc4508231cc4301": {
 			"type": "Ybodychange",
 			"commitMessage": "Support for return type 'Void' in DoesNothingAnswer (#933)\n\n* Fixes #927 methods with return type 'Void' are treated now like void\r\nmethods\r\n\r\n* Refactored DoesNothing and added tests to verify its validation\r\nbehaviour in case of void/Void methods.\r\n",
-			"commitDate": "2017-02-07, 8:27 AM",
+			"commitDate": "2017-02-07, 7:27 AM",
 			"commitName": "275586ecf3a00da078b6fb7e9cc4508231cc4301",
 			"commitAuthor": "Christian Schwarz",
-			"commitDateOld": "2017-02-06, 8:00 AM",
+			"commitDateOld": "2017-02-06, 7:00 AM",
 			"commitNameOld": "e9516f42b1182ae675022c101954e721e20b2c72",
 			"commitAuthorOld": "Allon Murienik",
 			"daysBetweenCommits": 1.02,
@@ -28,10 +28,10 @@
 		"fe7bbabb82ce3d1000c13d39d6355c134e94ac27": {
 			"type": "Yfilerename",
 			"commitMessage": "Moved sources to standard location\n\nLet's make the project be as close as possible to standard, conventional project for better clarity\n",
-			"commitDate": "2015-07-08, 10:42 PM",
+			"commitDate": "2015-07-08, 9:42 PM",
 			"commitName": "fe7bbabb82ce3d1000c13d39d6355c134e94ac27",
 			"commitAuthor": "Szczepan Faber",
-			"commitDateOld": "2015-07-08, 10:16 AM",
+			"commitDateOld": "2015-07-08, 9:16 AM",
 			"commitNameOld": "9d3124ae8768ec9fb60ff5b8a176b060491f9770",
 			"commitAuthorOld": "Szczepan Faber",
 			"daysBetweenCommits": 0.52,
@@ -46,17 +46,17 @@
 		"af098cc912eb51ba8c457c68c8dcf97fa4dbb9f2": {
 			"type": "Ymultichange(Yrename,Ybodychange)",
 			"commitMessage": "changed doReturn() to doNothing() and fixed javadocs accordingly\n\n--HG--\nrename : src/org/mockito/internal/stubbing/ReturnsVoid.java => src/org/mockito/internal/stubbing/DoesNothing.java\nextra : convert_revision : svn%3Aaa2aecf3-ea3e-0410-9d70-716747e7c967/trunk%40707\n",
-			"commitDate": "2008-07-20, 8:42 AM",
+			"commitDate": "2008-07-20, 7:42 AM",
 			"commitName": "af098cc912eb51ba8c457c68c8dcf97fa4dbb9f2",
 			"commitAuthor": "Szczepan Faber",
 			"subchanges": [
 				{
 					"type": "Yrename",
 					"commitMessage": "changed doReturn() to doNothing() and fixed javadocs accordingly\n\n--HG--\nrename : src/org/mockito/internal/stubbing/ReturnsVoid.java => src/org/mockito/internal/stubbing/DoesNothing.java\nextra : convert_revision : svn%3Aaa2aecf3-ea3e-0410-9d70-716747e7c967/trunk%40707\n",
-					"commitDate": "2008-07-20, 8:42 AM",
+					"commitDate": "2008-07-20, 7:42 AM",
 					"commitName": "af098cc912eb51ba8c457c68c8dcf97fa4dbb9f2",
 					"commitAuthor": "Szczepan Faber",
-					"commitDateOld": "2008-07-16, 4:40 PM",
+					"commitDateOld": "2008-07-16, 3:40 PM",
 					"commitNameOld": "87581fc75cb381237dba8fcb3351bbbad1aecfc2",
 					"commitAuthorOld": "Szczepan Faber",
 					"daysBetweenCommits": 3.67,
@@ -71,10 +71,10 @@
 				{
 					"type": "Ybodychange",
 					"commitMessage": "changed doReturn() to doNothing() and fixed javadocs accordingly\n\n--HG--\nrename : src/org/mockito/internal/stubbing/ReturnsVoid.java => src/org/mockito/internal/stubbing/DoesNothing.java\nextra : convert_revision : svn%3Aaa2aecf3-ea3e-0410-9d70-716747e7c967/trunk%40707\n",
-					"commitDate": "2008-07-20, 8:42 AM",
+					"commitDate": "2008-07-20, 7:42 AM",
 					"commitName": "af098cc912eb51ba8c457c68c8dcf97fa4dbb9f2",
 					"commitAuthor": "Szczepan Faber",
-					"commitDateOld": "2008-07-16, 4:40 PM",
+					"commitDateOld": "2008-07-16, 3:40 PM",
 					"commitNameOld": "87581fc75cb381237dba8fcb3351bbbad1aecfc2",
 					"commitAuthorOld": "Szczepan Faber",
 					"daysBetweenCommits": 3.67,
@@ -88,10 +88,10 @@
 		"87581fc75cb381237dba8fcb3351bbbad1aecfc2": {
 			"type": "Ybodychange",
 			"commitMessage": "more stuff to doReturn() - more checks around exceptional scenarios\n\n--HG--\nrename : test/org/mockitousage/examples/use/PrototypingTest.java => test/org/mockitousage/PrototypingTest.java\nrename : test/org/mockitousage/binding/BridgeMethodPuzzleTest.java => test/org/mockitousage/puzzlers/BridgeMethodPuzzleTest.java\nrename : test/org/mockitousage/binding/OverloadingPuzzleTest.java => test/org/mockitousage/puzzlers/OverloadingPuzzleTest.java\nextra : convert_revision : svn%3Aaa2aecf3-ea3e-0410-9d70-716747e7c967/trunk%40685\n",
-			"commitDate": "2008-07-16, 4:40 PM",
+			"commitDate": "2008-07-16, 3:40 PM",
 			"commitName": "87581fc75cb381237dba8fcb3351bbbad1aecfc2",
 			"commitAuthor": "Szczepan Faber",
-			"commitDateOld": "2008-07-16, 2:15 PM",
+			"commitDateOld": "2008-07-16, 1:15 PM",
 			"commitNameOld": "235b99ae5d66e7ce5386d9993ef9a3ad95ddee23",
 			"commitAuthorOld": "Szczepan Faber",
 			"daysBetweenCommits": 0.1,
@@ -103,10 +103,10 @@
 		"235b99ae5d66e7ce5386d9993ef9a3ad95ddee23": {
 			"type": "Yreturntypechange",
 			"commitMessage": "renamed class accordingly\n\n--HG--\nrename : src/org/mockito/internal/stubbing/StubberFoo.java => src/org/mockito/internal/stubbing/Stubber.java\nextra : convert_revision : svn%3Aaa2aecf3-ea3e-0410-9d70-716747e7c967/trunk%40680\n",
-			"commitDate": "2008-07-16, 2:15 PM",
+			"commitDate": "2008-07-16, 1:15 PM",
 			"commitName": "235b99ae5d66e7ce5386d9993ef9a3ad95ddee23",
 			"commitAuthor": "Szczepan Faber",
-			"commitDateOld": "2008-07-16, 2:14 PM",
+			"commitDateOld": "2008-07-16, 1:14 PM",
 			"commitNameOld": "183167dbd20a85fa1106c300b304684ddec5f3d8",
 			"commitAuthorOld": "Szczepan Faber",
 			"daysBetweenCommits": 0,
@@ -121,9 +121,10 @@
 		"183167dbd20a85fa1106c300b304684ddec5f3d8": {
 			"type": "Yintroduced",
 			"commitMessage": "another batch of stuff related to doReturn() API\n\n--HG--\nrename : src/org/mockito/internal/stubbing/Stubber.java => src/org/mockito/internal/stubbing/MockitoStubber.java\nrename : src/org/mockito/internal/stubbing/MethodSelector.java => src/org/mockito/internal/stubbing/StubbedMethodSelector.java\nrename : src/org/mockito/internal/stubbing/MethodSelectorImpl.java => src/org/mockito/internal/stubbing/StubberImpl.java\nrename : test/org/mockito/internal/stubbing/StubberTest.java => test/org/mockito/internal/stubbing/MockitoStubberTest.java\nextra : convert_revision : svn%3Aaa2aecf3-ea3e-0410-9d70-716747e7c967/trunk%40677\n",
-			"commitDate": "2008-07-16, 2:14 PM",
+			"commitDate": "2008-07-16, 1:14 PM",
 			"commitName": "183167dbd20a85fa1106c300b304684ddec5f3d8",
-			"commitAuthor": "Szczepan Faber"
+			"commitAuthor": "Szczepan Faber",
+			"diff": "@@ -0,0 +1,4 @@\n+    public StubberFoo doReturn() {\n+        answers.add(new Returns());\n+        return this;\n+    }\n\\ No newline at end of file\n"
 		}
 	},
 	"sha": "077562ea54f1fa87ff8dd233c3060ddbf0f1ce26"

@@ -1,6 +1,788 @@
 {
+	"Z_commons-io-CopyUtils-copy": {
+		"longName": "public void copy(byte[] input, OutputStream output);",
+		"methodName": "copy",
+		"repoShort": "apache/commons-io",
+		"file": "Z_commons-io-CopyUtils-copy",
+		"historyShort": [
+			"Yparametermetachange",
+			"Yfilerename",
+			"Ybodychange",
+			"Yparametermetachange",
+			"Yintroduced"
+		]
+	},
+	"Z_commons-io-DemuxOutputStream-flush": {
+		"longName": "public void flush();",
+		"methodName": "flush",
+		"repoShort": "apache/commons-io",
+		"file": "Z_commons-io-DemuxOutputStream-flush",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_commons-io-EndianUtils-read": {
+		"longName": "private int read(InputStream input);",
+		"methodName": "read",
+		"repoShort": "apache/commons-io",
+		"file": "Z_commons-io-EndianUtils-read",
+		"historyShort": [
+			"Ybodychange",
+			"Ymultichange",
+			"Yfilerename",
+			"Ybodychange",
+			"Yparametermetachange",
+			"Yintroduced"
+		]
+	},
+	"Z_commons-io-FileAlterationObserver-createFileEntry": {
+		"longName": "private FileEntry createFileEntry(FileEntry parent, File file);",
+		"methodName": "createFileEntry",
+		"repoShort": "apache/commons-io",
+		"file": "Z_commons-io-FileAlterationObserver-createFileEntry",
+		"historyShort": [
+			"Ybodychange",
+			"Ymultichange",
+			"Ybodychange",
+			"Yfilerename",
+			"Ymultichange",
+			"Ybodychange",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_commons-io-FilenameUtils-wildcardMatch": {
+		"longName": "public boolean wildcardMatch(String fileName, String wildcardMatcher, IOCase caseSensitivity);",
+		"methodName": "wildcardMatch",
+		"repoShort": "apache/commons-io",
+		"file": "Z_commons-io-FilenameUtils-wildcardMatch",
+		"historyShort": [
+			"Ymultichange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ymultichange",
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ymultichange",
+			"Ybodychange",
+			"Ymultichange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ymultichange",
+			"Ymultichange",
+			"Ymultichange",
+			"Yfilerename",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_commons-io-IOUtils-contentEqualsIgnoreEOL": {
+		"longName": "public boolean contentEqualsIgnoreEOL(Reader input1, Reader input2);",
+		"methodName": "contentEqualsIgnoreEOL",
+		"repoShort": "apache/commons-io",
+		"file": "Z_commons-io-IOUtils-contentEqualsIgnoreEOL",
+		"historyShort": [
+			"Ybodychange",
+			"Ymultichange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_commons-io-IOUtils-toInputStream": {
+		"longName": "public InputStream toInputStream(CharSequence input, Charset encoding);",
+		"methodName": "toInputStream",
+		"repoShort": "apache/commons-io",
+		"file": "Z_commons-io-IOUtils-toInputStream",
+		"historyShort": [
+			"Yparametermetachange",
+			"Ymultichange",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_commons-io-ProxyWriter-write": {
+		"longName": "public void write(String str);",
+		"methodName": "write",
+		"repoShort": "apache/commons-io",
+		"file": "Z_commons-io-ProxyWriter-write",
+		"historyShort": [
+			"Ymultichange",
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_commons-io-Tailer-run": {
+		"longName": "public void run();",
+		"methodName": "run",
+		"repoShort": "apache/commons-io",
+		"file": "Z_commons-io-Tailer-run",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_commons-io-XmlStreamReader-doHttpStream": {
+		"longName": "private String doHttpStream(BOMInputStream bom, BOMInputStream pis, String httpContentType, boolean lenient);",
+		"methodName": "doHttpStream",
+		"repoShort": "apache/commons-io",
+		"file": "Z_commons-io-XmlStreamReader-doHttpStream",
+		"historyShort": [
+			"Ybodychange",
+			"Ymultichange",
+			"Ymultichange",
+			"Ymultichange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_elasticsearch-BulkRequest-add": {
+		"longName": "public BulkRequest add(DocWriteRequest<?> requests);",
+		"methodName": "add",
+		"repoShort": "elastic/elasticsearch",
+		"file": "Z_elasticsearch-BulkRequest-add",
+		"historyShort": [
+			"Ymultichange",
+			"Yfilerename",
+			"Ymultichange",
+			"Ymultichange",
+			"Ymultichange",
+			"Ymultichange"
+		]
+	},
+	"Z_elasticsearch-ESFileStore-getUnallocatedSpace": {
+		"longName": "public long getUnallocatedSpace();",
+		"methodName": "getUnallocatedSpace",
+		"repoShort": "elastic/elasticsearch",
+		"file": "Z_elasticsearch-ESFileStore-getUnallocatedSpace",
+		"historyShort": [
+			"Yfilerename",
+			"Ybodychange",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_elasticsearch-IndicesSegmentResponse-addCustomXContentFields": {
+		"longName": "protected void addCustomXContentFields(XContentBuilder builder, Params params);",
+		"methodName": "addCustomXContentFields",
+		"repoShort": "elastic/elasticsearch",
+		"file": "Z_elasticsearch-IndicesSegmentResponse-addCustomXContentFields",
+		"historyShort": [
+			"Ybodychange",
+			"Ymultichange",
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_elasticsearch-IndicesSegmentResponse-toXContent": {
+		"longName": "private void toXContent(XContentBuilder builder, Accountable tree);",
+		"methodName": "toXContent",
+		"repoShort": "elastic/elasticsearch",
+		"file": "Z_elasticsearch-IndicesSegmentResponse-toXContent",
+		"historyShort": [
+			"Ymodifierchange",
+			"Ybodychange",
+			"Yfilerename",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_elasticsearch-IndicesService-verifyIndexMetadata": {
+		"longName": "public void verifyIndexMetadata(IndexMetaData metaData, IndexMetaData metaDataUpdate);",
+		"methodName": "verifyIndexMetadata",
+		"repoShort": "elastic/elasticsearch",
+		"file": "Z_elasticsearch-IndicesService-verifyIndexMetadata",
+		"historyShort": [
+			"Ybodychange",
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Ymultichange",
+			"Ymultichange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_elasticsearch-NodesFaultDetection-handleTransportDisconnect": {
+		"longName": "protected void handleTransportDisconnect(DiscoveryNode node);",
+		"methodName": "handleTransportDisconnect",
+		"repoShort": "elastic/elasticsearch",
+		"file": "Z_elasticsearch-NodesFaultDetection-handleTransportDisconnect",
+		"historyShort": [
+			"Yfilerename",
+			"Yfilerename",
+			"Yfilerename",
+			"Ybodychange",
+			"Ymodifierchange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_elasticsearch-RestRequest-method": {
+		"longName": "public Method method();",
+		"methodName": "method",
+		"repoShort": "elastic/elasticsearch",
+		"file": "Z_elasticsearch-RestRequest-method",
+		"historyShort": [
+			"Ymultichange",
+			"Yfilerename",
+			"Ymultichange",
+			"Yintroduced"
+		]
+	},
+	"Z_elasticsearch-RestTable-expandHeadersFromRequest": {
+		"longName": "private Set<String> expandHeadersFromRequest(Table table, RestRequest request);",
+		"methodName": "expandHeadersFromRequest",
+		"repoShort": "elastic/elasticsearch",
+		"file": "Z_elasticsearch-RestTable-expandHeadersFromRequest",
+		"historyShort": [
+			"Yfilerename",
+			"Yfilerename",
+			"Yfilerename",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_elasticsearch-Security-createPermissions": {
+		"longName": "Permissions createPermissions(Environment environment);",
+		"methodName": "createPermissions",
+		"repoShort": "elastic/elasticsearch",
+		"file": "Z_elasticsearch-Security-createPermissions",
+		"historyShort": [
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ymultichange",
+			"Ymultichange",
+			"Yintroduced"
+		]
+	},
+	"Z_elasticsearch-TransportClusterInfoAction-masterOperation": {
+		"longName": "protected void masterOperation(Request request, ClusterState state, ActionListener<Response> listener);",
+		"methodName": "masterOperation",
+		"repoShort": "elastic/elasticsearch",
+		"file": "Z_elasticsearch-TransportClusterInfoAction-masterOperation",
+		"historyShort": [
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Yexceptionschange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yexceptionschange",
+			"Ybodychange",
+			"Ymultichange",
+			"Yintroduced"
+		]
+	},
+	"Z_hadoop-ClientRMService-renewDelegationToken": {
+		"longName": "public RenewDelegationTokenResponse renewDelegationToken(RenewDelegationTokenRequest request);",
+		"methodName": "renewDelegationToken",
+		"repoShort": "apache/hadoop",
+		"file": "Z_hadoop-ClientRMService-renewDelegationToken",
+		"historyShort": [
+			"Yexceptionschange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_hadoop-ConverterUtils-convertFromYarn": {
+		"longName": "public Token<T> convertFromYarn(org.apache.hadoop.yarn.api.records.Token protoToken, InetSocketAddress serviceAddr);",
+		"methodName": "convertFromYarn",
+		"repoShort": "apache/hadoop",
+		"file": "Z_hadoop-ConverterUtils-convertFromYarn",
+		"historyShort": [
+			"Ymultichange",
+			"Yparameterchange",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_hadoop-FiCaSchedulerNode-unreserveResource": {
+		"longName": "public void unreserveResource(SchedulerApplicationAttempt application);",
+		"methodName": "unreserveResource",
+		"repoShort": "apache/hadoop",
+		"file": "Z_hadoop-FiCaSchedulerNode-unreserveResource",
+		"historyShort": [
+			"Ybodychange",
+			"Yparameterchange",
+			"Ybodychange",
+			"Yfilerename",
+			"Ymultichange",
+			"Ybodychange",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_hadoop-FifoScheduler-allocate": {
+		"longName": "public Allocation allocate(ApplicationAttemptId applicationAttemptId, List<ResourceRequest> ask, List<SchedulingRequest> schedulingRequests, List<ContainerId> release, List<String> blacklistAdditions, List<String> blacklistRemovals, ContainerUpdates updateRequests);",
+		"methodName": "allocate",
+		"repoShort": "apache/hadoop",
+		"file": "Z_hadoop-FifoScheduler-allocate",
+		"historyShort": [
+			"Ymultichange",
+			"Ybodychange",
+			"Yparameterchange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yparameterchange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ymultichange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ymultichange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_hadoop-FifoScheduler-getAppsInQueue": {
+		"longName": "public List<ApplicationAttemptId> getAppsInQueue(String queueName);",
+		"methodName": "getAppsInQueue",
+		"repoShort": "apache/hadoop",
+		"file": "Z_hadoop-FifoScheduler-getAppsInQueue",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_hadoop-LeveldbConfigurationStore-retrieve": {
+		"longName": "public Configuration retrieve();",
+		"methodName": "retrieve",
+		"repoShort": "apache/hadoop",
+		"file": "Z_hadoop-LeveldbConfigurationStore-retrieve",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_hadoop-NodeReportPBImpl-setCapability": {
+		"longName": "public void setCapability(Resource capability);",
+		"methodName": "setCapability",
+		"repoShort": "apache/hadoop",
+		"file": "Z_hadoop-NodeReportPBImpl-setCapability",
+		"historyShort": [
+			"Ybodychange",
+			"Yfilerename",
+			"Yfilerename",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_hadoop-RMServerUtils-normalizeAndValidateRequests": {
+		"longName": "public void normalizeAndValidateRequests(List<ResourceRequest> ask, Resource maximumResource, String queueName, YarnScheduler scheduler, RMContext rmContext);",
+		"methodName": "normalizeAndValidateRequests",
+		"repoShort": "apache/hadoop",
+		"file": "Z_hadoop-RMServerUtils-normalizeAndValidateRequests",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Ymultichange",
+			"Ymultichange",
+			"Ymultichange",
+			"Ymultichange",
+			"Yintroduced"
+		]
+	},
+	"Z_hadoop-SchedulerApplicationAttempt-getRunningAggregateAppResourceUsage": {
+		"longName": "private AggregateAppResourceUsage getRunningAggregateAppResourceUsage();",
+		"methodName": "getRunningAggregateAppResourceUsage",
+		"repoShort": "apache/hadoop",
+		"file": "Z_hadoop-SchedulerApplicationAttempt-getRunningAggregateAppResourceUsage",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Ymodifierchange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_hadoop-SchedulerApplicationAttempt-resetSchedulingOpportunities": {
+		"longName": "public void resetSchedulingOpportunities(SchedulerRequestKey schedulerKey, long currentTimeMs);",
+		"methodName": "resetSchedulingOpportunities",
+		"repoShort": "apache/hadoop",
+		"file": "Z_hadoop-SchedulerApplicationAttempt-resetSchedulingOpportunities",
+		"historyShort": [
+			"Ybodychange",
+			"Ymultichange",
+			"Ymultichange",
+			"Ymovefromfile",
+			"Ymovefromfile",
+			"Ymultichange",
+			"Ybodychange",
+			"Yfilerename",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_hibernate-search-ArrayBridge-indexNotNullArray": {
+		"longName": "private void indexNotNullArray(String name, Object value, Document document, LuceneOptions luceneOptions);",
+		"methodName": "indexNotNullArray",
+		"repoShort": "hibernate/hibernate-search",
+		"file": "Z_hibernate-search-ArrayBridge-indexNotNullArray",
+		"historyShort": [
+			"Ybodychange",
+			"Ymodifierchange",
+			"Yfilerename",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_hibernate-search-ClassLoaderHelper-getNoArgConstructor": {
+		"longName": "private Constructor<T> getNoArgConstructor(Class<T> classToLoad, String componentDescription);",
+		"methodName": "getNoArgConstructor",
+		"repoShort": "hibernate/hibernate-search",
+		"file": "Z_hibernate-search-ClassLoaderHelper-getNoArgConstructor",
+		"historyShort": [
+			"Ymultichange",
+			"Ybodychange",
+			"Yfilerename",
+			"Yfilerename",
+			"Yfilerename",
+			"Yfilerename",
+			"Ymultichange",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_hibernate-search-ClassLoaderHelper-instanceFromName": {
+		"longName": "public T instanceFromName(Class<T> targetSuperType, String classNameToLoad, String componentDescription, ServiceManager serviceManager);",
+		"methodName": "instanceFromName",
+		"repoShort": "hibernate/hibernate-search",
+		"file": "Z_hibernate-search-ClassLoaderHelper-instanceFromName",
+		"historyShort": [
+			"Ymultichange",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_hibernate-search-DefaultBatchBackend-doWorkInSync": {
+		"longName": "public void doWorkInSync(LuceneWork work);",
+		"methodName": "doWorkInSync",
+		"repoShort": "hibernate/hibernate-search",
+		"file": "Z_hibernate-search-DefaultBatchBackend-doWorkInSync",
+		"historyShort": [
+			"Ybodychange",
+			"Yfilerename",
+			"Yfilerename",
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_hibernate-search-DistanceQuery-matches": {
+		"longName": "public boolean matches();",
+		"methodName": "matches",
+		"repoShort": "hibernate/hibernate-search",
+		"file": "Z_hibernate-search-DistanceQuery-matches",
+		"historyShort": [
+			"Ymultichange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_hibernate-search-Elasticsearch2AnalyzerStrategy-buildScopedAnalyzerReference": {
+		"longName": "public ScopedElasticsearchAnalyzerReference.Builder buildScopedAnalyzerReference(AnalyzerReference initialGlobalAnalyzerReference);",
+		"methodName": "buildScopedAnalyzerReference",
+		"repoShort": "hibernate/hibernate-search",
+		"file": "Z_hibernate-search-Elasticsearch2AnalyzerStrategy-buildScopedAnalyzerReference",
+		"historyShort": [
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange",
+			"Ymultichange",
+			"Ymultichange",
+			"Ymultichange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_hibernate-search-FullTextQueryImpl-setTimeout": {
+		"longName": "public FullTextQueryImpl setTimeout(long timeout, TimeUnit timeUnit);",
+		"methodName": "setTimeout",
+		"repoShort": "hibernate/hibernate-search",
+		"file": "Z_hibernate-search-FullTextQueryImpl-setTimeout",
+		"historyShort": [
+			"Yreturntypechange",
+			"Yfilerename",
+			"Yfilerename",
+			"Yfilerename",
+			"Ybodychange",
+			"Ybodychange"
+		]
+	},
+	"Z_hibernate-search-NumericFieldUtils-createNumericRangeQuery": {
+		"longName": "public Query createNumericRangeQuery(String fieldName, Object from, Object to, boolean includeLower, boolean includeUpper);",
+		"methodName": "createNumericRangeQuery",
+		"repoShort": "hibernate/hibernate-search",
+		"file": "Z_hibernate-search-NumericFieldUtils-createNumericRangeQuery",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Yfilerename",
+			"Ybodychange",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_hibernate-search-StreamingOperationDispatcher-executeWork": {
+		"longName": "private void executeWork(LuceneWork work, IndexingMonitor progressMonitor);",
+		"methodName": "executeWork",
+		"repoShort": "hibernate/hibernate-search",
+		"file": "Z_hibernate-search-StreamingOperationDispatcher-executeWork",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_hibernate-search-TokenizerChain-createComponents": {
+		"longName": "protected TokenStreamComponents createComponents(String fieldName);",
+		"methodName": "createComponents",
+		"repoShort": "hibernate/hibernate-search",
+		"file": "Z_hibernate-search-TokenizerChain-createComponents",
+		"historyShort": [
+			"Ymultichange",
+			"Yfilerename",
+			"Yintroduced"
+		]
+	},
+	"Z_jetty-AnnotationIntrospector-introspect": {
+		"longName": "public void introspect(Class<?> clazz);",
+		"methodName": "introspect",
+		"repoShort": "eclipse/jetty.project",
+		"file": "Z_jetty-AnnotationIntrospector-introspect",
+		"historyShort": [
+			"Yparameterchange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_jetty-ExecutorThreadPool-isLowOnThreads": {
+		"longName": "public boolean isLowOnThreads();",
+		"methodName": "isLowOnThreads",
+		"repoShort": "eclipse/jetty.project",
+		"file": "Z_jetty-ExecutorThreadPool-isLowOnThreads",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_jetty-FragmentDescriptor-processAfters": {
+		"longName": "public void processAfters(XmlParser.Node ordering);",
+		"methodName": "processAfters",
+		"repoShort": "eclipse/jetty.project",
+		"file": "Z_jetty-FragmentDescriptor-processAfters",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Ymultichange",
+			"Ymultichange",
+			"Yintroduced"
+		]
+	},
+	"Z_jetty-HttpTransportOverHTTP2-push": {
+		"longName": "public void push(MetaData.Request request);",
+		"methodName": "push",
+		"repoShort": "eclipse/jetty.project",
+		"file": "Z_jetty-HttpTransportOverHTTP2-push",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ymultichange",
+			"Yintroduced"
+		]
+	},
+	"Z_jetty-HttpTransportOverHTTP2-send": {
+		"longName": "public void send(MetaData.Response info, boolean isHeadRequest, ByteBuffer content, boolean lastContent, Callback callback);",
+		"methodName": "send",
+		"repoShort": "eclipse/jetty.project",
+		"file": "Z_jetty-HttpTransportOverHTTP2-send",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ymultichange",
+			"Ymultichange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_jetty-JsrSession-addMessageHandler": {
+		"longName": "public void addMessageHandler(MessageHandler handler);",
+		"methodName": "addMessageHandler",
+		"repoShort": "eclipse/jetty.project",
+		"file": "Z_jetty-JsrSession-addMessageHandler",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Ymultichange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_jetty-Module-equals": {
+		"longName": "public boolean equals(Object obj);",
+		"methodName": "equals",
+		"repoShort": "eclipse/jetty.project",
+		"file": "Z_jetty-Module-equals",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
+	"Z_jetty-ServiceWebAppProvider-doStart": {
+		"longName": "protected void doStart();",
+		"methodName": "doStart",
+		"repoShort": "eclipse/jetty.project",
+		"file": "Z_jetty-ServiceWebAppProvider-doStart",
+		"historyShort": [
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
 	"Z_jetty-ServletHolder-doStart": {
-		"longName": "ServletHolder::doStart()",
+		"longName": "public void doStart();",
 		"methodName": "doStart",
 		"repoShort": "eclipse/jetty.project",
 		"file": "Z_jetty-ServletHolder-doStart",
@@ -26,7 +808,7 @@
 		]
 	},
 	"Z_jetty-StdErrLog-escape": {
-		"longName": "StdErrLog::escape(StringBuilder builder, String string)",
+		"longName": "private void escape(StringBuilder builder, String string);",
 		"methodName": "escape",
 		"repoShort": "eclipse/jetty.project",
 		"file": "Z_jetty-StdErrLog-escape",
@@ -39,7 +821,7 @@
 		]
 	},
 	"Z_lucene-solr-ConcurrentMergeScheduler-sync": {
-		"longName": "ConcurrentMergeScheduler::sync()",
+		"longName": "public void sync();",
 		"methodName": "sync",
 		"repoShort": "apache/lucene-solr",
 		"file": "Z_lucene-solr-ConcurrentMergeScheduler-sync",
@@ -61,7 +843,7 @@
 		]
 	},
 	"Z_lucene-solr-ConcurrentMergeScheduler-updateMergeThreads": {
-		"longName": "ConcurrentMergeScheduler::updateMergeThreads()",
+		"longName": "protected void updateMergeThreads();",
 		"methodName": "updateMergeThreads",
 		"repoShort": "apache/lucene-solr",
 		"file": "Z_lucene-solr-ConcurrentMergeScheduler-updateMergeThreads",
@@ -81,7 +863,7 @@
 		]
 	},
 	"Z_lucene-solr-ConstantScoreQuery-rewrite": {
-		"longName": "ConstantScoreQuery::rewrite(IndexReader reader)",
+		"longName": "public Query rewrite(IndexReader reader);",
 		"methodName": "rewrite",
 		"repoShort": "apache/lucene-solr",
 		"file": "Z_lucene-solr-ConstantScoreQuery-rewrite",
@@ -97,7 +879,7 @@
 		]
 	},
 	"Z_lucene-solr-Field-tokenStream": {
-		"longName": "Field::tokenStream(Analyzer analyzer, TokenStream reuse)",
+		"longName": "public TokenStream tokenStream(Analyzer analyzer, TokenStream reuse);",
 		"methodName": "tokenStream",
 		"repoShort": "apache/lucene-solr",
 		"file": "Z_lucene-solr-Field-tokenStream",
@@ -131,7 +913,7 @@
 		]
 	},
 	"Z_lucene-solr-IndexWriter-shutdown": {
-		"longName": "IndexWriter::shutdown()",
+		"longName": "private void shutdown();",
 		"methodName": "shutdown",
 		"repoShort": "apache/lucene-solr",
 		"file": "Z_lucene-solr-IndexWriter-shutdown",
@@ -144,7 +926,7 @@
 		]
 	},
 	"Z_lucene-solr-IndexWriter-writeSomeDocValuesUpdates": {
-		"longName": "IndexWriter::writeSomeDocValuesUpdates()",
+		"longName": "void writeSomeDocValuesUpdates();",
 		"methodName": "writeSomeDocValuesUpdates",
 		"repoShort": "apache/lucene-solr",
 		"file": "Z_lucene-solr-IndexWriter-writeSomeDocValuesUpdates",
@@ -157,7 +939,7 @@
 		]
 	},
 	"Z_lucene-solr-MemoryIndex-keywordTokenStream": {
-		"longName": "MemoryIndex::keywordTokenStream(Collection<T> keywords)",
+		"longName": "public TokenStream keywordTokenStream(Collection<T> keywords);",
 		"methodName": "keywordTokenStream",
 		"repoShort": "apache/lucene-solr",
 		"file": "Z_lucene-solr-MemoryIndex-keywordTokenStream",
@@ -175,7 +957,7 @@
 		]
 	},
 	"Z_lucene-solr-MemoryIndex-storeDocValues": {
-		"longName": "MemoryIndex::storeDocValues(Info info, DocValuesType docValuesType, Object docValuesValue)",
+		"longName": "private void storeDocValues(Info info, DocValuesType docValuesType, Object docValuesValue);",
 		"methodName": "storeDocValues",
 		"repoShort": "apache/lucene-solr",
 		"file": "Z_lucene-solr-MemoryIndex-storeDocValues",
@@ -187,7 +969,7 @@
 		]
 	},
 	"Z_lucene-solr-QueryParserBase-addClause": {
-		"longName": "QueryParserBase::addClause(List<BooleanClause> clauses, int conj, int mods, Query q)",
+		"longName": "protected void addClause(List<BooleanClause> clauses, int conj, int mods, Query q);",
 		"methodName": "addClause",
 		"repoShort": "apache/lucene-solr",
 		"file": "Z_lucene-solr-QueryParserBase-addClause",
@@ -207,7 +989,7 @@
 		]
 	},
 	"Z_lucene-solr-QueryParserBase-newRangeQuery": {
-		"longName": "QueryParserBase::newRangeQuery(String field, String part1, String part2, boolean startInclusive, boolean endInclusive)",
+		"longName": "protected Query newRangeQuery(String field, String part1, String part2, boolean startInclusive, boolean endInclusive);",
 		"methodName": "newRangeQuery",
 		"repoShort": "apache/lucene-solr",
 		"file": "Z_lucene-solr-QueryParserBase-newRangeQuery",
@@ -229,7 +1011,7 @@
 		]
 	},
 	"Z_mockito-AdditionalMatchers-geq": {
-		"longName": "AdditionalMatchers::geq(double value)",
+		"longName": "public double geq(double value);",
 		"methodName": "geq",
 		"repoShort": "mockito/mockito",
 		"file": "Z_mockito-AdditionalMatchers-geq",
@@ -244,7 +1026,7 @@
 		]
 	},
 	"Z_mockito-AdditionalMatchers-gt": {
-		"longName": "AdditionalMatchers::gt(T value)",
+		"longName": "public T gt(T value);",
 		"methodName": "gt",
 		"repoShort": "mockito/mockito",
 		"file": "Z_mockito-AdditionalMatchers-gt",
@@ -261,7 +1043,7 @@
 		]
 	},
 	"Z_mockito-InvocationContainerImpl-getStubbingsDescending": {
-		"longName": "InvocationContainerImpl::getStubbingsDescending()",
+		"longName": "public List<Stubbing> getStubbingsDescending();",
 		"methodName": "getStubbingsDescending",
 		"repoShort": "mockito/mockito",
 		"file": "Z_mockito-InvocationContainerImpl-getStubbingsDescending",
@@ -274,7 +1056,7 @@
 		]
 	},
 	"Z_mockito-InvocationsFinder-findPreviousVerifiedInOrder": {
-		"longName": "InvocationsFinder::findPreviousVerifiedInOrder(List<Invocation> invocations, InOrderContext context)",
+		"longName": "public Invocation findPreviousVerifiedInOrder(List<Invocation> invocations, InOrderContext context);",
 		"methodName": "findPreviousVerifiedInOrder",
 		"repoShort": "mockito/mockito",
 		"file": "Z_mockito-InvocationsFinder-findPreviousVerifiedInOrder",
@@ -292,7 +1074,7 @@
 		]
 	},
 	"Z_mockito-MatchersBinder-bindMatchers": {
-		"longName": "MatchersBinder::bindMatchers(ArgumentMatcherStorage argumentMatcherStorage, Invocation invocation)",
+		"longName": "public InvocationMatcher bindMatchers(ArgumentMatcherStorage argumentMatcherStorage, Invocation invocation);",
 		"methodName": "bindMatchers",
 		"repoShort": "mockito/mockito",
 		"file": "Z_mockito-MatchersBinder-bindMatchers",
@@ -315,7 +1097,7 @@
 		]
 	},
 	"Z_mockito-PluginLoader-loadPlugin": {
-		"longName": "PluginLoader::loadPlugin(Class<PreferredType> preferredPluginType, Class<AlternateType> alternatePluginType)",
+		"longName": "Object loadPlugin(Class<PreferredType> preferredPluginType, Class<AlternateType> alternatePluginType);",
 		"methodName": "loadPlugin",
 		"repoShort": "mockito/mockito",
 		"file": "Z_mockito-PluginLoader-loadPlugin",
@@ -327,7 +1109,7 @@
 		]
 	},
 	"Z_mockito-ReturnsArgumentAt-answer": {
-		"longName": "ReturnsArgumentAt::answer(InvocationOnMock invocation)",
+		"longName": "public Object answer(InvocationOnMock invocation);",
 		"methodName": "answer",
 		"repoShort": "mockito/mockito",
 		"file": "Z_mockito-ReturnsArgumentAt-answer",
@@ -344,7 +1126,7 @@
 		]
 	},
 	"Z_mockito-StringUtil-join": {
-		"longName": "StringUtil::join(String start, String linePrefix, Collection<?> lines)",
+		"longName": "public String join(String start, String linePrefix, Collection<?> lines);",
 		"methodName": "join",
 		"repoShort": "mockito/mockito",
 		"file": "Z_mockito-StringUtil-join",
@@ -359,7 +1141,7 @@
 		]
 	},
 	"Z_mockito-StubberImpl-doNothing": {
-		"longName": "StubberImpl::doNothing()",
+		"longName": "public Stubber doNothing();",
 		"methodName": "doNothing",
 		"repoShort": "mockito/mockito",
 		"file": "Z_mockito-StubberImpl-doNothing",
@@ -373,7 +1155,7 @@
 		]
 	},
 	"Z_mockito-VerificationStartedNotifier-notifyVerificationStarted": {
-		"longName": "VerificationStartedNotifier::notifyVerificationStarted(List<VerificationStartedListener> listeners, MockingDetails originalMockingDetails)",
+		"longName": "public Object notifyVerificationStarted(List<VerificationStartedListener> listeners, MockingDetails originalMockingDetails);",
 		"methodName": "notifyVerificationStarted",
 		"repoShort": "mockito/mockito",
 		"file": "Z_mockito-VerificationStartedNotifier-notifyVerificationStarted",
@@ -386,7 +1168,7 @@
 		]
 	},
 	"Z_pmd-ASTConditionalExpression-isTernary": {
-		"longName": "ASTConditionalExpression::isTernary()",
+		"longName": "public boolean isTernary();",
 		"methodName": "isTernary",
 		"repoShort": "pmd/pmd",
 		"file": "Z_pmd-ASTConditionalExpression-isTernary",
@@ -399,7 +1181,7 @@
 		]
 	},
 	"Z_pmd-AbstractJavaRule-visit": {
-		"longName": "AbstractJavaRule::visit(ASTArgumentList node, Object data)",
+		"longName": "public Object visit(ASTArgumentList node, Object data);",
 		"methodName": "visit",
 		"repoShort": "pmd/pmd",
 		"file": "Z_pmd-AbstractJavaRule-visit",
@@ -416,7 +1198,7 @@
 		]
 	},
 	"Z_pmd-ClassTypeResolver-visit": {
-		"longName": "ClassTypeResolver::visit(ASTCompilationUnit node, Object data)",
+		"longName": "public Object visit(ASTCompilationUnit node, Object data);",
 		"methodName": "visit",
 		"repoShort": "pmd/pmd",
 		"file": "Z_pmd-ClassTypeResolver-visit",
@@ -445,7 +1227,7 @@
 		]
 	},
 	"Z_pmd-CommentUtil-javadocContentAfter": {
-		"longName": "CommentUtil::javadocContentAfter(String text, int position)",
+		"longName": "public String javadocContentAfter(String text, int position);",
 		"methodName": "javadocContentAfter",
 		"repoShort": "pmd/pmd",
 		"file": "Z_pmd-CommentUtil-javadocContentAfter",
@@ -460,7 +1242,7 @@
 		]
 	},
 	"Z_pmd-FormalComment-findJavadocs": {
-		"longName": "FormalComment::findJavadocs()",
+		"longName": "private void findJavadocs();",
 		"methodName": "findJavadocs",
 		"repoShort": "pmd/pmd",
 		"file": "Z_pmd-FormalComment-findJavadocs",
@@ -478,7 +1260,7 @@
 		]
 	},
 	"Z_pmd-JUnitTestsShouldIncludeAssertRule-visit": {
-		"longName": "JUnitTestsShouldIncludeAssertRule::visit(ASTClassOrInterfaceDeclaration node, Object data)",
+		"longName": "public Object visit(ASTClassOrInterfaceDeclaration node, Object data);",
 		"methodName": "visit",
 		"repoShort": "pmd/pmd",
 		"file": "Z_pmd-JUnitTestsShouldIncludeAssertRule-visit",
@@ -493,7 +1275,7 @@
 		]
 	},
 	"Z_pmd-JavaParserVisitorAdapter-visit": {
-		"longName": "JavaParserVisitorAdapter::visit(ASTNameList node, Object data)",
+		"longName": "public Object visit(ASTNameList node, Object data);",
 		"methodName": "visit",
 		"repoShort": "pmd/pmd",
 		"file": "Z_pmd-JavaParserVisitorAdapter-visit",
@@ -509,7 +1291,7 @@
 		]
 	},
 	"Z_pmd-LocalScope-getVariableDeclarations": {
-		"longName": "LocalScope::getVariableDeclarations()",
+		"longName": "public Map<VariableNameDeclaration, List<NameOccurrence>> getVariableDeclarations();",
 		"methodName": "getVariableDeclarations",
 		"repoShort": "pmd/pmd",
 		"file": "Z_pmd-LocalScope-getVariableDeclarations",
@@ -528,7 +1310,7 @@
 		]
 	},
 	"Z_pmd-SimplifyBooleanReturnsRule-terminatesInBooleanLiteral": {
-		"longName": "SimplifyBooleanReturnsRule::terminatesInBooleanLiteral(Node node)",
+		"longName": "private boolean terminatesInBooleanLiteral(Node node);",
 		"methodName": "terminatesInBooleanLiteral",
 		"repoShort": "pmd/pmd",
 		"file": "Z_pmd-SimplifyBooleanReturnsRule-terminatesInBooleanLiteral",
@@ -544,7 +1326,7 @@
 		]
 	},
 	"Z_pmd-SourceFileScope-getSubTypes": {
-		"longName": "SourceFileScope::getSubTypes(String qualifyingName, Scope subType)",
+		"longName": "private Map<String, Node> getSubTypes(String qualifyingName, Scope subType);",
 		"methodName": "getSubTypes",
 		"repoShort": "pmd/pmd",
 		"file": "Z_pmd-SourceFileScope-getSubTypes",
@@ -556,7 +1338,7 @@
 		]
 	},
 	"Z_spring-boot-ConfigurationPropertiesBinder-getBindHandler": {
-		"longName": "ConfigurationPropertiesBinder::getBindHandler(ConfigurationProperties annotation, List<Validator> validators)",
+		"longName": "private BindHandler getBindHandler(ConfigurationProperties annotation, List<Validator> validators);",
 		"methodName": "getBindHandler",
 		"repoShort": "spring-projects/spring-boot",
 		"file": "Z_spring-boot-ConfigurationPropertiesBinder-getBindHandler",
@@ -570,7 +1352,7 @@
 		]
 	},
 	"Z_spring-boot-DefaultErrorAttributes-addErrorMessage": {
-		"longName": "DefaultErrorAttributes::addErrorMessage(Map<String, Object> errorAttributes, Throwable error)",
+		"longName": "private void addErrorMessage(Map<String, Object> errorAttributes, Throwable error);",
 		"methodName": "addErrorMessage",
 		"repoShort": "spring-projects/spring-boot",
 		"file": "Z_spring-boot-DefaultErrorAttributes-addErrorMessage",
@@ -586,7 +1368,7 @@
 		]
 	},
 	"Z_spring-boot-ErrorPageRegistrarBeanPostProcessor-getRegistrars": {
-		"longName": "ErrorPageRegistrarBeanPostProcessor::getRegistrars()",
+		"longName": "private Collection<ErrorPageRegistrar> getRegistrars();",
 		"methodName": "getRegistrars",
 		"repoShort": "spring-projects/spring-boot",
 		"file": "Z_spring-boot-ErrorPageRegistrarBeanPostProcessor-getRegistrars",
@@ -600,7 +1382,7 @@
 		]
 	},
 	"Z_spring-boot-JettyServletWebServerFactory-addDefaultServlet": {
-		"longName": "JettyServletWebServerFactory::addDefaultServlet(WebAppContext context)",
+		"longName": "protected void addDefaultServlet(WebAppContext context);",
 		"methodName": "addDefaultServlet",
 		"repoShort": "spring-projects/spring-boot",
 		"file": "Z_spring-boot-JettyServletWebServerFactory-addDefaultServlet",
@@ -619,7 +1401,7 @@
 		]
 	},
 	"Z_spring-boot-JsonParserFactory-getJsonParser": {
-		"longName": "JsonParserFactory::getJsonParser()",
+		"longName": "public JsonParser getJsonParser();",
 		"methodName": "getJsonParser",
 		"repoShort": "spring-projects/spring-boot",
 		"file": "Z_spring-boot-JsonParserFactory-getJsonParser",
@@ -642,7 +1424,7 @@
 		]
 	},
 	"Z_spring-boot-ServletWebServerApplicationContext-prepareWebApplicationContext": {
-		"longName": "ServletWebServerApplicationContext::prepareWebApplicationContext(ServletContext servletContext)",
+		"longName": "protected void prepareWebApplicationContext(ServletContext servletContext);",
 		"methodName": "prepareWebApplicationContext",
 		"repoShort": "spring-projects/spring-boot",
 		"file": "Z_spring-boot-ServletWebServerApplicationContext-prepareWebApplicationContext",
@@ -664,7 +1446,7 @@
 		]
 	},
 	"Z_spring-boot-SpringApplication-getBeanDefinitionRegistry": {
-		"longName": "SpringApplication::getBeanDefinitionRegistry(ApplicationContext context)",
+		"longName": "private BeanDefinitionRegistry getBeanDefinitionRegistry(ApplicationContext context);",
 		"methodName": "getBeanDefinitionRegistry",
 		"repoShort": "spring-projects/spring-boot",
 		"file": "Z_spring-boot-SpringApplication-getBeanDefinitionRegistry",
@@ -682,7 +1464,7 @@
 		]
 	},
 	"Z_spring-boot-StaticResourceJars-addUrlConnection": {
-		"longName": "StaticResourceJars::addUrlConnection(List<URL> urls, URL url, URLConnection connection)",
+		"longName": "private void addUrlConnection(List<URL> urls, URL url, URLConnection connection);",
 		"methodName": "addUrlConnection",
 		"repoShort": "spring-projects/spring-boot",
 		"file": "Z_spring-boot-StaticResourceJars-addUrlConnection",
@@ -693,7 +1475,7 @@
 		]
 	},
 	"Z_spring-boot-TomcatDataSourcePoolMetadata-getMin": {
-		"longName": "TomcatDataSourcePoolMetadata::getMin()",
+		"longName": "public Integer getMin();",
 		"methodName": "getMin",
 		"repoShort": "spring-projects/spring-boot",
 		"file": "Z_spring-boot-TomcatDataSourcePoolMetadata-getMin",
@@ -707,7 +1489,7 @@
 		]
 	},
 	"Z_spring-boot-UndertowWebServer-getPortFromChannel": {
-		"longName": "UndertowWebServer::getPortFromChannel(BoundChannel channel)",
+		"longName": "private UndertowWebServer.Port getPortFromChannel(BoundChannel channel);",
 		"methodName": "getPortFromChannel",
 		"repoShort": "spring-projects/spring-boot",
 		"file": "Z_spring-boot-UndertowWebServer-getPortFromChannel",
@@ -720,7 +1502,7 @@
 		]
 	},
 	"checkstyle-Checker-fireErrors": {
-		"longName": "Checker::fireErrors(String fileName, SortedSet<LocalizedMessage> errors)",
+		"longName": "public void fireErrors(String fileName, SortedSet<LocalizedMessage> errors);",
 		"methodName": "fireErrors",
 		"repoShort": "checkstyle/checkstyle",
 		"file": "checkstyle-Checker-fireErrors",
@@ -750,7 +1532,7 @@
 		]
 	},
 	"checkstyle-Checker-process": {
-		"longName": "Checker::process(List<File> files)",
+		"longName": "public int process(List<File> files);",
 		"methodName": "process",
 		"repoShort": "checkstyle/checkstyle",
 		"file": "checkstyle-Checker-process",
@@ -798,7 +1580,7 @@
 		]
 	},
 	"checkstyle-CommonUtils-createPattern": {
-		"longName": "CommonUtils::createPattern(String pattern, int flags)",
+		"longName": "public Pattern createPattern(String pattern, int flags);",
 		"methodName": "createPattern",
 		"repoShort": "checkstyle/checkstyle",
 		"file": "checkstyle-CommonUtils-createPattern",
@@ -826,7 +1608,7 @@
 		]
 	},
 	"checkstyle-FinalLocalVariableCheck-visitToken": {
-		"longName": "FinalLocalVariableCheck::visitToken(DetailAST ast)",
+		"longName": "public void visitToken(DetailAST ast);",
 		"methodName": "visitToken",
 		"repoShort": "checkstyle/checkstyle",
 		"file": "checkstyle-FinalLocalVariableCheck-visitToken",
@@ -867,7 +1649,7 @@
 		]
 	},
 	"checkstyle-JavadocMethodCheck-checkThrowsTags": {
-		"longName": "JavadocMethodCheck::checkThrowsTags(List<JavadocTag> tags, List<ExceptionInfo> throwsList, boolean reportExpectedTags)",
+		"longName": "private void checkThrowsTags(List<JavadocTag> tags, List<ExceptionInfo> throwsList, boolean reportExpectedTags);",
 		"methodName": "checkThrowsTags",
 		"repoShort": "checkstyle/checkstyle",
 		"file": "checkstyle-JavadocMethodCheck-checkThrowsTags",
@@ -909,7 +1691,7 @@
 		]
 	},
 	"checkstyle-Main-main": {
-		"longName": "Main::main(String args)",
+		"longName": "public void main(String args);",
 		"methodName": "main",
 		"repoShort": "checkstyle/checkstyle",
 		"file": "checkstyle-Main-main",
@@ -979,7 +1761,7 @@
 		]
 	},
 	"checkstyle-TreeWalker-processFiltered": {
-		"longName": "TreeWalker::processFiltered(File file, FileText fileText)",
+		"longName": "protected void processFiltered(File file, FileText fileText);",
 		"methodName": "processFiltered",
 		"repoShort": "checkstyle/checkstyle",
 		"file": "checkstyle-TreeWalker-processFiltered",
@@ -1056,7 +1838,7 @@
 		]
 	},
 	"checkstyle-WhitespaceAroundCheck-getAcceptableTokens": {
-		"longName": "WhitespaceAroundCheck::getAcceptableTokens()",
+		"longName": "public int[] getAcceptableTokens();",
 		"methodName": "getAcceptableTokens",
 		"repoShort": "checkstyle/checkstyle",
 		"file": "checkstyle-WhitespaceAroundCheck-getAcceptableTokens",
@@ -1070,7 +1852,7 @@
 		]
 	},
 	"checkstyle-WhitespaceAroundCheck-isNotRelevantSituation": {
-		"longName": "WhitespaceAroundCheck::isNotRelevantSituation(DetailAST ast, int currentType)",
+		"longName": "private boolean isNotRelevantSituation(DetailAST ast, int currentType);",
 		"methodName": "isNotRelevantSituation",
 		"repoShort": "checkstyle/checkstyle",
 		"file": "checkstyle-WhitespaceAroundCheck-isNotRelevantSituation",
@@ -1083,7 +1865,7 @@
 		]
 	},
 	"checkstyle-WhitespaceAroundCheck-shouldCheckSeparationFromNextToken": {
-		"longName": "WhitespaceAroundCheck::shouldCheckSeparationFromNextToken(DetailAST ast, char nextChar)",
+		"longName": "private boolean shouldCheckSeparationFromNextToken(DetailAST ast, char nextChar);",
 		"methodName": "shouldCheckSeparationFromNextToken",
 		"repoShort": "checkstyle/checkstyle",
 		"file": "checkstyle-WhitespaceAroundCheck-shouldCheckSeparationFromNextToken",
@@ -1093,7 +1875,7 @@
 		]
 	},
 	"commons-lang-DateUtils-modify": {
-		"longName": "DateUtils::modify(Calendar val, int field, ModifyType modType)",
+		"longName": "private void modify(Calendar val, int field, ModifyType modType);",
 		"methodName": "modify",
 		"repoShort": "apache/commons-lang",
 		"file": "commons-lang-DateUtils-modify",
@@ -1125,7 +1907,7 @@
 		]
 	},
 	"commons-lang-DurationFormatUtils-formatPeriod": {
-		"longName": "DurationFormatUtils::formatPeriod(long startMillis, long endMillis, String format, boolean padWithZeros, TimeZone timezone)",
+		"longName": "public String formatPeriod(long startMillis, long endMillis, String format, boolean padWithZeros, TimeZone timezone);",
 		"methodName": "formatPeriod",
 		"repoShort": "apache/commons-lang",
 		"file": "commons-lang-DurationFormatUtils-formatPeriod",
@@ -1153,7 +1935,7 @@
 		]
 	},
 	"commons-lang-EqualsBuilder-reflectionAppend": {
-		"longName": "EqualsBuilder::reflectionAppend(Object lhs, Object rhs)",
+		"longName": "public EqualsBuilder reflectionAppend(Object lhs, Object rhs);",
 		"methodName": "reflectionAppend",
 		"repoShort": "apache/commons-lang",
 		"file": "commons-lang-EqualsBuilder-reflectionAppend",
@@ -1180,7 +1962,7 @@
 		]
 	},
 	"commons-lang-FastDatePrinter-parsePattern": {
-		"longName": "FastDatePrinter::parsePattern()",
+		"longName": "protected List<Rule> parsePattern();",
 		"methodName": "parsePattern",
 		"repoShort": "apache/commons-lang",
 		"file": "commons-lang-FastDatePrinter-parsePattern",
@@ -1207,7 +1989,7 @@
 		]
 	},
 	"commons-lang-LocaleUtils-toLocale": {
-		"longName": "LocaleUtils::toLocale(String str)",
+		"longName": "public Locale toLocale(String str);",
 		"methodName": "toLocale",
 		"repoShort": "apache/commons-lang",
 		"file": "commons-lang-LocaleUtils-toLocale",
@@ -1236,7 +2018,7 @@
 		]
 	},
 	"commons-lang-NumberUtils-createNumber": {
-		"longName": "NumberUtils::createNumber(String str)",
+		"longName": "public Number createNumber(String str);",
 		"methodName": "createNumber",
 		"repoShort": "apache/commons-lang",
 		"file": "commons-lang-NumberUtils-createNumber",
@@ -1279,7 +2061,7 @@
 		]
 	},
 	"commons-lang-NumberUtils-isCreatable": {
-		"longName": "NumberUtils::isCreatable(String str)",
+		"longName": "public boolean isCreatable(String str);",
 		"methodName": "isCreatable",
 		"repoShort": "apache/commons-lang",
 		"file": "commons-lang-NumberUtils-isCreatable",
@@ -1305,7 +2087,7 @@
 		]
 	},
 	"commons-lang-NumberUtils-isNumber": {
-		"longName": "NumberUtils::isNumber(String str)",
+		"longName": "public boolean isNumber(String str);",
 		"methodName": "isNumber",
 		"repoShort": "apache/commons-lang",
 		"file": "commons-lang-NumberUtils-isNumber",
@@ -1327,7 +2109,7 @@
 		]
 	},
 	"commons-lang-RandomStringUtils-random": {
-		"longName": "RandomStringUtils::random(int count, int start, int end, boolean letters, boolean numbers, char[] chars, Random random)",
+		"longName": "public String random(int count, int start, int end, boolean letters, boolean numbers, char[] chars, Random random);",
 		"methodName": "random",
 		"repoShort": "apache/commons-lang",
 		"file": "commons-lang-RandomStringUtils-random",
@@ -1356,7 +2138,7 @@
 		]
 	},
 	"commons-lang-StrSubstitutor-substitute": {
-		"longName": "StrSubstitutor::substitute(StrBuilder buf, int offset, int length, List<String> priorVariables)",
+		"longName": "private int substitute(StrBuilder buf, int offset, int length, List<String> priorVariables);",
 		"methodName": "substitute",
 		"repoShort": "apache/commons-lang",
 		"file": "commons-lang-StrSubstitutor-substitute",
@@ -1378,7 +2160,7 @@
 		]
 	},
 	"flink-CheckpointCoordinator-receiveAcknowledgeMessage": {
-		"longName": "CheckpointCoordinator::receiveAcknowledgeMessage(AcknowledgeCheckpoint message)",
+		"longName": "public boolean receiveAcknowledgeMessage(AcknowledgeCheckpoint message);",
 		"methodName": "receiveAcknowledgeMessage",
 		"repoShort": "apache/flink",
 		"file": "flink-CheckpointCoordinator-receiveAcknowledgeMessage",
@@ -1415,7 +2197,7 @@
 		]
 	},
 	"flink-ConnectedStreams-map": {
-		"longName": "ConnectedStreams::map(CoMapFunction<IN1, IN2, R> coMapper)",
+		"longName": "public SingleOutputStreamOperator<R> map(CoMapFunction<IN1, IN2, R> coMapper);",
 		"methodName": "map",
 		"repoShort": "apache/flink",
 		"file": "flink-ConnectedStreams-map",
@@ -1439,7 +2221,7 @@
 		]
 	},
 	"flink-ContinuousFileMonitoringFunction-close": {
-		"longName": "ContinuousFileMonitoringFunction::close()",
+		"longName": "public void close();",
 		"methodName": "close",
 		"repoShort": "apache/flink",
 		"file": "flink-ContinuousFileMonitoringFunction-close",
@@ -1451,7 +2233,7 @@
 		]
 	},
 	"flink-DataStream-filter": {
-		"longName": "DataStream::filter(FilterFunction<T> filter)",
+		"longName": "public SingleOutputStreamOperator<T> filter(FilterFunction<T> filter);",
 		"methodName": "filter",
 		"repoShort": "apache/flink",
 		"file": "flink-DataStream-filter",
@@ -1511,7 +2293,7 @@
 		]
 	},
 	"flink-DispatcherRestEndpoint-initializeHandlers": {
-		"longName": "DispatcherRestEndpoint::initializeHandlers(CompletableFuture<String> restAddressFuture)",
+		"longName": "protected List<Tuple2<RestHandlerSpecification, ChannelInboundHandler>> initializeHandlers(CompletableFuture<String> restAddressFuture);",
 		"methodName": "initializeHandlers",
 		"repoShort": "apache/flink",
 		"file": "flink-DispatcherRestEndpoint-initializeHandlers",
@@ -1569,7 +2351,7 @@
 		]
 	},
 	"flink-FileSystem-getUnguardedFileSystem": {
-		"longName": "FileSystem::getUnguardedFileSystem(URI fsUri)",
+		"longName": "public FileSystem getUnguardedFileSystem(URI fsUri);",
 		"methodName": "getUnguardedFileSystem",
 		"repoShort": "apache/flink",
 		"file": "flink-FileSystem-getUnguardedFileSystem",
@@ -1591,7 +2373,7 @@
 		]
 	},
 	"flink-KryoSerializer-checkKryoInitialized": {
-		"longName": "KryoSerializer::checkKryoInitialized()",
+		"longName": "private void checkKryoInitialized();",
 		"methodName": "checkKryoInitialized",
 		"repoShort": "apache/flink",
 		"file": "flink-KryoSerializer-checkKryoInitialized",
@@ -1613,7 +2395,7 @@
 		]
 	},
 	"flink-LocatableInputSplitAssigner-getNextInputSplit": {
-		"longName": "LocatableInputSplitAssigner::getNextInputSplit(String host, int taskId)",
+		"longName": "public LocatableInputSplit getNextInputSplit(String host, int taskId);",
 		"methodName": "getNextInputSplit",
 		"repoShort": "apache/flink",
 		"file": "flink-LocatableInputSplitAssigner-getNextInputSplit",
@@ -1632,7 +2414,7 @@
 		]
 	},
 	"flink-PojoSerializer-deserialize": {
-		"longName": "PojoSerializer::deserialize(DataInputView source)",
+		"longName": "public T deserialize(DataInputView source);",
 		"methodName": "deserialize",
 		"repoShort": "apache/flink",
 		"file": "flink-PojoSerializer-deserialize",
@@ -1646,7 +2428,7 @@
 		]
 	},
 	"flink-RemoteStreamEnvironment-executeRemotely": {
-		"longName": "RemoteStreamEnvironment::executeRemotely(StreamGraph streamGraph, List<URL> jarFiles)",
+		"longName": "protected JobExecutionResult executeRemotely(StreamGraph streamGraph, List<URL> jarFiles);",
 		"methodName": "executeRemotely",
 		"repoShort": "apache/flink",
 		"file": "flink-RemoteStreamEnvironment-executeRemotely",
@@ -1689,7 +2471,7 @@
 		]
 	},
 	"hibernate-orm-AnnotationBinder-bindClass": {
-		"longName": "AnnotationBinder::bindClass(XClass clazzToProcess, Map<XClass, InheritanceState> inheritanceStatePerClass, MetadataBuildingContext context)",
+		"longName": "public void bindClass(XClass clazzToProcess, Map<XClass, InheritanceState> inheritanceStatePerClass, MetadataBuildingContext context);",
 		"methodName": "bindClass",
 		"repoShort": "hibernate/hibernate-orm",
 		"file": "hibernate-orm-AnnotationBinder-bindClass",
@@ -1739,7 +2521,7 @@
 		]
 	},
 	"hibernate-orm-CollectionBinder-bind": {
-		"longName": "CollectionBinder::bind()",
+		"longName": "public void bind();",
 		"methodName": "bind",
 		"repoShort": "hibernate/hibernate-orm",
 		"file": "hibernate-orm-CollectionBinder-bind",
@@ -1779,7 +2561,7 @@
 		]
 	},
 	"hibernate-orm-DefaultRefreshEventListener-onRefresh": {
-		"longName": "DefaultRefreshEventListener::onRefresh(RefreshEvent event, Map refreshedAlready)",
+		"longName": "public void onRefresh(RefreshEvent event, Map refreshedAlready);",
 		"methodName": "onRefresh",
 		"repoShort": "hibernate/hibernate-orm",
 		"file": "hibernate-orm-DefaultRefreshEventListener-onRefresh",
@@ -1819,7 +2601,7 @@
 		]
 	},
 	"hibernate-orm-QueryBinder-bindNativeQuery": {
-		"longName": "QueryBinder::bindNativeQuery(NamedNativeQuery queryAnn, MetadataBuildingContext context, boolean isDefault)",
+		"longName": "public void bindNativeQuery(NamedNativeQuery queryAnn, MetadataBuildingContext context, boolean isDefault);",
 		"methodName": "bindNativeQuery",
 		"repoShort": "hibernate/hibernate-orm",
 		"file": "hibernate-orm-QueryBinder-bindNativeQuery",
@@ -1844,7 +2626,7 @@
 		]
 	},
 	"hibernate-orm-QueryBinder-bindNativeQuery2": {
-		"longName": "QueryBinder::bindNativeQuery(org.hibernate.annotations.NamedNativeQuery queryAnn, MetadataBuildingContext context)",
+		"longName": "public void bindNativeQuery(org.hibernate.annotations.NamedNativeQuery queryAnn, MetadataBuildingContext context);",
 		"methodName": "bindNativeQuery",
 		"repoShort": "hibernate/hibernate-orm",
 		"file": "hibernate-orm-QueryBinder-bindNativeQuery2",
@@ -1865,7 +2647,7 @@
 		]
 	},
 	"hibernate-orm-QueryBinder-bindQuery": {
-		"longName": "QueryBinder::bindQuery(NamedQuery queryAnn, MetadataBuildingContext context, boolean isDefault)",
+		"longName": "public void bindQuery(NamedQuery queryAnn, MetadataBuildingContext context, boolean isDefault);",
 		"methodName": "bindQuery",
 		"repoShort": "hibernate/hibernate-orm",
 		"file": "hibernate-orm-QueryBinder-bindQuery",
@@ -1890,7 +2672,7 @@
 		]
 	},
 	"hibernate-orm-QueryBinder-bindQuery2": {
-		"longName": "QueryBinder::bindQuery(org.hibernate.annotations.NamedQuery queryAnn, MetadataBuildingContext context)",
+		"longName": "public void bindQuery(org.hibernate.annotations.NamedQuery queryAnn, MetadataBuildingContext context);",
 		"methodName": "bindQuery",
 		"repoShort": "hibernate/hibernate-orm",
 		"file": "hibernate-orm-QueryBinder-bindQuery2",
@@ -1911,7 +2693,7 @@
 		]
 	},
 	"hibernate-orm-RevisionInfoConfiguration-configure": {
-		"longName": "RevisionInfoConfiguration::configure(MetadataImplementor metadata, ReflectionManager reflectionManager)",
+		"longName": "public RevisionInfoConfigurationResult configure(MetadataImplementor metadata, ReflectionManager reflectionManager);",
 		"methodName": "configure",
 		"repoShort": "hibernate/hibernate-orm",
 		"file": "hibernate-orm-RevisionInfoConfiguration-configure",
@@ -1949,7 +2731,7 @@
 		]
 	},
 	"hibernate-orm-SessionFactoryBuilderImpl-unwrap": {
-		"longName": "SessionFactoryBuilderImpl::unwrap(Class<T> type)",
+		"longName": "public T unwrap(Class<T> type);",
 		"methodName": "unwrap",
 		"repoShort": "hibernate/hibernate-orm",
 		"file": "hibernate-orm-SessionFactoryBuilderImpl-unwrap",
@@ -1958,7 +2740,7 @@
 		]
 	},
 	"hibernate-orm-SimpleValue-buildAttributeConverterTypeAdapter": {
-		"longName": "SimpleValue::buildAttributeConverterTypeAdapter()",
+		"longName": "private Type buildAttributeConverterTypeAdapter();",
 		"methodName": "buildAttributeConverterTypeAdapter",
 		"repoShort": "hibernate/hibernate-orm",
 		"file": "hibernate-orm-SimpleValue-buildAttributeConverterTypeAdapter",
@@ -1981,7 +2763,7 @@
 		]
 	},
 	"javaparser-Difference-apply": {
-		"longName": "Difference::apply()",
+		"longName": "void apply();",
 		"methodName": "apply",
 		"repoShort": "javaparser/javaparser",
 		"file": "javaparser-Difference-apply",
@@ -2055,7 +2837,7 @@
 		]
 	},
 	"javaparser-Difference-applyRemovedDiffElement": {
-		"longName": "Difference::applyRemovedDiffElement(RemovedGroup removedGroup, Removed removed, TextElement originalElement, boolean originalElementIsChild, boolean originalElementIsToken)",
+		"longName": "private void applyRemovedDiffElement(RemovedGroup removedGroup, Removed removed, TextElement originalElement, boolean originalElementIsChild, boolean originalElementIsToken);",
 		"methodName": "applyRemovedDiffElement",
 		"repoShort": "javaparser/javaparser",
 		"file": "javaparser-Difference-applyRemovedDiffElement",
@@ -2066,7 +2848,7 @@
 		]
 	},
 	"javaparser-JavaParserFacade-convertToUsage": {
-		"longName": "JavaParserFacade::convertToUsage(com.github.javaparser.ast.type.Type type, Context context)",
+		"longName": "protected ResolvedType convertToUsage(com.github.javaparser.ast.type.Type type, Context context);",
 		"methodName": "convertToUsage",
 		"repoShort": "javaparser/javaparser",
 		"file": "javaparser-JavaParserFacade-convertToUsage",
@@ -2123,7 +2905,7 @@
 		]
 	},
 	"javaparser-JavaParserFacade-getTypeConcrete": {
-		"longName": "JavaParserFacade::getTypeConcrete(Node node, boolean solveLambdas)",
+		"longName": "private ResolvedType getTypeConcrete(Node node, boolean solveLambdas);",
 		"methodName": "getTypeConcrete",
 		"repoShort": "javaparser/javaparser",
 		"file": "javaparser-JavaParserFacade-getTypeConcrete",
@@ -2216,7 +2998,7 @@
 		]
 	},
 	"javaparser-LambdaExprContext-solveSymbolAsValue": {
-		"longName": "LambdaExprContext::solveSymbolAsValue(String name, TypeSolver typeSolver)",
+		"longName": "public Optional<Value> solveSymbolAsValue(String name, TypeSolver typeSolver);",
 		"methodName": "solveSymbolAsValue",
 		"repoShort": "javaparser/javaparser",
 		"file": "javaparser-LambdaExprContext-solveSymbolAsValue",
@@ -2254,7 +3036,7 @@
 		]
 	},
 	"javaparser-MethodCallExprContext-solveMethod": {
-		"longName": "MethodCallExprContext::solveMethod(String name, List<ResolvedType> argumentsTypes, boolean staticOnly, TypeSolver typeSolver)",
+		"longName": "public SymbolReference<ResolvedMethodDeclaration> solveMethod(String name, List<ResolvedType> argumentsTypes, boolean staticOnly, TypeSolver typeSolver);",
 		"methodName": "solveMethod",
 		"repoShort": "javaparser/javaparser",
 		"file": "javaparser-MethodCallExprContext-solveMethod",
@@ -2298,7 +3080,7 @@
 		]
 	},
 	"javaparser-MethodCallExprContext-solveMethodAsUsage": {
-		"longName": "MethodCallExprContext::solveMethodAsUsage(String name, List<ResolvedType> argumentsTypes, TypeSolver typeSolver)",
+		"longName": "public Optional<MethodUsage> solveMethodAsUsage(String name, List<ResolvedType> argumentsTypes, TypeSolver typeSolver);",
 		"methodName": "solveMethodAsUsage",
 		"repoShort": "javaparser/javaparser",
 		"file": "javaparser-MethodCallExprContext-solveMethodAsUsage",
@@ -2349,7 +3131,7 @@
 		]
 	},
 	"javaparser-MethodResolutionLogic-isApplicable": {
-		"longName": "MethodResolutionLogic::isApplicable(ResolvedMethodDeclaration method, String name, List<ResolvedType> argumentsTypes, TypeSolver typeSolver, boolean withWildcardTolerance)",
+		"longName": "private boolean isApplicable(ResolvedMethodDeclaration method, String name, List<ResolvedType> argumentsTypes, TypeSolver typeSolver, boolean withWildcardTolerance);",
 		"methodName": "isApplicable",
 		"repoShort": "javaparser/javaparser",
 		"file": "javaparser-MethodResolutionLogic-isApplicable",
@@ -2389,7 +3171,7 @@
 		]
 	},
 	"javaparser-SourceFileInfoExtractor-solve": {
-		"longName": "SourceFileInfoExtractor::solve(Node node)",
+		"longName": "private void solve(Node node);",
 		"methodName": "solve",
 		"repoShort": "javaparser/javaparser",
 		"file": "javaparser-SourceFileInfoExtractor-solve",
@@ -2428,7 +3210,7 @@
 		]
 	},
 	"javaparser-VisitorAdapter-visit": {
-		"longName": "VoidVisitorAdapter::visit(MethodDeclaration n, A arg)",
+		"longName": "public void visit(MethodDeclaration n, A arg);",
 		"methodName": "visit",
 		"repoShort": "javaparser/javaparser",
 		"file": "javaparser-VisitorAdapter-visit",
@@ -2461,7 +3243,7 @@
 		]
 	},
 	"jgit-CommitCommand-call": {
-		"longName": "CommitCommand::call()",
+		"longName": "public RevCommit call();",
 		"methodName": "call",
 		"repoShort": "eclipse/jgit",
 		"file": "jgit-CommitCommand-call",
@@ -2509,7 +3291,7 @@
 		]
 	},
 	"jgit-IndexDiff-diff": {
-		"longName": "IndexDiff::diff(ProgressMonitor monitor, int estWorkTreeSize, int estIndexSize, String title)",
+		"longName": "public boolean diff(ProgressMonitor monitor, int estWorkTreeSize, int estIndexSize, String title);",
 		"methodName": "diff",
 		"repoShort": "eclipse/jgit",
 		"file": "jgit-IndexDiff-diff",
@@ -2556,7 +3338,7 @@
 		]
 	},
 	"jgit-MergeCommand-call": {
-		"longName": "MergeCommand::call()",
+		"longName": "public MergeResult call();",
 		"methodName": "call",
 		"repoShort": "eclipse/jgit",
 		"file": "jgit-MergeCommand-call",
@@ -2600,7 +3382,7 @@
 		]
 	},
 	"jgit-PackWriter-findObjectsToPack": {
-		"longName": "PackWriter::findObjectsToPack(ProgressMonitor countingMonitor, ObjectWalk walker, Set<? extends ObjectId> want, Set<? extends ObjectId> have, Set<? extends ObjectId> noBitmaps)",
+		"longName": "private void findObjectsToPack(ProgressMonitor countingMonitor, ObjectWalk walker, Set<? extends ObjectId> want, Set<? extends ObjectId> have, Set<? extends ObjectId> noBitmaps);",
 		"methodName": "findObjectsToPack",
 		"repoShort": "eclipse/jgit",
 		"file": "jgit-PackWriter-findObjectsToPack",
@@ -2649,7 +3431,7 @@
 		]
 	},
 	"jgit-PackWriter-writePack": {
-		"longName": "PackWriter::writePack(ProgressMonitor compressMonitor, ProgressMonitor writeMonitor, OutputStream packStream)",
+		"longName": "public void writePack(ProgressMonitor compressMonitor, ProgressMonitor writeMonitor, OutputStream packStream);",
 		"methodName": "writePack",
 		"repoShort": "eclipse/jgit",
 		"file": "jgit-PackWriter-writePack",
@@ -2695,7 +3477,7 @@
 		]
 	},
 	"jgit-PullCommand-call": {
-		"longName": "PullCommand::call()",
+		"longName": "public PullResult call();",
 		"methodName": "call",
 		"repoShort": "eclipse/jgit",
 		"file": "jgit-PullCommand-call",
@@ -2734,7 +3516,7 @@
 		]
 	},
 	"jgit-RebaseCommand-call": {
-		"longName": "RebaseCommand::call()",
+		"longName": "public RebaseResult call();",
 		"methodName": "call",
 		"repoShort": "eclipse/jgit",
 		"file": "jgit-RebaseCommand-call",
@@ -2778,7 +3560,7 @@
 		]
 	},
 	"jgit-ReceivePack-getLockMessageProcessName": {
-		"longName": "ReceivePack::getLockMessageProcessName()",
+		"longName": "protected String getLockMessageProcessName();",
 		"methodName": "getLockMessageProcessName",
 		"repoShort": "eclipse/jgit",
 		"file": "jgit-ReceivePack-getLockMessageProcessName",
@@ -2788,7 +3570,7 @@
 		]
 	},
 	"jgit-RepoCommand-call": {
-		"longName": "RepoCommand::call()",
+		"longName": "public RevCommit call();",
 		"methodName": "call",
 		"repoShort": "eclipse/jgit",
 		"file": "jgit-RepoCommand-call",
@@ -2824,7 +3606,7 @@
 		]
 	},
 	"jgit-UploadPack-sendPack": {
-		"longName": "UploadPack::sendPack(boolean sideband, PackStatistics.Accumulator accumulator, Collection<Ref> allTags, List<ObjectId> unshallowCommits)",
+		"longName": "private void sendPack(boolean sideband, PackStatistics.Accumulator accumulator, Collection<Ref> allTags, List<ObjectId> unshallowCommits);",
 		"methodName": "sendPack",
 		"repoShort": "eclipse/jgit",
 		"file": "jgit-UploadPack-sendPack",
@@ -2861,7 +3643,7 @@
 		]
 	},
 	"junit4-BlockJUnit4ClassRunner-describeChild": {
-		"longName": "BlockJUnit4ClassRunner::describeChild(FrameworkMethod method)",
+		"longName": "protected Description describeChild(FrameworkMethod method);",
 		"methodName": "describeChild",
 		"repoShort": "junit-team/junit4",
 		"file": "junit4-BlockJUnit4ClassRunner-describeChild",
@@ -2888,7 +3670,7 @@
 		]
 	},
 	"junit4-BlockJUnit4ClassRunner-evaluate": {
-		"longName": "BlockJUnit4ClassRunner::runChild$Statement$Statement$Statement::evaluate()",
+		"longName": "public void evaluate();",
 		"methodName": "evaluate",
 		"repoShort": "junit-team/junit4",
 		"file": "junit4-BlockJUnit4ClassRunner-evaluate",
@@ -2897,7 +3679,7 @@
 		]
 	},
 	"junit4-BlockJUnit4ClassRunner-methodBlock": {
-		"longName": "BlockJUnit4ClassRunner::methodBlock(FrameworkMethod method)",
+		"longName": "protected Statement methodBlock(FrameworkMethod method);",
 		"methodName": "methodBlock",
 		"repoShort": "junit-team/junit4",
 		"file": "junit4-BlockJUnit4ClassRunner-methodBlock",
@@ -2934,7 +3716,7 @@
 		]
 	},
 	"junit4-BlockJUnit4ClassRunner-possiblyExpectingExceptions": {
-		"longName": "BlockJUnit4ClassRunner::possiblyExpectingExceptions(FrameworkMethod method, Object test, Statement next)",
+		"longName": "protected Statement possiblyExpectingExceptions(FrameworkMethod method, Object test, Statement next);",
 		"methodName": "possiblyExpectingExceptions",
 		"repoShort": "junit-team/junit4",
 		"file": "junit4-BlockJUnit4ClassRunner-possiblyExpectingExceptions",
@@ -2957,7 +3739,7 @@
 		]
 	},
 	"junit4-BlockJUnit4ClassRunner-runChild": {
-		"longName": "BlockJUnit4ClassRunner::runChild(FrameworkMethod method, RunNotifier notifier)",
+		"longName": "protected void runChild(FrameworkMethod method, RunNotifier notifier);",
 		"methodName": "runChild",
 		"repoShort": "junit-team/junit4",
 		"file": "junit4-BlockJUnit4ClassRunner-runChild",
@@ -3000,7 +3782,7 @@
 		]
 	},
 	"junit4-BlockJUnit4ClassRunner-withPotentialTimeout": {
-		"longName": "BlockJUnit4ClassRunner::withPotentialTimeout(FrameworkMethod method, Object test, Statement next)",
+		"longName": "protected Statement withPotentialTimeout(FrameworkMethod method, Object test, Statement next);",
 		"methodName": "withPotentialTimeout",
 		"repoShort": "junit-team/junit4",
 		"file": "junit4-BlockJUnit4ClassRunner-withPotentialTimeout",
@@ -3021,7 +3803,7 @@
 		]
 	},
 	"junit4-Parameterized-createRunners": {
-		"longName": "Parameterized$RunnersFactory::createRunners()",
+		"longName": "private List<Runner> createRunners();",
 		"methodName": "createRunners",
 		"repoShort": "junit-team/junit4",
 		"file": "junit4-Parameterized-createRunners",
@@ -3032,7 +3814,7 @@
 		]
 	},
 	"junit4-Parameterized-createRunnersForParameters": {
-		"longName": "Parameterized$RunnersFactory::createRunnersForParameters(Iterable<Object> allParameters, String namePattern, ParametersRunnerFactory runnerFactory)",
+		"longName": "private List<Runner> createRunnersForParameters(Iterable<Object> allParameters, String namePattern, ParametersRunnerFactory runnerFactory);",
 		"methodName": "createRunnersForParameters",
 		"repoShort": "junit-team/junit4",
 		"file": "junit4-Parameterized-createRunnersForParameters",
@@ -3049,7 +3831,7 @@
 		]
 	},
 	"junit4-ParentRunner-applyValidators": {
-		"longName": "ParentRunner::applyValidators(List<Throwable> errors)",
+		"longName": "private void applyValidators(List<Throwable> errors);",
 		"methodName": "applyValidators",
 		"repoShort": "junit-team/junit4",
 		"file": "junit4-ParentRunner-applyValidators",
@@ -3058,7 +3840,7 @@
 		]
 	},
 	"junit4-Version-id": {
-		"longName": "Version::id()",
+		"longName": "public String id();",
 		"methodName": "id",
 		"repoShort": "junit-team/junit4",
 		"file": "junit4-Version-id",
@@ -3137,7 +3919,7 @@
 		]
 	},
 	"junit5-AvailableOptions-toCommandLineOptions": {
-		"longName": "AvailableOptions::toCommandLineOptions(OptionSet detectedOptions)",
+		"longName": "CommandLineOptions toCommandLineOptions(OptionSet detectedOptions);",
 		"methodName": "toCommandLineOptions",
 		"repoShort": "junit-team/junit5",
 		"file": "junit5-AvailableOptions-toCommandLineOptions",
@@ -3178,7 +3960,7 @@
 		]
 	},
 	"junit5-ClassTestDescriptor-invokeBeforeAllMethods": {
-		"longName": "ClassTestDescriptor::invokeBeforeAllMethods(JupiterEngineExecutionContext context)",
+		"longName": "private void invokeBeforeAllMethods(JupiterEngineExecutionContext context);",
 		"methodName": "invokeBeforeAllMethods",
 		"repoShort": "junit-team/junit5",
 		"file": "junit5-ClassTestDescriptor-invokeBeforeAllMethods",
@@ -3198,7 +3980,7 @@
 		]
 	},
 	"junit5-ClassTestDescriptor-prepare": {
-		"longName": "ClassTestDescriptor::prepare(JupiterEngineExecutionContext context)",
+		"longName": "public JupiterEngineExecutionContext prepare(JupiterEngineExecutionContext context);",
 		"methodName": "prepare",
 		"repoShort": "junit-team/junit5",
 		"file": "junit5-ClassTestDescriptor-prepare",
@@ -3247,7 +4029,7 @@
 		]
 	},
 	"junit5-DefaultLauncher-discover": {
-		"longName": "DefaultLauncher::discover(LauncherDiscoveryRequest discoveryRequest)",
+		"longName": "public TestPlan discover(LauncherDiscoveryRequest discoveryRequest);",
 		"methodName": "discover",
 		"repoShort": "junit-team/junit5",
 		"file": "junit5-DefaultLauncher-discover",
@@ -3287,7 +4069,7 @@
 		]
 	},
 	"junit5-DefaultLauncher-discoverRoot": {
-		"longName": "DefaultLauncher::discoverRoot(LauncherDiscoveryRequest discoveryRequest, String phase)",
+		"longName": "private Root discoverRoot(LauncherDiscoveryRequest discoveryRequest, String phase);",
 		"methodName": "discoverRoot",
 		"repoShort": "junit-team/junit5",
 		"file": "junit5-DefaultLauncher-discoverRoot",
@@ -3351,7 +4133,7 @@
 		]
 	},
 	"junit5-DefaultLauncher-execute": {
-		"longName": "DefaultLauncher::execute(Root root, ConfigurationParameters configurationParameters, TestExecutionListener listeners)",
+		"longName": "private void execute(Root root, ConfigurationParameters configurationParameters, TestExecutionListener listeners);",
 		"methodName": "execute",
 		"repoShort": "junit-team/junit5",
 		"file": "junit5-DefaultLauncher-execute",
@@ -3397,7 +4179,7 @@
 		]
 	},
 	"junit5-NodeTestTask-execute": {
-		"longName": "NodeTestTask::execute()",
+		"longName": "public void execute();",
 		"methodName": "execute",
 		"repoShort": "junit-team/junit5",
 		"file": "junit5-NodeTestTask-execute",
@@ -3437,7 +4219,7 @@
 		]
 	},
 	"junit5-TestFactoryTestDescriptor-invokeTestMethod": {
-		"longName": "TestFactoryTestDescriptor::invokeTestMethod(JupiterEngineExecutionContext context, DynamicTestExecutor dynamicTestExecutor)",
+		"longName": "protected void invokeTestMethod(JupiterEngineExecutionContext context, DynamicTestExecutor dynamicTestExecutor);",
 		"methodName": "invokeTestMethod",
 		"repoShort": "junit-team/junit5",
 		"file": "junit5-TestFactoryTestDescriptor-invokeTestMethod",
@@ -3475,7 +4257,7 @@
 		]
 	},
 	"junit5-TestMethodTestDescriptor-execute": {
-		"longName": "TestMethodTestDescriptor::execute(JupiterEngineExecutionContext context, DynamicTestExecutor dynamicTestExecutor)",
+		"longName": "public JupiterEngineExecutionContext execute(JupiterEngineExecutionContext context, DynamicTestExecutor dynamicTestExecutor);",
 		"methodName": "execute",
 		"repoShort": "junit-team/junit5",
 		"file": "junit5-TestMethodTestDescriptor-execute",
@@ -3521,7 +4303,7 @@
 		]
 	},
 	"junit5-TestMethodTestDescriptor-invokeTestMethod": {
-		"longName": "TestMethodTestDescriptor::invokeTestMethod(JupiterEngineExecutionContext context, DynamicTestExecutor dynamicTestExecutor)",
+		"longName": "protected void invokeTestMethod(JupiterEngineExecutionContext context, DynamicTestExecutor dynamicTestExecutor);",
 		"methodName": "invokeTestMethod",
 		"repoShort": "junit-team/junit5",
 		"file": "junit5-TestMethodTestDescriptor-invokeTestMethod",
@@ -3565,7 +4347,7 @@
 		]
 	},
 	"okhttp-ConnectionPool-get": {
-		"longName": "ConnectionPool::get(Address address, StreamAllocation streamAllocation, Route route)",
+		"longName": "RealConnection get(Address address, StreamAllocation streamAllocation, Route route);",
 		"methodName": "get",
 		"repoShort": "square/okhttp",
 		"file": "okhttp-ConnectionPool-get",
@@ -3602,7 +4384,7 @@
 		]
 	},
 	"okhttp-Http2Codec-writeRequestHeaders": {
-		"longName": "Http2Codec::writeRequestHeaders(Request request)",
+		"longName": "public void writeRequestHeaders(Request request);",
 		"methodName": "writeRequestHeaders",
 		"repoShort": "square/okhttp",
 		"file": "okhttp-Http2Codec-writeRequestHeaders",
@@ -3644,7 +4426,7 @@
 		]
 	},
 	"okhttp-Http2Connection-headers": {
-		"longName": "Http2Connection$ReaderRunnable::headers(boolean inFinished, int streamId, int associatedStreamId, List<Header> headerBlock)",
+		"longName": "public void headers(boolean inFinished, int streamId, int associatedStreamId, List<Header> headerBlock);",
 		"methodName": "headers",
 		"repoShort": "square/okhttp",
 		"file": "okhttp-Http2Connection-headers",
@@ -3682,7 +4464,7 @@
 		]
 	},
 	"okhttp-Http2Connection-newStream": {
-		"longName": "Http2Connection::newStream(int associatedStreamId, List<Header> requestHeaders, boolean out)",
+		"longName": "private Http2Stream newStream(int associatedStreamId, List<Header> requestHeaders, boolean out);",
 		"methodName": "newStream",
 		"repoShort": "square/okhttp",
 		"file": "okhttp-Http2Connection-newStream",
@@ -3727,7 +4509,7 @@
 		]
 	},
 	"okhttp-Http2Connection-newStream2": {
-		"longName": "Http2Connection::newStream(List<Header> requestHeaders, boolean out)",
+		"longName": "public Http2Stream newStream(List<Header> requestHeaders, boolean out);",
 		"methodName": "newStream",
 		"repoShort": "square/okhttp",
 		"file": "okhttp-Http2Connection-newStream2",
@@ -3765,7 +4547,7 @@
 		]
 	},
 	"okhttp-Http2Connection-pushStream": {
-		"longName": "Http2Connection::pushStream(int associatedStreamId, List<Header> requestHeaders, boolean out)",
+		"longName": "public Http2Stream pushStream(int associatedStreamId, List<Header> requestHeaders, boolean out);",
 		"methodName": "pushStream",
 		"repoShort": "square/okhttp",
 		"file": "okhttp-Http2Connection-pushStream",
@@ -3779,8 +4561,31 @@
 			"Yintroduced"
 		]
 	},
+	"okhttp-JavaNetAuthenticator-authenticate": {
+		"longName": "public Request authenticate(Route route, Response response);",
+		"methodName": "authenticate",
+		"repoShort": "square/okhttp",
+		"file": "okhttp-JavaNetAuthenticator-authenticate",
+		"historyShort": [
+			"Ybodychange",
+			"Yfilerename",
+			"Ymultichange",
+			"Ymovefromfile",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yfilerename",
+			"Ybodychange",
+			"Ymultichange",
+			"Ybodychange",
+			"Ybodychange",
+			"Ybodychange",
+			"Yintroduced"
+		]
+	},
 	"okhttp-OkHttpURLConnection-getResponse": {
-		"longName": "OkHttpURLConnection::getResponse(boolean networkResponseOnError)",
+		"longName": "private Response getResponse(boolean networkResponseOnError);",
 		"methodName": "getResponse",
 		"repoShort": "square/okhttp",
 		"file": "okhttp-OkHttpURLConnection-getResponse",
@@ -3820,7 +4625,7 @@
 		]
 	},
 	"okhttp-RealCall-execute": {
-		"longName": "RealCall$AsyncCall::execute()",
+		"longName": "protected void execute();",
 		"methodName": "execute",
 		"repoShort": "square/okhttp",
 		"file": "okhttp-RealCall-execute",
@@ -3867,7 +4672,7 @@
 		]
 	},
 	"okhttp-RealConnection-connect": {
-		"longName": "RealConnection::connect(int connectTimeout, int readTimeout, int writeTimeout, int pingIntervalMillis, boolean connectionRetryEnabled, Call call, EventListener eventListener)",
+		"longName": "public void connect(int connectTimeout, int readTimeout, int writeTimeout, int pingIntervalMillis, boolean connectionRetryEnabled, Call call, EventListener eventListener);",
 		"methodName": "connect",
 		"repoShort": "square/okhttp",
 		"file": "okhttp-RealConnection-connect",
@@ -4040,7 +4845,7 @@
 		]
 	},
 	"spring-framework-AbstractMessageConverterMethodProcessor-writeWithMessageConverters": {
-		"longName": "AbstractMessageConverterMethodProcessor::writeWithMessageConverters(T value, MethodParameter returnType, ServletServerHttpRequest inputMessage, ServletServerHttpResponse outputMessage)",
+		"longName": "protected void writeWithMessageConverters(T value, MethodParameter returnType, ServletServerHttpRequest inputMessage, ServletServerHttpResponse outputMessage);",
 		"methodName": "writeWithMessageConverters",
 		"repoShort": "spring-projects/spring-framework",
 		"file": "spring-framework-AbstractMessageConverterMethodProcessor-writeWithMessageConverters",
@@ -4093,7 +4898,7 @@
 		]
 	},
 	"spring-framework-AbstractNestablePropertyAccessor-setPropertyValue": {
-		"longName": "AbstractNestablePropertyAccessor::setPropertyValue(PropertyTokenHolder tokens, PropertyValue pv)",
+		"longName": "protected void setPropertyValue(PropertyTokenHolder tokens, PropertyValue pv);",
 		"methodName": "setPropertyValue",
 		"repoShort": "spring-projects/spring-framework",
 		"file": "spring-framework-AbstractNestablePropertyAccessor-setPropertyValue",
@@ -4149,7 +4954,7 @@
 		]
 	},
 	"spring-framework-ConfigurationClassBeanDefinitionReader-loadBeanDefinitionsForBeanMethod": {
-		"longName": "ConfigurationClassBeanDefinitionReader::loadBeanDefinitionsForBeanMethod(BeanMethod beanMethod)",
+		"longName": "private void loadBeanDefinitionsForBeanMethod(BeanMethod beanMethod);",
 		"methodName": "loadBeanDefinitionsForBeanMethod",
 		"repoShort": "spring-projects/spring-framework",
 		"file": "spring-framework-ConfigurationClassBeanDefinitionReader-loadBeanDefinitionsForBeanMethod",
@@ -4206,7 +5011,7 @@
 		]
 	},
 	"spring-framework-ConfigurationClassParser-doProcessConfigurationClass": {
-		"longName": "ConfigurationClassParser::doProcessConfigurationClass(ConfigurationClass configClass, SourceClass sourceClass)",
+		"longName": "protected SourceClass doProcessConfigurationClass(ConfigurationClass configClass, SourceClass sourceClass);",
 		"methodName": "doProcessConfigurationClass",
 		"repoShort": "spring-projects/spring-framework",
 		"file": "spring-framework-ConfigurationClassParser-doProcessConfigurationClass",
@@ -4272,7 +5077,7 @@
 		]
 	},
 	"spring-framework-ConfigurationClassPostProcessor-processConfigBeanDefinitions": {
-		"longName": "ConfigurationClassPostProcessor::processConfigBeanDefinitions(BeanDefinitionRegistry registry)",
+		"longName": "public void processConfigBeanDefinitions(BeanDefinitionRegistry registry);",
 		"methodName": "processConfigBeanDefinitions",
 		"repoShort": "spring-projects/spring-framework",
 		"file": "spring-framework-ConfigurationClassPostProcessor-processConfigBeanDefinitions",
@@ -4332,7 +5137,7 @@
 		]
 	},
 	"spring-framework-ConstructorResolver-instantiateUsingFactoryMethod": {
-		"longName": "ConstructorResolver::instantiateUsingFactoryMethod(String beanName, RootBeanDefinition mbd, Object[] explicitArgs)",
+		"longName": "public BeanWrapper instantiateUsingFactoryMethod(String beanName, RootBeanDefinition mbd, Object[] explicitArgs);",
 		"methodName": "instantiateUsingFactoryMethod",
 		"repoShort": "spring-projects/spring-framework",
 		"file": "spring-framework-ConstructorResolver-instantiateUsingFactoryMethod",
@@ -4385,7 +5190,7 @@
 		]
 	},
 	"spring-framework-GenericConversionService-getConverter": {
-		"longName": "GenericConversionService::getConverter(TypeDescriptor sourceType, TypeDescriptor targetType)",
+		"longName": "protected GenericConverter getConverter(TypeDescriptor sourceType, TypeDescriptor targetType);",
 		"methodName": "getConverter",
 		"repoShort": "spring-projects/spring-framework",
 		"file": "spring-framework-GenericConversionService-getConverter",
@@ -4418,7 +5223,7 @@
 		]
 	},
 	"spring-framework-ResponseBodyResultHandler-handleResult": {
-		"longName": "ResponseBodyResultHandler::handleResult(ServerWebExchange exchange, HandlerResult result)",
+		"longName": "public Mono<Void> handleResult(ServerWebExchange exchange, HandlerResult result);",
 		"methodName": "handleResult",
 		"repoShort": "spring-projects/spring-framework",
 		"file": "spring-framework-ResponseBodyResultHandler-handleResult",
@@ -4470,7 +5275,7 @@
 		]
 	},
 	"spring-framework-ServletHttpHandlerAdapter-service": {
-		"longName": "ServletHttpHandlerAdapter::service(ServletRequest request, ServletResponse response)",
+		"longName": "public void service(ServletRequest request, ServletResponse response);",
 		"methodName": "service",
 		"repoShort": "spring-projects/spring-framework",
 		"file": "spring-framework-ServletHttpHandlerAdapter-service",
@@ -4522,7 +5327,7 @@
 		]
 	},
 	"spring-framework-TypeConverterDelegate-convertIfNecessary": {
-		"longName": "TypeConverterDelegate::convertIfNecessary(String propertyName, Object oldValue, Object newValue, Class<T> requiredType, TypeDescriptor typeDescriptor)",
+		"longName": "public T convertIfNecessary(String propertyName, Object oldValue, Object newValue, Class<T> requiredType, TypeDescriptor typeDescriptor);",
 		"methodName": "convertIfNecessary",
 		"repoShort": "spring-projects/spring-framework",
 		"file": "spring-framework-TypeConverterDelegate-convertIfNecessary",
