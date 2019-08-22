@@ -75,24 +75,20 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 	}
 
 	private goToAuthor(event: any): void {
-		if (this.authorLink.endsWith("&type=Users")) {
+		if (!this.authorRequested) {
 			event.preventDefault();
-			if (!this.authorRequested) {
-				this.authorRequested = true;
-				const link: string[] = this.props.repo.replace(".git", "").split('/');
-				const org: string = link[link.length - 2];
-				const repo: string = link[link.length - 1];
-				RequestController.getAuthorUrl(org, repo, this.props.commit.commitName)
-					.then((authorUrl: string) => {
-						this.authorRequested = false;
-						this.authorLink = authorUrl;
-						window.open(this.authorLink, "_blank");
-					}).catch((err) => {
-						this.authorRequested = false;
-						window.open(this.authorLink, "_blank");
-					});
+			this.authorRequested = true;
+			const link: string[] = this.props.repo.replace(".git", "").split('/');
+			const org: string = link[link.length - 2];
+			const repo: string = link[link.length - 1];
+			RequestController.getAuthorUrl(org, repo, this.props.commit.commitName)
+				.then((authorUrl: string) => {
+					this.authorLink = authorUrl;
+					window.open(this.authorLink, "_blank");
+				}).catch((err) => {
+					window.open(this.authorLink, "_blank");
+				});
 			}
-		}
 	}
 
 	private chooseDiffText(): string {
