@@ -395,7 +395,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 									height: this.state.details ? this.getHeight(true) : 0,
 									backgroundImage: this.getBackgroundImage(change.type),
 									opacity: this.state.details ? 0.8 : 0,
-									backgroundSize: (this.props.windowHeight * 0.04 * Constants.COMMIT_ROW_HEIGHT) + "px",
+									backgroundSize: this.getHeight(true, 4),
 									backgroundRepeat: "no-repeat",
 									backgroundPosition: "left",
 									transition: this.fadeOutTime + "ms ease-in-out",
@@ -404,7 +404,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 								}}
 								key={`${this.props.commit.commitName}-${this.props.method.longName}-${this.props.method.startLine}-${i}`}
 							>
-									{this.state.details ?
+									{// this.state.details ?
 										<div
 											className="NoClick"
 											style={{
@@ -413,10 +413,12 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 												position: "absolute",
 												bottom: "0",
 												right: "0",
+												transition: this.fadeOutTime + "ms ease-in-out",
+												opacity: this.state.details ? 1 : 0
 											}}
 										>
 											{desc}
-										</div> : <div style={{opacity: 0}}/>
+										</div>// : <div style={{opacity: 0}}/>
 									}
 							</div>);
 						})
