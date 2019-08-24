@@ -73,7 +73,7 @@ export class Method extends React.Component<IReactMethodProps, IReactMethodState
 			>
 				{// TODO fix ' ' bug
 					(this.props.search === "" || !this.props.active ? [this.props.method.longName] : this.props.method.longName.split(this.props.search)).flatMap(
-						(s, i, list) => list.length - 1 !== i ? [<div key={2 * i} style={regularStyle}>{s}</div>, <div key={2 * i + 1} style={matchedStyle}>{this.props.search}</div>] : <div key={2 * i} style={regularStyle}>{s}</div>,
+						(s, i, list) => list.length - 1 !== i ? [<div key={2 * i} style={regularStyle}>{s.replace(/ /g, '\u00A0')}</div>, <div key={2 * i + 1} style={matchedStyle}>{this.props.search.replace(/ /g, '\u00A0')}</div>] : <div key={2 * i} style={regularStyle}>{s.replace(/ /g, '\u00A0')}</div>,
 					)
 				}
 			</div>
