@@ -114,9 +114,13 @@ export class RequestController {
 		// 		throw new InternalError("RequestController able to handle request.");
 		// 	}
 		// }
+		const formData = new FormData();
+		for (const key of Object.keys(qs)) {
+			formData.append(key, qs[key].toString());
+		}
 		let status = 400;
 		try {
-			let res = await fetch(url, {mode: 'cors'});
+			let res = await fetch(url, {body: formData, mode: 'cors'});
 			status = res.status;
 			if (status === 200) {
 				return await res.json();
