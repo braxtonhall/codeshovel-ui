@@ -105,6 +105,7 @@ export class RequestController {
 	}
 
 	private static async request(url: string, qs: {[key: string]: string | boolean | number}): Promise<any> {
+		console.log("Requesting:", url);
 		try {
 			// @ts-ignore
 			return JSON.parse(await rp(url, {qs, ...RequestController.opts}));
