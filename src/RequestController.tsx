@@ -1,4 +1,3 @@
-import * as rp from "request-promise-native";
 import {Constants} from "./Constants";
 import {
 	EmptyError,
@@ -9,15 +8,14 @@ import {
 	InternalError,
 	ServerBusyError
 } from "./Types";
-import fetch from "node-fetch";
 
 export class RequestController {
 	private static readonly server: string = Constants.SERVER_ADDRESS;
-	private static readonly opts: rp.RequestPromiseOptions = {
-		rejectUnauthorized: false,
-		strictSSL: false,
-		method: 'get',
-	};
+	// private static readonly opts: rp.RequestPromiseOptions = {
+	// 	rejectUnauthorized: false,
+	// 	strictSSL: false,
+	// 	method: 'get',
+	// };
 
 	public static async getManifest(): Promise<IManifest> {
 		return JSON.parse(await (await fetch(Constants.MANIFEST_PATH)).text());
@@ -105,17 +103,31 @@ export class RequestController {
 	}
 
 	private static async request(url: string, qs: {[key: string]: string | boolean | number}): Promise<any> {
-		console.log("Requesting:", url);
+		// console.log("Requesting:", url);
+		// try {
+		// 	return JSON.parse(await rp(url, {qs, ...RequestController.opts}));
+		// } catch (err) {
+		// 	console.log("RequestController::request - ERROR: " + err.message);
+		// 	if (err.statusCode === undefined || err.statusCode === 503) {
+		// 		throw new ServerBusyError("RequestController able to handle request.");
+		// 	} else {
+		// 		throw new InternalError("RequestController able to handle request.");
+		// 	}
+		// }
+		let status = 400;
 		try {
-			// @ts-ignore
-			return JSON.parse(await rp(url, {qs, ...RequestController.opts}));
-		} catch (err) {
-			console.log("RequestController::request - ERROR: " + err.message);
-			if (err.statusCode === undefined || err.statusCode === 503) {
-				throw new ServerBusyError("RequestController able to handle request.");
-			} else {
-				throw new InternalError("RequestController able to handle request.");
+			let res = await fetch(url, {mode: 'cors'});
+			status = res.status;
+			if (status === 200) {
+				return await res.json();
 			}
+		} catch (e) {
+			// Keep other errors in method
+		}
+		if (status === 503) {
+			throw new ServerBusyError("RequestController able to handle request.");
+		} else {
+			throw new InternalError("RequestController able to handle request.");
 		}
 	}
 }
