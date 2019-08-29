@@ -103,39 +103,24 @@ export class RequestController {
 	}
 
 	private static async request(url: string, qs: {[key: string]: string | boolean | number}): Promise<any> {
-		// console.log("Requesting:", url);
-		// try {
-		// 	return JSON.parse(await rp(url, {qs, ...RequestController.opts}));
-		// } catch (err) {
-		// 	console.log("RequestController::request - ERROR: " + err.message);
-		// 	if (err.statusCode === undefined || err.statusCode === 503) {
-		// 		throw new ServerBusyError("RequestController able to handle request.");
-		// 	} else {
-		// 		throw new InternalError("RequestController able to handle request.");
-		// 	}
-		// }
+		const urlObject: URL = new URL(url);
 		let status = 400;
 		try {
-			const formData = new FormData();
 			for (const [key, value] of Object.entries(qs)) {
-				formData.append(key, value.toString());
+				urlObject.searchParams.append(key, value.toString());
 			}
-			let res = await fetch(url, {body: formData, mode: 'cors'});
+			// @ts-ignore
+			let res = await fetch(urlObject, {mode: 'cors'});
 			status = res.status;
 			if (status === 200) {
 				return await res.json();
-			} else {
-				console.log(await res.json());
 			}
 		} catch (e) {
-			console.log(e);
 			// Keep other errors in method
 		}
 		if (status === 503) {
-			console.log("ServerBusy");
 			throw new ServerBusyError("RequestController able to handle request.");
 		} else {
-			console.log("InternalError");
 			throw new InternalError("RequestController able to handle request.");
 		}
 	}
