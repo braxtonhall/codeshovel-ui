@@ -11,11 +11,6 @@ import {
 
 export class RequestController {
 	private static readonly server: string = Constants.SERVER_ADDRESS;
-	// private static readonly opts: rp.RequestPromiseOptions = {
-	// 	rejectUnauthorized: false,
-	// 	strictSSL: false,
-	// 	method: 'get',
-	// };
 
 	public static async getManifest(): Promise<IManifest> {
 		return JSON.parse(await (await fetch(Constants.MANIFEST_PATH)).text());
