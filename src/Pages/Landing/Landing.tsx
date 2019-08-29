@@ -190,7 +190,7 @@ class ExampleContainer extends FadeableElement<IExampleContainerProps, IExampleC
 							width={15}
 							left={350}
 							backgroundSize={10}
-							backgroundImage={"url(/cross.png)"}
+							backgroundImage={`url(${process.env.PUBLIC_URL}/cross.png)`}
 							onClick={() => {
 								if (!this.props.examplesHidden) {
 									this.props.toggleExamplesHidden()

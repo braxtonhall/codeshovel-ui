@@ -40,7 +40,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 			}}>
 				<div style={{
 					position: "absolute",
-					backgroundImage: "url(/icon.png)",
+					backgroundImage: `url(${process.env.PUBLIC_URL}/icon.png)`,
 					width: this.getFontSize("", 16.5),
 					height: this.getFontSize("", 16.5),
 					backgroundSize: "contain",

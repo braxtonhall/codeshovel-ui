@@ -42,18 +42,18 @@ export class Constants {
 	};
 
 	public static readonly CHANGE_IMAGES: {[internalName: string]: string} = {
-		[Changes.BODY_CHANGE]: "url(/logos/body.png)",
-		[Changes.FILE_RENAME]: "url(/logos/filerename.png)",
-		[Changes.INTRODUCED]: "url(/logos/introduced.png)",
-		[Changes.EXCEPS_CHANGE]: "url(/logos/exception.png)",
-		[Changes.MOD_CHANGE]: "url(/logos/modifier.png)",
-		[Changes.MOV_FROM_FILE]: "url(/logos/movefromfile.png)",
-		[Changes.MULTI_CHANGE]: "url(/logos/nochange.png)",
-		[Changes.NO_CHANGE]: "url(/logos/nochange.png)",
-		[Changes.PARAM_CHANGE]: "url(/logos/parameter.png)",
-		[Changes.PARAM_META_CHANGE]: "url(/logos/parameter.png)",
-		[Changes.RENAME]: "url(/logos/rename.png)",
-		[Changes.RETURN_CHANGE]: "url(/logos/return.png)",
+		[Changes.BODY_CHANGE]: `url(${process.env.PUBLIC_URL}/logos/body.png)`,
+		[Changes.FILE_RENAME]: `url(${process.env.PUBLIC_URL}/logos/filerename.png)`,
+		[Changes.INTRODUCED]: `url(${process.env.PUBLIC_URL}/logos/introduced.png)`,
+		[Changes.EXCEPS_CHANGE]: `url(${process.env.PUBLIC_URL}/logos/exception.png)`,
+		[Changes.MOD_CHANGE]: `url(${process.env.PUBLIC_URL}/logos/modifier.png)`,
+		[Changes.MOV_FROM_FILE]: `url(${process.env.PUBLIC_URL}/logos/movefromfile.png)`,
+		[Changes.MULTI_CHANGE]: `url(${process.env.PUBLIC_URL}/logos/nochange.png)`,
+		[Changes.NO_CHANGE]: `url(${process.env.PUBLIC_URL}/logos/nochange.png)`,
+		[Changes.PARAM_CHANGE]: `url(${process.env.PUBLIC_URL}/logos/parameter.png)`,
+		[Changes.PARAM_META_CHANGE]: `url(${process.env.PUBLIC_URL}/logos/parameter.png)`,
+		[Changes.RENAME]: `url(${process.env.PUBLIC_URL}/logos/rename.png)`,
+		[Changes.RETURN_CHANGE]: `url(${process.env.PUBLIC_URL}/logos/return.png)`,
 	};
 
 	public static readonly CHANGE_DESCRIPTIONS: {[internalName: string]: string} = {
@@ -83,7 +83,7 @@ export class Constants {
 
 	public static readonly FONT: string = "100% \"Courier New\", Futura, sans-serif";
 
-	public static readonly SERVER_ADDRESS: string = "http://cs310.students.cs.ubc.ca:443";
+	public static readonly SERVER_ADDRESS: string = `${process.env.PUBLIC_URL}:${process.env.BACKEND_PORT}`;
 
 	public static readonly INVALID_URL_ERROR_TEXT: string = "Please enter a link to proceed.";
 

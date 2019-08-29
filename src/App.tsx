@@ -479,7 +479,7 @@ export default class App extends React.Component<any, IAppState> {
 						onClick={() => window.history.back()}
 						width={30}
 						height={30}
-						backgroundImage={"url(/left.png)"}
+						backgroundImage={`url(${process.env.PUBLIC_URL}/left.png)`}
 						backgroundSize={15}
 						shift={this.history.length > 0 ? 35 : 0}
 						left={-30}
@@ -490,7 +490,7 @@ export default class App extends React.Component<any, IAppState> {
 						onClick={() => this.proceedToPage(Pages.ABOUT)}
 						width={30}
 						height={30}
-						backgroundImage={"url(/question.png)"}
+						backgroundImage={`url(${process.env.PUBLIC_URL}/question.png)`}
 						backgroundSize={15}
 						shift={this.history.length > 0 || this.state.page !== Pages.LANDING ? 35 : 0}
 						left={5}
@@ -502,7 +502,7 @@ export default class App extends React.Component<any, IAppState> {
 						shift={this.history.length > 0 && this.state.page !== Pages.ABOUT ? 35 : 0}
 						displayNotification={this.state.displayTextCopied}
 						text={"Copy JSON"}
-						backgroundImage={"url(/clipboard.png)"}
+						backgroundImage={`url(${process.env.PUBLIC_URL}/clipboard.png)`}
 						left={40}
 						bottom={5}
 						width={180}
