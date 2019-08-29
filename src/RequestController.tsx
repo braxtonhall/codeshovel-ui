@@ -124,13 +124,18 @@ export class RequestController {
 			status = res.status;
 			if (status === 200) {
 				return await res.json();
+			} else {
+				console.log(await res.json());
 			}
 		} catch (e) {
+			console.log(e);
 			// Keep other errors in method
 		}
 		if (status === 503) {
+			console.log("ServerBusy");
 			throw new ServerBusyError("RequestController able to handle request.");
 		} else {
+			console.log("InternalError");
 			throw new InternalError("RequestController able to handle request.");
 		}
 	}
