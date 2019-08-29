@@ -73,7 +73,7 @@ export class Constants {
 
 	public static readonly IN_TEST: boolean = false;
 	public static readonly TEST: string = "r2";
-	public static readonly MANIFEST_PATH: string = "/responses.json";
+	public static readonly MANIFEST_PATH: string = `${process.env.PUBLIC_URL}/responses.json`;
 
 	public static readonly NOTIFICATION_DISPLAY_TIME: number = 1000;
 	public static readonly SHOW_ABOUT_DELAY_TIME: number = 1000;

@@ -24,15 +24,15 @@ export class RequestController {
 	}
 
 	public static async getExample(file: string): Promise<ICachedResponse> {
-		return JSON.parse(await (await fetch(`/responses/${file}.json`)).text());
+		return JSON.parse(await (await fetch(`${process.env.PUBLIC_URL}/responses/${file}.json`)).text());
 	}
 
 	public static async getFiles(file: string): Promise<string[]> {
-		return JSON.parse(await (await fetch(`/responses/${file}.json`)).text()).files;
+		return JSON.parse(await (await fetch(`${process.env.PUBLIC_URL}/responses/${file}.json`)).text()).files;
 	}
 
 	public static async getMethods(file: string): Promise<IMethodTransport[]> {
-		return JSON.parse(await (await fetch(`/responses/${file}.json`)).text()).methods;
+		return JSON.parse(await (await fetch(`${process.env.PUBLIC_URL}/responses/${file}.json`)).text()).methods;
 	}
 
 	public static async getAuthorUrl(org: string, repo: string, sha: string): Promise<string> {
