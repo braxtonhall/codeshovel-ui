@@ -143,10 +143,11 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 					active={!this.state.tutorialDismissed && !mobileView}
 					text={this.tutorialText}
 					windowWidth={this.props.windowWidth}
-					width={20}
+					width={25}
 					dismissTutorial={this.dismissTutorial}
 					top={5}
 					right={2}
+					heightRatio={0.62}
 				/>
 				<ErrorPane text={this.errorText} active={this.state.error} exit={this.toggleError} size={{height: 30, width: 72}}/>
 			</div>

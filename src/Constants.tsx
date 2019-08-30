@@ -96,7 +96,7 @@ export class Constants {
 	public static readonly EXAMPLE_TEXT_SIZE: number = 6;
 	public static readonly EXAMPLE_ROW_WIDTH: number = 10;
 
-	public static readonly FILES_TUTORIAL_TEXT: string = "On the left you can click through the file tree to find a specific class, and you can refine the tree using the search bar above. If the class you are looking for is not in the current commit, you can enter the SHA beneath to explore that commit's file tree.";
+	public static readonly FILES_TUTORIAL_TEXT: string = "Each row on this page represents a directory or file. On the left you can click through the file tree to find a specific class, and you can refine the tree using the search bar above. If the class you are looking for is not in the current commit, you can enter the SHA beneath to explore that commit's file tree.";
 
 	public static readonly FILE_REQUEST_ERROR_TEXT: string = "There don't appear to be any .java files in this repo. Please try another.";
 	public static readonly FILE_SHA_PLACEHOLDER_TEXT: string = "Specific commit? Enter the SHA here and reload";
@@ -105,6 +105,8 @@ export class Constants {
 	public static readonly FILES_SEARCH_TEXT: string = `/regex/ or ordered search strings`;
 
 	public static readonly LIST_ELEMENT_NEW_LINE_PX_COUNT: number = 15;
+
+	public static readonly METHODS_TUTORIAL_TEXT: string = "Each row on this page is a single method in the selected class. Click on a method on the left, or use the search bar above to narrow down the list of methods.";
 
 	public static readonly METHODS_MAX_INDENT_UNIT_COUNT: number = 20;
 	public static readonly METHODS_INDENT_UNIT_PX: number = 5;
@@ -115,6 +117,8 @@ export class Constants {
 	public static readonly METHOD_NAME_TEXT_SIZE:number = 10;
 
 	public static readonly RESULTS_REQUEST_ERROR_TEXT: string = "There aren't any changes in this method's history! Please try another.";
+
+	public static readonly RESULTS_TUTORIAL_TEXT: string = "Each row on this page represents one commit that changed this method. Click on Author, Commit or File to visit their respective pages on GitHub. Click on Type or Diff to view more information on this page.";
 
 	public static readonly COMMIT_ROW_HEIGHT: number = 8;
 	public static readonly COMMIT_ROW_WIDTH: number = 80;

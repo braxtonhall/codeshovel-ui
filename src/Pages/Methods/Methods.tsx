@@ -7,12 +7,14 @@ import Form from "react-bootstrap/Form";
 import {IMethodTransport} from "../../Types";
 import {Method} from "./Method";
 import Cookies from "js-cookie";
+import TutorialPane from "../../Panes/TutorialPane";
 
 export class Methods extends Page<IMethodsProps, IMethodsState> {
 	private readonly methodInputPlaceholder: string = Constants.METHODS_SEARCH_TEXT;
 	protected readonly page: Pages = Pages.METHODS;
 	private file: string;
 	protected readonly cookieName: string = "methods";
+	private readonly tutorialText: string = Constants.METHODS_TUTORIAL_TEXT;
 
 	public constructor(props: IMethodsProps) {
 		super(props);
@@ -63,6 +65,7 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 	}
 
 	public createReactNode(): ReactNode {
+		const transform: string = this.chooseTransform();
 		const searchElement: HTMLInputElement = (document.getElementById("methodSearchInput") as HTMLInputElement);
 		if (searchElement) {
 			searchElement.value = this.state.search;
@@ -95,16 +98,26 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 							top: "50%",
 							left: "50%",
 							position: "absolute",
-							transform: this.chooseTransform(),
+							transform,
 							transition: this.fadeOutTime + "ms ease-in-out",
-							opacity: 0.8,
+							opacity: this.props.active ? 1 : 0
 						}}>
 							<MethodContainer
 								methods={this.props.content}
 								search={this.state.search}
 								tellParent={this.proceedToNextPageAndUpdateSelected}
 							/>
-						</div> : <div style={{top: "50%", left: "50%", transform: this.chooseTransform()}}/>
+							<TutorialPane
+								active={!this.state.tutorialDismissed}
+								text={this.tutorialText}
+								windowWidth={this.props.windowWidth}
+								width={25}
+								dismissTutorial={this.dismissTutorial}
+								top={40}
+								right={15}
+								heightRatio={0.8}
+							/>
+						</div> : <div style={{top: "50%", left: "50%", transform, opacity: 0}}/>
 					}
 				</div>
 				<div>
@@ -149,7 +162,8 @@ class MethodContainer extends React.Component<IMethodContainerProps, any> {
 					display: "block",
 					textAlign: "left",
 					height: "100%",
-					width: "100%"
+					width: "100%",
+					opacity: 0.8,
 				}}
 			>
 				<div

@@ -6,12 +6,15 @@ import {IHistoryTransport, IMethodTransport} from "../../Types";
 import {History, ReactHistory} from "./History";
 import {Header} from "./Header";
 import Cookies from "js-cookie";
+import TutorialPane from "../../Panes/TutorialPane";
+import {Constants} from "../../Constants";
 
 export class Results extends Page<IHistoryProps, IHistoryState> {
 	protected readonly page: Pages = Pages.RESULTS;
 	private content: IHistoryTransport;
 	private history: History;
 	protected readonly cookieName: string = "results";
+	private readonly tutorialText: string = Constants.RESULTS_TUTORIAL_TEXT;
 
 	public constructor(props: IHistoryProps) {
 		super(props);
@@ -37,6 +40,7 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 		if (this.content !== this.props.content) {
 			this.buildHistory(this.props.content);
 		}
+		const transform: string = this.chooseTransform();
 		return(
 			<div>
 				<div
@@ -47,7 +51,7 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 						width: "100%",
 						top: "50%",
 						left: "50%",
-						transform: this.chooseTransform(),
+						transform,
 						opacity: this.props.active ? 0.8 : 0,
 						transition: `${this.fadeOutTime}ms ease-in-out`,
 					}}
@@ -65,7 +69,7 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 					style={{
 						opacity: this.props.active ? 0.8 : 0,
 						position: "relative",
-						transform: this.chooseTransform(),
+						transform,
 						left: "50%",
 						transition: `${this.fadeOutTime}ms ease-in-out`,
 					}}
@@ -76,6 +80,32 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 						active={this.props.active}
 					/>
 				</div>
+				{this.state.onScreen || this.props.active ?
+					<div
+						style={{
+							position: "absolute",
+							height: "100%",
+							width: "100%",
+							top: "50%",
+							left: "50%",
+							transform,
+							transition: `${this.fadeOutTime}ms ease-in-out`,
+							pointerEvents: "none",
+							opacity: this.props.active ? 1 : 0
+						}}
+					>
+						<TutorialPane
+							active={!this.state.tutorialDismissed}
+							text={this.tutorialText}
+							windowWidth={this.props.windowWidth}
+							width={20}
+							dismissTutorial={this.dismissTutorial}
+							top={60}
+							right={60}
+							heightRatio={0.62}
+						/>
+					</div> : <div style={{top: "50%", left: "50%", transform, opacity: 0}}/>
+				}
 			</div>
 		);
 	}

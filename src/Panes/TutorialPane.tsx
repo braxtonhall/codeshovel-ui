@@ -17,21 +17,20 @@ export default class TutorialPane extends FadeableElement<ITutorialPaneProps, IT
 	}
 
 	public createReactNode(): ReactNode {
-		const size: string = this.getSize();
 		return (this.state.onScreen || this.props.active ?
 				<div
 					style={{
 						top: this.props.top + "%",
 						right: this.props.right + "%",
-						height: size,
-						width: size,
+						height: this.getSize(this.props.heightRatio),
+						width: this.getSize(),
 						color: this.props.active ? "rgb(255, 255, 255)" : "rgb(112, 111, 162)",
 						backgroundColor: "rgb(112, 111, 162)",
-						opacity: this.props.active ? 0.8 : 0,
+						opacity: this.props.active ? 1 : 0,
 						transition: this.fadeOutTime + "ms ease-in-out",
 						position: "absolute",
 						zIndex: 9999,
-						pointerEvents: "none",
+						pointerEvents: "auto",
 						alignItems: "center",
 						justifyContent: "center",
 						display: "flex"
@@ -75,6 +74,7 @@ export interface ITutorialPaneProps extends IFadeableElementProps {
 	dismissTutorial: () => void;
 	top: number;
 	right: number;
+	heightRatio: number;
 }
 
 export interface ITutorialPaneState extends IFadeableElementState {
