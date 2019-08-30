@@ -6,6 +6,10 @@ import {Constants} from "../Constants";
 
 export class About extends Page<IAboutProps, IAboutState> {
 	protected readonly page = Pages.ABOUT;
+	private readonly codeshovelRepo: string = `https://github.com/ataraxie/codeshovel`;
+	private readonly codeshovelUiRepo: string = `https://github.com/braxtonhall/codeshovel-ui`;
+	private readonly codeshovelWebserviceRepo: string = `https://github.com/braxtonhall/codeshovel-webservice`;
+	private readonly codeshovelPaperRepo: string = `https://github.com/ataraxie/codeshovel-paper`;
 
 	constructor(props: IAboutProps) {
 		super(props);
@@ -168,43 +172,51 @@ export class About extends Page<IAboutProps, IAboutState> {
 							color: "rgb(0,0,0)"
 						}}
 					>
-						<div
+						<a
 							className="SubtleButton CommitRowCell"
-							style={{backgroundColor: "rgba(255, 255, 255, 0.3)"}}
-							onClick={() => {
-								window.open(`https://github.com/ataraxie/codeshovel`, "_blank");
+							href={this.codeshovelRepo}
+							style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.3)"}}
+							onClick={(ev) => {
+								ev.preventDefault();
+								window.open(this.codeshovelRepo, "_blank");
 							}}
 
 						>
 							codeshovel
-						</div>
-						<div
+						</a>
+						<a
 							className="SubtleButton CommitRowCell"
-							style={{backgroundColor: "rgba(255, 255, 255, 0.1)"}}
-							onClick={() => {
-								window.open(`https://github.com/braxtonhall/codeshovel-webservice`, "_blank");
+							href={this.codeshovelWebserviceRepo}
+							style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.1)"}}
+							onClick={(ev) => {
+								ev.preventDefault();
+								window.open(this.codeshovelWebserviceRepo, "_blank");
 							}}
 						>
 							webservice
-						</div>
-						<div
+						</a>
+						<a
 							className="SubtleButton CommitRowCell"
-							style={{backgroundColor: "rgba(255, 255, 255, 0.2)"}}
-							onClick={() => {
-								window.open(`https://github.com/braxtonhall/codeshovel-ui`, "_blank");
+							href={this.codeshovelUiRepo}
+							style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.2)"}}
+							onClick={(ev) => {
+								ev.preventDefault();
+								window.open(this.codeshovelUiRepo, "_blank");
 							}}
 						>
 							ui
-						</div>
-						<div
+						</a>
+						<a
 							className="SubtleButton CommitRowCell"
-							style={{backgroundColor: "rgba(255, 255, 255, 0.15)"}}
-							onClick={() => {
-								window.open(`https://github.com/ataraxie/codeshovel-paper`, "_blank");
+							href={this.codeshovelPaperRepo}
+							style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.15)"}}
+							onClick={(ev) => {
+								ev.preventDefault();
+								window.open(this.codeshovelPaperRepo, "_blank");
 							}}
 						>
 							paper
-						</div>
+						</a>
 					</div>
 				</div>
 			</div>
