@@ -5,7 +5,6 @@ import {Landing} from "./Pages/Landing/Landing";
 import {Files} from "./Pages/Files/Files";
 import {Methods} from "./Pages/Methods/Methods";
 import {
-	ICachedResponse,
 	IHistoryTransport,
 	IManifest,
 	IManifestEntry,
@@ -63,6 +62,7 @@ export default class App extends React.Component<any, IAppState> {
 			examplesHidden: Cookies.get("examplesHidden") === 'true',
 			examples: [],
 			shaRefresh: false,
+			exampleClick: false,
 		};
 		this.history = [];
 		this.proceedToPage = this.proceedToPage.bind(this);
@@ -150,14 +150,23 @@ export default class App extends React.Component<any, IAppState> {
 
 	private async handleExample(example: IManifestEntry): Promise<void> {
 		try {
-			const response: ICachedResponse = await RequestController.getExample(example.file);
-			const state: IAppState = Object.assign({}, this.state);
-			state.link = response.repo;
-			state.file = response.file;
-			state.historyContent = response.history;
-			state.method = response.method;
-			state.sha = response.sha;
-			this.finishLoad(Pages.RESULTS, null, state);
+			// TODO make this live
+			// const response: ICachedResponse = await RequestController.getExample(example.file);
+			// const state: IAppState = Object.assign({}, this.state);
+			// state.link = response.repo;
+			// state.file = response.file;
+			// state.historyContent = response.history;
+			// state.method = response.method;
+			// state.sha = response.sha;
+			// this.finishLoad(Pages.RESULTS, null, state);
+			const state: IAppState = {
+				...this.state,
+				link: example.repo,
+				method: example.method,
+				sha: example.sha,
+				file: example.filePath,
+			};
+			this.proceedToPage(Pages.RESULTS, state);
 		} catch (err) {
 			this.finishLoad(this.state.page, new ParseCachedError("Couldn't Find the Result"));
 		}
@@ -221,6 +230,9 @@ export default class App extends React.Component<any, IAppState> {
 					});
 				break;
 			case Pages.RESULTS:
+				if (state.sha !== "HEAD") {
+					state.exampleClick = true;
+				}
 				state.loading = true;
 				state.historyContent = null;
 				this.rc.getHistory(state.link, state.sha, state.file, state.method.startLine, state.method.methodName)
@@ -276,6 +288,7 @@ export default class App extends React.Component<any, IAppState> {
 		}
 		state.loading = false;
 		state.shaRefresh = false;
+		state.exampleClick = false;
 		this.setState(state);
 	}
 
@@ -508,9 +521,9 @@ export default class App extends React.Component<any, IAppState> {
 						bottom={5}
 						width={180}
 					/>
-					<LoadingPane windowWidth={this.state.width} text={`Cloning ${this.state.link}`} active={this.state.loading && this.state.page === Pages.LANDING} size={{height: 30, width: 72}}/>
+					<LoadingPane windowWidth={this.state.width} text={this.state.exampleClick ? `Digging through ${this.state.method.methodName}'s history` : `Cloning ${this.state.link}`} active={this.state.loading && this.state.page === Pages.LANDING} size={{height: 30, width: 72}}/>
 					<LoadingPane windowWidth={this.state.width} text={this.state.shaRefresh ? `Checking out ${this.state.sha}` : `Getting all methods in ${this.state.file.split('/').pop()}`} active={this.state.loading && this.state.page === Pages.FILES} size={{height: 30, width: 72}}/>
-					<LoadingPane windowWidth={this.state.width} text={`Unearthing ${this.state.method.methodName}'s history`} active={this.state.loading && this.state.page === Pages.METHODS} size={{height: 30, width: 72}}/>
+					<LoadingPane windowWidth={this.state.width} text={`Digging through ${this.state.method.methodName}'s history`} active={this.state.loading && this.state.page === Pages.METHODS} size={{height: 30, width: 72}}/>
 					<ErrorPane text={App.serverBusyErrorText} active={this.state.serverBusyError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
 					<ErrorPane text={App.cacheErrorText} active={this.state.cachedError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
 					<ErrorPane text={App.internalErrorText} active={this.state.internalError} size={{height: 30, width: 72}} exit={this.closeErrors}/>
@@ -546,4 +559,5 @@ export interface IAppState {
 	examples: IManifestEntry[];
 	cachedError: boolean;
 	shaRefresh: boolean;
+	exampleClick: boolean;
 }

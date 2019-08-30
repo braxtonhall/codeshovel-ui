@@ -1,6 +1,6 @@
 import {IPageProps, IPageState, Page} from "./Page";
 import {Pages} from "../Enums";
-import {ReactNode} from "react";
+import {ReactFragment, ReactNode} from "react";
 import * as React from "react";
 import {Constants} from "../Constants";
 
@@ -68,12 +68,12 @@ export class About extends Page<IAboutProps, IAboutState> {
 					style={{textAlign: "left", position: "absolute", top: "40%", width: this.getFontSize("", 16.5), left: "10%"}}
 				>
 					<div style={{marginBottom: "5%", fontSize: "70%"}}>
-						Take this shovel and dig through source code history for changes to specific methods.
+						<code>codeshovel</code> digs through source code to unearth the histories for methods.
 						Currently implemented for Java with more languages to follow.
 					</div>
 					<div style={{marginBottom: "5%", fontSize: "60%"}}>
-						<code>codeshovel</code> is a tool for navigating dedicated method histories, across all kinds of changes that the method saw throughout its life span.
-						It is capable of tracking a method not only as it moves between line ranges, but as it moves through classes and around a codebase, from file to file, across traditionally disparate histories.
+						<code>codeshovel</code> is a tool for navigating 'how source code methods have evolved, accross the kinds of evolutionary changes applied to the method, including most common refactorings, that the method saw throughout its life span.
+						It is capable of tracking a method not only as it moves between line ranges, but as it moves through classes and around a codebase, from file to file.
 					</div>
 					<div style={{marginBottom: "5%", fontSize: "60%"}}>
 						Enter a repository link, open a file, and select a method to try it for yourself.
@@ -114,7 +114,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 						image={"url(https://avatars3.githubusercontent.com/u/35436247?s=400&v=4)"}
 						name={"Braxton Hall"}
 						username={"braxtonhall"}
-						info={"Braxton is a BA student, and the developer of this website."}
+						info={<React.Fragment>Braxton is a BA student, and the developer of the codeshovel web service</React.Fragment>}
 
 					/>
 					<div
@@ -291,6 +291,6 @@ interface IContributorProps {
 	image: string;
 	name: string;
 	username: string;
-	info: string;
+	info: string | ReactFragment;
 	link?: string;
 }

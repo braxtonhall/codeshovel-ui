@@ -1,7 +1,7 @@
 import {Constants} from "./Constants";
 import {
 	EmptyError,
-	ICachedResponse,
+	// ICachedResponse,
 	IHistoryTransport,
 	IManifest,
 	IMethodTransport,
@@ -14,10 +14,6 @@ export class RequestController {
 
 	public static async getManifest(): Promise<IManifest> {
 		return JSON.parse(await (await fetch(Constants.MANIFEST_PATH)).text());
-	}
-
-	public static async getExample(file: string): Promise<ICachedResponse> {
-		return JSON.parse(await (await fetch(`${process.env.PUBLIC_URL}/responses/${file}.json`)).text());
 	}
 
 	public static async getFiles(file: string): Promise<string[]> {

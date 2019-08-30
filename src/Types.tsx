@@ -42,21 +42,12 @@ export interface IManifest {
 }
 
 export interface IManifestEntry {
-	longName: string;
 	repoShort: string;
-	file: string;
-	methodName: string;
-	historyShort: Changes[];
-}
-
-export interface ICachedResponse {
-	repo: string;
-	// files: string[] | string;
-	file: string;
-	// methods: IMethodTransport[] | string;
-	method: IMethodTransport;
-	history: IHistoryTransport;
 	sha: string;
+	repo: string;
+	filePath: string;
+	historyShort: Changes[];
+	method: IMethodTransport;
 }
 
 export class ServerBusyError extends Error {
