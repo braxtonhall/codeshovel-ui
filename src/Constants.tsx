@@ -83,7 +83,7 @@ export class Constants {
 
 	public static readonly FONT: string = "100% \"Courier New\", Futura, sans-serif";
 
-	public static readonly SERVER_ADDRESS: string = `${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}`;
+	public static readonly SERVER_ADDRESS: string = `${process.env.REACT_APP_SERVER_ADDRESS}`;
 
 	public static readonly INVALID_URL_ERROR_TEXT: string = "Please enter a link to proceed.";
 
