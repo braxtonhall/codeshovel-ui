@@ -71,7 +71,7 @@ export class Constants {
 		[Changes.RETURN_CHANGE]: "Return Type Change",
 	};
 
-	public static readonly IN_TEST: boolean = true;
+	public static readonly IN_TEST: boolean = false;
 	public static readonly TEST: string = "r2";
 	public static readonly MANIFEST_PATH: string = `${process.env.PUBLIC_URL}/responses.json`;
 
