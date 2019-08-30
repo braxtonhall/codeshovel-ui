@@ -6,17 +6,20 @@ import {Constants} from "../../Constants";
 import Form from "react-bootstrap/Form";
 import {IMethodTransport} from "../../Types";
 import {Method} from "./Method";
+import Cookies from "js-cookie";
 
 export class Methods extends Page<IMethodsProps, IMethodsState> {
 	private readonly methodInputPlaceholder: string = Constants.METHODS_SEARCH_TEXT;
 	protected readonly page: Pages = Pages.METHODS;
 	private file: string;
+	protected readonly cookieName: string = "methods";
 
 	public constructor(props: IMethodsProps) {
 		super(props);
 		this.state = {
 			onScreen: this.props.active,
 			search: "",
+			tutorialDismissed: Cookies.get(this.cookieName) === 'true',
 		};
 		this.file = "";
 		this.proceedToNextPageAndUpdateSelected = this.proceedToNextPageAndUpdateSelected.bind(this);

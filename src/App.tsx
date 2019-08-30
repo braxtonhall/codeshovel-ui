@@ -1,5 +1,4 @@
 import React, {ReactNode} from 'react';
-// import logo from './logo.svg';
 import './App.css';
 import {ArgKind, Key, Pages} from './Enums'
 import {Landing} from "./Pages/Landing/Landing";
@@ -447,6 +446,7 @@ export default class App extends React.Component<any, IAppState> {
 						page={this.state.page}
 						proceedWithUpdate={this.proceedWithUpdate}
 						content={this.state.fileContent ? this.state.fileContent : []}
+						windowWidth={this.state.width}
 					/>
 					<Methods
 						proceedToPage={this.proceedToPage}
@@ -455,6 +455,7 @@ export default class App extends React.Component<any, IAppState> {
 						proceedWithUpdate={this.proceedWithUpdate}
 						page={this.state.page}
 						content={this.state.methodContent ? this.state.methodContent : []}
+						windowWidth={this.state.width}
 					/>
 					<Results
 						proceedToPage={this.proceedToPage}

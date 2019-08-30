@@ -11,6 +11,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 		super(props);
 		this.state = {
 			onScreen: this.props.active,
+			tutorialDismissed: true
 		}
 	}
 
@@ -279,7 +280,6 @@ class Contributor extends React.Component<IContributorProps, any> {
 }
 
 export interface IAboutProps extends IPageProps {
-	windowWidth: number;
 	windowHeight: number;
 }
 

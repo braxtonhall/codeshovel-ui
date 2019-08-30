@@ -5,16 +5,19 @@ import {Pages} from "../../Enums";
 import {IHistoryTransport, IMethodTransport} from "../../Types";
 import {History, ReactHistory} from "./History";
 import {Header} from "./Header";
+import Cookies from "js-cookie";
 
 export class Results extends Page<IHistoryProps, IHistoryState> {
 	protected readonly page: Pages = Pages.RESULTS;
 	private content: IHistoryTransport;
 	private history: History;
+	protected readonly cookieName: string = "results";
 
 	public constructor(props: IHistoryProps) {
 		super(props);
 		this.state = {
 			onScreen: this.props.active,
+			tutorialDismissed: Cookies.get(this.cookieName) === 'true',
 		};
 		this.history = new History({}, "");
 		this.content = {};
@@ -83,7 +86,6 @@ export interface IHistoryProps extends IPageProps {
 	repo: string;
 	file: string;
 	windowHeight: number;
-	windowWidth: number;
 	method: IMethodTransport;
 }
 

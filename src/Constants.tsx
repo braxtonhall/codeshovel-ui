@@ -71,7 +71,7 @@ export class Constants {
 		[Changes.RETURN_CHANGE]: "Return Type Change",
 	};
 
-	public static readonly IN_TEST: boolean = false;
+	public static readonly IN_TEST: boolean = true;
 	public static readonly TEST: string = "r2";
 	public static readonly MANIFEST_PATH: string = `${process.env.PUBLIC_URL}/responses.json`;
 
@@ -87,12 +87,16 @@ export class Constants {
 
 	public static readonly INVALID_URL_ERROR_TEXT: string = "Please enter a link to proceed.";
 
+	public static readonly LANDING_TUTORIAL_TEXT: string = "To use this page, you can either select a cached response on the left to quickly view a sample output, or enter a repo below and follow the steps on the following pages to try it live.";
+
 	public static readonly SERVER_BUSY_ERROR_TEXT: string = "The server is under heavy load. Please try again in a few minutes!";
 	public static readonly INTERNAL_ERROR_TEXT: string = "The server is having trouble processing this specific request. Please try another.";
 	public static readonly CACHE_ERROR_TEXT: string = "Oddly we couldn't couldn't find this response in our cache.";
 
 	public static readonly EXAMPLE_TEXT_SIZE: number = 6;
 	public static readonly EXAMPLE_ROW_WIDTH: number = 10;
+
+	public static readonly FILES_TUTORIAL_TEXT: string = "On the left you can click through the file tree to find a specific class, and you can refine the tree using the search bar above. If the class you are looking for is not in the current commit, you can enter the SHA beneath to explore that commit's file tree.";
 
 	public static readonly FILE_REQUEST_ERROR_TEXT: string = "There don't appear to be any .java files in this repo. Please try another.";
 	public static readonly FILE_SHA_PLACEHOLDER_TEXT: string = "Specific commit? Enter the SHA here and reload";

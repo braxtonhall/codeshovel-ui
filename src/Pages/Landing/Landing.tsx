@@ -10,17 +10,22 @@ import {IManifestEntry} from "../../Types";
 import {Example} from "./Example";
 import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../../FadeableElement";
 import SmallButton from "../../Buttons/SmallButton";
+import TutorialPane from "../../Panes/TutorialPane";
+import Cookies from "js-cookie";
 
 export class Landing extends Page<ILandingProps, ILandingState> {
 	private readonly placeholder: string;
 	private readonly errorText: string = Constants.INVALID_URL_ERROR_TEXT;
+	private readonly tutorialText: string = Constants.LANDING_TUTORIAL_TEXT;
 	protected readonly page: Pages = Pages.LANDING;
+	protected readonly cookieName: string = "landing";
 
 	public constructor(props: ILandingProps) {
 		super(props);
 		this.state = {
 			error: false,
 			onScreen: this.props.active,
+			tutorialDismissed: Cookies.get(this.cookieName) === 'true',
 		};
 		this.placeholder = Constants.EXAMPLE_LINKS[Math.floor(Math.random() * Constants.EXAMPLE_LINKS.length)];
 		this.toggleError = this.toggleError.bind(this);
@@ -68,7 +73,6 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 				opacity: this.props.active ? 1 : 0,
 				transition: `${this.fadeOutTime}ms ease-in-out`,
 				textAlign: "center",
-				display: "flex",
 				alignItems: "center"
 			}}>
 				<div
@@ -107,7 +111,7 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 						}}
 					>
 						<p>
-							Welcome to Felix's Java <code>codeshovel</code>.
+							Welcome to the Java <code>codeshovel</code>.
 						</p>
 						<p>
 							To begin, enter a link to a Java GitHub repository.
@@ -117,8 +121,33 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 						</Form>
 						<Button style={{pointerEvents: "auto"}} variant="primary" onClick={this.handleNext}
 								disabled={this.state.error}>Next</Button>
-					</div> : <div/>
+					</div> :
+					<div
+						className="NoClick"
+						style={{
+							position: "absolute",
+							top: "50%",
+							left: "50%",
+							transform: "translate(-50%, -50%)",
+							fontSize: "300%",
+							opacity: !examplesShown ? 1 : 0,
+							transition: `400ms ease-in-out`,
+						}}
+					>
+						<code>
+							codeshovel
+						</code>
+					</div>
 				}
+				<TutorialPane
+					active={!this.state.tutorialDismissed && !mobileView}
+					text={this.tutorialText}
+					windowWidth={this.props.windowWidth}
+					width={20}
+					dismissTutorial={this.dismissTutorial}
+					top={5}
+					right={2}
+				/>
 				<ErrorPane text={this.errorText} active={this.state.error} exit={this.toggleError} size={{height: 30, width: 72}}/>
 			</div>
 		);
@@ -237,7 +266,6 @@ export interface ILandingProps extends IPageProps {
 	examplesHidden: boolean;
 	tellParent: (example: IManifestEntry) => void;
 	toggleHidden: () => void;
-	windowWidth: number;
 }
 
 export interface ILandingState extends IPageState {

@@ -7,12 +7,16 @@ import Button from "react-bootstrap/Button";
 import {Constants} from "../../Constants";
 import Form from "react-bootstrap/Form";
 import {Directory} from "./Directory";
+import Cookies from "js-cookie";
+import TutorialPane from "../../Panes/TutorialPane";
 
 export class Files extends Page<IFilesProps, IFilesState> {
 	private readonly fileInputPlaceholder: string = Constants.FILES_SEARCH_TEXT;
 	private readonly shaPlaceholder: string = Constants.FILE_SHA_PLACEHOLDER_TEXT;
 	private readonly shaErrorText: string = Constants.FILE_SHA_ERROR_TEXT;
 	protected readonly page: Pages = Pages.FILES;
+	protected readonly cookieName: string = "files";
+	private readonly tutorialText = Constants.FILES_TUTORIAL_TEXT;
 
 	private link: string;
 	private sha: string;
@@ -26,6 +30,7 @@ export class Files extends Page<IFilesProps, IFilesState> {
 			loading: false,
 			shaError: false,
 			search: "",
+			tutorialDismissed: Cookies.get(this.cookieName) === 'true',
 		};
 		this.link = "";
 		this.sha = "HEAD";
@@ -154,11 +159,20 @@ export class Files extends Page<IFilesProps, IFilesState> {
 							top: "50%",
 							left: "50%",
 							transform: this.chooseTransform(),
-							opacity: this.props.active ? 0.8 : 0,
+							opacity: this.props.active ? 1 : 0,
 							transition: `${this.fadeOutTime}ms ease-in-out`,
 						}}
 					>
 						<FileContainer dir={this.root}/>
+						<TutorialPane
+							active={!this.state.tutorialDismissed}
+							text={this.tutorialText}
+							windowWidth={this.props.windowWidth}
+							width={25}
+							dismissTutorial={this.dismissTutorial}
+							top={30}
+							right={1}
+						/>
 					</div>
 				</div>
 				<div>
@@ -234,7 +248,8 @@ class FileContainer extends React.Component<{dir: Directory}, any> {
 					display: "block",
 					textAlign: "left",
 					width: "100%",
-					height: "100%"
+					height: "100%",
+					opacity: 0.8
 				}}
 			>
 				{this.props.dir.toReactNode()}
