@@ -1,7 +1,6 @@
 import {Constants} from "./Constants";
 import {
 	EmptyError,
-	// ICachedResponse,
 	IHistoryTransport,
 	IManifest,
 	IMethodTransport,
@@ -14,14 +13,6 @@ export class RequestController {
 
 	public static async getManifest(): Promise<IManifest> {
 		return JSON.parse(await (await fetch(Constants.MANIFEST_PATH)).text());
-	}
-
-	public static async getFiles(file: string): Promise<string[]> {
-		return JSON.parse(await (await fetch(`${process.env.PUBLIC_URL}/responses/${file}.json`)).text()).files;
-	}
-
-	public static async getMethods(file: string): Promise<IMethodTransport[]> {
-		return JSON.parse(await (await fetch(`${process.env.PUBLIC_URL}/responses/${file}.json`)).text()).methods;
 	}
 
 	public static async getAuthorUrl(org: string, repo: string, sha: string): Promise<string> {
@@ -94,9 +85,9 @@ export class RequestController {
 	}
 
 	private static async request(url: string, qs: {[key: string]: string | boolean | number}): Promise<any> {
-		const urlObject: URL = new URL(url);
 		let status = 400;
 		try {
+			const urlObject: URL = new URL(url);
 			for (const [key, value] of Object.entries(qs)) {
 				urlObject.searchParams.append(key, value.toString());
 			}
@@ -110,9 +101,9 @@ export class RequestController {
 			// Keep other errors in method
 		}
 		if (status === 503) {
-			throw new ServerBusyError("RequestController able to handle request.");
+			throw new ServerBusyError("RequestController not able to handle request.");
 		} else {
-			throw new InternalError("RequestController able to handle request.");
+			throw new InternalError("RequestController not able to handle request.");
 		}
 	}
 }

@@ -149,27 +149,14 @@ export default class App extends React.Component<any, IAppState> {
 	}
 
 	private async handleExample(example: IManifestEntry): Promise<void> {
-		try {
-			// TODO make this live
-			// const response: ICachedResponse = await RequestController.getExample(example.file);
-			// const state: IAppState = Object.assign({}, this.state);
-			// state.link = response.repo;
-			// state.file = response.file;
-			// state.historyContent = response.history;
-			// state.method = response.method;
-			// state.sha = response.sha;
-			// this.finishLoad(Pages.RESULTS, null, state);
-			const state: IAppState = {
-				...this.state,
-				link: example.repo,
-				method: example.method,
-				sha: example.sha,
-				file: example.filePath,
-			};
-			this.proceedToPage(Pages.RESULTS, state);
-		} catch (err) {
-			this.finishLoad(this.state.page, new ParseCachedError("Couldn't Find the Result"));
-		}
+		const state: IAppState = {
+			...this.state,
+			link: example.repo,
+			method: example.method,
+			sha: example.sha,
+			file: example.filePath,
+		};
+		this.proceedToPage(Pages.RESULTS, state);
 	}
 
 	private getExamples(): void {
@@ -270,12 +257,14 @@ export default class App extends React.Component<any, IAppState> {
 					state.fileContent = this.oldFileContentStorage;
 					state.sha = this.oldShaStorage;
 				}
-			} else if (error instanceof ParseCachedError) {
-				state.cachedError = true
 			} else {
 				switch (page) {
 					case Pages.LANDING:
-						state.loadFilesError = true;
+						if (state.exampleClick) {
+							state.loadHistoryError = true;
+						} else {
+							state.loadFilesError = true;
+						}
 						break;
 					case Pages.FILES:
 						state.loadMethodsError = true;
