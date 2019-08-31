@@ -87,6 +87,10 @@
     /*text-decoration: underline;*/
 }
 
+.Underline:hover {
+    text-decoration: underline;
+}
+
 .d2h-code-linenumber {
     cursor: auto;
 }

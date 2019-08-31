@@ -184,10 +184,8 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 			case Changes.PARAM_CHANGE:
 			case Changes.PARAM_META_CHANGE:
 				if (ichange.extendedDetails && ichange.extendedDetails.oldValue && ichange.extendedDetails.newValue) {
-					let oldParams = ichange.extendedDetails.oldValue;
-					oldParams = oldParams.replace(/^\[/, "(").replace(/]$/, ")");
-					let newParams = ichange.extendedDetails.newValue;
-					newParams = newParams.replace(/^\[/, "(").replace(/]$/, ")");
+					const oldParams = this.cleanParameters(ichange.extendedDetails.oldValue);
+					const newParams = this.cleanParameters(ichange.extendedDetails.newValue);
 					return `${Constants.CHANGE_DESCRIPTIONS[change]}:\`${oldParams}\` to \`${newParams}\``;
 				} else {
 					break;
@@ -203,6 +201,19 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 				break;
 		}
 		return Constants.CHANGE_DESCRIPTIONS[change];
+	}
+
+	private cleanParameters(input: string): string {
+		input = input.replace(/^\[/, "").replace(/]$/, "");
+		input = input.split(', ').map((str) => {
+			try {
+				const split: string[] = str.split('-', 2);
+				return `${split[1]} ${split[0]}`;
+			} catch (e) {
+				return str;
+			}
+		}).join(', ');
+		return `(${input})`
 	}
 
 	private getDate(): string {
@@ -388,8 +399,8 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						this.changes.map((change, i) => {
 							const desc: string = this.getDescription(change);
 							return (<div
-								className={this.getClassName(change.type)}
-								// className={this.getClassName(this.props.commit.type)}
+								// className={this.getClassName(change.type)} // Different colour subrows
+								className={this.getClassName(this.props.commit.type)}
 								style={{
 									margin: "0 auto",
 									height: this.state.details ? this.getHeight(true) : 0,

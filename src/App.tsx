@@ -10,7 +10,6 @@ import {
 	IManifestEntry,
 	IMethodTransport,
 	InternalError,
-	ParseCachedError,
 	ServerBusyError
 } from "./Types";
 import {BackgroundText} from "./BackgroundText";
@@ -477,17 +476,17 @@ export default class App extends React.Component<any, IAppState> {
 						windowHeight={this.state.height}
 						windowWidth={this.state.width}
 					/>
-					<SmallButton
-						active={this.history.length > 0}
-						onClick={() => window.history.back()}
-						width={30}
-						height={30}
-						backgroundImage={`url(${process.env.PUBLIC_URL}/left.png)`}
-						backgroundSize={15}
-						shift={this.history.length > 0 ? 35 : 0}
-						left={-30}
-						bottom={5}
-					/>
+					{/*<SmallButton*/}
+						{/*active={this.history.length > 0}*/}
+						{/*onClick={() => window.history.back()}*/}
+						{/*width={30}*/}
+						{/*height={30}*/}
+						{/*backgroundImage={`url(${process.env.PUBLIC_URL}/left.png)`}*/}
+						{/*backgroundSize={15}*/}
+						{/*shift={this.history.length > 0 ? 35 : 0}*/}
+						{/*left={-30}*/}
+						{/*bottom={5}*/}
+					{/*/>*/}
 					<SmallButton
 						active={this.state.page !== Pages.ABOUT && (this.state.showAbout || this.history.length > 0)}
 						onClick={() => this.proceedToPage(Pages.ABOUT)}
@@ -495,14 +494,16 @@ export default class App extends React.Component<any, IAppState> {
 						height={30}
 						backgroundImage={`url(${process.env.PUBLIC_URL}/question.png)`}
 						backgroundSize={15}
-						shift={this.history.length > 0 || this.state.page !== Pages.LANDING ? 35 : 0}
+						// shift={this.history.length > 0 || this.state.page !== Pages.LANDING ? 35 : 0}
+						shift={0}
 						left={5}
 						bottom={5}
 					/>
 					<LargeButton
 						active={this.history.length > 0 && this.state.page < Pages.ABOUT}
 						handleClick={() => setImmediate(this.copyText)}
-						shift={this.history.length > 0 && this.state.page !== Pages.ABOUT ? 35 : 0}
+						// shift={this.history.length > 0 && this.state.page !== Pages.ABOUT ? 35 : 0}
+						shift={0}
 						displayNotification={this.state.displayTextCopied}
 						text={"Copy JSON"}
 						backgroundImage={`url(${process.env.PUBLIC_URL}/clipboard.png)`}
