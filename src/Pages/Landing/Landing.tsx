@@ -75,19 +75,6 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 				textAlign: "center",
 				alignItems: "center"
 			}}>
-				<div
-					style={{
-						position: "absolute",
-						width: "5%",
-						height: "75%",
-						zIndex: 0
-					}}
-					onMouseEnter={() => {
-						if (this.props.examplesHidden) {
-							this.props.toggleHidden();
-						}
-					}}
-				/>
 				<ExampleContainer
 					active={examplesShown}
 					tellParentExampleClicked={this.props.tellParent}
@@ -143,19 +130,21 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 								pointerEvents: "none"
 							}}
 						>
-							<div
-								style={{
-									backgroundImage: `url(${process.env.PUBLIC_URL}/chevron.png)`,
-									backgroundSize: "contain",
-									backgroundRepeat: "no-repeat",
-									whiteSpace: "nowrap",
-									width: "100%",
-									height: "100%",
-									opacity: this.state.chevronHover && examplesShown ? 0.3 : 0.1
-								}}
-							>
-								<div className="SubtleButton Hitbox Hitbox1" onClick={this.props.toggleHidden} onMouseEnter={() => this.setState({chevronHover: true})} onMouseLeave={() => this.setState({chevronHover: false})} style={{pointerEvents: examplesShown ? "auto" : "none"}}/>
-								<div className="SubtleButton Hitbox Hitbox2" onClick={this.props.toggleHidden} onMouseEnter={() => this.setState({chevronHover: true})} onMouseLeave={() => this.setState({chevronHover: false})} style={{pointerEvents: examplesShown ? "auto" : "none"}}/>
+							<div style={{width: "100%", height: "100%", transition: `400ms ease-in-out`, transform: examplesShown ? "scaleX(1)" : "scaleX(-1)"}}>
+								<div
+									style={{
+										backgroundImage: `url(${process.env.PUBLIC_URL}/chevron.png)`,
+										backgroundSize: "contain",
+										backgroundRepeat: "no-repeat",
+										whiteSpace: "nowrap",
+										width: "100%",
+										height: "100%",
+										opacity: this.state.chevronHover ? 0.3 : 0.1
+									}}
+								>
+									<div className="SubtleButton Hitbox Hitbox1" onClick={this.props.toggleHidden} onMouseEnter={() => this.setState({chevronHover: true})} onMouseLeave={() => this.setState({chevronHover: false})} style={{pointerEvents: "auto"}}/>
+									<div className="SubtleButton Hitbox Hitbox2" onClick={this.props.toggleHidden} onMouseEnter={() => this.setState({chevronHover: true})} onMouseLeave={() => this.setState({chevronHover: false})} style={{pointerEvents: "auto"}}/>
+								</div>
 							</div>
 						</div>
 					</React.Fragment> :
