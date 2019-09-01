@@ -5,16 +5,16 @@ export class Constants {
 	public static readonly EXAMPLE_LINKS: string[] = [
 		"https://github.com/apache/commons-lang",
 		"https://github.com/apache/flink",
-		// "https://github.com/apache/lucene-solr",
+		"https://github.com/apache/lucene-solr",
 		"https://github.com/checkstyle/checkstyle",
 		"https://github.com/eclipse/jetty.project",
-		// "https://github.com/hibernate/hibernate-orm",
-		// "https://github.com/hibernate/hibernate-search",
+		"https://github.com/hibernate/hibernate-orm",
+		"https://github.com/hibernate/hibernate-search",
 		"https://github.com/javaparser/javaparser",
-		// "https://github.com/JetBrains/intellij-community",
+		"https://github.com/JetBrains/intellij-community",
 		"https://github.com/kiegroup/drools",
 		"https://github.com/mockito/mockito",
-		// "https://github.com/spring-projects/spring-boot",
+		"https://github.com/spring-projects/spring-boot",
 	];
 
 	public static readonly DEFAULT_METHOD: IMethodTransport = {

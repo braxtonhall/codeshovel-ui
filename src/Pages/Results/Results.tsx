@@ -37,6 +37,7 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 	}
 
 	public createReactNode(): ReactNode {
+		const mobileView: boolean = this.props.windowWidth < Constants.MOBILE_WIDTH;
 		if (this.content !== this.props.content) {
 			this.buildHistory(this.props.content);
 		}
@@ -95,7 +96,7 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 						}}
 					>
 						<TutorialPane
-							active={!this.state.tutorialDismissed}
+							active={!this.state.tutorialDismissed && !mobileView}
 							text={this.tutorialText}
 							windowWidth={this.props.windowWidth}
 							width={20}
