@@ -115,7 +115,7 @@ export class Methods extends Page<IMethodsProps, IMethodsState> {
 								dismissTutorial={this.dismissTutorial}
 								top={40}
 								right={15}
-								heightRatio={0.8}
+								heightRatio={0.5}
 							/>
 						</div> : <div style={{top: "50%", left: "50%", transform, opacity: 0}}/>
 					}

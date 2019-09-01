@@ -45,6 +45,7 @@ export default class LoadingPane extends FadeableElement<ILoadingPaneProps, ILoa
 						verticalAlign: "middle",
 						justifyContent: "center",
 						alignItems: "center",
+						animation: "Pulse infinite 2s linear",
 					}}
 				>
 					{this.text}

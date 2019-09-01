@@ -172,7 +172,7 @@ export class Files extends Page<IFilesProps, IFilesState> {
 							dismissTutorial={this.dismissTutorial}
 							top={30}
 							right={10}
-							heightRatio={1}
+							heightRatio={0.8}
 						/>
 					</div>
 				</div>

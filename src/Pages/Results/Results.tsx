@@ -99,11 +99,11 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 							active={!this.state.tutorialDismissed && !mobileView}
 							text={this.tutorialText}
 							windowWidth={this.props.windowWidth}
-							width={20}
+							width={25}
 							dismissTutorial={this.dismissTutorial}
 							top={60}
 							right={60}
-							heightRatio={0.62}
+							heightRatio={0.67}
 						/>
 					</div> : <div style={{top: "50%", left: "50%", transform, opacity: 0}}/>
 				}

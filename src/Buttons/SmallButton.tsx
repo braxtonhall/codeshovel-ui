@@ -28,7 +28,16 @@ export default class SmallButton extends FadeableElement<ISmallButtonProps, ISma
 						backgroundSize: this.props.backgroundSize + "px",
 					}}
 					onClick={this.props.onClick}
-				/> : <div className="BackgroundImage" style={{position: "absolute", bottom: this.props.bottom + "px", left: this.props.left + "px", opacity: 0,}}/>
+				/> :
+				<div
+					className="BackgroundImage"
+					style={{
+						position: "absolute",
+						bottom: this.props.bottom + "px",
+						left: this.props.left + this.props.shift + "px",
+						opacity: 0,
+					}}
+				/>
 		);
 	}
 }

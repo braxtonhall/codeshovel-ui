@@ -87,7 +87,7 @@ export class Constants {
 
 	public static readonly INVALID_URL_ERROR_TEXT: string = "Please enter a link to proceed.";
 
-	public static readonly LANDING_TUTORIAL_TEXT: string = "Welcome. For a demonstration of the codeshovel web service, you can try a live example by clicking a method on the left, or enter a link below and follow the steps on the next few pages to try it on your favourite public Java repo.";
+	public static readonly LANDING_TUTORIAL_TEXT: string = "Welcome. For a live demonstration of the codeshovel web service, you can select example by clicking a method on the left, or enter a link below and follow the steps on the next few pages to try it on your favourite public Java repo.";
 
 	public static readonly SERVER_BUSY_ERROR_TEXT: string = "The server is under heavy load. Please try again in a few minutes!";
 	public static readonly INTERNAL_ERROR_TEXT: string = "The server is having trouble processing this specific request. Please try another.";
@@ -106,19 +106,16 @@ export class Constants {
 
 	public static readonly LIST_ELEMENT_NEW_LINE_PX_COUNT: number = 15;
 
-	public static readonly METHODS_TUTORIAL_TEXT: string = "Each row on this page is a single method in the selected class. Click on a method on the left, or use the search bar above to narrow down the list of methods.";
+	public static readonly METHODS_TUTORIAL_TEXT: string = "Each row on this page is a single method in the selected file. Click on a method on the left, or use the search bar above to narrow down the list of methods.";
 
-	public static readonly METHODS_MAX_INDENT_UNIT_COUNT: number = 20;
-	public static readonly METHODS_INDENT_UNIT_PX: number = 5;
 	public static readonly METHODS_METHOD_ANIMATE_TIME: number = 300;
 	public static readonly METHODS_SEARCH_TEXT: string = "Refine method list";
 	public static readonly METHODS_REQUEST_ERROR_TEXT: string = "We couldn't find any methods in this file. Try another?";
-	public static readonly METHODS_LOADING_TEXT: string = "Retrieving methods";
 	public static readonly METHOD_NAME_TEXT_SIZE:number = 10;
 
 	public static readonly RESULTS_REQUEST_ERROR_TEXT: string = "The server is having some trouble processing this request. Please try another method.";
 
-	public static readonly RESULTS_TUTORIAL_TEXT: string = "Each row on this page represents one commit that changed this method. Click on Author, Commit or File to visit their respective pages on GitHub. Click on Type or Diff to view more information on this page.";
+	public static readonly RESULTS_TUTORIAL_TEXT: string = "Each row on this page represents one commit that changed this method, and the colours correspond to different change types. Click on Author, Commit or File to visit their respective pages on GitHub. Click on Type or Diff to view more information on this page.";
 
 	public static readonly COMMIT_ROW_HEIGHT: number = 8;
 	public static readonly COMMIT_ROW_WIDTH: number = 80;
@@ -131,7 +128,6 @@ export class Constants {
 
 	public static readonly ABOUT_TEXT_SIZE: number = 100;
 
-	public static readonly LOADING_TEXT: string = "Retrieving.";
 	public static readonly LOADING_TEXT_SIZE: number = 100;
 
 	public static readonly MOBILE_WIDTH: number = 500;

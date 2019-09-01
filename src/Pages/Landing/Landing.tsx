@@ -9,7 +9,6 @@ import {IPageProps, IPageState, Page} from "../Page";
 import {IManifestEntry} from "../../Types";
 import {Example} from "./Example";
 import {FadeableElement, IFadeableElementProps, IFadeableElementState} from "../../FadeableElement";
-import SmallButton from "../../Buttons/SmallButton";
 import TutorialPane from "../../Panes/TutorialPane";
 import Cookies from "js-cookie";
 
@@ -26,6 +25,7 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 			error: false,
 			onScreen: this.props.active,
 			tutorialDismissed: Cookies.get(this.cookieName) === 'true',
+			chevronHover: false,
 		};
 		this.placeholder = Constants.EXAMPLE_LINKS[Math.floor(Math.random() * Constants.EXAMPLE_LINKS.length)];
 		this.toggleError = this.toggleError.bind(this);
@@ -97,31 +97,68 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 					windowWidth={this.props.windowWidth}
 				/>
 				{!mobileView ?
-					<div
-						className="NoClick"
-						style={{
-							position: "absolute",
-							top: "50%",
-							left: "50%",
-							width: "40%",
-							transform: examplesShown ? "translate(-20%, -50%)" : "translate(-50%, -50%)",
-							height: "20%",
-							zIndex: 5000,
-							transition: `${400 /*This should be the same as ExampleContainer fadeOutTime*/}ms ease-in-out`,
-						}}
-					>
-						<p>
-							Welcome to the Java <code>codeshovel</code>.
-						</p>
-						<p>
-							To begin, enter a link to a Java GitHub repository.
-						</p>
-						<Form style={{pointerEvents: "auto"}} onSubmit={this.handleEnter}>
-							<Form.Control id="repoInput" size="lg" type="text" placeholder={this.placeholder}/>
-						</Form>
-						<Button style={{pointerEvents: "auto"}} variant="primary" onClick={this.handleNext}
-								disabled={this.state.error}>Next</Button>
-					</div> :
+					<React.Fragment>
+						<div
+							className="NoClick"
+							style={{
+								position: "absolute",
+								top: "50%",
+								left: "50%",
+								width: "40%",
+								transform: examplesShown ? "translate(-20%, -50%)" : "translate(-50%, -50%)",
+								height: "20%",
+								zIndex: 5000,
+								transition: `${400 /*This should be the same as ExampleContainer fadeOutTime*/}ms ease-in-out`,
+							}}
+						>
+							<p>
+								Welcome to the Java <code>codeshovel</code>.
+							</p>
+							<p>
+								To begin, enter a link to a Java GitHub repository.
+							</p>
+							<Form style={{pointerEvents: "auto"}} onSubmit={this.handleEnter}>
+								<Form.Control id="repoInput" size="lg" type="text" placeholder={this.placeholder}/>
+							</Form>
+							<Button
+								style={{pointerEvents: "auto"}}
+								variant="primary"
+								onClick={this.handleNext}
+								disabled={this.state.error}
+							>
+								Next
+							</Button>
+						</div>
+						<div
+							style={{
+								position: "relative",
+								top: "50%",
+								left: "50%",
+								transform: examplesShown ? `translate(${-this.props.windowWidth / 5 + "px"}, -50%)` : `translate(${-this.props.windowWidth / 1.8 + "px"}, -50%)`,
+								transition: `400ms ease-in-out`,
+								height: this.props.windowWidth * 0.11,
+								width: this.props.windowWidth * 0.2,
+								float: "left",
+								zIndex: 3,
+								pointerEvents: "none"
+							}}
+						>
+							<div
+								style={{
+									backgroundImage: `url(${process.env.PUBLIC_URL}/chevron.png)`,
+									backgroundSize: "contain",
+									backgroundRepeat: "no-repeat",
+									whiteSpace: "nowrap",
+									width: "100%",
+									height: "100%",
+									opacity: this.state.chevronHover && examplesShown ? 0.3 : 0.1
+								}}
+							>
+								<div className="SubtleButton Hitbox Hitbox1" onClick={this.props.toggleHidden} onMouseEnter={() => this.setState({chevronHover: true})} onMouseLeave={() => this.setState({chevronHover: false})} style={{pointerEvents: examplesShown ? "auto" : "none"}}/>
+								<div className="SubtleButton Hitbox Hitbox2" onClick={this.props.toggleHidden} onMouseEnter={() => this.setState({chevronHover: true})} onMouseLeave={() => this.setState({chevronHover: false})} style={{pointerEvents: examplesShown ? "auto" : "none"}}/>
+							</div>
+						</div>
+					</React.Fragment> :
 					<div
 						className="NoClick"
 						style={{
@@ -199,38 +236,38 @@ class ExampleContainer extends FadeableElement<IExampleContainerProps, IExampleC
 						}}
 					>
 						Welcome to <code>codeshovel</code>. Select a history.
-					</div> :
-					<div
-						style={{display: "inline-block", opacity: 0.5, position: "relative"}}
-					>
-						<div
-							style={{
-								textAlign: "left",
-								left: "20%",
-								top: "10%",
-								fontSize: "20px",
-								marginTop: "6px",
-								marginLeft: "6px",
-							}}
-						>
-							Sample <code>codeshovel</code> Executions
-						</div>
-						<SmallButton
-							height={15}
-							width={15}
-							left={350}
-							backgroundSize={10}
-							backgroundImage={`url(${process.env.PUBLIC_URL}/cross.png)`}
-							onClick={() => {
-								if (!this.props.examplesHidden) {
-									this.props.toggleExamplesHidden()
-								}
-							}}
-							bottom={4}
-							shift={0}
-							active={true}
-						/>
-					</div>
+					</div> : <div/>
+					// <div
+					// 	style={{display: "inline-block", opacity: 0.5, position: "relative"}}
+					// >
+					// 	<div
+					// 		style={{
+					// 			textAlign: "left",
+					// 			left: "20%",
+					// 			top: "10%",
+					// 			fontSize: "20px",
+					// 			marginTop: "6px",
+					// 			marginLeft: "6px",
+					// 		}}
+					// 	>
+					// 		Sample <code>codeshovel</code> Executions
+					// 	</div>
+					// 	<SmallButton
+					// 		height={15}
+					// 		width={15}
+					// 		left={350}
+					// 		backgroundSize={10}
+					// 		backgroundImage={`url(${process.env.PUBLIC_URL}/cross.png)`}
+					// 		onClick={() => {
+					// 			if (!this.props.examplesHidden) {
+					// 				this.props.toggleExamplesHidden()
+					// 			}
+					// 		}}
+					// 		bottom={4}
+					// 		shift={0}
+					// 		active={true}
+					// 	/>
+					// </div>
 				}
 				<div
 					style={{
@@ -271,6 +308,7 @@ export interface ILandingProps extends IPageProps {
 
 export interface ILandingState extends IPageState {
 	error: boolean;
+	chevronHover: boolean;
 }
 
 interface IExampleContainerProps extends IFadeableElementProps {

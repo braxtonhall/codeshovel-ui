@@ -168,6 +168,20 @@
     position: absolute;
 }
 
+.Hitbox {
+    width: 39%;
+    height: 12%;
+    position: absolute;
+}
+
+.Hitbox1 {
+    transform: rotate(45deg) translate(72%, 340%);
+}
+
+.Hitbox2 {
+    transform: rotate(-45deg)  translate(-16%, 180%);
+}
+
 @keyframes App-logo-spin {
     from {
         transform: rotate(0deg);
@@ -197,10 +211,13 @@
 
 @keyframes Pulse {
     from {
-        color: rgb(183, 166, 108);
+        color: black;
+    }
+    50% {
+        color: rgb(227, 208, 135);
     }
     to {
-        color: rgb(227, 208, 135);
+        color: black;
     }
 }
 

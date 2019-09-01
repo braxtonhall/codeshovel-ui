@@ -83,13 +83,14 @@ export class Example extends React.Component<IReactExampleProps, IReactExampleSt
 							overflow: "hidden",
 							zIndex: 9999,
 							fontSize: Example.getFontSize(display),
+							pointerEvents: "auto"
 						}}
 						onClick={this.handleClick}
 						onMouseDown={this.mouseDown}
 					>
 						{display}
 						<div style={{
-							height: "5px",
+							height: "3px",
 							width: "100%",
 							position: "absolute",
 							bottom: "0",
