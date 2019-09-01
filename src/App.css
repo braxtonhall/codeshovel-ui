@@ -182,6 +182,20 @@
     transform: rotate(-45deg)  translate(-16%, 180%);
 }
 
+.Hitbox3 {
+    width: 15%;
+    height: 25%;
+    position: absolute;
+    transform: rotate(45deg)  translate(160%, 40%);
+}
+
+.Hitbox4 {
+    width: 25%;
+    height: 12%;
+    position: absolute;
+    transform: rotate(90deg) translate(100%, -190%);
+}
+
 @keyframes App-logo-spin {
     from {
         transform: rotate(0deg);
