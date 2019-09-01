@@ -61,14 +61,15 @@ export class RequestController {
 		}
 	}
 
-	public async getHistory(gitUrl: string, sha: string, filePath: string, startLine: number, methodName: string): Promise<IHistoryTransport> {
+	public async getHistory(gitUrl: string, sha: string, filePath: string, startLine: number, methodName: string, noClone: boolean): Promise<IHistoryTransport> {
 		const url = RequestController.server + "/getHistory";
 		const qs: {[key: string]: string | boolean | number} = {
 			gitUrl,
 			sha,
 			filePath,
 			startLine,
-			methodName
+			methodName,
+			noClone
 		};
 		const history: IHistoryTransport = await RequestController.request(url, qs);
 		if (Object.keys(history).length === 0) {

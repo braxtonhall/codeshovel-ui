@@ -221,7 +221,8 @@ export default class App extends React.Component<any, IAppState> {
 				}
 				state.loading = true;
 				state.historyContent = null;
-				this.rc.getHistory(state.link, state.sha, state.file, state.method.startLine, state.method.methodName)
+				this.rc.getHistory(state.link, state.sha, state.file, state.method.startLine,
+					state.method.methodName, state.exampleClick)
 					.then((content: IHistoryTransport) => {
 						const state: IAppState = Object.assign({}, this.state);
 						state.historyContent = content;
