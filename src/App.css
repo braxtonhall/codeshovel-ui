@@ -196,6 +196,13 @@
     transform: rotate(90deg) translate(100%, -190%);
 }
 
+.Hitbox5 {
+    width: 8%;
+    height: 70%;
+    position: absolute;
+    transform: translate(350%, 20%);
+}
+
 @keyframes App-logo-spin {
     from {
         transform: rotate(0deg);

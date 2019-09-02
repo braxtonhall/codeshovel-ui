@@ -142,10 +142,11 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 										opacity: this.state.chevronHover ? 0.3 : 0.1
 									}}
 								>
+									<div className="Hitbox3" onClick={this.props.toggleHidden} style={{pointerEvents: "auto"}}/>
+									<div className="Hitbox4" onClick={this.props.toggleHidden} style={{pointerEvents: "auto"}}/>
+									<div className="Hitbox5" onClick={this.props.toggleHidden} style={{pointerEvents: "auto"}}/>
 									<div className="SubtleButton Hitbox Hitbox1" onClick={this.props.toggleHidden} onMouseEnter={() => this.setState({chevronHover: true})} onMouseLeave={() => this.setState({chevronHover: false})} style={{pointerEvents: "auto"}}/>
 									<div className="SubtleButton Hitbox Hitbox2" onClick={this.props.toggleHidden} onMouseEnter={() => this.setState({chevronHover: true})} onMouseLeave={() => this.setState({chevronHover: false})} style={{pointerEvents: "auto"}}/>
-									<div className="SubtleButton Hitbox3" onClick={this.props.toggleHidden} onMouseEnter={() => this.setState({chevronHover: true})} onMouseLeave={() => this.setState({chevronHover: false})} style={{pointerEvents: "auto"}}/>
-									<div className="SubtleButton Hitbox4" onClick={this.props.toggleHidden} onMouseEnter={() => this.setState({chevronHover: true})} onMouseLeave={() => this.setState({chevronHover: false})} style={{pointerEvents: "auto"}}/>
 								</div>
 							</div>
 						</div>
