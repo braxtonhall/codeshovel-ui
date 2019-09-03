@@ -123,8 +123,8 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 								left: "50%",
 								transform: examplesShown ? `translate(${-this.props.windowWidth / 5 + "px"}, -50%)` : `translate(${-this.props.windowWidth / 1.8 + "px"}, -50%)`,
 								transition: `400ms ease-in-out`,
-								height: this.props.windowWidth * 0.11,
-								width: this.props.windowWidth * 0.2,
+								height: 140,
+								width: 256,
 								float: "left",
 								zIndex: 3,
 								pointerEvents: "none"
