@@ -39,7 +39,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		this.time = this.getTime();
 		this.type = this.getChangeType();
 		this.diffId = `${this.props.commit.commitName}-${this.props.method.startLine}-${this.props.method.methodName}-diff`;
-		this.sha = this.props.commit.commitName.substring(34);
+		this.sha = this.props.commit.commitName.slice(0, 6);
 		this.commitLink = this.getCommitLink();
 		this.fileLink = this.getFileInCommitLink();
 		this.authorLink = this.getAuthorLink();

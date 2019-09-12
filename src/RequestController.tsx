@@ -22,7 +22,19 @@ export class RequestController {
 		} catch (err) {
 			throw new Error("Wasn't able to get the required information from GitHub");
 		}
-}
+	}
+
+	public static async getAuthorAvatarUrl(user: string): Promise<string> {
+		const defaultUrl: string = "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png";
+		let url;
+		try {
+			const response: any = await RequestController.request(`https://api.github.com/users/${user}`, {});
+			url = response.avatar_url as string | undefined;
+		} catch (err) {
+			// Suppress
+		}
+		return url || defaultUrl;
+	}
 
 	public async listFiles(gitUrl: string, sha: string): Promise<string[]> {
 		const url = RequestController.server + "/listFiles";
