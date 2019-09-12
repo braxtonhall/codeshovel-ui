@@ -352,7 +352,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 						</a>
 						{mobileView ? <div/> :
 							this.commitLink ?
-								<a href={this.commitLink} className="CommitRowCell SubtleButton Underline" onClick={this.goToCommit} style={{color: "white", fontSize: this.getFontSize("View123456"), backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
+								<a href={this.commitLink} className="CommitRowCell SubtleButton Underline" onClick={this.goToCommit} style={{color: "white", fontSize: this.getFontSize("View1234567"), backgroundColor: `rgba(255, 255, 255, 0.${this.comtc})`}}>
 									{this.sha}
 								</a> :
 								<div className="CommitRowCell" style={{
