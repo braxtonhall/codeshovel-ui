@@ -27,29 +27,29 @@ Docker run -p <Port to listen on>:5000 csui
 
 ### Command Line
 
-_Recommended Node version 10 or higher and Yarn_
+_Requires Node version 10 or higher and Yarn_
 
 **Development Server**
 
-To build the project:
+To prepare for running, from the project directory run:
 ```
 yarn install
 ```
 
-To deploy:
+To deploy, from the project directory run:
 ```
 REACT_APP_SERVER_ADDRESS=<Address of webservice> yarn start
 ```
 
 **Static Server**
 
-To build the project:
+To build the project, from the project directory run:
 ```
 yarn install && REACT_APP_SERVER_ADDRESS=<Address of webservice> \
                 PUBLIC_URL=<Public address of UI> yarn build
 ```
 
-To deploy:
+To deploy, from the project directory run:
 ```
 yarn serve -s build
 ```
