@@ -15,8 +15,8 @@ docker-compose build && docker-compose up -d
 
 To build an image, from the project directory run:
 ```
-Docker build -a SERVER_ADDRESS=<Address of webservice> \
-             -a PUBLIC_ADDRESS=<Public address of UI> \
+Docker build --build-arg SERVER_ADDRESS=<Address of webservice> \
+             --build-arg PUBLIC_ADDRESS=<Public address of UI> \
              -t csui .
 ```
 
