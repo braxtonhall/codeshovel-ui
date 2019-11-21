@@ -44,7 +44,7 @@ export class RequestController {
 		};
 		const files: string[] = (await RequestController.request(url, qs)).sort();
 		if (files.length === 0) {
-			throw new EmptyError("No java files found in this repo.")
+			throw new EmptyError("No java or python files found in this repo.")
 		} else {
 			return files;
 		}

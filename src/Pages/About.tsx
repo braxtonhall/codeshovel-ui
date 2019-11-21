@@ -99,7 +99,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 						>
 							<div style={{marginBottom: "5%", fontSize: "70%"}}>
 								<code>codeshovel</code> digs through source code to unearth the histories for methods.
-								Currently implemented for Java with more languages to follow.
+								Currently implemented for Java and Python with more languages to follow.
 							</div>
 							<div style={{marginBottom: "5%", fontSize: "60%"}}>
 								<code>codeshovel</code> is a tool for navigating how source code methods have evolved, across the kinds of evolutionary changes applied to the method, including most common refactorings, that the method saw throughout its life span.

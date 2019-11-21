@@ -98,7 +98,7 @@ export class Constants {
 
 	public static readonly FILES_TUTORIAL_TEXT: string = "Each row on this page represents a directory or file. On the left you can click through the file tree to find a specific class, and you can refine the tree using the search bar above. If the class you are looking for is not in the current commit, you can enter the SHA beneath to explore that commit's file tree.";
 
-	public static readonly FILE_REQUEST_ERROR_TEXT: string = "There don't appear to be any .java files in this repo. Please try another.";
+	public static readonly FILE_REQUEST_ERROR_TEXT: string = "There don't appear to be any .java or .py files in this repo. Please try another.";
 	public static readonly FILE_SHA_PLACEHOLDER_TEXT: string = "Specific commit? Enter the SHA here and reload";
 	public static readonly FILE_SHA_ERROR_TEXT: string = "Enter a SHA to refresh";
 	public static readonly FILE_SYSTEM_TEXT_SIZE: number = 10;
