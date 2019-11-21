@@ -208,7 +208,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		input = input.split(', ').map((str) => {
 			try {
 				const split: string[] = str.split('-', 2);
-				return `${split[1]} ${split[0]}`;
+				return split[0];
 			} catch (e) {
 				return str;
 			}
