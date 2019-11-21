@@ -102,7 +102,7 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 								Welcome to <code>codeshovel</code>.
 							</p>
 							<p>
-								To begin, enter a link to a Java or Python GitHub repository.
+								To begin, enter a link to a GitHub repository.
 							</p>
 							<Form style={{pointerEvents: "auto"}} onSubmit={this.handleEnter}>
 								<Form.Control id="repoInput" size="lg" type="text" placeholder={this.placeholder}/>
