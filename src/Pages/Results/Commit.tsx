@@ -23,6 +23,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 	private readonly time: string;
 	private readonly type: string;
 	private readonly diffId: string;
+	private readonly extension: string | undefined;
 
 	constructor(props: IReactCommitProps) {
 		super(props);
@@ -33,7 +34,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 			this.changes = [this.props.commit]
 		}
 		this.authorRequested = false;
-		this.file = this.getFileName();
+		[this.file, this.extension] = this.getFileName();
 		this.diffText = this.chooseDiffText();
 		this.date = this.getDate();
 		this.time = this.getTime();
@@ -227,19 +228,20 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 		}
 	}
 
-	private getFileName(): string | undefined {
+	private getFileName(): [string | undefined, string | undefined] {
 		try {
 			if (this.props.commit.file) {
-				let file: string = (this.props.commit.file.split('/').pop() as string).split('.')[0];
+				let [file, extension] = (this.props.commit.file.split('/').pop() as string).split('.');
 				this.longFile = file;
 				if (file.length > 15) {
 					file = `${file.substring(0, 10)}...`;
 				}
-				return file;
+				return [file, extension];
 			}
 		} catch (err) {
-			return;
+			// suppress
 		}
+		return [undefined, undefined];
 	}
 
 	private getTime(): string {
@@ -282,7 +284,7 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 				/* eslint-disable */
 				// @ts-ignore
 				const diffDrawer = new Diff2HtmlUI({
-					diff: `--- a/${this.props.file}\n+++ b/${this.props.file}\n` + this.props.commit.diff
+					diff: `--- a/f.${this.extension}\n+++ b/f.${this.extension}\n` + this.props.commit.diff
 				});
 				diffDrawer.draw(`#${this.diffId}`, {inputFormat: 'diff', showFiles: false, matching: 'lines', outputFormat: 'line-by-line'});
 				diffDrawer.highlightCode(`#${this.diffId}`);
@@ -455,7 +457,6 @@ export interface IReactCommitProps extends ICommitRowProps {
 	commit: ICommitx;
 	repo: string;
 	method: IMethodTransport;
-	file: string;
 }
 
 export interface IReactCommitState extends IFadeableElementState {

@@ -64,7 +64,6 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 						windowHeight={this.props.windowHeight}
 						windowWidth={this.props.windowWidth}
 						method={this.props.method}
-						file={this.props.file}
 					/>
 				</div>
 				<div
