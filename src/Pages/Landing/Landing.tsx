@@ -3,7 +3,7 @@ import {FormEvent, ReactNode} from "react";
 import Form from "react-bootstrap/Form";
 import {Constants} from "../../Constants";
 import Button from "react-bootstrap/Button";
-import {ArgKind, Pages} from "../../Enums";
+import {ArgKind, Key, Pages} from "../../Enums";
 import ErrorPane from "../../Panes/ErrorPane";
 import {IPageProps, IPageState, Page} from "../Page";
 import {IManifestEntry} from "../../Types";
@@ -30,6 +30,11 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 		this.placeholder = Constants.EXAMPLE_LINKS[Math.floor(Math.random() * Constants.EXAMPLE_LINKS.length)];
 		this.toggleError = this.toggleError.bind(this);
 		this.handleEnter = this.handleEnter.bind(this);
+		this.handleKey = this.handleKey.bind(this);
+	}
+
+	public componentDidMount(): void {
+		document.addEventListener('keydown', this.handleKey);
 	}
 
 	protected handleNext(): void {
@@ -38,13 +43,30 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 		if (repoElement && repoElement.value) {
 			repoLink = repoElement.value;
 		}
+		if (repoLink === "") {
+			repoElement.value = repoElement.placeholder;
+			return;
+		}
+		if (!repoLink.toLowerCase().includes("github.")) {
+			this.toggleError();
+			return;
+		}
 		if (!repoLink.endsWith(".git")) {
 			repoLink = repoLink + ".git";
 		}
-		if (repoLink !== ".git") {
-			this.props.proceedWithUpdate(Pages.FILES, repoLink, ArgKind.REPO)
-		} else {
-			this.toggleError();
+		this.props.proceedWithUpdate(Pages.FILES, repoLink, ArgKind.REPO)
+	}
+	
+	private handleKey(event: KeyboardEvent): void {
+		const repoInputElement = document.getElementById("repoInput") as HTMLInputElement;
+		if (this.props.active &&
+			document.activeElement &&
+			document.activeElement.id === "repoInput" &&
+			event.code === Key.RIGHT &&
+			repoInputElement &&
+			repoInputElement.value === ""
+		) {
+			repoInputElement.value = repoInputElement.placeholder;
 		}
 	}
 
@@ -229,37 +251,6 @@ class ExampleContainer extends FadeableElement<IExampleContainerProps, IExampleC
 					>
 						Welcome to <code>codeshovel</code>. Select a history.
 					</div> : <div/>
-					// <div
-					// 	style={{display: "inline-block", opacity: 0.5, position: "relative"}}
-					// >
-					// 	<div
-					// 		style={{
-					// 			textAlign: "left",
-					// 			left: "20%",
-					// 			top: "10%",
-					// 			fontSize: "20px",
-					// 			marginTop: "6px",
-					// 			marginLeft: "6px",
-					// 		}}
-					// 	>
-					// 		Sample <code>codeshovel</code> Executions
-					// 	</div>
-					// 	<SmallButton
-					// 		height={15}
-					// 		width={15}
-					// 		left={350}
-					// 		backgroundSize={10}
-					// 		backgroundImage={`url(${process.env.PUBLIC_URL}/cross.png)`}
-					// 		onClick={() => {
-					// 			if (!this.props.examplesHidden) {
-					// 				this.props.toggleExamplesHidden()
-					// 			}
-					// 		}}
-					// 		bottom={4}
-					// 		shift={0}
-					// 		active={true}
-					// 	/>
-					// </div>
 				}
 				<div
 					style={{
