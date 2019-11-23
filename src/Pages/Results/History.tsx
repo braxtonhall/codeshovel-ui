@@ -94,6 +94,7 @@ export class ReactHistory extends FadeableElement<IReactHistoryProps, IReactHist
 								windowHeight={this.props.windowHeight}
 								windowWidth={this.props.windowWidth}
 								method={this.props.method}
+								file={this.props.file}
 							/>
 						);
 					})
@@ -109,6 +110,7 @@ export interface IReactHistoryProps extends IFadeableElementProps {
 	windowHeight: number;
 	windowWidth: number;
 	method: IMethodTransport;
+	file: string;
 }
 
 export interface IReactHistoryState extends IFadeableElementState {

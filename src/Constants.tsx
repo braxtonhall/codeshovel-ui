@@ -15,6 +15,16 @@ export class Constants {
 		"https://github.com/kiegroup/drools",
 		"https://github.com/mockito/mockito",
 		"https://github.com/spring-projects/spring-boot",
+		"https://github.com/tensorflow/models",
+		"https://github.com/keras-team/keras",
+		"https://github.com/pallets/flask",
+		"https://github.com/scikit-learn/scikit-learn",
+		"https://github.com/zulip/zulip",
+		"https://github.com/pandas-dev/pandas",
+		"https://github.com/django/django",
+		"https://github.com/shobrook/rebound",
+		"https://github.com/asciinema/asciinema",
+		"https://github.com/jakubroztocil/httpie",
 	];
 
 	public static readonly DEFAULT_METHOD: IMethodTransport = {

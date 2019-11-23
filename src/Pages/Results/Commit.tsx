@@ -281,7 +281,9 @@ export class ReactCommit extends ReactCommitRow<IReactCommitProps, IReactCommitS
 			if (this.props.commit.diff) {
 				/* eslint-disable */
 				// @ts-ignore
-				const diffDrawer = new Diff2HtmlUI({diff: "--- a/file.fake\n+++ b/file.fake\n" + this.props.commit.diff});
+				const diffDrawer = new Diff2HtmlUI({
+					diff: `--- a/${this.props.file}\n+++ b/${this.props.file}\n` + this.props.commit.diff
+				});
 				diffDrawer.draw(`#${this.diffId}`, {inputFormat: 'diff', showFiles: false, matching: 'lines', outputFormat: 'line-by-line'});
 				diffDrawer.highlightCode(`#${this.diffId}`);
 				if (this.diffDeleter) {
@@ -453,6 +455,7 @@ export interface IReactCommitProps extends ICommitRowProps {
 	commit: ICommitx;
 	repo: string;
 	method: IMethodTransport;
+	file: string;
 }
 
 export interface IReactCommitState extends IFadeableElementState {
