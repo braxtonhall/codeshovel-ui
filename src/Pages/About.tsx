@@ -9,7 +9,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 	private readonly codeshovelRepo: string = `https://github.com/ataraxie/codeshovel`;
 	private readonly codeshovelUiRepo: string = `https://github.com/braxtonhall/codeshovel-ui`;
 	private readonly codeshovelWebserviceRepo: string = `https://github.com/braxtonhall/codeshovel-webservice`;
-	private readonly codeshovelPaperRepo: string = `https://github.com/ataraxie/codeshovel-paper`;
+	private readonly codeshovelPaperRepo: string = `https://open.library.ubc.ca/cIRcle/collections/ubctheses/24/items/1.0379647`;
 	private readonly splLink: string = `https://spl.cs.ubc.ca/`;
 	private readonly ubcLink: string = `https://www.ubc.ca`;
 
@@ -112,7 +112,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 								""
 							}
 							<div style={{marginBottom: "0.5%", fontSize: "55%"}}>
-								Check us out on GitHub!
+								codeshovel is open source, so check us out!
 							</div>
 							<div
 								style={{
@@ -170,8 +170,8 @@ export class About extends Page<IAboutProps, IAboutState> {
 									<a
 										className="SubtleButton CommitRowCell Disabled"
 										href={this.codeshovelPaperRepo}
-										// style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.15)"}}
-										style={{color: "black", backgroundColor: "#a8a8a8", pointerEvents: "none"}} // Disabled view TODO
+										style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.15)"}}
+										// style={{color: "black", backgroundColor: "#a8a8a8", pointerEvents: "none"}} // Disabled view TODO
 										onClick={(ev) => {
 											ev.preventDefault();
 											window.open(this.codeshovelPaperRepo, "_blank");
@@ -207,6 +207,8 @@ export class About extends Page<IAboutProps, IAboutState> {
 							name={"Nick C. Bradley"}
 							username={"nickbradley"}
 							info={"Nick is a PhD student, and co-author of the codeshovel thesis paper."}
+							link={"https://www.ncbradley.com/"}
+							linkDesc={"ncbradley"}
 
 						/>
 						<Contributor
@@ -217,7 +219,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 							username={"rtholmes"}
 							info={"Reid is an Associate Professor of Computer Science, and supervisor on codeshovel."}
 							link={"https://www.cs.ubc.ca/~rtholmes/"}
-
+							linkDesc={"cs.ubc/rtholmes"}
 						/>
 						<Contributor
 							containerWidth={contributorWidth}
@@ -286,9 +288,9 @@ class Contributor extends React.Component<IContributorProps, any> {
 		this.state = {
 
 		};
-		if (this.props.link) {
+		if (this.props.link && this.props.linkDesc) {
 			this.link = this.props.link;
-			this.linkDesc = `cs.ubc/${this.props.username}`;
+			this.linkDesc = this.props.linkDesc;
 		} else {
 			this.link = `https://github.com/${this.props.username}`;
 			this.linkDesc = `github/${this.props.username}`
@@ -365,4 +367,5 @@ interface IContributorProps {
 	username: string;
 	info: string;
 	link?: string;
+	linkDesc?: string;
 }
