@@ -20,7 +20,8 @@ export default class SmallButton extends FadeableElement<ISmallButtonProps, ISma
 						width: this.props.width + "px",
 						position: "absolute",
 						bottom: this.props.bottom + "px",
-						left: (this.props.left + this.props.shift) + "px",
+						left: this.props.left ? + this.props.left + "px" : undefined,
+						right: this.props.right ? + this.props.right + "px" : undefined,
 						backgroundColor: "rgb(183, 166, 108)",
 						opacity: this.props.active ? 1 : 0,
 						transition: this.fadeOutTime + "ms ease-in-out",
@@ -34,7 +35,8 @@ export default class SmallButton extends FadeableElement<ISmallButtonProps, ISma
 					style={{
 						position: "absolute",
 						bottom: this.props.bottom + "px",
-						left: this.props.left + this.props.shift + "px",
+						left: this.props.left ? + this.props.left + "px" : undefined,
+						right: this.props.right ? + this.props.right + "px" : undefined,
 						opacity: 0,
 					}}
 				/>
@@ -47,10 +49,11 @@ export interface ISmallButtonProps extends IFadeableElementProps{
 	height: number;
 	width: number;
 	bottom: number;
-	left: number;
+	left?: number;
+	right?: number;
 	backgroundImage: string;
 	backgroundSize: number;
-	shift: number;
+	shift?: number;
 }
 
 export interface ISmallButtonState extends IFadeableElementState{

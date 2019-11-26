@@ -31,6 +31,7 @@
   "scripts": {
     "start": "react-scripts start",
     "start:local": "REACT_APP_SERVER_ADDRESS=http://localhost:1234 react-scripts start",
+    "start:cs310": "REACT_APP_SERVER_ADDRESS=https://cs310.students.cs.ubc.ca/codeshovelserver react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

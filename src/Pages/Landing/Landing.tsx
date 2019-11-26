@@ -121,10 +121,10 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 							}}
 						>
 							<p>
-								Welcome to <code>codeshovel</code>.
+								Welcome to <code>CodeShovel::Python3</code>
 							</p>
 							<p>
-								To begin, enter a link to a GitHub repository.
+								To begin, enter a link to a Python GitHub repository.
 							</p>
 							<Form style={{pointerEvents: "auto"}} onSubmit={this.handleEnter}>
 								<Form.Control id="repoInput" size="lg" type="text" placeholder={this.placeholder}/>
@@ -152,25 +152,25 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 								pointerEvents: "none"
 							}}
 						>
-							<div style={{width: "100%", height: "100%", transition: `400ms ease-in-out`, transform: examplesShown ? "scaleX(1)" : "scaleX(-1)"}}>
-								<div
-									style={{
-										backgroundImage: `url(${process.env.PUBLIC_URL}/chevron.png)`,
-										backgroundSize: "contain",
-										backgroundRepeat: "no-repeat",
-										whiteSpace: "nowrap",
-										width: "100%",
-										height: "100%",
-										opacity: this.state.chevronHover ? 0.3 : 0.1
-									}}
-								>
-									<div className="Hitbox3" onClick={this.props.toggleHidden} style={{pointerEvents: "auto"}}/>
-									<div className="Hitbox4" onClick={this.props.toggleHidden} style={{pointerEvents: "auto"}}/>
-									<div className="Hitbox5" onClick={this.props.toggleHidden} style={{pointerEvents: "auto"}}/>
-									<div className="SubtleButton Hitbox Hitbox1" onClick={this.props.toggleHidden} onMouseEnter={() => this.setState({chevronHover: true})} onMouseLeave={() => this.setState({chevronHover: false})} style={{pointerEvents: "auto"}}/>
-									<div className="SubtleButton Hitbox Hitbox2" onClick={this.props.toggleHidden} onMouseEnter={() => this.setState({chevronHover: true})} onMouseLeave={() => this.setState({chevronHover: false})} style={{pointerEvents: "auto"}}/>
-								</div>
-							</div>
+							{/*<div style={{width: "100%", height: "100%", transition: `400ms ease-in-out`, transform: examplesShown ? "scaleX(1)" : "scaleX(-1)"}}>*/}
+							{/*	<div*/}
+							{/*		style={{*/}
+							{/*			backgroundImage: `url(${process.env.PUBLIC_URL}/chevron.png)`,*/}
+							{/*			backgroundSize: "contain",*/}
+							{/*			backgroundRepeat: "no-repeat",*/}
+							{/*			whiteSpace: "nowrap",*/}
+							{/*			width: "100%",*/}
+							{/*			height: "100%",*/}
+							{/*			opacity: this.state.chevronHover ? 0.3 : 0.1*/}
+							{/*		}}*/}
+							{/*	>*/}
+							{/*		<div className="Hitbox3" onClick={this.props.toggleHidden} style={{pointerEvents: "auto"}}/>*/}
+							{/*		<div className="Hitbox4" onClick={this.props.toggleHidden} style={{pointerEvents: "auto"}}/>*/}
+							{/*		<div className="Hitbox5" onClick={this.props.toggleHidden} style={{pointerEvents: "auto"}}/>*/}
+							{/*		<div className="SubtleButton Hitbox Hitbox1" onClick={this.props.toggleHidden} onMouseEnter={() => this.setState({chevronHover: true})} onMouseLeave={() => this.setState({chevronHover: false})} style={{pointerEvents: "auto"}}/>*/}
+							{/*		<div className="SubtleButton Hitbox Hitbox2" onClick={this.props.toggleHidden} onMouseEnter={() => this.setState({chevronHover: true})} onMouseLeave={() => this.setState({chevronHover: false})} style={{pointerEvents: "auto"}}/>*/}
+							{/*	</div>*/}
+							{/*</div>*/}
 						</div>
 					</React.Fragment> :
 					<div

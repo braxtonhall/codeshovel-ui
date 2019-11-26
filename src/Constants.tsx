@@ -3,18 +3,18 @@ import {Changes} from "./Enums";
 
 export class Constants {
 	public static readonly EXAMPLE_LINKS: string[] = [
-		"https://github.com/apache/commons-lang",
-		"https://github.com/apache/flink",
-		"https://github.com/apache/lucene-solr",
-		"https://github.com/checkstyle/checkstyle",
-		"https://github.com/eclipse/jetty.project",
-		"https://github.com/hibernate/hibernate-orm",
-		"https://github.com/hibernate/hibernate-search",
-		"https://github.com/javaparser/javaparser",
-		"https://github.com/JetBrains/intellij-community",
-		"https://github.com/kiegroup/drools",
-		"https://github.com/mockito/mockito",
-		"https://github.com/spring-projects/spring-boot",
+		// "https://github.com/apache/commons-lang",
+		// "https://github.com/apache/flink",
+		// "https://github.com/apache/lucene-solr",
+		// "https://github.com/checkstyle/checkstyle",
+		// "https://github.com/eclipse/jetty.project",
+		// "https://github.com/hibernate/hibernate-orm",
+		// "https://github.com/hibernate/hibernate-search",
+		// "https://github.com/javaparser/javaparser",
+		// "https://github.com/JetBrains/intellij-community",
+		// "https://github.com/kiegroup/drools",
+		// "https://github.com/mockito/mockito",
+		// "https://github.com/spring-projects/spring-boot",
 		"https://github.com/tensorflow/models",
 		"https://github.com/keras-team/keras",
 		"https://github.com/pallets/flask",
@@ -97,7 +97,7 @@ export class Constants {
 
 	public static readonly INVALID_URL_ERROR_TEXT: string = "Please enter a link to proceed.";
 
-	public static readonly LANDING_TUTORIAL_TEXT: string = "Welcome. For a live demonstration of the codeshovel web service, you can select example by clicking a method on the left, or enter a link below and follow the steps on the next few pages to try it on your favourite public Java repo.";
+	public static readonly LANDING_TUTORIAL_TEXT: string = "Welcome! For a live demonstration of CodeShovel::Python3, please enter a link to a Python repo. Note: it may take a while to clone if you don't use the suggested one!";
 
 	public static readonly SERVER_BUSY_ERROR_TEXT: string = "The server is under heavy load. Please try again in a few minutes!";
 	public static readonly INTERNAL_ERROR_TEXT: string = "The server is having trouble processing this specific request. Please try another.";
@@ -106,7 +106,7 @@ export class Constants {
 	public static readonly EXAMPLE_TEXT_SIZE: number = 6;
 	public static readonly EXAMPLE_ROW_WIDTH: number = 10;
 
-	public static readonly FILES_TUTORIAL_TEXT: string = "Each row on this page represents a directory or file. On the left you can click through the file tree to find a specific class, and you can refine the tree using the search bar above. If the class you are looking for is not in the current commit, you can enter the SHA beneath to explore that commit's file tree.";
+	public static readonly FILES_TUTORIAL_TEXT: string = "This page here represents the selected project's files! On the left you can click through the file tree to find a specific file with functions in it. Some Python files are just scripts with no functions, so don't be alarmed if you get an error!";
 
 	public static readonly FILE_REQUEST_ERROR_TEXT: string = "There don't appear to be any supported file types in this repo. Please try another.";
 	public static readonly FILE_SHA_PLACEHOLDER_TEXT: string = "Specific commit? Enter the SHA here and reload";
@@ -116,7 +116,7 @@ export class Constants {
 
 	public static readonly LIST_ELEMENT_NEW_LINE_PX_COUNT: number = 15;
 
-	public static readonly METHODS_TUTORIAL_TEXT: string = "Each row on this page is a single method in the selected file. Click on a method on the left, or use the search bar above to narrow down the list of methods.";
+	public static readonly METHODS_TUTORIAL_TEXT: string = "Each row on this page is a single function in the selected file. Click on a function on the left to see its complete change history.";
 
 	public static readonly METHODS_METHOD_ANIMATE_TIME: number = 300;
 	public static readonly METHODS_SEARCH_TEXT: string = "Refine method list";
@@ -125,7 +125,7 @@ export class Constants {
 
 	public static readonly RESULTS_REQUEST_ERROR_TEXT: string = "The server is having some trouble processing this request. Please try another method.";
 
-	public static readonly RESULTS_TUTORIAL_TEXT: string = "Each row on this page represents one commit that changed this method, and the colours correspond to different change types. Click on Author, Commit or File to visit their respective pages on GitHub. Click on Type or Diff to view more information on this page.";
+	public static readonly RESULTS_TUTORIAL_TEXT: string = "Each row on this page represents one commit that changed this function! The colours correspond to different change types. Click on a Type or Diff cell to view more information on this page.";
 
 	public static readonly COMMIT_ROW_HEIGHT: number = 8;
 	public static readonly COMMIT_ROW_WIDTH: number = 80;

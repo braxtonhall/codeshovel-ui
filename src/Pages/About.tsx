@@ -60,7 +60,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 						height: this.getFontSize("", 16.5),
 						backgroundSize: "contain",
 						backgroundRepeat: "no-repeat",
-						opacity: 0.3,
+						opacity: 0.1,
 						top: "-20%",
 						left: "10%",
 					}}/>
@@ -84,35 +84,35 @@ export class About extends Page<IAboutProps, IAboutState> {
 				>
 					<div
 						style={{
-							fontSize: this.getFontSize("codeshovel", 3),
+							fontSize: this.getFontSize("CodeShovel::Python3", 1.6),
 							top: "5%",
-							left: "10%",
+							right: "10%",
 							position: "absolute",
 							textAlign: "center",
 						}}
 					>
-						<code>codeshovel</code>
+						<code>CodeShovel::Python3</code>
 						<br/>
 						<div style={{fontSize: this.getFontSize("Unearthing Method Histories")}}>Unearthing Method Histories</div>
 						<div
 							style={{fontSize: this.getBoxFontSize(0.04), textAlign: "left", position: "absolute", marginTop: "8%", width: this.getFontSize("", 16.5)}}
 						>
 							<div style={{marginBottom: "5%", fontSize: "70%"}}>
-								<code>codeshovel</code> digs through source code to unearth the histories for methods.
-								Currently implemented for Java and Python with more languages to follow.
+								CodeShovel digs through source code to unearth histories at the function level.
+								Implemented originally for Java, it has been extended for Python.
 							</div>
 							<div style={{marginBottom: "5%", fontSize: "60%"}}>
-								<code>codeshovel</code> is a tool for navigating how source code methods have evolved, across the kinds of evolutionary changes applied to the method, including most common refactorings, that the method saw throughout its life span.
+								CodeShovel is a tool for navigating how source code methods have evolved, across the kinds of evolutionary changes applied to the method, including most common refactorings, that the method saw throughout its life span.
 								It is capable of tracking a method not only as it moves between line ranges, but as it moves through classes and around a codebase, from file to file.
 							</div>
 							{!mobileView ?
 								<div style={{marginBottom: "5%", fontSize: "60%"}}>
-									Enter a repository link, open a file, and select a method to try it for yourself.
+									Click that little arrow on the right to try it out yourself.
 								</div> :
 								""
 							}
 							<div style={{marginBottom: "0.5%", fontSize: "55%"}}>
-								codeshovel is open source, so check us out!
+								If you would like to do more reading, here are our reports!
 							</div>
 							<div
 								style={{
@@ -135,49 +135,50 @@ export class About extends Page<IAboutProps, IAboutState> {
 								>
 									<a
 										className="SubtleButton CommitRowCell"
-										href={this.codeshovelRepo}
+										href={"/docs/proposal.pdf"}
 										style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.3)"}}
 										onClick={(ev) => {
 											ev.preventDefault();
-											window.open(this.codeshovelRepo, "_blank");
+											window.open("/docs/proposal.pdf", "_blank");
 										}}
 
 									>
-										codeshovel
+										proposal
 									</a>
 									<a
 										className="SubtleButton CommitRowCell"
-										href={this.codeshovelWebserviceRepo}
+										href={"/docs/background.pdf"}
 										style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.1)"}}
 										onClick={(ev) => {
 											ev.preventDefault();
-											window.open(this.codeshovelWebserviceRepo, "_blank");
+											window.open("/docs/background.pdf", "_blank");
 										}}
 									>
-										webservice
+										background
 									</a>
 									<a
 										className="SubtleButton CommitRowCell"
-										href={this.codeshovelUiRepo}
-										style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.2)"}}
+										href={"/docs/plan.pdf"}
+										// style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.2)"}}
+										style={{color: "black", backgroundColor: "#a8a8a8", pointerEvents: "none"}} // Disabled view TODO
 										onClick={(ev) => {
 											ev.preventDefault();
-											window.open(this.codeshovelUiRepo, "_blank");
+											window.open("/docs/plan.pdf", "_blank");
 										}}
 									>
-										ui
+										plan
 									</a>
 									<a
 										className="SubtleButton CommitRowCell Disabled"
-										href={this.codeshovelPaperRepo}
-										style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.15)"}}
-										// style={{color: "black", backgroundColor: "#a8a8a8", pointerEvents: "none"}} // Disabled view TODO
+										href={"/docs/final.pdf"}
+										// style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.15)"}}
+										style={{color: "black", backgroundColor: "#a8a8a8", pointerEvents: "none"}} // Disabled view TODO
 										onClick={(ev) => {
 											ev.preventDefault();
-											window.open(this.codeshovelPaperRepo, "_blank");
+											window.open("/docs/final.pdf", "_blank");
 										}}
 									>
-										paper
+										final
 									</a>
 								</div>
 							</div>
@@ -186,7 +187,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 					<div
 						style={{
 							width: contributorWidth,
-							right: "10%",
+							left: "10%",
 							top: mobileView ? "70%" : "10%",
 							position: "absolute",
 						}}
@@ -194,40 +195,36 @@ export class About extends Page<IAboutProps, IAboutState> {
 						<Contributor
 							containerWidth={contributorWidth}
 							containerHeight={contributorHeight}
-							image={"url(https://avatars2.githubusercontent.com/u/1646086?s=400&v=4)"}
-							name={"Felix Grund"}
-							username={"ataraxie"}
-							info={"Felix is a software developer, MSc student, and the founder of codeshovel."}
-
-						/>
-						<Contributor
-							containerWidth={contributorWidth}
-							containerHeight={contributorHeight}
-							image={"url(https://avatars2.githubusercontent.com/u/2560480?s=400&v=4)"}
-							name={"Nick C. Bradley"}
-							username={"nickbradley"}
-							info={"Nick is a PhD student, and co-author of the codeshovel thesis paper."}
-							link={"https://www.ncbradley.com/"}
-							linkDesc={"ncbradley"}
-
-						/>
-						<Contributor
-							containerWidth={contributorWidth}
-							containerHeight={contributorHeight}
-							image={"url(https://avatars1.githubusercontent.com/u/89003?s=400&v=4)"}
-							name={"Reid Holmes"}
-							username={"rtholmes"}
-							info={"Reid is an Associate Professor of Computer Science, and supervisor on codeshovel."}
-							link={"https://www.cs.ubc.ca/~rtholmes/"}
-							linkDesc={"cs.ubc/rtholmes"}
-						/>
-						<Contributor
-							containerWidth={contributorWidth}
-							containerHeight={contributorHeight}
 							image={"url(https://avatars3.githubusercontent.com/u/35436247?s=400&v=4)"}
 							name={"Braxton Hall"}
 							username={"braxtonhall"}
-							info={"Braxton is a BA student, and the developer of the codeshovel web service."}
+							info={"Braxton is a BA student, and plays Marth in Super Smash Bros. Melee."}
+
+						/>
+						<Contributor
+							containerWidth={contributorWidth}
+							containerHeight={contributorHeight}
+							image={"url(https://avatars2.githubusercontent.com/u/57985355?s=400&v=4)"}
+							name={"Danhui Jia"}
+							username={"danhuijia"}
+							info={"Danhui is a BUCS student, and likes to scream with guinea pigs."}
+
+						/>
+						<Contributor
+							containerWidth={contributorWidth}
+							containerHeight={contributorHeight}
+							image={"url(https://avatars1.githubusercontent.com/u/33373979?s=400&v=4)"}
+							name={"Lilli Freischem"}
+							username={"lillif"}
+							info={"Lilli is a visting student from the University of Edinburgh, and ..."}
+						/>
+						<Contributor
+							containerWidth={contributorWidth}
+							containerHeight={contributorHeight}
+							image={"url()"}
+							name={"Brian Yeung"}
+							username={""}
+							info={"Brian is a BSc student, and ..."}
 
 						/>
 						<div style={{

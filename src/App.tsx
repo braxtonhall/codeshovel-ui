@@ -4,7 +4,7 @@ import {ArgKind, Key, Pages} from './Enums'
 import {Landing} from "./Pages/Landing/Landing";
 import {Files} from "./Pages/Files/Files";
 import {Methods} from "./Pages/Methods/Methods";
-import {IHistoryTransport, IManifest, IManifestEntry, IMethodTransport, InternalError, ServerBusyError} from "./Types";
+import {IHistoryTransport, IManifestEntry, IMethodTransport, InternalError, ServerBusyError} from "./Types";
 import {BackgroundText} from "./BackgroundText";
 import {Constants} from "./Constants";
 import {RequestController} from "./RequestController";
@@ -14,7 +14,6 @@ import {Results} from "./Pages/Results/Results";
 import {TestController} from "./TestRequestController";
 import LargeButton from "./Buttons/LargeButton";
 import SmallButton from "./Buttons/SmallButton";
-import Cookies from 'js-cookie';
 import {About} from "./Pages/About";
 
 export default class App extends React.Component<any, IAppState> {
@@ -32,7 +31,7 @@ export default class App extends React.Component<any, IAppState> {
 	public constructor(props: any) {
 		super(props);
 		this.state = {
-			page: Pages.LANDING,
+			page: Pages.ABOUT,
 			link: "",
 			file: "",
 			sha: "HEAD",
@@ -48,10 +47,10 @@ export default class App extends React.Component<any, IAppState> {
 			methodContent: null,
 			historyContent: null,
 			displayTextCopied: false,
-			showAbout: false,
+			showAbout: true,
 			width: window.innerWidth,
 			height: window.innerHeight,
-			examplesHidden: Cookies.get("examplesHidden") === 'true',
+			examplesHidden: true,// Cookies.get("examplesHidden") === 'true',
 			examples: [],
 			shaRefresh: false,
 			exampleClick: false,
@@ -101,12 +100,12 @@ export default class App extends React.Component<any, IAppState> {
 	}
 
 	private toggleExamples(): void {
-		if (this.state.loading) {
-			return;
-		}
-		const examplesHidden: boolean = !this.state.examplesHidden;
-		this.setState({examplesHidden});
-		setImmediate(() => Cookies.set('examplesHidden', examplesHidden.toString()));
+		// if (this.state.loading) {
+		// 	return;
+		// }
+		// const examplesHidden: boolean = !this.state.examplesHidden;
+		// this.setState({examplesHidden});
+		// setImmediate(() => Cookies.set('examplesHidden', examplesHidden.toString()));
 	}
 
 	private handleKey(event: KeyboardEvent): void {
@@ -152,20 +151,20 @@ export default class App extends React.Component<any, IAppState> {
 	}
 
 	private getExamples(): void {
-		RequestController.getManifest()
-			.then((manifest: IManifest) => {
-				const examples: IManifestEntry[] = Array.from(Object.values(manifest));
-				for (let i = examples.length - 1; i > 0; i--) {
-					const j = Math.floor(Math.random() * (i + 1));
-					const temp = examples[i];
-					examples[i] = examples[j];
-					examples[j] = temp;
-				}
-				this.setState({examples});
-			})
-			.catch((err) => {
-				// Do nothing
-			});
+		// RequestController.getManifest()
+		// 	.then((manifest: IManifest) => {
+		// 		const examples: IManifestEntry[] = Array.from(Object.values(manifest));
+		// 		for (let i = examples.length - 1; i > 0; i--) {
+		// 			const j = Math.floor(Math.random() * (i + 1));
+		// 			const temp = examples[i];
+		// 			examples[i] = examples[j];
+		// 			examples[j] = temp;
+		// 		}
+		// 		this.setState({examples});
+		// 	})
+		// 	.catch((err) => {
+		// 		// Do nothing
+		// 	});
 	}
 
 	private proceedToPage(page: Pages, state: IAppState | null = null): void {
@@ -338,6 +337,12 @@ export default class App extends React.Component<any, IAppState> {
 			this.setState(state);
 		}
 	}
+	
+	private proceed(): void {
+		window.history.pushState('', '', Pages.LANDING.toString());
+		this.history.push(this.state.page);
+		this.setState({page: Pages.LANDING});
+	}
 
 	private async proceedWithUpdate(page: Pages, arg: any, kind: ArgKind): Promise<void> {
 		this.proceedToPage(page, await this.getNewStateWithArg(arg, kind));
@@ -472,13 +477,12 @@ export default class App extends React.Component<any, IAppState> {
 					/>
 					<SmallButton
 						active={this.state.page === Pages.ABOUT}
-						onClick={() => {if (this.history.length > 0) window.history.back()}}
+						onClick={this.proceed.bind(this)}// window.history.back()}}
 						width={30}
 						height={30}
 						backgroundImage={`url(${process.env.PUBLIC_URL}/left.png)`}
 						backgroundSize={15}
-						shift={this.state.page === Pages.ABOUT ? 35 : 0}
-						left={-30}
+						right={5}
 						bottom={5}
 					/>
 					<SmallButton

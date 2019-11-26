@@ -1,9 +1,9 @@
 export enum Pages {
+	ABOUT,
 	LANDING,
 	FILES,
 	METHODS,
 	RESULTS,
-	ABOUT,
 }
 
 export enum ArgKind {
