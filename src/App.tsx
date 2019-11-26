@@ -478,10 +478,10 @@ export default class App extends React.Component<any, IAppState> {
 					<SmallButton
 						active={this.state.page === Pages.ABOUT}
 						onClick={this.proceed.bind(this)}// window.history.back()}}
-						width={30}
-						height={30}
+						width={60}
+						height={60}
 						backgroundImage={`url(${process.env.PUBLIC_URL}/left.png)`}
-						backgroundSize={15}
+						backgroundSize={30}
 						right={5}
 						bottom={5}
 					/>

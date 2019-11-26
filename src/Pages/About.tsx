@@ -97,6 +97,15 @@ export class About extends Page<IAboutProps, IAboutState> {
 						<div
 							style={{fontSize: this.getBoxFontSize(0.04), textAlign: "left", position: "absolute", marginTop: "8%", width: this.getFontSize("", 16.5)}}
 						>
+							<div style={{marginBottom: "1.5%", fontSize: "75%"}}>
+								CodeShovel::Python3 is a Python syntax aware analysis tool that can track changes to a function that are not easily discovered with traditional version control tools.
+							</div>
+							<div style={{marginBottom: "6%", fontSize: "45%"}}>
+								Originally implemented for Java, it was extended to Python for CPSC 311.
+							</div>
+							<div style={{marginBottom: "1.5%", fontSize: "45%"}}>
+								Consider the following case,
+							</div>
 							<div style={{marginBottom: "2%", fontSize: "55%"}}>
 								A Python 3 developer prepares to merge a Pull Request from another developer on her team into the develop branch of their project.
 							</div>
@@ -106,24 +115,24 @@ export class About extends Page<IAboutProps, IAboutState> {
 							<div style={{marginBottom: "2%", fontSize: "55%"}}>
 								She performs a git log, walking through the file’s history one commit at a time to better understand how and why the method came to be. However the method abruptly shows up as additions in its entirety only a few commits before the HEAD of the branch.
 							</div>
-							<div style={{marginBottom: "7%", fontSize: "55%"}}>
+							<div style={{marginBottom: "2%", fontSize: "55%"}}>
 								Unbeknownst to the developer, the method had been moved up from a child class from that commit. The tools supposedly designed to archive code mutation have failed her; the method’s true birth and early germination period in the child class are lost to the developer.
 							</div>
-							<div style={{marginBottom: "6%", fontSize: "75%"}}>
-								CodeShovel::Python3 is a Python syntax aware analysis tool that can track changes to a function that are not easily discovered with traditional version control tools.
+							<div style={{marginBottom: "7%", fontSize: "55%"}}>
+								However they would have been found by CodeShovel.
 							</div>
-							<div style={{marginBottom: "4%", fontSize: "60%"}}>
-								By building and navigating Abstract Syntax Trees for every commit, CodeShovel::Python3 can do better than trace change and line changes; it can track changes to specific a Python function as is moves around a file, as common refactorings are applied to it, and even as it is moved across files in a code base.
+							<div style={{marginBottom: "4%", fontSize: "65%"}}>
+								By building and interpreting Abstract Syntax Trees for every commit, CodeShovel::Python3 can do better than trace dates and line changes; it can track changes to specific a Python function as is moves around a file, as common refactorings are applied to it, and even as it is moved across files in a code base.
 							</div>
 							<div style={{marginBottom: "5%", fontSize: "60%"}}>
 								CodeShovel walks backward through the commit history like a linked list, uses a Similarity Algorithm to rank and isolate the "same" function, and returns to you only the changes that affected it.
 							</div>
-							{!mobileView ?
+							{/*{!mobileView ?*/}
 								<div style={{marginBottom: "5%", fontSize: "60%"}}>
 									Click that little arrow on the right to try it out yourself.
-								</div> :
-								""
-							}
+								</div> {/*:*/}
+							{/*	""*/}
+							{/*}*/}
 							<div style={{marginBottom: "0.5%", fontSize: "55%"}}>
 								If you would like to do more reading, here are our reports!
 							</div>
@@ -238,7 +247,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 							image={"url(https://avatars2.githubusercontent.com/u/43458455?s=400&v=4)"}
 							name={"Brian Yeung"}
 							username={"byeung18"}
-							info={"Brian is a BSc student, and ..."}
+							info={"Brian is a BCS student, and likes blueberries and bubble tea."}
 
 						/>
 						<div style={{

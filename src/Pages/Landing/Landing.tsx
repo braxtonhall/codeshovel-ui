@@ -127,7 +127,7 @@ export class Landing extends Page<ILandingProps, ILandingState> {
 								To begin, enter a link to a Python GitHub repository.
 							</p>
 							<Form style={{pointerEvents: "auto"}} onSubmit={this.handleEnter}>
-								<Form.Control id="repoInput" size="lg" type="text" placeholder={this.placeholder}/>
+								<Form.Control id="repoInput" size="lg" type="text" placeholder={this.placeholder} defaultValue={this.placeholder}/>
 							</Form>
 							<Button
 								style={{pointerEvents: "auto"}}
