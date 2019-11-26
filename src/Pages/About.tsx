@@ -135,11 +135,11 @@ export class About extends Page<IAboutProps, IAboutState> {
 								>
 									<a
 										className="SubtleButton CommitRowCell"
-										href={"/docs/proposal.pdf"}
+										href={process.env.PUBLIC_URL +"/docs/proposal.pdf"}
 										style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.3)"}}
 										onClick={(ev) => {
 											ev.preventDefault();
-											window.open("/docs/proposal.pdf", "_blank");
+											window.open(process.env.PUBLIC_URL +"/docs/proposal.pdf", "_blank");
 										}}
 
 									>
@@ -147,35 +147,35 @@ export class About extends Page<IAboutProps, IAboutState> {
 									</a>
 									<a
 										className="SubtleButton CommitRowCell"
-										href={"/docs/background.pdf"}
+										href={process.env.PUBLIC_URL +"/docs/background.pdf"}
 										style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.1)"}}
 										onClick={(ev) => {
 											ev.preventDefault();
-											window.open("/docs/background.pdf", "_blank");
+											window.open(process.env.PUBLIC_URL +"/docs/background.pdf", "_blank");
 										}}
 									>
 										background
 									</a>
 									<a
 										className="SubtleButton CommitRowCell"
-										href={"/docs/plan.pdf"}
+										href={process.env.PUBLIC_URL +"/docs/plan.pdf"}
 										// style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.2)"}}
 										style={{color: "black", backgroundColor: "#a8a8a8", pointerEvents: "none"}} // Disabled view TODO
 										onClick={(ev) => {
 											ev.preventDefault();
-											window.open("/docs/plan.pdf", "_blank");
+											window.open(process.env.PUBLIC_URL +"/docs/plan.pdf", "_blank");
 										}}
 									>
 										plan
 									</a>
 									<a
 										className="SubtleButton CommitRowCell Disabled"
-										href={"/docs/final.pdf"}
+										href={process.env.PUBLIC_URL +"/docs/final.pdf"}
 										// style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.15)"}}
 										style={{color: "black", backgroundColor: "#a8a8a8", pointerEvents: "none"}} // Disabled view TODO
 										onClick={(ev) => {
 											ev.preventDefault();
-											window.open("/docs/final.pdf", "_blank");
+											window.open(process.env.PUBLIC_URL +"/docs/final.pdf", "_blank");
 										}}
 									>
 										final
