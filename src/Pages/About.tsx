@@ -98,34 +98,31 @@ export class About extends Page<IAboutProps, IAboutState> {
 							style={{fontSize: this.getBoxFontSize(0.04), textAlign: "left", position: "absolute", marginTop: "8%", width: this.getFontSize("", 16.5)}}
 						>
 							<div style={{marginBottom: "1.5%", fontSize: "75%"}}>
-								CodeShovel::Python3 is a Python syntax aware analysis tool that can track changes to a function that are not easily discovered with traditional version control tools.
+								CodeShovel::Python3 is a syntax aware git analysis tool that can track changes to a function throughout its lifespan that are not easily discovered with traditional version control tools.
 							</div>
-							<div style={{marginBottom: "6%", fontSize: "45%"}}>
-								Originally implemented for Java, it was extended to Python for CPSC 311.
-							</div>
-							<div style={{marginBottom: "1.5%", fontSize: "45%"}}>
-								Consider the following case,
-							</div>
-							<div style={{marginBottom: "2%", fontSize: "55%"}}>
-								A Python 3 developer prepares to merge a Pull Request from another developer on her team into the develop branch of their project.
-							</div>
-							<div style={{marginBottom: "2%", fontSize: "55%"}}>
-								In the Pull Request she sees a method she is unfamiliar with.
-							</div>
-							<div style={{marginBottom: "2%", fontSize: "55%"}}>
-								She performs a git log, walking through the file’s history one commit at a time to better understand how and why the method came to be. However the method abruptly shows up as additions in its entirety only a few commits before the HEAD of the branch.
-							</div>
-							<div style={{marginBottom: "2%", fontSize: "55%"}}>
-								Unbeknownst to the developer, the method had been moved up from a child class from that commit. The tools supposedly designed to archive code mutation have failed her; the method’s true birth and early germination period in the child class are lost to the developer.
-							</div>
-							<div style={{marginBottom: "7%", fontSize: "55%"}}>
-								However they would have been found by CodeShovel.
+							<div style={{marginBottom: "5%", fontSize: "45%"}}>
+								Originally implemented for Java, and extended to Python for CPSC 311.
 							</div>
 							<div style={{marginBottom: "4%", fontSize: "65%"}}>
-								By building and interpreting Abstract Syntax Trees for every commit, CodeShovel::Python3 can do better than trace dates and line changes; it can track changes to specific a Python function as is moves around a file, as common refactorings are applied to it, and even as it is moved across files in a code base.
+								CodeShovel::Python3 can do better than trace dates and line changes; it can track changes to a specific function as it moves around a file, as common refactorings are applied to it, and even as it is moved across files in a code base.
+							</div>
+							<div style={{marginBottom: "2%", fontSize: "55%"}}>
+								Git may be a powerful tool for aggregating all changes made to a codebase, however when we think about changes to code, we consider them as changes to functionality (or functions), not changes to line ranges. CodeShovel annotates changes at a function level, rather than at a lexical level.
+							</div>
+							<div style={{marginBottom: "2%", fontSize: "55%"}}>
+								By grouping code by functions instead of just by files, CodeShovel provides several benefits.
+							</div>
+							<div style={{marginBottom: "2%", fontSize: "55%"}}>
+								1. Assists in identifying the contributors to a function.
+							</div>
+							<div style={{marginBottom: "2%", fontSize: "55%"}}>
+								2. Provides meaningful insight by discarding irrelevant changes.
+							</div>
+							<div style={{marginBottom: "7%", fontSize: "55%"}}>
+								3. Facilitates better understanding of unfamiliar code.
 							</div>
 							<div style={{marginBottom: "5%", fontSize: "60%"}}>
-								CodeShovel walks backward through the commit history like a linked list, uses a Similarity Algorithm to rank and isolate the "same" function, and returns to you only the changes that affected it.
+								CodeShovel walks backward through the commit history, uses a Similarity Algorithm to rank and isolate the "same" function, and returns to you only the changes that affected it.
 							</div>
 							{/*{!mobileView ?*/}
 								<div style={{marginBottom: "5%", fontSize: "60%"}}>

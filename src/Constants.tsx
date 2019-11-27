@@ -106,7 +106,7 @@ export class Constants {
 	public static readonly EXAMPLE_TEXT_SIZE: number = 6;
 	public static readonly EXAMPLE_ROW_WIDTH: number = 10;
 
-	public static readonly FILES_TUTORIAL_TEXT: string = "This page here represents the selected project's files! On the left you can click through the file tree to find a specific file with functions in it. Some Python files are just scripts with no functions, so don't be alarmed if you get an error!";
+	public static readonly FILES_TUTORIAL_TEXT: string = "This page here represents the selected project's files! Click through the file tree on the left to find a file. Click on a file to view the functions in it. Some Python files are just scripts with no functions, so don't be alarmed if you get an error!";
 
 	public static readonly FILE_REQUEST_ERROR_TEXT: string = "There don't appear to be any supported file types in this repo. Please try another.";
 	public static readonly FILE_SHA_PLACEHOLDER_TEXT: string = "Specific commit? Enter the SHA here and reload";

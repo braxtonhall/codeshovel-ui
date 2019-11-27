@@ -26,7 +26,7 @@ export class BackgroundText extends React.Component<IBackgroundTextProps, {}> {
 						top: "15%",
 						left: "2%",
 						font: "900% \"Courier New\", Futura, sans-serif",
-						opacity: this.props.page >= Pages.LANDING ? Constants.BACKGROUND_TEXT_OPACITY : 0,
+						opacity: this.props.page > Pages.LANDING ? Constants.BACKGROUND_TEXT_OPACITY : 0,
 						filter,
 						transition: this.fadeOutTime + "ms ease-in-out",
 						fontStyle: "italic",
