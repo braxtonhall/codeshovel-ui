@@ -236,7 +236,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 							image={"url(https://avatars1.githubusercontent.com/u/33373979?s=400&v=4)"}
 							name={"Lilli Freischem"}
 							username={"lillif"}
-							info={"Lilli is a visiting student from the University of Edinburgh, and ..."}
+							info={"Lilli is an exchange student from Edinburgh, and likes running through Canada's forests."}
 						/>
 						<Contributor
 							containerWidth={contributorWidth}
