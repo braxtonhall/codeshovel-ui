@@ -97,7 +97,7 @@ export class Results extends Page<IHistoryProps, IHistoryState> {
 					>
 						<TutorialPane
 							active={!this.state.tutorialDismissed && !mobileView}
-							text={this.tutorialText}
+							text={Object.keys(this.props.content).length <= 1 ? "It looks like this function has hardly any changes! Perhaps go back and try another." : this.tutorialText}
 							windowWidth={this.props.windowWidth}
 							width={25}
 							dismissTutorial={this.dismissTutorial}
