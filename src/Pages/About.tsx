@@ -180,7 +180,6 @@ export class About extends Page<IAboutProps, IAboutState> {
 										className="SubtleButton CommitRowCell"
 										href={process.env.PUBLIC_URL +"/docs/plan.pdf"}
 										style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.2)"}}
-										// style={{color: "black", backgroundColor: "#a8a8a8", pointerEvents: "none"}} // Disabled view TODO
 										onClick={(ev) => {
 											ev.preventDefault();
 											window.open(process.env.PUBLIC_URL +"/docs/plan.pdf", "_blank");
@@ -191,8 +190,7 @@ export class About extends Page<IAboutProps, IAboutState> {
 									<a
 										className="SubtleButton CommitRowCell Disabled"
 										href={process.env.PUBLIC_URL +"/docs/final.pdf"}
-										// style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.15)"}}
-										style={{color: "black", backgroundColor: "#a8a8a8", pointerEvents: "none"}} // Disabled view TODO
+										style={{color: "black", backgroundColor: "rgba(255, 255, 255, 0.15)"}}
 										onClick={(ev) => {
 											ev.preventDefault();
 											window.open(process.env.PUBLIC_URL +"/docs/final.pdf", "_blank");
